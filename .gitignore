@@ -1,0 +1,38 @@
+# Personal data - never commit
+**/my-*.csv
+**/my-*.json
+**/my-*.xlsx
+**/personal-*.csv
+**/personal-*.json
+**/*_personal.*
+**/*-real.*
+
+# Raw bank/financial data
+**/amex_activity*.csv
+**/nationwide_*.csv
+**/transactions_anonymised*.csv
+**/transactions_categorised*.csv
+**/combined_transactions*.csv
+**/holdings.json
+**/redaction_report*.json
+**/merchant_map*.csv
+**/merchant_categories*.csv
+
+# Data input/output directories (personal data)
+**/data/input/
+**/data/output/
+
+# Session/working files
+SESSION_STATE.md
+**/working/
+**/*.jsonl
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python
+__pycache__/
+*.pyc
+.env

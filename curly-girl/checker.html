@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingredient Checker | Curly Girl UK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Curly Girl <span>UK</span></a>
+      <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="quiz.html">Find My Routine</a></li>
+        <li><a href="checker.html" class="active">Ingredient Checker</a></li>
+        <li><a href="about.html">The Method</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Hero -->
+    <section class="hero">
+      <h1>Is your product <span class="highlight">Curly Girl approved</span>?</h1>
+      <p>Paste your product's ingredient list below and we'll check every ingredient against the Curly Girl Method database. Built for the UK curly community.</p>
+    </section>
+
+    <!-- Ingredient Checker -->
+    <section class="section" id="checker">
+      <div class="checker-wrap">
+        <div class="card">
+          <h2>Ingredient Checker</h2>
+          <p class="text-muted mb-2">Paste a full ingredient list from the back of your product. We'll separate and analyse each one.</p>
+          <textarea class="checker-textarea" id="ingredientInput" placeholder="e.g. Aqua, Cetearyl Alcohol, Glycerin, Dimethicone, Behentrimonium Chloride, Panthenol..."></textarea>
+          <div class="checker-actions">
+            <button class="btn btn-primary" onclick="checkIngredients()">Check Ingredients</button>
+            <button class="btn btn-secondary" onclick="clearChecker()">Clear</button>
+            <button class="btn btn-secondary btn-small" onclick="loadExample()">Try Example</button>
+          </div>
+        </div>
+        <div class="results-container" id="results"></div>
+      </div>
+    </section>
+
+    <!-- Individual Search -->
+    <section class="section" id="search">
+      <div class="checker-wrap">
+        <div class="card">
+          <h2>Search Individual Ingredients</h2>
+          <p class="text-muted mb-2">Not sure about a specific ingredient? Search our database.</p>
+          <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="Start typing an ingredient name..." oninput="searchIngredients()">
+          </div>
+          <div class="search-results ingredient-list" id="searchResults"></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Built by <a href="#">Stackless</a> &copy; 2026</p>
+    <p class="disclaimer">This tool is for informational purposes only. It is not a medical or dermatological tool. Always patch test new products.</p>
+  </footer>
+
+  <script src="ingredients-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

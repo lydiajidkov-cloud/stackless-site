@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curly Girl Ingredient Checker | Stackless</title>
+  <title>Curly Girl UK | Your Guide to the Curly Girl Method</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -14,9 +14,10 @@
       <a href="index.html" class="nav-logo">Curly Girl <span>UK</span></a>
       <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
       <ul class="nav-links" id="navLinks">
-        <li><a href="index.html" class="active">Ingredient Checker</a></li>
-        <li><a href="quiz.html">Hair Quiz</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="quiz.html">Find My Routine</a></li>
+        <li><a href="checker.html">Ingredient Checker</a></li>
+        <li><a href="about.html">The Method</a></li>
       </ul>
     </div>
   </nav>
@@ -24,101 +25,134 @@
   <div class="container">
     <!-- Hero -->
     <section class="hero">
-      <h1>Is your product <span class="highlight">Curly Girl approved</span>?</h1>
-      <p>Paste your product's ingredient list below and we'll check every ingredient against the Curly Girl Method database. Built for the UK curly community.</p>
-    </section>
-
-    <!-- Ingredient Checker -->
-    <section class="section" id="checker">
-      <div class="checker-wrap">
-        <div class="card">
-          <h2>Ingredient Checker</h2>
-          <p class="text-muted mb-2">Paste a full ingredient list from the back of your product. We'll separate and analyse each one.</p>
-          <textarea class="checker-textarea" id="ingredientInput" placeholder="e.g. Aqua, Cetearyl Alcohol, Glycerin, Dimethicone, Behentrimonium Chloride, Panthenol..."></textarea>
-          <div class="checker-actions">
-            <button class="btn btn-primary" onclick="checkIngredients()">Check Ingredients</button>
-            <button class="btn btn-secondary" onclick="clearChecker()">Clear</button>
-            <button class="btn btn-secondary btn-small" onclick="loadExample()">Try Example</button>
-          </div>
-        </div>
-        <div class="results-container" id="results"></div>
+      <h1>Your guide to the <span class="highlight">Curly Girl Method</span></h1>
+      <p>Built for the UK curly community. Find your routine, discover UK products, and learn what actually works for your hair type.</p>
+      <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="quiz.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">Find My Routine</a>
+        <a href="about.html" class="btn btn-secondary" style="font-size: 1.1rem; padding: 1rem 2rem;">Learn the Method</a>
       </div>
     </section>
 
-    <!-- Individual Search -->
-    <section class="section" id="search">
+    <!-- Why UK -->
+    <section class="section">
       <div class="checker-wrap">
-        <div class="card">
-          <h2>Search Individual Ingredients</h2>
-          <p class="text-muted mb-2">Not sure about a specific ingredient? Search our database.</p>
-          <div class="search-box">
-            <input type="text" class="search-input" id="searchInput" placeholder="Start typing an ingredient name..." oninput="searchIngredients()">
+        <h2>Why UK-focused?</h2>
+        <p class="text-muted mb-2">Most CGM resources recommend American products you can't find here. We use UK products, from UK shops, at UK prices.</p>
+        <div class="explainer-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <div class="explainer-card">
+            <h4 style="color: var(--accent);">UK Products</h4>
+            <p>Recommendations from Boots, Superdrug, Poundland, and Savers. Starter kits from 99p.</p>
           </div>
-          <div class="search-results ingredient-list" id="searchResults"></div>
+          <div class="explainer-card">
+            <h4 style="color: var(--accent);">All Hair Types</h4>
+            <p>Wavy, curly, and coily. Type 2A to 4C. Fine strands to coarse. Your routine, not someone else's.</p>
+          </div>
+          <div class="explainer-card">
+            <h4 style="color: var(--accent);">Personalised</h4>
+            <p>7 questions, then a routine tailored to your texture, porosity, strand width, and budget.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- What is CGM -->
-    <section class="section" id="explainer">
+    <!-- Quick Start -->
+    <section class="section">
+      <div class="checker-wrap">
+        <h2>How it works</h2>
+        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+          <div class="explainer-card" style="display: flex; align-items: flex-start; gap: 1rem;">
+            <span class="routine-step-number" style="flex-shrink: 0;">1</span>
+            <div>
+              <h4 style="font-size: 1rem; margin-bottom: 0.25rem;">Take the quiz</h4>
+              <p>Answer 7 quick questions about your hair texture, porosity, and concerns. Takes about 2 minutes.</p>
+            </div>
+          </div>
+          <div class="explainer-card" style="display: flex; align-items: flex-start; gap: 1rem;">
+            <span class="routine-step-number" style="flex-shrink: 0;">2</span>
+            <div>
+              <h4 style="font-size: 1rem; margin-bottom: 0.25rem;">Get your routine</h4>
+              <p>Receive a step-by-step CGM routine personalised to your hair type, with UK product suggestions at your budget.</p>
+            </div>
+          </div>
+          <div class="explainer-card" style="display: flex; align-items: flex-start; gap: 1rem;">
+            <span class="routine-step-number" style="flex-shrink: 0;">3</span>
+            <div>
+              <h4 style="font-size: 1rem; margin-bottom: 0.25rem;">Start your journey</h4>
+              <p>Your results are saved locally, so they're always here when you come back. Retake anytime as your hair changes.</p>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+          <a href="quiz.html" class="btn btn-primary" style="font-size: 1rem; padding: 0.85rem 2rem;">Take the Quiz</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- What is CGM (brief) -->
+    <section class="section">
       <div class="checker-wrap">
         <h2>What is the Curly Girl Method?</h2>
-        <p class="text-muted mb-2">Created by hairstylist Lorraine Massey and published in her 2001 book, the Curly Girl Method (CGM) is a hair care routine designed to enhance your natural curl pattern. The core idea: stop using ingredients that damage curls and start working with your natural texture.</p>
+        <p class="text-muted">Created by Lorraine Massey in 2001, CGM is a hair care approach built on a simple idea: stop using ingredients that damage curls and start working with your natural texture.</p>
+        <p class="text-muted mb-2">The method avoids harsh sulphates, non-soluble silicones, and drying alcohols. It replaces them with gentle cleansers, rich conditioners, and styling products that enhance your natural curl pattern.</p>
 
         <div class="explainer-grid">
           <div class="explainer-card">
             <h4 class="avoid-label">Avoid: Sulphates</h4>
             <p>Harsh cleansers that strip your hair's natural oils. Look for names ending in "-sulfate" or "-sulphate".</p>
-            <ul>
-              <li>Sodium Lauryl Sulfate (SLS)</li>
-              <li>Sodium Laureth Sulfate (SLES)</li>
-              <li>Ammonium Lauryl Sulfate</li>
-            </ul>
           </div>
-
           <div class="explainer-card">
             <h4 class="avoid-label">Avoid: Non-Soluble Silicones</h4>
             <p>Coat hair and block moisture. Need sulphates to remove, creating a damaging cycle.</p>
-            <ul>
-              <li>Dimethicone</li>
-              <li>Cyclomethicone</li>
-              <li>Amodimethicone</li>
-            </ul>
           </div>
-
-          <div class="explainer-card">
-            <h4 class="avoid-label">Avoid: Drying Alcohols</h4>
-            <p>Evaporate quickly and wick moisture from hair, leaving it dry and brittle.</p>
-            <ul>
-              <li>Alcohol Denat</li>
-              <li>SD Alcohol</li>
-              <li>Isopropyl Alcohol</li>
-            </ul>
-          </div>
-
           <div class="explainer-card">
             <h4 class="safe-label">Safe: Fatty Alcohols</h4>
-            <p>Not all alcohols are bad. Fatty alcohols are moisturising and conditioning.</p>
-            <ul>
-              <li>Cetyl Alcohol</li>
-              <li>Cetearyl Alcohol</li>
-              <li>Stearyl Alcohol</li>
-            </ul>
+            <p>Not all alcohols are bad. Cetyl, cetearyl, and stearyl alcohols are moisturising and conditioning.</p>
           </div>
-
-          <div class="explainer-card">
-            <h4 class="safe-label">Safe: Water-Soluble Silicones</h4>
-            <p>Silicones with PEG or PPG prefixes wash out with gentle cleansers.</p>
-            <ul>
-              <li>PEG-8 Dimethicone</li>
-              <li>Dimethicone Copolyol</li>
-            </ul>
-          </div>
-
           <div class="explainer-card">
             <h4 class="safe-label">Sneaky Exception</h4>
             <p>Behentrimonium Methosulfate sounds like a sulphate but is actually a gentle conditioning agent. CGM approved.</p>
           </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 1.5rem;">
+          <a href="about.html" class="btn btn-secondary">Read the Full Guide</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Budget Starter Kits -->
+    <section class="section">
+      <div class="checker-wrap">
+        <h2>UK starter kits from 99p</h2>
+        <p class="text-muted mb-2">You don't need expensive products. Some of the UK curly community's favourites cost under a pound.</p>
+        <div class="card">
+          <h3>Budget Starter Kit (under &pound;5)</h3>
+          <p class="text-muted" style="font-size: 0.9rem;">Available at Poundland, Savers, Boots, and Superdrug.</p>
+          <div class="product-suggestions mt-1">
+            <span class="product-suggestion">XHC Banana Conditioner - &pound;1</span>
+            <span class="product-suggestion">XHC Papaya Shampoo - &pound;1</span>
+            <span class="product-suggestion">Boots Essentials Gel - 99p</span>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 1.5rem;">
+          <a href="quiz.html" class="btn btn-primary">Get Personalised Recommendations</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools -->
+    <section class="section">
+      <div class="checker-wrap">
+        <h2>Tools</h2>
+        <div class="explainer-grid" style="grid-template-columns: 1fr 1fr;">
+          <a href="quiz.html" class="explainer-card" style="text-decoration: none; transition: border-color 0.2s;">
+            <h4 style="color: var(--accent);">Find My Routine</h4>
+            <p>7-question quiz with personalised CGM routine and UK product suggestions at three budget tiers.</p>
+          </a>
+          <a href="checker.html" class="explainer-card" style="text-decoration: none; transition: border-color 0.2s;">
+            <h4 style="color: var(--accent);">Ingredient Checker</h4>
+            <p>Paste a product's ingredient list and check every ingredient against the CGM database.</p>
+          </a>
         </div>
       </div>
     </section>
@@ -126,11 +160,10 @@
 
   <!-- Footer -->
   <footer class="footer">
-    <p>Built by <a href="#">Stackless</a> &copy; 2026</p>
+    <p>Built by <a href="../">Stackless</a> &copy; 2026</p>
     <p class="disclaimer">This tool is for informational purposes only. It is not a medical or dermatological tool. Always patch test new products.</p>
   </footer>
 
-  <script src="ingredients-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

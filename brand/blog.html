@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+                <li><a href="../shop/index.html" class="nav-cta">Browse Products</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="page-header">
+            <h1>Blog</h1>
+        </div>
+
+        <div class="page-content">
+            <p style="color: var(--slate-700); font-weight: 700; max-width: 800px; margin-bottom: 2rem; font-size: 1.125rem;">
+                Thoughts on building with AI, domain expertise, and the future of non-traditional development.
+            </p>
+
+            <div class="article-list">
+                <div class="article-item">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">Healthcare</span>
+                        <span class="tag" style="background: var(--slate-100);">Coming Soon</span>
+                    </div>
+                    <h3>What I Learned Building an EHR Pathway Template with AI</h3>
+                    <p class="meta">8 min read</p>
+                    <p>A healthcare pathway requires clinical accuracy, technical precision, and real-world usability. Here's what it takes to build one with AI tools, and what you can't automate away.</p>
+                </div>
+
+                <div class="article-item">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="tag" style="background: var(--indigo-500); color: white; border-color: var(--indigo-500);">Business</span>
+                        <span class="tag" style="background: var(--slate-100);">Coming Soon</span>
+                    </div>
+                    <h3>Why I Share My Process, Not My Code</h3>
+                    <p class="meta">5 min read</p>
+                    <p>The code is not the valuable part. The process, the domain knowledge, and the decision-making are what matter. Here's why I share one and sell the other.</p>
+                </div>
+
+                <div class="article-item">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="tag" style="background: var(--lime-400); border-color: var(--lime-400);">Tools</span>
+                        <span class="tag" style="background: var(--slate-100);">Coming Soon</span>
+                    </div>
+                    <h3>The Non-Coder's Stack: Tools I Actually Use</h3>
+                    <p class="meta">6 min read</p>
+                    <p>Claude, Cursor, GitHub, Streamlit, and a handful of other tools. No framework debates, no dependency hell, just practical tools that get the job done.</p>
+                </div>
+
+                <div class="article-item">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="tag" style="background: var(--amber-400); border-color: var(--amber-400);">Career</span>
+                        <span class="tag" style="background: var(--slate-100);">Coming Soon</span>
+                    </div>
+                    <h3>From Doctor to Product Builder: A Non-Linear Career Path</h3>
+                    <p class="meta">7 min read</p>
+                    <p>NHS clinical practice to health informatics to management consulting to AI product building. The path was not planned, the skills compound in unexpected ways.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+    </footer>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">&times;</button>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="../shop/index.html">Shop</a>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+</body>
+</html>

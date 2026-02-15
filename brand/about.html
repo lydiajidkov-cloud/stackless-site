@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+                <li><a href="../shop/index.html" class="nav-cta">Browse Products</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="page-header">
+            <h1>About Stackless</h1>
+        </div>
+
+        <div class="page-content">
+            <div class="content-card">
+                <h2>The Experiment</h2>
+                <p>Stackless started as an experiment: what happens when someone with domain expertise uses AI tools to build real products, without a traditional development stack?</p>
+                <p>The result is a growing catalogue of practical tools and templates, spanning healthcare, personal finance, and consumer apps. Everything is built with AI development tools. No dev team. No framework dependencies. No stack. That's the name.</p>
+            </div>
+
+            <div class="content-card">
+                <h2>The Approach</h2>
+                <div class="value-grid">
+                    <div class="value-card">
+                        <h3>Domain First</h3>
+                        <p>Every product starts with deep domain knowledge. Healthcare pathways built by a doctor. Finance tools designed by someone who actually uses them. AI handles the implementation, expertise drives the vision.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3>Real Products</h3>
+                        <p>These are not proof-of-concept projects. They are practical templates handling real data, solving real problems. Complete, documented, and ready to deploy.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3>No Lock-In</h3>
+                        <p>Every product ships with source files, documentation, and clear instructions. Edit the data, customise the logic, deploy it yourself. No vendor lock-in, no ongoing subscriptions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card" style="box-shadow: 8px 8px 0 0 var(--pink-500);">
+                <h2>Founder</h2>
+                <p>I'm a doctor who ended up in health informatics and clinical AI. I now lead clinical strategy at Quadrivia (AI voice agents for healthcare) and build digital tools on the side using AI, without writing traditional code.</p>
+                <p>I share what works, what doesn't, and what I've learned along the way.</p>
+            </div>
+
+            <div class="content-card" style="box-shadow: 8px 8px 0 0 var(--indigo-600);">
+                <h2>Mission</h2>
+                <p>Domain experts should be able to build their own tools. AI makes that possible. I'm proving it by shipping real products.</p>
+                <p>This is not about replacing developers. It's about enabling people with expertise in healthcare, finance, education, and other domains to build the tools they need, when they need them.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+    </footer>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">&times;</button>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="../shop/index.html">Shop</a>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+</body>
+</html>

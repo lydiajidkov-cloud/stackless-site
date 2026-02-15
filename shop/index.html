@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../brand/styles.css">
+    <style>
+        /* Shop-specific styles */
+        .shop-hero {
+            padding: 4rem 1rem 3rem;
+            text-align: center;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .shop-hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+            line-height: 0.95;
+            margin-bottom: 1.5rem;
+        }
+
+        .shop-hero h1 .accent {
+            color: var(--indigo-600);
+            font-style: italic;
+        }
+
+        .shop-hero p {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--slate-700);
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        /* Products section */
+        .products-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--white);
+            border: 4px solid var(--slate-900);
+            box-shadow: 10px 10px 0 0 rgba(0,0,0,1);
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            box-shadow: none;
+            transform: translate(2px, 2px);
+        }
+
+        .product-bar {
+            height: 0.75rem;
+            border-bottom: 4px solid var(--slate-900);
+        }
+
+        .product-bar.pink { background: var(--pink-500); }
+        .product-bar.lime { background: var(--lime-400); }
+        .product-bar.indigo { background: var(--indigo-500); }
+
+        .product-body {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .product-category-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border: 2px solid var(--slate-900);
+            font-size: 0.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            align-self: flex-start;
+        }
+
+        .product-title {
+            font-size: 1.75rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--indigo-600);
+            margin-bottom: 1rem;
+        }
+
+        .product-desc {
+            color: var(--slate-700);
+            font-weight: 600;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            flex: 1;
+        }
+
+        .product-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--slate-900);
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: var(--slate-700);
+        }
+
+        .product-features li:last-child {
+            border-bottom: none;
+        }
+
+        .product-features li::before {
+            content: '';
+            display: inline-block;
+            width: 0.75rem;
+            height: 0.75rem;
+            border: 2px solid var(--slate-900);
+            border-radius: 50%;
+            margin-right: 0.75rem;
+            vertical-align: middle;
+        }
+
+        .product-card.healthcare .product-features li::before { background: var(--pink-500); }
+        .product-card.finance .product-features li::before { background: var(--lime-400); }
+        .product-card.portfolio .product-features li::before { background: var(--indigo-500); }
+
+        .btn-buy {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            border: 3px solid var(--slate-900);
+            font-size: 1rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s;
+            box-shadow: 4px 4px 0 0 rgba(0,0,0,1);
+            color: var(--white);
+        }
+
+        .btn-buy:hover {
+            box-shadow: none;
+            transform: translate(1px, 1px);
+        }
+
+        .btn-buy.pink { background: var(--pink-500); }
+        .btn-buy.lime { background: var(--lime-400); color: var(--slate-900); }
+        .btn-buy.indigo { background: var(--indigo-600); }
+
+        /* Free Guide Section */
+        .guide-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem 4rem;
+        }
+
+        .guide-card {
+            background: var(--white);
+            border: 4px solid var(--slate-900);
+            box-shadow: 12px 12px 0 0 var(--indigo-600);
+            padding: 3rem;
+            text-align: center;
+            max-width: 48rem;
+            margin: 0 auto;
+        }
+
+        .guide-card h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+
+        .guide-card p {
+            color: var(--slate-700);
+            font-weight: 700;
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+        }
+
+        .guide-form {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 28rem;
+            margin: 0 auto;
+        }
+
+        .guide-form input {
+            flex: 1;
+            padding: 0.875rem 1rem;
+            border: 3px solid var(--slate-900);
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 0.875rem;
+            outline: none;
+        }
+
+        .guide-form input:focus {
+            background: var(--slate-100);
+        }
+
+        .guide-form button {
+            padding: 0.875rem 1.5rem;
+            background: var(--pink-500);
+            color: var(--white);
+            border: 3px solid var(--slate-900);
+            font-family: inherit;
+            font-weight: 900;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 0 rgba(0,0,0,1);
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+
+        .guide-form button:hover {
+            box-shadow: none;
+            transform: translate(1px, 1px);
+        }
+
+        /* About snippet */
+        .about-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem 4rem;
+        }
+
+        .about-card {
+            background: var(--white);
+            border: 4px solid var(--slate-900);
+            box-shadow: 8px 8px 0 0 var(--pink-500);
+            padding: 2.5rem;
+            max-width: 48rem;
+            margin: 0 auto;
+        }
+
+        .about-card h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .about-card p {
+            color: var(--slate-700);
+            font-weight: 600;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .about-card p:last-child { margin-bottom: 0; }
+
+        /* Delivery note */
+        .delivery-note {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            font-size: 0.8125rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--slate-500);
+            border-top: 2px solid var(--slate-900);
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 900px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                max-width: 28rem;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .guide-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../brand/index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../brand/index.html">Home</a></li>
+                <li><a href="../brand/about.html">About</a></li>
+                <li><a href="../brand/projects.html">Projects</a></li>
+                <li><a href="index.html" class="active">Shop</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero -->
+        <section class="shop-hero">
+            <h1>Templates &amp;<br><span class="accent">Tools</span></h1>
+            <p>Ready-to-use templates for healthcare, finance, and personal productivity. Built with AI, designed by a domain expert. No subscriptions, no lock-in.</p>
+        </section>
+
+        <!-- Products -->
+        <section id="products" class="products-section">
+            <div class="products-grid">
+                <!-- EHR -->
+                <div class="product-card healthcare" id="buy-ehr">
+                    <div class="product-bar pink"></div>
+                    <div class="product-body">
+                        <span class="product-category-tag" style="background: var(--pink-500); color: white;">Healthcare</span>
+                        <h3 class="product-title">EHR Clinical Pathway Template</h3>
+                        <p class="product-price">£79</p>
+                        <p class="product-desc">A vendor-agnostic acute heart failure pathway template, structured around NICE/ESC/GIRFT guidance. 7-layer architecture, designed as a starting point for your EHR implementation.</p>
+                        <ul class="product-features">
+                            <li>7-layer architecture</li>
+                            <li>12 governance decision points</li>
+                            <li>SNOMED CT codes included</li>
+                            <li>Vendor adaptation guide</li>
+                        </ul>
+                        <a href="#" class="btn-buy pink">Buy Now — £79</a>
+                    </div>
+                </div>
+
+                <!-- Finance -->
+                <div class="product-card finance" id="buy-finance">
+                    <div class="product-bar lime"></div>
+                    <div class="product-body">
+                        <span class="product-category-tag" style="background: var(--lime-400);">Data &amp; Finance</span>
+                        <h3 class="product-title">Personal Finance Dashboard</h3>
+                        <p class="product-price">£29</p>
+                        <p class="product-desc">A Streamlit-based personal finance dashboard with categorisation, trend analysis, and life-change modelling. A Python template you can make your own. Not financial advice.</p>
+                        <ul class="product-features">
+                            <li>6 interactive tabs</li>
+                            <li>Category drill-down</li>
+                            <li>Budget planner with life-change modelling</li>
+                            <li>Self-service data editor</li>
+                        </ul>
+                        <a href="#" class="btn-buy lime">Buy Now — £29</a>
+                    </div>
+                </div>
+
+                <!-- Portfolio -->
+                <div class="product-card portfolio" id="buy-portfolio">
+                    <div class="product-bar indigo"></div>
+                    <div class="product-body">
+                        <span class="product-category-tag" style="background: var(--indigo-500); color: white;">Portfolio</span>
+                        <h3 class="product-title">AI Portfolio Template</h3>
+                        <p class="product-price">£19</p>
+                        <p class="product-desc">A dark-themed interactive portfolio dashboard that tracks your AI-built projects, skills, and progress. Designed for non-coders showcasing their work.</p>
+                        <ul class="product-features">
+                            <li>Skills tracking with radar chart</li>
+                            <li>Project portfolio with complexity ratings</li>
+                            <li>Activity heatmap</li>
+                            <li>Zero dependencies (just HTML + JS)</li>
+                        </ul>
+                        <a href="#" class="btn-buy indigo">Buy Now — £19</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Free Guide -->
+        <section id="free-guide" class="guide-section">
+            <div class="guide-card">
+                <h2>Free: The Non-Coder's Guide to Building with AI</h2>
+                <p>9,600 words on how to build real tools using AI, with no coding background needed. Delivered as a PDF.</p>
+                <form class="guide-form" id="guideForm">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit">Get Free Guide</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- About -->
+        <section id="about" class="about-section">
+            <div class="about-card">
+                <h2>About Stackless</h2>
+                <p>Stackless started as an experiment: what happens when someone with domain expertise uses AI tools to build real products, without a traditional development stack?</p>
+                <p>I'm a doctor turned health informatician. I build digital tools using AI, without writing traditional code, and share my process openly to help other non-technical professionals do the same.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+        <p class="delivery-note">All products delivered as digital downloads via Lemon Squeezy</p>
+    </footer>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">&times;</button>
+        <a href="../brand/index.html">Home</a>
+        <a href="../brand/about.html">About</a>
+        <a href="../brand/projects.html">Projects</a>
+        <a href="index.html">Shop</a>
+    </div>
+
+    <script>
+        // Mobile menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    window.scrollTo({ top: target.offsetTop - navHeight - 20, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Guide form placeholder
+        document.getElementById('guideForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            alert('Thanks! Guide delivery not yet connected. Email: ' + email);
+        });
+    </script>
+</body>
+</html>

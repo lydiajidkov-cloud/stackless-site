@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | Curly Girl UK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Curly Girl <span>UK</span></a>
+      <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Ingredient Checker</a></li>
+        <li><a href="quiz.html">Hair Quiz</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="hero" style="padding-bottom:1rem;">
+      <h1>About <span class="highlight">Curly Girl UK</span></h1>
+      <p>Everything you need to know about the Curly Girl Method, common myths, and why we built this.</p>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="about-content">
+
+        <h2>What is the Curly Girl Method?</h2>
+        <p>The Curly Girl Method (CGM) is a hair care approach created by hairstylist Lorraine Massey and published in her 2001 book "Curly Girl: The Handbook". Massey grew up in England and was ridiculed for her curly hair. A friend later suggested washing with conditioner instead of shampoo, which transformed her approach to curl care.</p>
+
+        <p>The core philosophy is simple: stop using ingredients that damage curls, and start working with your natural texture rather than against it. CGM is based on three steps:</p>
+
+        <ol>
+          <li><strong>Cleanse, don't strip:</strong> Replace harsh sulphate shampoos with gentle cleansers or conditioner-only washing (co-washing). This preserves your hair's natural oils.</li>
+          <li><strong>Condition generously:</strong> Use silicone-free conditioners to hydrate, detangle, and protect curls. This is the only time to comb or brush your hair.</li>
+          <li><strong>Style on wet hair:</strong> Apply styling products (gels, creams, mousses) to soaking wet hair to lock in moisture and encourage curl clumping.</li>
+        </ol>
+
+        <h2>What to Avoid</h2>
+        <p>CGM identifies several ingredient categories that are harmful to curly, wavy, and coily hair:</p>
+
+        <ul>
+          <li><strong>Sulphates:</strong> Harsh cleansers (SLS, SLES, ALS) that strip natural oils, causing dryness, frizz, and damage to the curl pattern.</li>
+          <li><strong>Non-water-soluble silicones:</strong> Coating agents (dimethicone, cyclomethicone, amodimethicone) that build up on hair, block moisture, and require sulphates to remove, creating a damaging cycle.</li>
+          <li><strong>Drying alcohols:</strong> Short-chain alcohols (alcohol denat, SD alcohol, isopropyl alcohol) that evaporate quickly and wick moisture from hair.</li>
+          <li><strong>Mineral oil, petrolatum, and paraffin:</strong> Petroleum-derived ingredients that coat hair and prevent moisture absorption.</li>
+        </ul>
+
+        <p>Not all "bad-sounding" ingredients are actually harmful. Fatty alcohols (cetyl, cetearyl, stearyl alcohol) are moisturising. Water-soluble silicones (those with PEG/PPG prefixes) wash out easily. Behentrimonium methosulfate is a conditioning agent, not a sulphate.</p>
+
+        <h2>Modified CGM</h2>
+        <p>Strict CGM is not for everyone, and the community increasingly embraces a modified approach:</p>
+        <ul>
+          <li>Occasional gentle sulphates for fine or wavy hair prone to buildup</li>
+          <li>A clarifying wash every 4-8 weeks to reset</li>
+          <li>Drying alcohols in trace amounts (last 5 ingredients) are less concerning</li>
+        </ul>
+        <p>The philosophy is: "If it works for your hair, go ahead." The goal is healthy, happy curls, not perfect rule-following.</p>
+
+        <h2>The Transition Period</h2>
+        <p>When you start CGM, your hair may actually look worse before it looks better. This is normal. Your hair needs time to adjust to gentler products and recover from years of sulphate and silicone use.</p>
+        <ul>
+          <li><strong>Weeks 1-2:</strong> Hair may feel oily, limp, or awkward</li>
+          <li><strong>Weeks 2-4:</strong> More frizz, itchy scalp possible, still adjusting</li>
+          <li><strong>Weeks 4-6:</strong> Hair starting to respond, mostly a learning curve</li>
+          <li><strong>Months 2-6:</strong> Significant improvement, better understanding of what works</li>
+          <li><strong>6+ months:</strong> Hair health noticeably improved, routine established</li>
+        </ul>
+        <p>Commit to at least 6 weeks before judging your results. Take monthly progress photos rather than daily ones.</p>
+
+        <h2>Common Myths</h2>
+
+        <div class="myth-card">
+          <div class="myth-label">Myth</div>
+          <p>"Sulphate-free means it's Curly Girl approved."</p>
+          <div class="truth-label">Truth</div>
+          <p>A product can be sulphate-free but still contain non-water-soluble silicones, drying alcohols, or mineral oil. Always check the full ingredient list.</p>
+        </div>
+
+        <div class="myth-card">
+          <div class="myth-label">Myth</div>
+          <p>"All silicones are bad for curly hair."</p>
+          <div class="truth-label">Truth</div>
+          <p>Water-soluble silicones (those with PEG or PPG prefixes) wash out with gentle cleansers and do not cause buildup. Only non-water-soluble silicones are problematic.</p>
+        </div>
+
+        <div class="myth-card">
+          <div class="myth-label">Myth</div>
+          <p>"All alcohols damage hair."</p>
+          <div class="truth-label">Truth</div>
+          <p>Fatty alcohols (cetyl, cetearyl, stearyl, behenyl alcohol) are actually moisturising and conditioning. Only short-chain "drying" alcohols (denat, SD, isopropyl) are harmful.</p>
+        </div>
+
+        <div class="myth-card">
+          <div class="myth-label">Myth</div>
+          <p>"You can never use shampoo on CGM."</p>
+          <div class="truth-label">Truth</div>
+          <p>CGM uses sulphate-free shampoos (low-poo) and recommends a clarifying wash every 4-8 weeks. The method avoids harsh sulphates, not all shampoo.</p>
+        </div>
+
+        <div class="myth-card">
+          <div class="myth-label">Myth</div>
+          <p>"Expensive products give better results."</p>
+          <div class="truth-label">Truth</div>
+          <p>Some of the UK curly community's favourite products cost under &pound;1. Boots Essentials Gel (99p) and XHC Banana Conditioner (&pound;1) are holy grail staples. Technique matters more than price.</p>
+        </div>
+
+        <div class="myth-card">
+          <div class="myth-label">Myth</div>
+          <p>"CGM works the same for everyone."</p>
+          <div class="truth-label">Truth</div>
+          <p>Hair porosity, density, strand width, scalp type, and your local water hardness all affect what works. Wavies (Type 2) need much lighter products than curlies (Type 3-4). What works for one person may not work for you.</p>
+        </div>
+
+        <h2>Why UK-Focused?</h2>
+        <p>Almost all CGM content and resources lean toward American products and terminology. UK users face challenges finding alternatives to recommended US products, translating brand names, dealing with different availability and pricing, and navigating fewer UK-specific communities.</p>
+        <p>This tool is built specifically for the UK curly community, with UK product suggestions, UK retailer references (Boots, Superdrug, Poundland), and GBP pricing.</p>
+
+        <h2>About This Tool</h2>
+        <p>Curly Girl UK is a free ingredient checker and hair quiz built by <a href="#">Stackless</a>. It uses a database of 100+ ingredients cross-referenced against multiple CGM community sources, including CurlsBot, British Curlies, and community-verified product lists.</p>
+        <p>The ingredient database includes pattern-matching rules to catch unlisted ingredients based on known naming conventions (e.g., anything ending in "-cone" without PEG/PPG is flagged as a non-water-soluble silicone).</p>
+        <p>All data is processed locally in your browser. Nothing is sent to any server. Your quiz results are saved in your browser's localStorage.</p>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Built by <a href="#">Stackless</a> &copy; 2026</p>
+    <p class="disclaimer">This tool is for informational purposes only. It is not a medical or dermatological tool. Always patch test new products.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

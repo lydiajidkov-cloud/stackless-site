@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+                <li><a href="../shop/index.html" class="nav-cta">Browse Products</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="page-header">
+            <h1>Projects</h1>
+        </div>
+
+        <div class="page-content">
+            <p style="color: var(--slate-700); font-weight: 700; max-width: 800px; margin-bottom: 2rem; font-size: 1.125rem;">
+                A collection of practical tools and experiments built with AI. Some are complete and ready to use, others are active works in progress. All are real products solving real problems.
+            </p>
+
+            <div class="card-grid">
+                <!-- EHR Pathway -->
+                <div class="project-card">
+                    <div class="card-color-bar bar-pink"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="card-category" style="background: var(--pink-500); color: white;">Healthcare</span>
+                            <span class="card-price">£79</span>
+                        </div>
+                        <h3 class="card-title">Acute HF EHR Pathway</h3>
+                        <p class="card-desc">A 7-layer vendor-agnostic EHR pathway template for acute heart failure. Built from NICE, ESC, and GIRFT guidance. Includes SNOMED codes, decision logic, and interactive workflow tools.</p>
+                        <div class="card-tags">
+                            <span class="tag">#SNOMED</span>
+                            <span class="tag">#Clinical</span>
+                            <span class="tag">#Template</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-status">
+                                <div class="status-dot live"></div>
+                                <span class="status-label">Ready</span>
+                            </div>
+                            <a href="../shop/index.html#buy-ehr" class="card-link">
+                                View Template
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Finance Dashboard -->
+                <div class="project-card">
+                    <div class="card-color-bar bar-yellow"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="card-category" style="background: var(--yellow-300);">Finance</span>
+                            <span class="card-price">£29</span>
+                        </div>
+                        <h3 class="card-title">Personal Finance Dashboard</h3>
+                        <p class="card-desc">A Streamlit dashboard for tracking spending, investments, and net worth. Six interactive tabs covering everything from category drill-down to life-change budget modelling.</p>
+                        <div class="card-tags">
+                            <span class="tag">#Python</span>
+                            <span class="tag">#Streamlit</span>
+                            <span class="tag">#Dashboard</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-status">
+                                <div class="status-dot live"></div>
+                                <span class="status-label">Ready</span>
+                            </div>
+                            <a href="../shop/index.html#buy-finance" class="card-link">
+                                View Template
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Portfolio -->
+                <div class="project-card">
+                    <div class="card-color-bar bar-indigo"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="card-category" style="background: var(--indigo-500); color: white;">Portfolio</span>
+                            <span class="card-price">£19</span>
+                        </div>
+                        <h3 class="card-title">AI Portfolio Dashboard</h3>
+                        <p class="card-desc">An interactive dark-themed dashboard for showcasing AI-built projects. Tracks skills progression, project complexity, and value created. Edit a data file and open in a browser.</p>
+                        <div class="card-tags">
+                            <span class="tag">#HTML</span>
+                            <span class="tag">#Chart.js</span>
+                            <span class="tag">#Portfolio</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-status">
+                                <div class="status-dot live"></div>
+                                <span class="status-label">Ready</span>
+                            </div>
+                            <a href="../shop/index.html#buy-portfolio" class="card-link">
+                                View Template
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Curly Girl -->
+                <div class="project-card">
+                    <div class="card-color-bar bar-lime"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="card-category" style="background: var(--lime-400);">Consumer</span>
+                            <span class="card-date">Free</span>
+                        </div>
+                        <h3 class="card-title">Curly Girl UK</h3>
+                        <p class="card-desc">Ingredient checker, hair type quiz, and 55-product searchable database for the UK curly hair community. Guide-first landing with practical recommendations.</p>
+                        <div class="card-tags">
+                            <span class="tag">#WebApp</span>
+                            <span class="tag">#Ingredients</span>
+                            <span class="tag">#UK</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-status">
+                                <div class="status-dot progress"></div>
+                                <span class="status-label">Coming Soon</span>
+                            </div>
+                            <a href="../curly-girl/index.html" class="card-link">
+                                Preview
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Haven -->
+                <div class="project-card">
+                    <div class="card-color-bar bar-yellow"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="card-category" style="background: var(--amber-400);">Game</span>
+                            <span class="card-date">Experiment</span>
+                        </div>
+                        <h3 class="card-title">Haven: Merge Game</h3>
+                        <p class="card-desc">A mobile merge game exploring economy design. Currently in prototype, iterating on core gameplay feel. The merge mechanic works, the economy doesn't yet, and that's the honest status.</p>
+                        <div class="card-tags">
+                            <span class="tag">#Game</span>
+                            <span class="tag">#Prototype</span>
+                            <span class="tag">#Economy</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-status">
+                                <div class="status-dot progress"></div>
+                                <span class="status-label">In Progress</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily AI Podcast -->
+                <div class="project-card">
+                    <div class="card-color-bar bar-indigo"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="card-category" style="background: var(--violet-400); color: white;">Automation</span>
+                            <span class="card-date">Daily</span>
+                        </div>
+                        <h3 class="card-title">Daily AI Podcast</h3>
+                        <p class="card-desc">An automated daily podcast delivering curated AI news every morning at 9am. Built with GitHub Actions, AI summarisation, and text-to-speech.</p>
+                        <div class="card-tags">
+                            <span class="tag">#Automation</span>
+                            <span class="tag">#GitHub Actions</span>
+                            <span class="tag">#TTS</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-status">
+                                <div class="status-dot live"></div>
+                                <span class="status-label">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+    </footer>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">&times;</button>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="../shop/index.html">Shop</a>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+</body>
+</html>

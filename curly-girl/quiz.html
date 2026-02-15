@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hair Quiz | Curly Girl UK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Curly Girl <span>UK</span></a>
+      <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Ingredient Checker</a></li>
+        <li><a href="quiz.html" class="active">Hair Quiz</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="hero" style="padding-bottom:1rem;">
+      <h1>Discover Your <span class="highlight">Hair Profile</span></h1>
+      <p>Answer 7 quick questions to get a personalised CGM routine with UK product suggestions.</p>
+    </section>
+
+    <!-- Quiz Container -->
+    <section class="section" style="padding-top:0;">
+      <div class="quiz-container" id="quizContainer">
+        <!-- Progress Bar -->
+        <div class="quiz-progress" id="quizProgress"></div>
+
+        <!-- Q1: Texture -->
+        <div class="quiz-question active" data-q="0">
+          <h2>What's your hair texture?</h2>
+          <p class="question-desc">Look at your hair after it air-dries without products. Most people have multiple types across their head, so pick the dominant one.</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="wavy" onclick="selectOption(this)">
+              <div class="quiz-option-label">Wavy (Type 2)</div>
+              <div class="quiz-option-desc">S-shaped waves, ranges from loose bends to loose ringlets. Hair may appear straight when wet.</div>
+            </button>
+            <button class="quiz-option" data-value="curly" onclick="selectOption(this)">
+              <div class="quiz-option-label">Curly (Type 3)</div>
+              <div class="quiz-option-desc">Defined spirals and corkscrews from root to tip. Bouncy, springy curls.</div>
+            </button>
+            <button class="quiz-option" data-value="coily" onclick="selectOption(this)">
+              <div class="quiz-option-label">Coily (Type 4)</div>
+              <div class="quiz-option-desc">Tight coils, zigzags, or S-shapes. Very dense, significant shrinkage.</div>
+            </button>
+            <button class="quiz-option" data-value="straight" onclick="selectOption(this)">
+              <div class="quiz-option-label">Straight (Type 1)</div>
+              <div class="quiz-option-desc">No visible curl or wave pattern. CGM principles can still help with hair health.</div>
+            </button>
+          </div>
+          <div class="quiz-nav">
+            <div></div>
+            <button class="btn btn-primary" onclick="nextQuestion()" id="nextBtn0" disabled>Next</button>
+          </div>
+        </div>
+
+        <!-- Q2: Porosity -->
+        <div class="quiz-question" data-q="1">
+          <h2>What's your hair porosity?</h2>
+          <p class="question-desc">Porosity = how well your hair absorbs and retains moisture. Try the float test: place a clean dry strand in room-temperature water.</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="low" onclick="selectOption(this)">
+              <div class="quiz-option-label">Low Porosity</div>
+              <div class="quiz-option-desc">Strand floats on top. Hair feels smooth, products sit on top, slow to dry. Water beads on surface.</div>
+            </button>
+            <button class="quiz-option" data-value="medium" onclick="selectOption(this)">
+              <div class="quiz-option-label">Medium Porosity</div>
+              <div class="quiz-option-desc">Strand floats in the middle. Normal feel, absorbs and retains moisture well.</div>
+            </button>
+            <button class="quiz-option" data-value="high" onclick="selectOption(this)">
+              <div class="quiz-option-label">High Porosity</div>
+              <div class="quiz-option-desc">Strand sinks quickly. Hair feels rough/bumpy, absorbs water instantly but dries fast, prone to frizz.</div>
+            </button>
+            <button class="quiz-option" data-value="unsure" onclick="selectOption(this)">
+              <div class="quiz-option-label">Not Sure</div>
+              <div class="quiz-option-desc">That's fine. We'll give general recommendations. You can always retake the quiz later.</div>
+            </button>
+          </div>
+          <div class="quiz-nav">
+            <button class="btn btn-secondary" onclick="prevQuestion()">Back</button>
+            <button class="btn btn-primary" onclick="nextQuestion()" id="nextBtn1" disabled>Next</button>
+          </div>
+        </div>
+
+        <!-- Q3: Density -->
+        <div class="quiz-question" data-q="2">
+          <h2>How dense is your hair?</h2>
+          <p class="question-desc">Density = how many strands you have overall. Look at your scalp: can you see it easily through your hair?</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="thin" onclick="selectOption(this)">
+              <div class="quiz-option-label">Thin / Low Density</div>
+              <div class="quiz-option-desc">Scalp easily visible. Hair feels sparse. Ponytail is thin.</div>
+            </button>
+            <button class="quiz-option" data-value="medium" onclick="selectOption(this)">
+              <div class="quiz-option-label">Medium Density</div>
+              <div class="quiz-option-desc">Scalp partially visible when parted. Average-sized ponytail.</div>
+            </button>
+            <button class="quiz-option" data-value="thick" onclick="selectOption(this)">
+              <div class="quiz-option-label">Thick / High Density</div>
+              <div class="quiz-option-desc">Scalp hard to see. Lots of hair. Ponytail is thick. Hair ties struggle.</div>
+            </button>
+          </div>
+          <div class="quiz-nav">
+            <button class="btn btn-secondary" onclick="prevQuestion()">Back</button>
+            <button class="btn btn-primary" onclick="nextQuestion()" id="nextBtn2" disabled>Next</button>
+          </div>
+        </div>
+
+        <!-- Q4: Width -->
+        <div class="quiz-question" data-q="3">
+          <h2>What's your strand thickness?</h2>
+          <p class="question-desc">Strand thickness (width) is different from density. Roll a single strand between your fingers.</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="fine" onclick="selectOption(this)">
+              <div class="quiz-option-label">Fine</div>
+              <div class="quiz-option-desc">Can barely feel it. Thinner than sewing thread. Easily weighed down by heavy products.</div>
+            </button>
+            <button class="quiz-option" data-value="medium" onclick="selectOption(this)">
+              <div class="quiz-option-label">Medium</div>
+              <div class="quiz-option-desc">Feels like sewing thread. The most common strand width.</div>
+            </button>
+            <button class="quiz-option" data-value="coarse" onclick="selectOption(this)">
+              <div class="quiz-option-label">Coarse</div>
+              <div class="quiz-option-desc">Thicker than thread, feels wiry. Resistant to styling but handles heavy products well.</div>
+            </button>
+          </div>
+          <div class="quiz-nav">
+            <button class="btn btn-secondary" onclick="prevQuestion()">Back</button>
+            <button class="btn btn-primary" onclick="nextQuestion()" id="nextBtn3" disabled>Next</button>
+          </div>
+        </div>
+
+        <!-- Q5: Scalp -->
+        <div class="quiz-question" data-q="4">
+          <h2>How would you describe your scalp?</h2>
+          <p class="question-desc">Think about how your scalp feels by day 2 or 3 after washing.</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="dry" onclick="selectOption(this)">
+              <div class="quiz-option-label">Dry</div>
+              <div class="quiz-option-desc">Feels tight, sometimes flaky or itchy. Rarely gets oily even after several days.</div>
+            </button>
+            <button class="quiz-option" data-value="normal" onclick="selectOption(this)">
+              <div class="quiz-option-label">Normal / Balanced</div>
+              <div class="quiz-option-desc">Comfortable. Gets slightly oily after 2-3 days. No major issues.</div>
+            </button>
+            <button class="quiz-option" data-value="oily" onclick="selectOption(this)">
+              <div class="quiz-option-label">Oily</div>
+              <div class="quiz-option-desc">Feels greasy by end of day 1 or early day 2. Roots look flat and limp.</div>
+            </button>
+          </div>
+          <div class="quiz-nav">
+            <button class="btn btn-secondary" onclick="prevQuestion()">Back</button>
+            <button class="btn btn-primary" onclick="nextQuestion()" id="nextBtn4" disabled>Next</button>
+          </div>
+        </div>
+
+        <!-- Q6: Concern -->
+        <div class="quiz-question" data-q="5">
+          <h2>What's your main hair concern?</h2>
+          <p class="question-desc">Pick the one that bothers you most. Your routine will prioritise this.</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="frizz" onclick="selectOption(this)">
+              <div class="quiz-option-label">Frizz Control</div>
+              <div class="quiz-option-desc">Hair poofs up, flyaways everywhere, halo of frizz around curls.</div>
+            </button>
+            <button class="quiz-option" data-value="definition" onclick="selectOption(this)">
+              <div class="quiz-option-label">Curl Definition</div>
+              <div class="quiz-option-desc">Curls look undefined, stringy, or limp. Want more consistent clumps.</div>
+            </button>
+            <button class="quiz-option" data-value="moisture" onclick="selectOption(this)">
+              <div class="quiz-option-label">Moisture & Hydration</div>
+              <div class="quiz-option-desc">Hair feels dry, straw-like, or crunchy even after conditioning.</div>
+            </button>
+            <button class="quiz-option" data-value="volume" onclick="selectOption(this)">
+              <div class="quiz-option-label">Volume & Lift</div>
+              <div class="quiz-option-desc">Hair looks flat at the roots. Want more body and bounce.</div>
+            </button>
+            <button class="quiz-option" data-value="damage" onclick="selectOption(this)">
+              <div class="quiz-option-label">Damage Repair</div>
+              <div class="quiz-option-desc">Heat, colour, or chemical damage. Split ends, breakage, loss of curl pattern.</div>
+            </button>
+          </div>
+          <div class="quiz-nav">
+            <button class="btn btn-secondary" onclick="prevQuestion()">Back</button>
+            <button class="btn btn-primary" onclick="nextQuestion()" id="nextBtn5" disabled>Next</button>
+          </div>
+        </div>
+
+        <!-- Q7: Budget -->
+        <div class="quiz-question" data-q="6">
+          <h2>What's your budget preference?</h2>
+          <p class="question-desc">All budgets can do CGM well. The best products aren't always the most expensive.</p>
+          <div class="quiz-options">
+            <button class="quiz-option" data-value="budget" onclick="selectOption(this)">
+              <div class="quiz-option-label">Budget-Friendly (under &pound;10)</div>
+              <div class="quiz-option-desc">Boots, Superdrug, Poundland. XHC, Garnier Hair Food, Boots Essentials.</div>
+            </button>
+            <button class="quiz-option" data-value="mid" onclick="selectOption(this)">
+              <div class="quiz-option-label">Mid-Range (&pound;10-25)</div>
+              <div class="quiz-option-desc">Cantu, Shea Moisture, Umberto Giannini, Noughty, Curlsmith.</div>
+            </button>
+            <button class="quiz-option" data-value="premium" onclick="selectOption(this)">
+              <div class="quiz-option-label">Premium (&pound;25+)</div>
+              <div class="quiz-option-desc">Boucleme, Flora &amp; Curl, Jessicurl. Specialist formulations.</div>
+            </button>
+          </div>
+          <div class="quiz-nav">
+            <button class="btn btn-secondary" onclick="prevQuestion()">Back</button>
+            <button class="btn btn-primary" onclick="submitQuiz()" id="nextBtn6" disabled>See My Results</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Results -->
+      <div class="quiz-results" id="quizResults">
+        <div class="quiz-container">
+          <h2 class="mb-2">Your Hair Profile</h2>
+          <div class="profile-card" id="profileCard"></div>
+
+          <h2 class="mb-2">Your Recommended Routine</h2>
+          <div id="routineSteps"></div>
+
+          <h2 class="mt-3 mb-2">UK Product Suggestions</h2>
+          <div id="productSuggestions"></div>
+
+          <div class="mt-3 text-center">
+            <button class="btn btn-secondary" onclick="retakeQuiz()">Retake Quiz</button>
+            <button class="btn btn-primary" onclick="window.location.href='index.html'">Check a Product</button>
+          </div>
+
+          <p class="text-muted text-center mt-2" style="font-size:0.8rem;">Your results are saved locally and will be here when you come back.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Built by <a href="#">Stackless</a> &copy; 2026</p>
+    <p class="disclaimer">This tool is for informational purposes only. It is not a medical or dermatological tool. Always patch test new products.</p>
+  </footer>
+
+  <script src="ingredients-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

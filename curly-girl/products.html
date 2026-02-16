@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Guide | Curly Girl Wavy Girl UK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .products-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+    .products-search {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.6rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+    .products-search:focus { outline: none; border-color: var(--accent); }
+    .products-search::placeholder { color: var(--text-muted); opacity: 0.7; }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .filter-select {
+      padding: 0.5rem 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.85rem;
+      cursor: pointer;
+      min-width: 130px;
+    }
+    .filter-select:focus { outline: none; border-color: var(--accent); }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.25rem 0.6rem;
+      background: rgba(108, 99, 255, 0.15);
+      border: 1px solid rgba(108, 99, 255, 0.3);
+      border-radius: 20px;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .filter-chip:hover { background: rgba(108, 99, 255, 0.25); }
+    .filter-chip .chip-x { font-weight: 400; opacity: 0.7; }
+
+    .results-summary {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 0.75rem;
+    }
+    .product-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      transition: border-color 0.2s;
+    }
+    .product-card:hover { border-color: var(--accent); }
+
+    .product-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .product-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      line-height: 1.3;
+    }
+    .product-price {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .product-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin: 0.4rem 0;
+    }
+    .product-meta-item {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .meta-brand { background: rgba(255,255,255,0.08); color: var(--text-muted); }
+    .meta-retailer { background: rgba(108,99,255,0.1); color: var(--accent); }
+    .meta-category { background: rgba(255,255,255,0.05); color: var(--text-muted); }
+    .meta-weight-lightweight { background: rgba(0,200,83,0.1); color: var(--success); }
+    .meta-weight-medium { background: rgba(240,192,64,0.1); color: var(--warning); }
+    .meta-weight-heavy { background: rgba(255,101,132,0.1); color: var(--danger); }
+
+    .product-cgm {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .cgm-approved { background: rgba(0,200,83,0.15); color: var(--success); }
+    .cgm-caution { background: rgba(240,192,64,0.15); color: var(--warning); }
+    .cgm-not_approved { background: rgba(255,101,132,0.15); color: var(--danger); }
+
+    .product-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      margin-top: 0.4rem;
+    }
+    .product-tag {
+      font-size: 0.65rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+    .tag-holy-grail { background: rgba(255,215,0,0.15); color: #ffd700; }
+    .tag-holy-grail-wavies { background: rgba(255,215,0,0.1); color: #e6c200; }
+    .tag-budget-starter { background: rgba(0,200,83,0.1); color: var(--success); }
+    .tag-good-sotc { background: rgba(108,99,255,0.1); color: var(--accent); }
+    .tag-protein-free { background: rgba(255,255,255,0.08); color: var(--text-muted); }
+    .tag-protein-boost { background: rgba(255,165,0,0.1); color: #ffa500; }
+    .tag-co-wash { background: rgba(0,200,83,0.08); color: #66d99a; }
+    .tag-fragrance-free { background: rgba(255,255,255,0.05); color: var(--text-muted); }
+    .tag-glycerin-free { background: rgba(255,255,255,0.05); color: var(--text-muted); }
+    .tag-lightweight { background: rgba(0,200,83,0.08); color: #66d99a; }
+    .tag-warning { background: rgba(255,101,132,0.1); color: var(--danger); }
+
+    .product-notes {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      line-height: 1.4;
+    }
+
+    .warnings-section {
+      margin-top: 2rem;
+      padding: 1.25rem;
+      background: rgba(240,192,64,0.08);
+      border: 1px solid rgba(240,192,64,0.2);
+      border-radius: var(--radius);
+    }
+    .warnings-section h3 {
+      color: var(--warning);
+      font-size: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .warning-item {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      padding-left: 1rem;
+      position: relative;
+    }
+    .warning-item::before {
+      content: "!";
+      position: absolute;
+      left: 0;
+      color: var(--warning);
+      font-weight: 700;
+    }
+    .warning-item strong { color: var(--text); }
+
+    .no-results {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+    }
+    .no-results h3 { color: var(--text); margin-bottom: 0.5rem; }
+
+    .load-more {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .product-grid { grid-template-columns: 1fr; }
+      .products-search { min-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Curly Girl Wavy Girl <span>UK</span></a>
+      <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="quiz.html">Find My Routine</a></li>
+        <li><a href="checker.html">Ingredient Checker</a></li>
+        <li><a href="products.html" class="active">Products</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="about.html">The Method</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="hero" style="padding-bottom:1rem;">
+      <h1>UK <span class="highlight">Product Guide</span></h1>
+      <p>257 CGM-reviewed products from Poundland to premium. Filter by category, hair type, budget, and more.</p>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <!-- Search -->
+      <div class="products-toolbar">
+        <input type="text" class="products-search" id="productSearch" placeholder="Search products, brands, or retailers..." oninput="filterProducts()">
+      </div>
+
+      <!-- Filters -->
+      <div class="filter-row">
+        <select class="filter-select" id="filterCategory" onchange="filterProducts()">
+          <option value="">All Categories</option>
+        </select>
+        <select class="filter-select" id="filterRetailer" onchange="filterProducts()">
+          <option value="">All Retailers</option>
+        </select>
+        <select class="filter-select" id="filterCGM" onchange="filterProducts()">
+          <option value="">CGM Status</option>
+          <option value="approved">Approved</option>
+          <option value="caution">Caution</option>
+          <option value="not_approved">Not Approved</option>
+        </select>
+        <select class="filter-select" id="filterWeight" onchange="filterProducts()">
+          <option value="">All Weights</option>
+          <option value="lightweight">Lightweight</option>
+          <option value="medium">Medium</option>
+          <option value="heavy">Heavy</option>
+        </select>
+        <select class="filter-select" id="filterTag" onchange="filterProducts()">
+          <option value="">All Tags</option>
+        </select>
+        <select class="filter-select" id="filterSort" onchange="filterProducts()">
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name">Name A-Z</option>
+          <option value="brand">Brand A-Z</option>
+        </select>
+      </div>
+
+      <!-- Active filters -->
+      <div class="filter-chips" id="filterChips"></div>
+
+      <!-- Results count -->
+      <div class="results-summary" id="resultsSummary"></div>
+
+      <!-- Product grid -->
+      <div class="product-grid" id="productGrid"></div>
+
+      <!-- Load more -->
+      <div class="load-more" id="loadMore" style="display:none;">
+        <button class="btn btn-secondary" onclick="showMore()">Show More</button>
+      </div>
+
+      <!-- Warnings -->
+      <div class="warnings-section" id="warningsSection"></div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Built by <a href="../index.html">Stackless</a> &copy; 2026</p>
+    <p class="disclaimer">Product information is community-sourced and may change. Always check the current ingredient list on the packaging.</p>
+  </footer>
+
+  <script src="products-data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    var BATCH_SIZE = 40;
+    var currentResults = [];
+    var displayedCount = 0;
+
+    function init() {
+      populateFilters();
+      renderWarnings();
+      filterProducts();
+    }
+
+    function populateFilters() {
+      var products = window.CG_PRODUCTS || [];
+
+      // Categories
+      var cats = [...new Set(products.map(function(p) { return p.category; }))].sort();
+      var catSelect = document.getElementById('filterCategory');
+      cats.forEach(function(c) {
+        var opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = formatLabel(c);
+        catSelect.appendChild(opt);
+      });
+
+      // Retailers (simplified)
+      var retailers = [...new Set(products.map(function(p) {
+        return p.retailer.split(' / ')[0].trim();
+      }))].sort();
+      var retSelect = document.getElementById('filterRetailer');
+      retailers.forEach(function(r) {
+        var opt = document.createElement('option');
+        opt.value = r;
+        opt.textContent = r;
+        retSelect.appendChild(opt);
+      });
+
+      // Tags
+      var tags = [...new Set(products.flatMap(function(p) { return p.tags; }))].filter(Boolean).sort();
+      var tagSelect = document.getElementById('filterTag');
+      tags.forEach(function(t) {
+        var opt = document.createElement('option');
+        opt.value = t;
+        opt.textContent = formatLabel(t);
+        tagSelect.appendChild(opt);
+      });
+    }
+
+    function formatLabel(s) {
+      return s.replace(/[-_]/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+    }
+
+    function parsePrice(priceStr) {
+      if (!priceStr) return 999;
+      var match = priceStr.match(/[\d.]+/);
+      return match ? parseFloat(match[0]) : 999;
+    }
+
+    function filterProducts() {
+      var products = window.CG_PRODUCTS || [];
+      var search = document.getElementById('productSearch').value.toLowerCase().trim();
+      var category = document.getElementById('filterCategory').value;
+      var retailer = document.getElementById('filterRetailer').value;
+      var cgm = document.getElementById('filterCGM').value;
+      var weight = document.getElementById('filterWeight').value;
+      var tag = document.getElementById('filterTag').value;
+      var sort = document.getElementById('filterSort').value;
+
+      var filtered = products.filter(function(p) {
+        if (search) {
+          var haystack = (p.name + ' ' + p.brand + ' ' + p.retailer + ' ' + p.notes + ' ' + p.tags.join(' ')).toLowerCase();
+          if (haystack.indexOf(search) === -1) return false;
+        }
+        if (category && p.category !== category) return false;
+        if (retailer && p.retailer.indexOf(retailer) === -1) return false;
+        if (cgm && p.cgm !== cgm) return false;
+        if (weight && p.weight !== weight) return false;
+        if (tag && p.tags.indexOf(tag) === -1) return false;
+        return true;
+      });
+
+      // Sort
+      filtered.sort(function(a, b) {
+        if (sort === 'price-asc') return parsePrice(a.price) - parsePrice(b.price);
+        if (sort === 'price-desc') return parsePrice(b.price) - parsePrice(a.price);
+        if (sort === 'name') return a.name.localeCompare(b.name);
+        if (sort === 'brand') return a.brand.localeCompare(b.brand) || a.name.localeCompare(b.name);
+        return 0;
+      });
+
+      currentResults = filtered;
+      displayedCount = 0;
+      document.getElementById('productGrid').innerHTML = '';
+      showMore();
+      updateSummary();
+      updateChips();
+    }
+
+    function showMore() {
+      var grid = document.getElementById('productGrid');
+      var end = Math.min(displayedCount + BATCH_SIZE, currentResults.length);
+
+      for (var i = displayedCount; i < end; i++) {
+        grid.appendChild(createProductCard(currentResults[i]));
+      }
+      displayedCount = end;
+
+      var loadMore = document.getElementById('loadMore');
+      loadMore.style.display = displayedCount < currentResults.length ? 'block' : 'none';
+    }
+
+    function createProductCard(p) {
+      var card = document.createElement('div');
+      card.className = 'product-card';
+
+      var tagsHTML = p.tags.map(function(t) {
+        return '<span class="product-tag tag-' + t + '">' + formatLabel(t) + '</span>';
+      }).join('');
+
+      card.innerHTML =
+        '<div class="product-header">' +
+          '<span class="product-name">' + escapeHtml(p.name) + '</span>' +
+          '<span class="product-price">' + escapeHtml(p.price) + '</span>' +
+        '</div>' +
+        '<div class="product-meta">' +
+          '<span class="product-meta-item meta-brand">' + escapeHtml(p.brand) + '</span>' +
+          '<span class="product-meta-item meta-retailer">' + escapeHtml(p.retailer) + '</span>' +
+          '<span class="product-meta-item meta-category">' + formatLabel(p.category) + '</span>' +
+          '<span class="product-meta-item meta-weight-' + p.weight + '">' + formatLabel(p.weight) + '</span>' +
+          '<span class="product-cgm cgm-' + p.cgm + '">' + formatLabel(p.cgm.replace('_', ' ')) + '</span>' +
+        '</div>' +
+        (tagsHTML ? '<div class="product-tags">' + tagsHTML + '</div>' : '') +
+        (p.notes ? '<div class="product-notes">' + escapeHtml(p.notes) + '</div>' : '');
+
+      return card;
+    }
+
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function updateSummary() {
+      var total = (window.CG_PRODUCTS || []).length;
+      var shown = currentResults.length;
+      var el = document.getElementById('resultsSummary');
+
+      if (shown === total) {
+        el.textContent = 'Showing all ' + total + ' products';
+      } else {
+        el.textContent = 'Showing ' + shown + ' of ' + total + ' products';
+      }
+    }
+
+    function updateChips() {
+      var chips = document.getElementById('filterChips');
+      chips.innerHTML = '';
+      var filters = [
+        { id: 'filterCategory', label: 'Category' },
+        { id: 'filterRetailer', label: 'Retailer' },
+        { id: 'filterCGM', label: 'CGM' },
+        { id: 'filterWeight', label: 'Weight' },
+        { id: 'filterTag', label: 'Tag' }
+      ];
+      filters.forEach(function(f) {
+        var val = document.getElementById(f.id).value;
+        if (val) {
+          var chip = document.createElement('span');
+          chip.className = 'filter-chip';
+          chip.innerHTML = f.label + ': ' + formatLabel(val) + ' <span class="chip-x">x</span>';
+          chip.onclick = function() {
+            document.getElementById(f.id).value = '';
+            filterProducts();
+          };
+          chips.appendChild(chip);
+        }
+      });
+      var search = document.getElementById('productSearch').value.trim();
+      if (search) {
+        var chip = document.createElement('span');
+        chip.className = 'filter-chip';
+        chip.innerHTML = 'Search: "' + escapeHtml(search) + '" <span class="chip-x">x</span>';
+        chip.onclick = function() {
+          document.getElementById('productSearch').value = '';
+          filterProducts();
+        };
+        chips.appendChild(chip);
+      }
+    }
+
+    function renderWarnings() {
+      var warnings = window.CG_WARNINGS || [];
+      if (!warnings.length) return;
+      var section = document.getElementById('warningsSection');
+      var html = '<h3>Reformulated or Discontinued Products</h3>';
+      warnings.forEach(function(w) {
+        html += '<div class="warning-item"><strong>' + escapeHtml(w.product) + '</strong>: ' + escapeHtml(w.note) + '</div>';
+      });
+      section.innerHTML = html;
+    }
+
+    // Run on load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  </script>
+</body>
+</html>

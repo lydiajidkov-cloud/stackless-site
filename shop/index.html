@@ -461,12 +461,15 @@
             });
         });
 
-        // Guide form placeholder
-        document.getElementById('guideForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = this.querySelector('input').value;
-            alert('Thanks! Guide delivery not yet connected. Email: ' + email);
-        });
+        // Guide form placeholder (only if form exists)
+        var guideForm = document.getElementById('guideForm');
+        if (guideForm) {
+            guideForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var email = this.querySelector('input').value;
+                alert('Thanks! Guide delivery not yet connected. Email: ' + email);
+            });
+        }
     </script>
 </body>
 </html>

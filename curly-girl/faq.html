@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — Curly Girl Wavy Girl UK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .faq-search { width: 100%; padding: 0.75rem 1rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; font-family: inherit; margin-bottom: 1.5rem; }
+    .faq-search:focus { outline: none; border-color: #6366f1; }
+    .faq-category { margin-bottom: 2rem; }
+    .faq-category-title { font-size: 1.1rem; font-weight: 700; color: #334155; margin-bottom: 0.75rem; padding: 0.5rem 0; border-bottom: 2px solid #e2e8f0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .faq-category-title:hover { color: #6366f1; }
+    .faq-category-title::after { content: '\25BC'; font-size: 0.7rem; transition: transform 0.2s; }
+    .faq-category.collapsed .faq-category-title::after { transform: rotate(-90deg); }
+    .faq-category.collapsed .faq-items { display: none; }
+    .faq-item { border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 0.5rem; overflow: hidden; }
+    .faq-question { padding: 0.75rem 1rem; font-weight: 600; font-size: 0.95rem; cursor: pointer; display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; background: #f8fafc; }
+    .faq-question:hover { background: #f1f5f9; }
+    .faq-question .toggle { flex-shrink: 0; font-size: 1.2rem; color: #94a3b8; transition: transform 0.2s; }
+    .faq-item.open .faq-question .toggle { transform: rotate(45deg); }
+    .faq-answer { display: none; padding: 0.75rem 1rem; font-size: 0.9rem; line-height: 1.6; color: #475569; border-top: 1px solid #e2e8f0; }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-answer strong { color: #334155; }
+    .faq-answer ul, .faq-answer ol { margin: 0.5rem 0; padding-left: 1.25rem; }
+    .faq-answer li { margin-bottom: 0.25rem; }
+    .faq-answer .product-rec { background: #f0fdf4; padding: 0.5rem 0.75rem; border-radius: 6px; margin: 0.5rem 0; font-size: 0.85rem; }
+    .faq-answer .warning-box { background: #fef3c7; padding: 0.5rem 0.75rem; border-radius: 6px; margin: 0.5rem 0; font-size: 0.85rem; }
+    .faq-answer table { width: 100%; border-collapse: collapse; margin: 0.5rem 0; font-size: 0.85rem; }
+    .faq-answer th, .faq-answer td { padding: 0.4rem 0.6rem; border: 1px solid #e2e8f0; text-align: left; }
+    .faq-answer th { background: #f8fafc; font-weight: 600; }
+    .faq-count { font-size: 0.85rem; color: #94a3b8; margin-bottom: 1rem; }
+    .faq-no-results { text-align: center; padding: 2rem; color: #94a3b8; font-style: italic; display: none; }
+    .starter-kit { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin: 0.75rem 0; }
+    .starter-kit h4 { margin: 0 0 0.5rem; font-size: 0.95rem; }
+    .starter-kit ul { margin: 0; padding-left: 1.25rem; }
+    .starter-kit li { font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Curly Girl Wavy Girl <span>UK</span></a>
+      <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="quiz.html">Find My Routine</a></li>
+        <li><a href="checker.html">Ingredient Checker</a></li>
+        <li><a href="faq.html" class="active">FAQ</a></li>
+        <li><a href="about.html">The Method</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="hero" style="padding-bottom: 1rem;">
+      <h1>What are you <span class="highlight">struggling</span> with?</h1>
+      <p>50 answers to the most common curly and wavy hair questions, with UK products and budget options first.</p>
+    </section>
+
+    <section style="max-width: 800px; margin: 0 auto; padding: 0 1rem 2rem;">
+      <input type="text" class="faq-search" id="faqSearch" placeholder="Search... e.g. 'frizzy', 'hard water', 'wavy', 'protein'" autocomplete="off">
+      <div class="faq-count" id="faqCount">50 questions</div>
+      <div class="faq-no-results" id="noResults">No matching questions found. Try different keywords.</div>
+
+      <!-- 1. Troubleshooting -->
+      <div class="faq-category" data-category="troubleshooting">
+        <div class="faq-category-title">Troubleshooting</div>
+        <div class="faq-items">
+
+          <div class="faq-item" data-keywords="frizz frizzy anti-frizz gel cast hard water">
+            <div class="faq-question"><span>Why is my hair STILL frizzy after starting CGM?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Frizz has multiple causes. The most common for CGM beginners:</p>
+              <ul>
+                <li>Apply styling products to <strong>soaking wet hair</strong> (not damp, dripping wet)</li>
+                <li>Use <strong>more gel than you think</strong>. If you think you've used enough, use more</li>
+                <li><strong>Don't touch your hair</strong> while it dries. Let the gel cast form, then scrunch out only when 100% dry</li>
+                <li>Sleep on a silk/satin pillowcase or pineapple (loose high ponytail)</li>
+                <li>If in a hard water area (most of England), mineral buildup causes frizz. Use a chelating shampoo monthly</li>
+              </ul>
+              <div class="product-rec"><strong>UK products:</strong> Boots Essentials Gel (99p), VO5 Mega Hold Gel (~&pound;2-5), Garnier Banana Hair Food (~&pound;4)</div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="day 2 flat refresh overnight night pineapple">
+            <div class="faq-question"><span>My curls fall flat by day 2. How do I make them last?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>Nighttime:</strong> Pineapple (gather loosely at crown with silk scrunchie), satin bonnet, or satin pillowcase.</p>
+              <p><strong>Day 2 refresh:</strong></p>
+              <ol>
+                <li>Shake hair out gently for volume</li>
+                <li>Mist flat/frizzy sections with water spray bottle</li>
+                <li>Scrunch in a tiny amount of gel or leave-in</li>
+                <li>Diffuse briefly on low heat, or air dry</li>
+              </ol>
+              <p>For fine/wavy hair: less water is more. Over-wetting flattens waves.</p>
+              <div class="product-rec"><strong>Budget:</strong> Primark satin pillowcase (~&pound;4-6) | <strong>Specialist:</strong> Only Curls Satin Pillowcase (~&pound;20)</div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="straw dry protein overload moisture balance strand test">
+            <div class="faq-question"><span>My hair feels like straw. What am I doing wrong?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Usually means <strong>protein overload</strong> or severe dryness. Do the strand test:</p>
+              <ul>
+                <li><strong>Snaps immediately</strong> = protein overload (too much protein, not enough moisture)</li>
+                <li><strong>Stretches endlessly then breaks</strong> = moisture overload</li>
+                <li><strong>Stretches slightly then springs back</strong> = balanced</li>
+              </ul>
+              <p><strong>If protein overload:</strong> Use a protein-free deep conditioner. Avoid products with "hydrolyzed" proteins for a few weeks.</p>
+              <p><strong>If severe dryness:</strong> Deep condition weekly, use a leave-in, seal with oil.</p>
+              <div class="product-rec"><strong>Moisture:</strong> Garnier Hair Food Banana Mask (~&pound;4-6) | <strong>Protein:</strong> Shea Moisture JBCO Treatment Masque (~&pound;10)</div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="greasy oily heavy weighed down product buildup">
+            <div class="faq-question"><span>Products make my hair look greasy and weighed down.</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Common causes:</p>
+              <ul>
+                <li><strong>Too much product</strong>: Start with a tiny amount and add more only if needed</li>
+                <li><strong>Products too heavy</strong>: Wavies and fine-haired people need lightweight gels/mousses, not creams and butters</li>
+                <li><strong>Not clarifying enough</strong>: Use a clarifying shampoo every 2-4 weeks</li>
+                <li><strong>Co-washing when you need shampoo</strong>: Not everyone suits co-washing. Try a gentle sulphate-free shampoo instead</li>
+              </ul>
+              <div class="product-rec"><strong>Lightweight gel:</strong> Boots Essentials Gel (99p) | <strong>Mousse:</strong> Wella Shockwaves Volume Mousse (~&pound;3)</div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="itchy scalp dandruff flaky">
+            <div class="faq-question"><span>My scalp is itchy since starting CGM.</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Your scalp may need more cleansing than CGM recommends. Scalp health comes first.</p>
+              <ul>
+                <li><strong>Clarify more often</strong>: every 1-2 weeks instead of monthly</li>
+                <li><strong>Use a medicated shampoo if needed</strong>: Head &amp; Shoulders, Nizoral, T/Gel. Apply to scalp only, protect lengths with conditioner</li>
+                <li>Try a <strong>scalp scrub</strong> or <strong>scalp brush</strong> during washing</li>
+                <li>If you switched to co-washing, go back to a gentle shampoo</li>
+              </ul>
+              <div class="warning-box"><strong>Important:</strong> Persistent itching, flaking, or redness may need a GP or dermatologist. Don't self-diagnose seborrheic dermatitis.</div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="not working give up weeks months patience">
+            <div class="faq-question"><span>I've been doing CGM for weeks and it's not working.</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>CGM takes <strong>4-8 weeks minimum</strong>. Timeline:</p>
+              <ul>
+                <li><strong>Week 1-2:</strong> Adjustment period, may look worse before better</li>
+                <li><strong>Week 3-4:</strong> Scalp starts adjusting, first signs of curl pattern</li>
+                <li><strong>Month 2-3:</strong> Noticeable improvement in definition and health</li>
+                <li><strong>Month 6+:</strong> If heat-damaged, new undamaged growth starts making visible difference</li>
+              </ul>
+              <p>If still no improvement after 8 weeks, review: Are you applying to soaking wet hair? Using enough gel? Not touching while drying? Clarifying regularly?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Technique -->
+      <div class="faq-category" data-category="technique">
+        <div class="faq-category-title">Technique</div>
+        <div class="faq-items">
+
+          <div class="faq-item" data-keywords="squish to condish s2c conditioner technique">
+            <div class="faq-question"><span>What is "squish to condish" and how do I do it?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>A technique for getting conditioner deep into your hair:</p>
+              <ol>
+                <li>Apply conditioner in the shower</li>
+                <li>Cup a handful of water and press it into your hair</li>
+                <li>You should hear a squelching sound as water pushes conditioner in</li>
+                <li>Repeat until hair feels slippery and conditioned</li>
+                <li>Don't rinse fully (leave some conditioner in)</li>
+              </ol>
+              <p><strong>Best for:</strong> Medium to high porosity hair. Low porosity hair may find this causes buildup.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="plopping plop t-shirt towel technique drying">
+            <div class="faq-question"><span>How do I plop my hair?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Plopping uses a T-shirt or microfibre towel to set curls while removing excess water:</p>
+              <ol>
+                <li>Lay a T-shirt flat on a surface</li>
+                <li>Flip your head forward and lower your curls onto the centre</li>
+                <li>Wrap the edges around your head and tie at the back</li>
+                <li>Leave for 10-30 minutes (not overnight for most people)</li>
+              </ol>
+              <div class="warning-box"><strong>Wavies:</strong> Plopping may flatten your waves. Try <strong>micro-plopping</strong> instead: scrunch upward briefly with a microfibre towel, then let hair hang free to dry.</div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="diffuse diffuser dry blow dry technique">
+            <div class="faq-question"><span>How do I diffuse properly?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <ul>
+                <li>Use <strong>low heat, medium speed</strong></li>
+                <li>Flip head upside down for volume</li>
+                <li>Cup sections of hair in the diffuser bowl, bring to your head, hold for 20-30 seconds</li>
+                <li><strong>Don't move the diffuser around</strong> (causes frizz)</li>
+                <li>Alternate sides to dry evenly</li>
+                <li>Stop when 80% dry, let the rest air dry</li>
+              </ul>
+              <p><strong>For wavies:</strong> Diffusing is often essential. Air drying causes water weight to pull waves straight.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="scrunch out the crunch sotc gel cast crunchy">
+            <div class="faq-question"><span>What is "scrunching out the crunch" (SOTC)?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>When gel dries, it forms a hard "cast" around your curls. This cast preserves definition while drying. Once <strong>100% dry</strong>, scrunch your hair gently to break the cast. The crunchiness disappears, leaving soft, defined curls.</p>
+              <ul>
+                <li><strong>Wait until completely dry</strong>: touching too early = frizz</li>
+                <li>Add a tiny drop of oil to your palms before scrunching for extra shine</li>
+                <li>Scrunch from the bottom up</li>
+              </ul>
+              <div class="product-rec"><strong>Best SOTC gels (UK):</strong> Boots Essentials Gel (99p), Eco Styler Olive Oil (~&pound;3), Giovanni LA Hold (~&pound;6-10, glycerin-free)</div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="beginner routine wash day step by step start">
+            <div class="faq-question"><span>What's a basic wash day routine for beginners?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <ol>
+                <li><strong>Cleanse</strong>: Gentle sulphate-free shampoo on scalp only</li>
+                <li><strong>Condition</strong>: Apply conditioner mid-lengths to ends. Detangle with wide-tooth comb or fingers. Squish to condish. Rinse mostly out (leave a little)</li>
+                <li><strong>Style</strong>: On soaking wet hair, scrunch in gel. Flip upside down and scrunch from ends up</li>
+                <li><strong>Dry</strong>: Plop in T-shirt for 10-20 min, then air dry or diffuse</li>
+                <li><strong>SOTC</strong>: When 100% dry, scrunch out the gel cast</li>
+              </ol>
+              <div class="starter-kit">
+                <h4>UK Budget Starter Kit (under &pound;5)</h4>
+                <ul>
+                  <li>Shampoo: Aldi Lacura (~&pound;1.29)</li>
+                  <li>Conditioner: Tesco/Superdrug own brand (~&pound;1)</li>
+                  <li>Gel: Boots Essentials Gel (99p)</li>
+                  <li>Towel: Old cotton T-shirt (free)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Products -->
+      <div class="faq-category" data-category="products">
+        <div class="faq-category-title">Product Questions</div>
+        <div class="faq-items">
+
+          <div class="faq-item" data-keywords="check approved cgm friendly ingredient">
+            <div class="faq-question"><span>How do I check if a product is CGM approved?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Use our <a href="checker.html"><strong>Ingredient Checker</strong></a>: paste the full ingredient list and it flags any issues.</p>
+              <p><strong>Quick rules:</strong></p>
+              <ul>
+                <li><strong>Avoid</strong> ingredients ending in "-cone", "-conol", "-xane" (silicones) unless preceded by "PEG-" (water-soluble)</li>
+                <li><strong>Avoid</strong> sodium lauryl/laureth sulfate, ammonium lauryl/laureth sulfate</li>
+                <li><strong>OK:</strong> Fatty alcohols (cetyl, cetearyl, stearyl) are moisturising, NOT drying</li>
+                <li><strong>OK:</strong> Behentrimonium methosulfate is NOT a sulphate despite the name</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="gel mousse cream difference which styling hold">
+            <div class="faq-question"><span>What's the difference between gel, mousse, and curl cream?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <table>
+                <tr><th>Product</th><th>Hold</th><th>Weight</th><th>Best for</th><th>Finish</th></tr>
+                <tr><td><strong>Gel</strong></td><td>Strong</td><td>Medium</td><td>All types, frizz control</td><td>Crunchy cast (scrunch out)</td></tr>
+                <tr><td><strong>Mousse</strong></td><td>Light-medium</td><td>Very light</td><td>Fine/wavy hair, volume</td><td>Soft, bouncy</td></tr>
+                <tr><td><strong>Curl cream</strong></td><td>Light</td><td>Heavy</td><td>Thick/coarse/dry hair</td><td>Soft, moisturised</td></tr>
+              </table>
+              <p><strong>Wavy (2A-2C):</strong> Start with gel or mousse. Creams usually too heavy.</p>
+              <p><strong>Curly (3A-3C):</strong> Gel is king. Layer cream underneath for extra moisture if needed.</p>
+              <p><strong>Coily (4A-4C):</strong> Cream + gel combo often works best.</p>
+              <p>You can layer: cream (moisture) then gel (hold) on the same wash day.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="reset wash final clarify first sulphate">
+            <div class="faq-question"><span>Do I need a "final wash" before starting CGM?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>Yes.</strong> One wash with a sulphate shampoo strips away silicone and product buildup. This gives CGM-friendly products a clean slate. After this single wash, switch to your sulphate-free routine.</p>
+              <p>Any cheap sulphate shampoo works: VO5, Pantene, Alberto Balsam. You likely already have one at home.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="clarifying chelating shampoo difference hard water mineral">
+            <div class="faq-question"><span>What's a clarifying shampoo vs a chelating shampoo?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <ul>
+                <li><strong>Clarifying shampoo</strong> uses surfactants to remove product buildup, oils, and silicones</li>
+                <li><strong>Chelating shampoo</strong> contains chelating agents (EDTA, phytic acid) that specifically bind to and remove mineral deposits from hard water</li>
+              </ul>
+              <p>If you're in a hard water area, a regular clarifying shampoo won't fully remove mineral buildup. You need a chelating shampoo for that.</p>
+              <div class="product-rec"><strong>Chelating:</strong> Malibu C Hard Water Shampoo (~&pound;15, Amazon UK) | <strong>Budget:</strong> Apple cider vinegar rinse (1 part ACV, 3 parts water)</div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="alcohol bad good fatty drying cetyl cetearyl">
+            <div class="faq-question"><span>What are "good" vs "bad" alcohols in hair products?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>Good alcohols (moisturising):</strong> Cetyl alcohol, cetearyl alcohol, stearyl alcohol, lauryl alcohol, myristyl alcohol. Derived from natural fats, help condition hair.</p>
+              <p><strong>Bad alcohols (drying):</strong> Isopropyl alcohol, ethanol, SD alcohol, alcohol denat, propanol. Strip moisture and cause dryness/frizz.</p>
+              <p>Use our <a href="checker.html">Ingredient Checker</a> to instantly flag any drying alcohols.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="spend budget waste money trial travel">
+            <div class="faq-question"><span>I keep buying products that don't work. How do I stop wasting money?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>Before buying anything, determine:</strong></p>
+              <ol>
+                <li><strong>Porosity</strong>: Does hair absorb water quickly or resist it?</li>
+                <li><strong>Thickness</strong>: Individual strand: fine, medium, or coarse?</li>
+                <li><strong>Density</strong>: How many strands overall?</li>
+              </ol>
+              <p>Then match: Fine + low porosity = lightweight, water-based products. Coarse + high porosity = richer products, oils to seal.</p>
+              <p><strong>Money-saving tip:</strong> Buy travel/mini sizes first. Superdrug and Boots stock minis of many ranges (~&pound;2-3).</p>
+              <p>Take our <a href="quiz.html">Hair Quiz</a> to get personalised product recommendations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. UK-Specific -->
+      <div class="faq-category" data-category="uk">
+        <div class="faq-category-title">UK-Specific</div>
+        <div class="faq-items">
+
+          <div class="faq-item" data-keywords="hard water mineral calcium shower filter london south east">
+            <div class="faq-question"><span>I'm in a hard water area and my hair is awful. What can I do?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Hard water deposits calcium and magnesium on your hair, blocking moisture absorption.</p>
+              <p><strong>Solutions (cheapest first):</strong></p>
+              <ol>
+                <li><strong>Apple cider vinegar rinse</strong> (~&pound;2): 1 part ACV to 3-4 parts water, pour over hair after shampooing. Monthly</li>
+                <li><strong>Chelating shampoo</strong> (~&pound;7-15): Every 2-4 weeks. Look for EDTA or phytic acid</li>
+                <li><strong>Shower filter</strong> (~&pound;20-40): Reduces chlorine but doesn't remove calcium/magnesium fully</li>
+                <li><strong>Shower head water softener</strong> (~&pound;30-60): Ion-exchange cartridges, needs regular replacement</li>
+              </ol>
+              <p>Most of London, South East, East Anglia, and the Midlands have hard to very hard water. Scotland, Wales, and North West tend to be soft.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="where buy shop retailer boots superdrug poundland savers pak">
+            <div class="faq-question"><span>Where can I buy CGM-friendly products in the UK?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>Budget (under &pound;5):</strong></p>
+              <ul>
+                <li><strong>Boots:</strong> Boots Essentials Gel (99p), Alberto Balsam conditioners (~&pound;1-2), Garnier Hair Food (~&pound;4)</li>
+                <li><strong>Superdrug:</strong> Own-brand Fruity conditioners (~&pound;1), Umberto Giannini (~&pound;7-8)</li>
+                <li><strong>Poundland/Savers:</strong> XHC range (99p-&pound;1.25)</li>
+                <li><strong>Tesco/Sainsbury's/Asda:</strong> Own-brand conditioners (~&pound;1)</li>
+              </ul>
+              <p><strong>Mid-range (&pound;5-15):</strong></p>
+              <ul>
+                <li><strong>Boots/Superdrug:</strong> Shea Moisture, Cantu, Noughty, Umberto Giannini</li>
+                <li><strong>Pak's / Afro hair shops:</strong> Often 10-20% cheaper on Cantu, Shea Moisture, Eco Styler</li>
+                <li><strong>TK Maxx:</strong> Giovanni, Shea Moisture, Camille Rose at 30-50% off (check regularly)</li>
+              </ul>
+              <p><strong>Specialist online:</strong> Only Curls, Curlsmith, Boucleme, Kiyo Beauty, Curl Care UK</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="US american alternative uk equivalent dupe">
+            <div class="faq-question"><span>What are UK alternatives to popular US curly products?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <table>
+                <tr><th>US Product</th><th>UK Alternative</th><th>Where</th><th>Price</th></tr>
+                <tr><td>LA Looks Gel</td><td>Boots Essentials Gel</td><td>Boots</td><td>99p</td></tr>
+                <tr><td>DevaCurl range</td><td>Umberto Giannini Curl Jelly/range</td><td>Superdrug</td><td>~&pound;7-8</td></tr>
+                <tr><td>Not Your Mother's</td><td>Garnier Ultimate Blends/Hair Food</td><td>Boots/Superdrug</td><td>~&pound;4-5</td></tr>
+                <tr><td>Kinky-Curly Knot Today</td><td>As I Am Leave-In Conditioner</td><td>Superdrug/Amazon</td><td>~&pound;8</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="primark penneys accessories satin pillowcase towel">
+            <div class="faq-question"><span>Is Primark stuff any good for curly hair?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Primark's <strong>accessories are great value</strong>: satin pillowcases (~&pound;4-6), satin scrunchies (~&pound;2-3), microfibre hair towels (~&pound;3-4).</p>
+              <p>Their actual <strong>hair products</strong> (shampoos, conditioners) are not widely reviewed and ingredients vary. Check with our <a href="checker.html">Ingredient Checker</a> before buying.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Wavy Hair -->
+      <div class="faq-category" data-category="wavy">
+        <div class="faq-category-title">Wavy Hair (Type 2)</div>
+        <div class="faq-items">
+
+          <div class="faq-item" data-keywords="wavy different curly 2a 2b 2c modified lightweight">
+            <div class="faq-question"><span>Is CGM different for wavy hair vs curly hair?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>Yes.</strong> Wavy hair needs significant CGM modifications:</p>
+              <ul>
+                <li><strong>Co-washing usually doesn't work.</strong> Use a gentle sulphate-free shampoo instead</li>
+                <li><strong>Clarify more often</strong> (every 1-2 weeks, not monthly)</li>
+                <li><strong>Lightweight products only.</strong> Gels and mousses, not creams and butters</li>
+                <li><strong>Less product overall.</strong> A 10p-coin amount where a curly uses a palmful</li>
+                <li><strong>Plopping may flatten waves.</strong> Try micro-plopping instead</li>
+                <li><strong>Diffusing often essential.</strong> Air drying can cause waves to drop out</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="heavy weigh down lightweight product wavy fine">
+            <div class="faq-question"><span>Products feel too heavy on my wavy hair. What should I use?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Avoid anything marketed as "deeply moisturising", "for coils", or with shea butter/coconut oil high in ingredients.</p>
+              <div class="product-rec">
+                <strong>Lightweight picks for UK wavies:</strong><br>
+                Mousse: Wella Shockwaves Volume Mousse (~&pound;3)<br>
+                Gel: Boots Essentials Gel (99p)<br>
+                Conditioner: Aldi Lacura (~&pound;1.29), rinse thoroughly<br>
+                Skip leave-ins, or use a tiny spray leave-in only
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="co-wash co wash wavy shampoo oily greasy">
+            <div class="faq-question"><span>Should wavies co-wash?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>Most wavies do better with a gentle shampoo</strong> rather than co-washing. Co-washing can leave wavy hair limp, greasy, and lacking volume because wavy hair is typically finer and produces more oil.</p>
+              <p>If you want to try: limit to once a week max, alternate with a low-poo. If hair feels heavy, it's not for you.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="waves straight drop fall lose pattern last">
+            <div class="faq-question"><span>My waves only last a few hours then go straight.</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Before giving up:</p>
+              <ul>
+                <li>Reset wash (sulphate shampoo) to remove all buildup</li>
+                <li>Use <strong>only gel</strong> (no cream, no leave-in) on soaking wet hair</li>
+                <li>Scrunch thoroughly (not just a casual squeeze)</li>
+                <li><strong>Diffuse</strong> rather than air dry (water weight pulls waves out)</li>
+                <li>Less conditioner, rinsed more thoroughly</li>
+              </ul>
+              <p>If your hair waves when wet but dries straight, you likely do have waves. They just need the right support.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="2a 2b 2c type difference wavy pattern">
+            <div class="faq-question"><span>What's the difference between 2A, 2B, and 2C hair?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <ul>
+                <li><strong>2A:</strong> Slight S-shaped bend, usually fine and thin, minimal volume. Very easily weighed down</li>
+                <li><strong>2B:</strong> More defined S-waves from mid-length, some frizz, medium texture</li>
+                <li><strong>2C:</strong> Well-defined waves from the root, can form loose ringlets at ends, thicker, more frizz-prone</li>
+              </ul>
+              <p>2A needs lightest products and most frequent clarifying. 2C can handle slightly heavier products. Take our <a href="quiz.html">Hair Quiz</a> to find your type.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Beginner Mistakes -->
+      <div class="faq-category" data-category="beginners">
+        <div class="faq-category-title">Beginner Mistakes</div>
+        <div class="faq-items">
+
+          <div class="faq-item" data-keywords="oily transition period scalp adjust greasy">
+            <div class="faq-question"><span>I started CGM and my hair is oilier than ever.</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>This is the <strong>"transition period"</strong>. Your scalp was producing extra oil to compensate for harsh sulphates stripping it daily. It takes 2-6 weeks to adjust.</p>
+              <ul>
+                <li>Wash every 2-3 days with your gentle cleanser during this period</li>
+                <li>Focus shampoo on <strong>scalp only</strong>, conditioner on <strong>lengths only</strong></li>
+                <li>Clarify if it becomes unbearable (not "cheating", it's good hair care)</li>
+                <li>Using a low-poo shortens the transition vs going co-wash only</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="same products copy reddit results different">
+            <div class="faq-question"><span>I bought the same products as someone on Reddit but my hair looks nothing like theirs.</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Hair varies enormously. Products are only one piece of the puzzle. <strong>What matters more:</strong></p>
+              <ul>
+                <li>Applying to <strong>soaking wet</strong> hair</li>
+                <li>How <strong>much product</strong> you use (varies hugely by hair type)</li>
+                <li><strong>Drying method</strong> and technique</li>
+                <li>Your <strong>water type</strong> (hard vs soft)</li>
+                <li>Your hair's <strong>porosity</strong></li>
+                <li><strong>Consistency</strong> over weeks, not days</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="brush detangle matted comb knots">
+            <div class="faq-question"><span>I tried not brushing my hair and it's a matted mess.</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>CGM says don't brush <strong>dry</strong> curly hair (breaks up curl clumps, causes frizz). You should still detangle!</p>
+              <p><strong>Detangle in the shower</strong> with conditioner in, using a wide-tooth comb or fingers, working from ends upward.</p>
+              <p><strong>For wavies:</strong> Some wavies find brushing dry <em>before</em> a shower helps. This is fine. Do what works for you.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="throw away old products keep sulphate">
+            <div class="faq-question"><span>Do I need to throw away all my old products?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>No.</strong> Keep one sulphate shampoo for clarifying (you'll need it every few weeks). Start with just a CGM-friendly conditioner and one gel. Replace other products gradually as they run out.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="expensive minimum routine need three products budget">
+            <div class="faq-question"><span>Do I really need all these products?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>No.</strong> A functional routine needs three products: cleanser, conditioner, one styler. Everything else is optional.</p>
+              <div class="starter-kit">
+                <h4>Minimum Viable CGM Routine (UK, under &pound;5)</h4>
+                <ul>
+                  <li>Shampoo: Aldi Lacura (&pound;1.29)</li>
+                  <li>Conditioner: Superdrug Fruity or Tesco own-brand (&pound;1)</li>
+                  <li>Gel: Boots Essentials Gel (99p)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Hair Science -->
+      <div class="faq-category" data-category="science">
+        <div class="faq-category-title">Hair Science</div>
+        <div class="faq-items">
+
+          <div class="faq-item" data-keywords="porosity low medium high absorb water test">
+            <div class="faq-question"><span>What is hair porosity and why does it matter?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Porosity is how easily your hair absorbs and retains moisture. <strong>More important than curl type for choosing products.</strong></p>
+              <ul>
+                <li><strong>Low porosity:</strong> Cuticle tightly closed. Water beads up. Products sit on top. Takes ages to dry. Use lightweight, water-based products with warmth</li>
+                <li><strong>Medium porosity:</strong> Balanced. Most products work. Easiest to maintain</li>
+                <li><strong>High porosity:</strong> Cuticle open/damaged. Absorbs water instantly, loses it fast. Needs heavier products, oils to seal, protein treatments</li>
+              </ul>
+              <p><strong>Quick test:</strong> Spray water on clean, product-free hair. Beads up (low), soaks in within seconds (medium), absorbs instantly (high).</p>
+              <p>Take our <a href="quiz.html">Hair Quiz</a> to determine your porosity.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="protein moisture balance overload mushy brittle snap stretch">
+            <div class="faq-question"><span>What is the protein-moisture balance?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Healthy hair needs both <strong>protein</strong> (strength) and <strong>moisture</strong> (flexibility). Too much of either is a problem.</p>
+              <p><strong>Protein overload:</strong> Hair feels rough, stiff, straw-like, brittle. Fix: protein-free deep conditioner, avoid "hydrolyzed" proteins for a few weeks.</p>
+              <p><strong>Moisture overload:</strong> Hair feels mushy, limp, overly soft, curls won't hold shape. Fix: clarify, reduce heavy conditioners, add a protein treatment.</p>
+              <p>Most people need protein every 2-4 weeks, not every wash. Fine/high-porosity hair generally needs more protein.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="humectant glycerin humidity dew point weather frizz">
+            <div class="faq-question"><span>What are humectants and why do they matter for UK weather?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Humectants (like glycerin) attract water from the environment into your hair.</p>
+              <ul>
+                <li><strong>Moderate humidity (most UK weather):</strong> Humectants work well</li>
+                <li><strong>Muggy summers:</strong> Too much moisture pulled in = frizz. Switch to glycerin-free products</li>
+                <li><strong>Winter cold snaps:</strong> Humectants pull moisture OUT of your hair = dryness</li>
+              </ul>
+              <p>UK weather is moderate enough that glycerin works fine most of the year. Adjust only in extremes.</p>
+              <div class="product-rec"><strong>Glycerin-free gels:</strong> Giovanni LA Hold (~&pound;6-10, TK Maxx)</div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="silicone bad cone dimethicone water-soluble peg">
+            <div class="faq-question"><span>Are silicones actually bad for curly hair?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>It's complicated.</strong></p>
+              <ul>
+                <li><strong>Non-water-soluble silicones</strong> (dimethicone, amodimethicone) coat hair and only come off with sulphates = buildup cycle</li>
+                <li><strong>Water-soluble silicones</strong> (PEG-modified) wash out with gentle cleansers and can help with frizz</li>
+              </ul>
+              <p><strong>Nuanced view:</strong> If you occasionally clarify with sulphates, using silicones is fine. Some high-porosity hair benefits from silicones for sealing the cuticle. Strict avoidance isn't necessary for everyone.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="curl type system 1 2 3 4 classification andre walker">
+            <div class="faq-question"><span>Does the curl type system actually matter?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>It helps with general communication but it's one of the <strong>least useful things for choosing products</strong>.</p>
+              <p><strong>More useful properties:</strong></p>
+              <ol>
+                <li><strong>Porosity</strong> (how hair absorbs moisture) = determines ingredients</li>
+                <li><strong>Width/thickness</strong> (strand diameter) = determines product weight</li>
+                <li><strong>Density</strong> (total number of strands) = determines product amount</li>
+                <li><strong>Elasticity</strong> (protein-moisture balance) = determines treatments</li>
+              </ol>
+              <p>Curl type tells you what your curls look like, not what they need.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="season winter summer spring change adjust routine weather">
+            <div class="faq-question"><span>Why does my hair behave differently in different seasons?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <ul>
+                <li><strong>Winter:</strong> Central heating dries indoor air. May need more moisture. Consider a humidifier</li>
+                <li><strong>Spring/Autumn:</strong> Usually the best curl weather in the UK (moderate humidity)</li>
+                <li><strong>Summer:</strong> Higher humidity can cause frizz or better definition (depends on porosity)</li>
+                <li><strong>Rain:</strong> UK rain is soft water, which can actually be good for curls</li>
+              </ul>
+              <p>Adjust your routine seasonally rather than using the same products year-round.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Common Questions -->
+      <div class="faq-category" data-category="common">
+        <div class="faq-category-title">More Common Questions</div>
+        <div class="faq-items">
+
+          <div class="faq-item" data-keywords="colour dye colour bleach chemical treatment">
+            <div class="faq-question"><span>Can I still colour my hair on CGM?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>Yes.</strong> Chemical processing raises the cuticle and increases porosity, so colour-treated hair needs more moisture and protein. Semi-permanent is gentler than bleach.</p>
+              <p>After colouring: deep condition, increase protein treatments, be gentler with manipulation, expect to need slightly heavier products.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="wash frequency how often shampoo days">
+            <div class="faq-question"><span>How often should I wash my curly/wavy hair?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <ul>
+                <li><strong>Wavy (2A-2C):</strong> Every 2-3 days</li>
+                <li><strong>Curly (3A-3C):</strong> Every 3-5 days</li>
+                <li><strong>Coily (4A-4C):</strong> Every 5-10 days</li>
+              </ul>
+              <p>Listen to your scalp and hair. There's no prize for going the longest between washes.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="haircut dry cut curly hairdresser barber salon">
+            <div class="faq-question"><span>Do I need a special haircut for curly hair?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>A good cut makes a huge difference. Many prefer a <strong>"dry cut"</strong> where the stylist cuts each curl in its natural shape.</p>
+              <p><strong>UK specialists:</strong> Search Curly Hair Artistry directory or Only Curls salon locator. Expect &pound;50-100+ for specialist cuts.</p>
+              <p><strong>Budget:</strong> Ask any hairdresser to cut your hair dry and in its natural state rather than wet and combed straight.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="pineapple sleep overnight protect preserve">
+            <div class="faq-question"><span>What's a "pineapple" and how do I do it?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>A sleeping technique to preserve curls overnight:</p>
+              <ol>
+                <li>Flip head forward</li>
+                <li>Gather all hair at the very top of your head</li>
+                <li>Secure <strong>loosely</strong> with a silk/satin scrunchie</li>
+              </ol>
+              <p>Key word: loosely. A tight ponytail creates dents.</p>
+              <p><strong>If hair too short:</strong> Try "medusa clipping" (multiple small claw clips at the crown) or a satin bonnet/pillowcase.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="wet looks great dry terrible frizz definition disappear">
+            <div class="faq-question"><span>My hair looks great wet but terrible dry.</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Very common. Usually means:</p>
+              <ul>
+                <li><strong>Not enough hold product</strong>: Gel creates a cast that preserves wet-look definition</li>
+                <li><strong>Air drying pulls curls out</strong>: Diffuse or plop instead</li>
+                <li><strong>Products too heavy</strong>: Curls elongate and lose definition as they dry</li>
+                <li><strong>High porosity</strong>: Cuticle opens as it dries, causing frizz. Seal with oil or gel</li>
+              </ul>
+              <p><strong>Fix:</strong> More gel, applied to wetter hair, dried with a diffuser.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="towel microfibre t-shirt terry cloth friction">
+            <div class="faq-question"><span>Can I use a regular towel to dry my hair?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>Regular terry cloth towels cause friction, frizz, and break up curl clumps. Switch to:</p>
+              <ul>
+                <li><strong>Microfibre towel</strong> (Primark &pound;3-4, Boots &pound;5-8)</li>
+                <li><strong>Old cotton T-shirt</strong> (free, most people have one)</li>
+              </ul>
+              <p>Scrunch gently upward. Never rub.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="different patterns sections mixed crown nape canopy">
+            <div class="faq-question"><span>My hair has different curl patterns in different sections. Is that normal?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>Completely normal.</strong> Most people have 2-3 different curl patterns on their head. Crown, nape, sides, and front often behave differently due to sun exposure, sleeping position, and natural variation.</p>
+              <p>Treat different sections differently if needed (e.g., more gel on the frizzy canopy, lighter products on the defined underlayer).</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="science backed evidence proof real work">
+            <div class="faq-question"><span>Is CGM actually backed by science?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>Parts are, parts aren't.</strong></p>
+              <p><strong>Science-backed:</strong> Sulphates can strip natural oils. Non-water-soluble silicones cause buildup. Heat damage is cumulative. Friction disrupts curl clumps.</p>
+              <p><strong>Not well-supported:</strong> "Silicones are always bad." "Never use sulphates." "Co-washing cleans effectively" (many dermatologists disagree).</p>
+              <p>CGM is best used as a <strong>starting framework</strong>, then adapted based on what your hair actually responds to.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="dandruff seborrheic dermatitis scalp condition medical">
+            <div class="faq-question"><span>I have dandruff. Can I still do CGM?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p><strong>Scalp health comes first, always.</strong> If you need medicated shampoo (Head &amp; Shoulders, Nizoral, T/Gel), use it.</p>
+              <p><strong>Compromise:</strong> Apply CGM conditioner to lengths before washing (protects from sulphates), use medicated shampoo on scalp only, then style as normal.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-keywords="bowl method water clump definition">
+            <div class="faq-question"><span>What's the "bowl method"?</span><span class="toggle">+</span></div>
+            <div class="faq-answer">
+              <p>A technique using a bowl of water to encourage curl clumps during styling:</p>
+              <ol>
+                <li>After conditioning, apply styler to soaking wet hair</li>
+                <li>Fill a bowl with water</li>
+                <li>Dip hair sections into the bowl and scrunch upward</li>
+                <li>The excess water distributes product and encourages clumping</li>
+              </ol>
+              <p><strong>Best for:</strong> People wanting maximum definition. May be too much water for fine/wavy hair.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <footer class="footer">
+    <p>Built by <a href="../index.html">Stackless</a> &copy; 2026</p>
+    <p class="disclaimer">This tool is for informational purposes only. It is not a medical or dermatological tool. Always patch test new products.</p>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('active');
+    }
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(function(q) {
+      q.addEventListener('click', function() {
+        this.parentElement.classList.toggle('open');
+      });
+    });
+
+    // Category collapse toggle
+    document.querySelectorAll('.faq-category-title').forEach(function(t) {
+      t.addEventListener('click', function() {
+        this.parentElement.classList.toggle('collapsed');
+      });
+    });
+
+    // Search
+    var searchInput = document.getElementById('faqSearch');
+    var faqCount = document.getElementById('faqCount');
+    var noResults = document.getElementById('noResults');
+    var allItems = document.querySelectorAll('.faq-item');
+    var allCategories = document.querySelectorAll('.faq-category');
+
+    searchInput.addEventListener('input', function() {
+      var query = this.value.toLowerCase().trim();
+      var visible = 0;
+
+      allItems.forEach(function(item) {
+        var question = item.querySelector('.faq-question span').textContent.toLowerCase();
+        var answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+        var keywords = (item.getAttribute('data-keywords') || '').toLowerCase();
+        var match = !query || question.indexOf(query) !== -1 || answer.indexOf(query) !== -1 || keywords.indexOf(query) !== -1;
+        item.style.display = match ? '' : 'none';
+        if (match) {
+          visible++;
+          if (query) item.classList.add('open');
+        }
+      });
+
+      // Show/hide categories based on whether they have visible items
+      allCategories.forEach(function(cat) {
+        var items = cat.querySelectorAll('.faq-item');
+        var hasVisible = false;
+        items.forEach(function(item) {
+          if (item.style.display !== 'none') hasVisible = true;
+        });
+        cat.style.display = hasVisible ? '' : 'none';
+        if (query) cat.classList.remove('collapsed');
+      });
+
+      faqCount.textContent = visible + ' question' + (visible !== 1 ? 's' : '') + (query ? ' matching "' + query + '"' : '');
+      noResults.style.display = visible === 0 ? 'block' : 'none';
+
+      // If search cleared, close all items
+      if (!query) {
+        allItems.forEach(function(item) { item.classList.remove('open'); });
+      }
+    });
+  </script>
+</body>
+</html>

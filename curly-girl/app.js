@@ -369,25 +369,25 @@ function getProfileSummary(texture, porosity, density, width) {
   var summaries = [];
 
   if (texture === 'wavy') {
-    summaries.push('Wavy hair needs lightweight products to avoid being weighed down.');
+    summaries.push('Wavy hair (Type 2) has a gentler curl pattern, so natural oils travel further down the shaft than on curlier types, but not as easily as on straight hair. You need lightweight products that enhance your wave pattern without weighing it down. Many wavies find that less product gives better results.');
   } else if (texture === 'curly') {
-    summaries.push('Curly hair benefits from regular deep conditioning and moisture-rich products.');
+    summaries.push('Curly hair (Type 3) has an elliptical cross-section that creates bends where natural oils get stuck. This is why curly hair tends to be oily at the roots but dry at the ends. Regular deep conditioning and moisture-rich products replace what your scalp oils cannot deliver.');
   } else if (texture === 'coily') {
-    summaries.push('Coily hair thrives with intensive moisture, thick butters, and the LOC/LCO layering method.');
+    summaries.push('Coily hair (Type 4) has the tightest curl pattern and the most bends per strand, making it the driest hair type. Natural scalp oils barely travel past the first centimetre. Your hair thrives with intensive moisture, thick butters, and the LOC/LCO layering method to lock hydration in.');
   } else {
-    summaries.push('Even straight hair benefits from gentle, sulphate-free cleansing and good hydration.');
+    summaries.push('Even straight hair benefits from gentle, sulphate-free cleansing. Without harsh stripping, your natural oils can do their job of moisturising from root to tip.');
   }
 
   if (porosity === 'low') {
-    summaries.push('Low porosity hair resists moisture, so use lightweight, water-based products and occasional heat (warm water, steam) to open cuticles.');
+    summaries.push('Your cuticle layer is tightly packed, so water and products tend to sit on top rather than absorb. Use lightweight, water-based products and apply to warm, damp hair (warmth opens cuticles slightly). Avoid heavy butters that will just sit on the surface.');
   } else if (porosity === 'high') {
-    summaries.push('High porosity hair absorbs then loses moisture quickly. Focus on protein treatments and sealing with oils/butters.');
+    summaries.push('Your cuticle layer has gaps, so moisture rushes in but leaks out just as fast. Focus on protein treatments to temporarily fill those gaps, then seal with oils or butters. The LOC method (Liquid, Oil, Cream) works well for locking moisture in.');
   }
 
   if (width === 'fine') {
-    summaries.push('Fine strands are easily weighed down, so avoid heavy butters and thick creams.');
+    summaries.push('Fine strands have a smaller diameter and are easily weighed down. Avoid heavy butters and thick creams. Mousses and lightweight gels are your friends.');
   } else if (width === 'coarse') {
-    summaries.push('Coarse strands can handle heavier products and benefit from rich moisturisers.');
+    summaries.push('Coarse strands have a larger diameter and can handle heavier products. Rich creams, butters, and oils that would weigh down fine hair will work well for you.');
   }
 
   return summaries.join(' ');
@@ -470,12 +470,42 @@ function buildRoutine(texture, porosity, density, width, scalp, concern) {
   steps.push({ number: 4, title: 'Dry', desc: dryDesc, products: ['Microfibre towel', 'Diffuser attachment'] });
 
   // Step 5: Refresh
+  var refreshDesc = 'Sleep with hair in a loose pineapple (gathered at the crown) with a silk/satin scrunchie. Use a silk/satin pillowcase to reduce friction. In the morning: spritz with water and a little leave-in conditioner, scrunch, and go. Re-gel if needed.';
+  if (texture === 'wavy') {
+    refreshDesc = 'Sleep with hair in a loose pineapple or medusa clips (multiple clips for longer hair). Use a silk/satin pillowcase. In the morning: lightly spritz with water, scrunch, and go. Wavies often get better day-2 hair by not over-wetting. If waves have dropped, try scrunching in a tiny amount of mousse on dry hair.';
+  }
   steps.push({
     number: 5,
     title: 'Refresh (Day 2+)',
-    desc: 'Sleep with hair in a loose pineapple (gathered at the crown) with a silk/satin scrunchie. Use a silk/satin pillowcase. In the morning: spritz with water and a little leave-in conditioner, scrunch, and go. Re-gel if needed.',
+    desc: refreshDesc,
     products: ['Silk/satin pillowcase', 'Satin scrunchie', 'Spray bottle with water + leave-in']
   });
+
+  // Step 6: Hard Water (UK-specific)
+  steps.push({
+    number: 6,
+    title: 'Hard Water Check (UK)',
+    desc: 'Over 60% of the UK has hard water. Hard water leaves mineral deposits (calcium, magnesium) on hair that block moisture absorption and cause buildup. Signs: hair feels waxy, products stop working, limp curls. If you are in a hard water area, use a chelating or clarifying shampoo monthly (like Noughty Detox Dynamo), or consider a shower filter. Apple cider vinegar rinses can also help dissolve mineral buildup.',
+    products: ['Noughty Detox Dynamo Shampoo', 'Shower filter', 'Apple cider vinegar rinse (1 tbsp ACV in 500ml water)']
+  });
+
+  // Step 7: Transition Period
+  steps.push({
+    number: 7,
+    title: 'The Transition Period',
+    desc: 'Expect 2-8 weeks of adjustment when starting CGM. Your scalp needs time to recalibrate oil production after years of harsh cleansing. Hair may feel greasy, flat, or unpredictable during this time. This is normal. Stick with it for at least 4-6 weeks before judging results. Wavies often have a shorter transition (2-4 weeks) because their scalp oil production is usually less disrupted.',
+    products: []
+  });
+
+  // Protein-Moisture Balance tip
+  if (concern === 'damage' || porosity === 'high') {
+    steps.push({
+      number: 8,
+      title: 'Protein-Moisture Balance',
+      desc: 'The wet strand test: take a wet strand and gently pull. If it stretches and bounces back, the balance is right. If it snaps immediately, you need moisture. If it stretches like gum without returning, you need protein. High porosity and damaged hair often need regular protein treatments (every 1-2 weeks). Alternate with deep moisture treatments. Look for hydrolysed protein, keratin, or silk amino acids in products.',
+      products: ['Shea Moisture JBCO Treatment Masque (protein)', 'Garnier Hair Food Banana Mask (moisture)', 'Curlsmith Bond Curl Rehab Salve (both)']
+    });
+  }
 
   // Build HTML
   var html = '';
@@ -504,61 +534,191 @@ function buildProductSuggestions(texture, porosity, width, scalp, concern, budge
   if (budget === 'budget') {
     html += '<div class="card mb-2">';
     html += '<h3>Budget Starter Kit (under &pound;5 total)</h3>';
-    html += '<p class="text-muted" style="font-size:0.9rem;">Available at Poundland, Savers, Boots, and Superdrug.</p>';
+    html += '<p class="text-muted" style="font-size:0.9rem;">Available at Poundland, Savers, Home Bargains, and Boots.</p>';
     html += '<div class="product-suggestions mt-1">';
-    html += '<span class="product-suggestion">XHC Banana Conditioner - &pound;1 (co-wash + conditioner)</span>';
-    html += '<span class="product-suggestion">XHC Papaya Shampoo - &pound;1 (sulphate-free cleanser)</span>';
-    html += '<span class="product-suggestion">Boots Essentials Gel - 99p (styling)</span>';
-    html += '<span class="product-suggestion">XHC No Rinse Conditioner - &pound;1.25 (leave-in)</span>';
+    html += '<span class="product-suggestion">XHC Banana Conditioner 400ml - &pound;1 (co-wash + conditioner)</span>';
+    html += '<span class="product-suggestion">XHC Papaya Shampoo 400ml - &pound;1 (sulphate-free cleanser)</span>';
+    html += '<span class="product-suggestion">Boots Essentials Gel - 99p (styling hold)</span>';
+    html += '<span class="product-suggestion">XHC No Rinse Conditioner 250ml - &pound;1.25 (leave-in)</span>';
     html += '</div>';
     html += '</div>';
 
-    if (concern === 'frizz' || concern === 'definition') {
-      html += '<div class="card mb-2">';
-      html += '<h3>Extra: Garnier Hair Food Range</h3>';
-      html += '<p class="text-muted" style="font-size:0.9rem;">&pound;6-8 each at Boots and Superdrug. The Banana mask doubles as a deep conditioner and styling product.</p>';
-      html += '</div>';
+    // Budget alternatives by hair type
+    html += '<div class="card mb-2">';
+    html += '<h3>Budget Alternatives by Hair Type</h3>';
+    html += '<div class="product-suggestions mt-1">';
+    if (texture === 'wavy' || width === 'fine') {
+      html += '<span class="product-suggestion">Studio 2000 Extra Hold Mousse - ~&pound;1.50 at Savers (lightweight for wavies)</span>';
+      html += '<span class="product-suggestion">Tesco Extreme Styling Gel - &pound;1.50 (firm hold)</span>';
+      html += '<span class="product-suggestion">Superdrug Hair Mousse Firm Hold - ~&pound;2 (budget mousse)</span>';
+      html += '<span class="product-suggestion">Pantene Mousse No 5 - ~&pound;3-4 at Savers (community favourite for wavies)</span>';
+    } else if (texture === 'coily') {
+      html += '<span class="product-suggestion">Eco Styler Olive Oil Gel 236ml - &pound;2.99 at Savers/Pak\'s (holy grail for curlies)</span>';
+      html += '<span class="product-suggestion">Inecto Naturals Coconut Conditioner 500ml - &pound;1.99 at Home Bargains</span>';
+      html += '<span class="product-suggestion">XHC Biotin & Collagen Conditioner - &pound;1 (protein boost)</span>';
+    } else {
+      html += '<span class="product-suggestion">Wella Shockwaves Wet Look Gel - ~&pound;2.50 at Savers (strong hold)</span>';
+      html += '<span class="product-suggestion">Eco Styler Krystal Gel 236ml - &pound;2.99 (clear, no residue)</span>';
+      html += '<span class="product-suggestion">XHC Strawberry Conditioner 400ml - &pound;1 (alternative co-wash)</span>';
     }
+    html += '</div>';
+    html += '</div>';
+
+    // Budget deep conditioning
+    html += '<div class="card mb-2">';
+    html += '<h3>Budget Deep Conditioning</h3>';
+    html += '<p class="text-muted" style="font-size:0.9rem;">Treat your hair weekly without spending much.</p>';
+    html += '<div class="product-suggestions mt-1">';
+    html += '<span class="product-suggestion">Organic Shop Hair Masks - &pound;2.50 at Tesco (7 varieties, all protein-free)</span>';
+    html += '<span class="product-suggestion">Garnier Hair Food Banana Mask - &pound;4-6 at Boots/Superdrug (doubles as styler)</span>';
+    html += '<span class="product-suggestion">XHC Argan Hair Treatment Shots - &pound;1.25 at Poundland (quick treatment)</span>';
+    html += '</div>';
+    html += '</div>';
+
+    // Supermarket finds
+    html += '<div class="card mb-2">';
+    html += '<h3>Supermarket Finds</h3>';
+    html += '<p class="text-muted" style="font-size:0.9rem;">CGM-friendly products in your weekly shop.</p>';
+    html += '<div class="product-suggestions mt-1">';
+    html += '<span class="product-suggestion">Tesco Extreme Styling Gel (Green/Blue Tub) - &pound;1.50</span>';
+    html += '<span class="product-suggestion">Tesco Pro Vitamin B5 Conditioner - ~&pound;1.50</span>';
+    html += '<span class="product-suggestion">Sainsbury\'s Apple Conditioner - ~&pound;1</span>';
+    html += '<span class="product-suggestion">Asda Apple Conditioner - ~&pound;1 (budget co-wash)</span>';
+    html += '</div>';
+    html += '<p class="text-muted" style="font-size:0.8rem;margin-top:0.5rem;"><strong>Warning:</strong> Tesco Extracts conditioners now contain Dimethicone. No longer approved.</p>';
+    html += '</div>';
+
   } else if (budget === 'mid') {
     html += '<div class="card mb-2">';
-    html += '<h3>Mid-Range Kit (&pound;20-30 total)</h3>';
-    html += '<p class="text-muted" style="font-size:0.9rem;">Available at Boots, Superdrug, and online.</p>';
+    html += '<h3>Mid-Range Starter Kit (&pound;20-35 total)</h3>';
+    html += '<p class="text-muted" style="font-size:0.9rem;">Available at Boots, Superdrug, and Pak\'s.</p>';
     html += '<div class="product-suggestions mt-1">';
-    html += '<span class="product-suggestion">Cantu Cleansing Cream Shampoo - &pound;6.99</span>';
-    html += '<span class="product-suggestion">Cantu Hydrating Cream Conditioner - &pound;6.99</span>';
 
     if (texture === 'wavy' || width === 'fine') {
-      html += '<span class="product-suggestion">Noughty Wave Hello Curl Cream - &pound;8.99</span>';
-      html += '<span class="product-suggestion">Umberto Giannini Curl Jelly - &pound;8.95</span>';
+      html += '<span class="product-suggestion">Noughty Wave Hello Shampoo 250ml - &pound;6.99 (designed for wavies)</span>';
+      html += '<span class="product-suggestion">Noughty Wave Hello Conditioner 250ml - &pound;6.99</span>';
+      html += '<span class="product-suggestion">Noughty Wave Hello Curl Cream 150ml - &pound;6.99-8.99</span>';
+      html += '<span class="product-suggestion">Umberto Giannini Boho Beach Jelly - &pound;6.50-8 (lightweight for waves)</span>';
+    } else if (texture === 'coily') {
+      html += '<span class="product-suggestion">Cantu Cleansing Cream Shampoo 400ml - &pound;4.99-6.99</span>';
+      html += '<span class="product-suggestion">Cantu Hydrating Cream Conditioner 400ml - &pound;4.99-6.99</span>';
+      html += '<span class="product-suggestion">Cantu Define & Shine Custard - &pound;5-7 (great definition)</span>';
+      html += '<span class="product-suggestion">Eco Styler Olive Oil Gel 473ml - &pound;3.50-4 (holy grail hold)</span>';
     } else {
-      html += '<span class="product-suggestion">Cantu Curl Activator Cream - &pound;9.99</span>';
-      html += '<span class="product-suggestion">Umberto Giannini Curl Jelly - &pound;8.95</span>';
+      html += '<span class="product-suggestion">Cantu Cleansing Cream Shampoo 400ml - &pound;4.99-6.99</span>';
+      html += '<span class="product-suggestion">Cantu Hydrating Cream Conditioner 400ml - &pound;4.99-6.99</span>';
+      html += '<span class="product-suggestion">Cantu Curl Activator Cream - &pound;5-7</span>';
+      html += '<span class="product-suggestion">Umberto Giannini Curl Jelly 200ml - &pound;6.50-8 (UK bestseller)</span>';
     }
     html += '</div>';
     html += '</div>';
 
+    // Mid-range alternatives
+    html += '<div class="card mb-2">';
+    html += '<h3>Other Mid-Range Options</h3>';
+    html += '<div class="product-suggestions mt-1">';
+    html += '<span class="product-suggestion">Imbue Curl Liberating Shampoo 400ml - &pound;8.99 at Superdrug (100% CGM)</span>';
+    html += '<span class="product-suggestion">Imbue Curl Empowering Creme Gel - &pound;8.99 (styling)</span>';
+    html += '<span class="product-suggestion">Faith in Nature Conditioners 400ml - &pound;4-6 at Boots (all CGM except Pomegranate)</span>';
+    html += '<span class="product-suggestion">As I Am Coconut CoWash - &pound;8-10 at Superdrug (protein-free co-wash)</span>';
+    html += '<span class="product-suggestion">Umberto Giannini Curl Jelly XL 500ml - &pound;12-15 (better value)</span>';
+    if (scalp === 'oily') {
+      html += '<span class="product-suggestion">Faith in Nature Tea Tree Conditioner - &pound;4-6 (clarifying)</span>';
+      html += '<span class="product-suggestion">As I Am Dry & Itchy Scalp CoWash - &pound;8-10 (tea tree)</span>';
+    }
+    html += '</div>';
+    html += '</div>';
+
+    // Protein treatment if needed
     if (porosity === 'high' || concern === 'damage') {
       html += '<div class="card mb-2">';
       html += '<h3>Add: Protein Treatment</h3>';
-      html += '<p class="text-muted" style="font-size:0.9rem;">Shea Moisture Jamaican Black Castor Oil Treatment Masque - &pound;9.75 at Boots (often on sale). Use weekly for 30 minutes.</p>';
+      html += '<p class="text-muted" style="font-size:0.9rem;">Use weekly for 30 minutes. Essential for high porosity or damaged hair.</p>';
+      html += '<div class="product-suggestions mt-1">';
+      html += '<span class="product-suggestion">Shea Moisture JBCO Treatment Masque - &pound;9-13 at Boots (protein + moisture)</span>';
+      html += '<span class="product-suggestion">Shea Moisture Power Greens Reconstructor - &pound;10-13 (protein boost)</span>';
+      html += '<span class="product-suggestion">As I Am Restore & Repair JBCO Masque - &pound;10-12 at Superdrug</span>';
+      html += '<span class="product-suggestion">Noughty To The Rescue Treatment 300ml - &pound;11.99 (weekly moisture)</span>';
+      html += '</div>';
       html += '</div>';
     }
+
+    // Money-saving tips
+    html += '<div class="card mb-2">';
+    html += '<h3>Money-Saving Tips</h3>';
+    html += '<ul style="color:var(--text-muted);font-size:0.85rem;padding-left:1.25rem;margin-top:0.5rem;">';
+    html += '<li>Boots 3-for-2 often includes Umberto Giannini, Garnier Hair Food, and Noughty</li>';
+    html += '<li>Superdrug 3-for-2 on Cantu, Imbue, and As I Am</li>';
+    html += '<li>Shea Moisture frequently goes on sale at Boots (check the &pound;8.66 price)</li>';
+    html += "<li>Pak's and Afro hair shops are 10-20% cheaper on Cantu, Shea Moisture, and Eco Styler</li>";
+    html += '<li>Faith in Nature 5L refills are the cheapest per-ml conditioner in the UK</li>';
+    html += '</ul>';
+    html += '</div>';
+
   } else {
     html += '<div class="card mb-2">';
     html += '<h3>Premium Kit (&pound;50-80 total)</h3>';
-    html += '<p class="text-muted" style="font-size:0.9rem;">Available at LookFantastic, brand websites, and select Boots stores.</p>';
+    html += '<p class="text-muted" style="font-size:0.9rem;">Available at LookFantastic, brand websites, Boots, and TK Maxx.</p>';
     html += '<div class="product-suggestions mt-1">';
 
     if (texture === 'wavy' || width === 'fine') {
-      html += '<span class="product-suggestion">Boucleme Curl Cleanser - &pound;25</span>';
-      html += '<span class="product-suggestion">Curlsmith Weightless Air Dry Cream</span>';
-      html += '<span class="product-suggestion">Boucleme Super Hold Styler - &pound;25</span>';
+      html += '<span class="product-suggestion">Boucleme Curl Cleanser - &pound;25 (gentle, lightweight)</span>';
+      html += '<span class="product-suggestion">Curlsmith Weightless Air Dry Cream - &pound;22 (designed for fine/wavy)</span>';
+      html += '<span class="product-suggestion">Curlsmith Hydro Flexi Jelly - &pound;22 (flexible hold)</span>';
+      html += '<span class="product-suggestion">Boucleme Super Hold Styler - &pound;25 (strong hold without weight)</span>';
+      html += '<span class="product-suggestion">Innersense I Create Volume - &pound;25-28 (volumising for fine hair)</span>';
+    } else if (texture === 'coily') {
+      html += '<span class="product-suggestion">Flora & Curl Flower Garden Shampoo - &pound;18 (gentle cleanse)</span>';
+      html += '<span class="product-suggestion">Flora & Curl Sweet Hibiscus Curl Activating Lotion - &pound;16</span>';
+      html += '<span class="product-suggestion">Boucleme Intensive Moisture Treatment - &pound;25 (deep moisture)</span>';
+      html += '<span class="product-suggestion">Afrocenchix Seal - &pound;12-15 (Black-owned, UK brand)</span>';
+      html += '<span class="product-suggestion">Curlsmith Double Cream Deep Quencher - &pound;26 (intense moisture)</span>';
     } else {
-      html += '<span class="product-suggestion">Flora & Curl Flower Garden Shampoo</span>';
-      html += '<span class="product-suggestion">Boucleme Intensive Moisture Treatment - &pound;25</span>';
-      html += '<span class="product-suggestion">Jessicurl Confident Coils Lotion</span>';
+      html += '<span class="product-suggestion">Curlsmith Curl Quenching Conditioning Wash - &pound;22</span>';
+      html += '<span class="product-suggestion">Boucleme Curl Conditioner - &pound;25</span>';
+      html += '<span class="product-suggestion">Curlsmith Hold Me Softly Balm - &pound;22 (medium hold)</span>';
       html += '<span class="product-suggestion">Boucleme Super Hold Styler - &pound;25</span>';
+      html += '<span class="product-suggestion">Flora & Curl Flower Garden Styling Gel - &pound;14</span>';
     }
+    html += '</div>';
+    html += '</div>';
+
+    // Premium extras
+    html += '<div class="card mb-2">';
+    html += '<h3>Premium Treatments</h3>';
+    html += '<div class="product-suggestions mt-1">';
+    if (porosity === 'high' || concern === 'damage') {
+      html += '<span class="product-suggestion">Curlsmith Bond Curl Rehab Salve - &pound;30 (bond repair + moisture)</span>';
+      html += '<span class="product-suggestion">Curlsmith Strength Flexi-Protein Filler - &pound;26 (protein treatment)</span>';
+    }
+    html += '<span class="product-suggestion">Curlsmith Scalp Recipe Detox Kit - &pound;20 (clarifying treatment)</span>';
+    html += '<span class="product-suggestion">Jessicurl Deep Conditioning Treatment - &pound;15-18 (from the US, available UK)</span>';
+    html += '<span class="product-suggestion">Innersense Hydrating Cream Conditioner - &pound;25-28 (clean beauty)</span>';
+    html += '</div>';
+    html += '</div>';
+
+    // TK Maxx tip
+    html += '<div class="card mb-2">';
+    html += '<h3>Save on Premium: TK Maxx</h3>';
+    html += '<p class="text-muted" style="font-size:0.9rem;">TK Maxx regularly stocks premium curly brands at 30-60% off. Stock is unpredictable, but worth checking regularly.</p>';
+    html += '<ul style="color:var(--text-muted);font-size:0.85rem;padding-left:1.25rem;margin-top:0.5rem;">';
+    html += '<li>Giovanni 1L bottles: &pound;6-10 (RRP &pound;12-18)</li>';
+    html += '<li>Shea Moisture: &pound;6-9 (RRP &pound;10-13)</li>';
+    html += '<li>Camille Rose: &pound;8-12 (RRP &pound;14-18)</li>';
+    html += '<li>Bumble & Bumble Curl: &pound;12-18 (RRP &pound;25-35)</li>';
+    html += '</ul>';
+    html += '</div>';
+  }
+
+  // Specialist retailers for all budgets
+  if (texture === 'coily' || texture === 'curly') {
+    html += '<div class="card mb-2">';
+    html += '<h3>Specialist Retailers</h3>';
+    html += '<div class="product-suggestions mt-1">';
+    html += "<span class=\"product-suggestion\">Pak's Cosmetics - 7 UK stores, 10-20% cheaper on Shea Moisture, Cantu, Eco Styler</span>";
+    html += '<span class="product-suggestion">Only Curls - UK curly specialist, full range + starter kits</span>';
+    html += '<span class="product-suggestion">Curlsmith direct - free shipping over &pound;30, full range</span>';
+    html += '<span class="product-suggestion">Amazon UK - widest range, check seller ratings and expiry dates</span>';
     html += '</div>';
     html += '</div>';
   }
@@ -566,13 +726,19 @@ function buildProductSuggestions(texture, porosity, width, scalp, concern, budge
   // UK shopping tips
   html += '<div class="card">';
   html += '<h3>Where to Shop (UK)</h3>';
-  html += '<p class="text-muted" style="font-size:0.9rem;">Tips for finding CGM products on the UK high street:</p>';
+  html += '<p class="text-muted" style="font-size:0.9rem;">UK retailers stocking CGM-friendly products, from budget to premium:</p>';
   html += '<ul style="color:var(--text-muted);font-size:0.85rem;padding-left:1.25rem;margin-top:0.5rem;">';
-  html += '<li><strong>Poundland / Savers:</strong> XHC range from 99p. Best budget CGM products.</li>';
-  html += '<li><strong>Superdrug:</strong> Best high street range. Look for 3-for-2 offers on Cantu and Noughty.</li>';
-  html += '<li><strong>Boots:</strong> Good for Umberto Giannini (often 3-for-2), Garnier Hair Food, and Curlsmith.</li>';
-  html += '<li><strong>TK Maxx:</strong> Premium brands at up to 60% off. Worth checking regularly.</li>';
-  html += '<li><strong>LookFantastic:</strong> Widest online range with 20+ CGM brands.</li>';
+  html += '<li><strong>Poundland / Savers:</strong> XHC range from 99p. Best budget CGM products in the UK.</li>';
+  html += '<li><strong>Lidl:</strong> Cien range occasionally includes silicone-free options. Check labels, ranges rotate.</li>';
+  html += '<li><strong>Aldi:</strong> Lacura range has occasional sulphate-free shampoos. Limited but worth checking.</li>';
+  html += '<li><strong>Superdrug:</strong> Best high street range. Cantu, Noughty, Shea Moisture, own-brand options. Look for 3-for-2 offers.</li>';
+  html += '<li><strong>Boots:</strong> Umberto Giannini (often 3-for-2), Garnier Hair Food, Curlsmith, Boucleme. Advantage card points add up.</li>';
+  html += "<li><strong>Pak's / Afro hair shops:</strong> Best range and prices for Shea Moisture, Cantu, Eco Styler, and brands not stocked on the high street. Often cheaper than Boots/Superdrug.</li>";
+  html += '<li><strong>Tesco / Sainsbury\'s:</strong> Limited but growing. Garnier Hair Food, some Cantu, Alberto Balsam for clarifying.</li>';
+  html += '<li><strong>TK Maxx:</strong> Premium brands (Boucleme, Flora & Curl, Curlsmith) at up to 60% off. Stock is random, worth checking regularly.</li>';
+  html += '<li><strong>Amazon UK:</strong> Widest range online. Good for Curlsmith, Jessicurl, Kinky-Curly, and US imports. Check seller ratings and expiry dates.</li>';
+  html += '<li><strong>Only Curls / Curlsmith direct:</strong> UK-based curly hair specialists. Full ranges, bundles, and starter kits. Free shipping over certain thresholds.</li>';
+  html += '<li><strong>LookFantastic:</strong> 20+ CGM brands including Boucleme, Cantu, Curlsmith. Regular discount codes.</li>';
   html += '</ul>';
   html += '</div>';
 

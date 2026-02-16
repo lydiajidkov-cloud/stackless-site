@@ -773,7 +773,254 @@ window.CG_INGREDIENTS = [
     aliases: ["edta", "disodium edta", "tetrasodium edta"],
     category: "other",
     status: "approved",
-    reason: "Chelating agent that helps remove mineral buildup. CGM approved."
+    reason: "Chelating agent that helps remove mineral buildup. Useful in hard water areas. CGM approved."
+  },
+
+  // ===== COMMONLY SEARCHED UK PRODUCT INGREDIENTS =====
+  {
+    name: "C14-16 Olefin Sulfonate",
+    aliases: ["c14-16 olefin sulfonate", "sodium c14-16 olefin sulfonate", "olefin sulfonate"],
+    category: "gentle_cleanser",
+    status: "approved",
+    reason: "Gentle cleansing surfactant found in XHC shampoos. Despite 'sulfonate' in the name, this is NOT a sulphate. CGM approved clarifying agent."
+  },
+  {
+    name: "Cocamidopropyl Betaine",
+    aliases: ["cocamidopropyl betaine", "coco betaine", "cocamidopropyl betain"],
+    category: "gentle_cleanser",
+    status: "approved",
+    reason: "Gentle, coconut-derived surfactant. The main cleanser in most sulphate-free shampoos. CGM approved."
+  },
+  {
+    name: "Decyl Glucoside",
+    aliases: ["decyl glucoside"],
+    category: "gentle_cleanser",
+    status: "approved",
+    reason: "Very gentle plant-derived surfactant. Common in sensitive/baby shampoos. CGM approved."
+  },
+  {
+    name: "Coco Glucoside",
+    aliases: ["coco glucoside", "coco-glucoside"],
+    category: "gentle_cleanser",
+    status: "approved",
+    reason: "Gentle coconut-derived cleanser. CGM approved."
+  },
+  {
+    name: "Sodium Cocoyl Isethionate",
+    aliases: ["sodium cocoyl isethionate", "sci"],
+    category: "gentle_cleanser",
+    status: "approved",
+    reason: "Gentle coconut-derived surfactant, often in shampoo bars. CGM approved."
+  },
+  {
+    name: "Disodium Laureth Sulfosuccinate",
+    aliases: ["disodium laureth sulfosuccinate", "disodium laureth sulphosuccinate"],
+    category: "gentle_cleanser",
+    status: "approved",
+    reason: "Gentle cleansing agent. Despite similar name, this is NOT a sulphate. CGM approved."
+  },
+  {
+    name: "Hydrolyzed Wheat Protein",
+    aliases: ["hydrolyzed wheat protein", "hydrolysed wheat protein", "wheat protein"],
+    category: "protein",
+    status: "approved",
+    reason: "Protein treatment that strengthens hair by temporarily filling gaps in the cuticle. Good for damaged or high-porosity hair. CGM approved."
+  },
+  {
+    name: "Hydrolyzed Silk",
+    aliases: ["hydrolyzed silk", "hydrolysed silk", "silk protein", "silk amino acids"],
+    category: "protein",
+    status: "approved",
+    reason: "Lightweight protein that adds shine and strength without stiffness. Good for fine hair. CGM approved."
+  },
+  {
+    name: "Hydrolyzed Keratin",
+    aliases: ["hydrolyzed keratin", "hydrolysed keratin", "keratin"],
+    category: "protein",
+    status: "approved",
+    reason: "Protein closest to hair's natural structure. Strengthens and repairs. Use sparingly if protein-sensitive. CGM approved."
+  },
+  {
+    name: "Hydrolyzed Rice Protein",
+    aliases: ["hydrolyzed rice protein", "hydrolysed rice protein", "rice protein"],
+    category: "protein",
+    status: "approved",
+    reason: "Lightweight protein that adds volume and strength. Good for fine/wavy hair. CGM approved."
+  },
+  {
+    name: "Hydrolyzed Soy Protein",
+    aliases: ["hydrolyzed soy protein", "hydrolysed soy protein", "soy protein"],
+    category: "protein",
+    status: "approved",
+    reason: "Protein that helps retain moisture and strengthen. CGM approved."
+  },
+  {
+    name: "Aloe Barbadensis",
+    aliases: ["aloe barbadensis", "aloe barbadensis leaf juice", "aloe vera", "aloe vera juice", "aloe barbadensis leaf extract"],
+    category: "moisturiser",
+    status: "approved",
+    reason: "Soothing, moisturising ingredient. Helps with scalp health and hydration. CGM approved."
+  },
+  {
+    name: "Shea Butter",
+    aliases: ["shea butter", "butyrospermum parkii butter", "butyrospermum parkii", "shea"],
+    category: "moisturiser",
+    status: "approved",
+    reason: "Rich natural butter that seals moisture. Best for curly/coily hair. May weigh down fine or wavy hair. CGM approved."
+  },
+  {
+    name: "Coconut Oil",
+    aliases: ["coconut oil", "cocos nucifera oil", "cocos nucifera"],
+    category: "oil",
+    status: "approved",
+    reason: "Natural oil that penetrates the hair shaft (one of few oils that can). Some hair types react negatively to coconut. CGM approved."
+  },
+  {
+    name: "Argan Oil",
+    aliases: ["argan oil", "argania spinosa kernel oil", "argania spinosa"],
+    category: "oil",
+    status: "approved",
+    reason: "Lightweight oil rich in vitamin E. Good for all hair types. CGM approved."
+  },
+  {
+    name: "Jojoba Oil",
+    aliases: ["jojoba oil", "simmondsia chinensis seed oil", "jojoba"],
+    category: "oil",
+    status: "approved",
+    reason: "Lightweight oil similar to natural sebum. Good for all hair types, won't weigh hair down. CGM approved."
+  },
+  {
+    name: "Castor Oil",
+    aliases: ["castor oil", "ricinus communis seed oil", "jamaican black castor oil", "jbco"],
+    category: "oil",
+    status: "approved",
+    reason: "Thick, sealing oil. Popular for edges, scalp massage, and hot oil treatments. CGM approved."
+  },
+  {
+    name: "Avocado Oil",
+    aliases: ["avocado oil", "persea gratissima oil", "persea americana oil"],
+    category: "oil",
+    status: "approved",
+    reason: "Nutrient-rich oil that penetrates the hair shaft. Good for dry or damaged hair. CGM approved."
+  },
+  {
+    name: "Tocopherol",
+    aliases: ["tocopherol", "tocopheryl acetate", "vitamin e"],
+    category: "other",
+    status: "approved",
+    reason: "Vitamin E. Antioxidant that protects hair. CGM approved."
+  },
+  {
+    name: "Panthenol",
+    aliases: ["panthenol", "d-panthenol", "dexpanthenol", "provitamin b5", "vitamin b5"],
+    category: "moisturiser",
+    status: "approved",
+    reason: "Pro-vitamin B5. Penetrates hair, adds moisture and shine, improves elasticity. CGM approved."
+  },
+  {
+    name: "Citric Acid",
+    aliases: ["citric acid"],
+    category: "other",
+    status: "approved",
+    reason: "pH adjuster. Helps close the hair cuticle. CGM approved."
+  },
+  {
+    name: "Lactic Acid",
+    aliases: ["lactic acid"],
+    category: "other",
+    status: "approved",
+    reason: "Mild acid used as pH adjuster and humectant. CGM approved."
+  },
+  {
+    name: "Xanthan Gum",
+    aliases: ["xanthan gum"],
+    category: "other",
+    status: "approved",
+    reason: "Natural thickener often found in gels and creams. CGM approved."
+  },
+  {
+    name: "Carbomer",
+    aliases: ["carbomer", "carbomer 940", "carbomer 934"],
+    category: "other",
+    status: "approved",
+    reason: "Gel-forming thickener. The base ingredient in many styling gels. CGM approved."
+  },
+  {
+    name: "Polyquaternium-7",
+    aliases: ["polyquaternium-7", "polyquaternium 7"],
+    category: "other",
+    status: "approved",
+    reason: "Conditioning and film-forming polymer. CGM approved."
+  },
+  {
+    name: "Polyquaternium-10",
+    aliases: ["polyquaternium-10", "polyquaternium 10"],
+    category: "other",
+    status: "approved",
+    reason: "Conditioning polymer derived from cellulose. Reduces static, adds slip. CGM approved."
+  },
+  {
+    name: "VP/VA Copolymer",
+    aliases: ["vp/va copolymer", "pvm/ma copolymer", "pvp"],
+    category: "other",
+    status: "approved",
+    reason: "Film-forming polymer that provides hold in gels and mousses. CGM approved."
+  },
+  {
+    name: "Hydroxyethylcellulose",
+    aliases: ["hydroxyethylcellulose", "hydroxyethyl cellulose"],
+    category: "other",
+    status: "approved",
+    reason: "Plant-derived thickener and film-former. Common in gels. CGM approved."
+  },
+  {
+    name: "Stearamidopropyl Dimethylamine",
+    aliases: ["stearamidopropyl dimethylamine"],
+    category: "other",
+    status: "approved",
+    reason: "Conditioning agent often confused with silicones due to 'dimethyl' in the name. CGM approved. NOT a silicone."
+  },
+  {
+    name: "Cetrimonium Chloride",
+    aliases: ["cetrimonium chloride"],
+    category: "other",
+    status: "approved",
+    reason: "Conditioning and detangling agent. CGM approved."
+  },
+  {
+    name: "Behentrimonium Chloride",
+    aliases: ["behentrimonium chloride"],
+    category: "other",
+    status: "approved",
+    reason: "Conditioning agent with excellent detangling properties. CGM approved."
+  },
+  {
+    name: "PEG-7 Glyceryl Cocoate",
+    aliases: ["peg-7 glyceryl cocoate"],
+    category: "other",
+    status: "approved",
+    reason: "Mild, moisturising emollient derived from coconut oil. CGM approved."
+  },
+  {
+    name: "Phenoxyethanol",
+    aliases: ["phenoxyethanol"],
+    category: "preservative",
+    status: "approved",
+    reason: "Common preservative. CGM approved."
+  },
+  {
+    name: "Methylisothiazolinone",
+    aliases: ["methylisothiazolinone", "mi", "mit"],
+    category: "preservative",
+    status: "caution",
+    reason: "Preservative that some people are sensitive/allergic to. CGM approved but patch test if you have sensitive skin."
+  },
+  {
+    name: "Methylchloroisothiazolinone",
+    aliases: ["methylchloroisothiazolinone", "mci"],
+    category: "preservative",
+    status: "caution",
+    reason: "Preservative. Common allergen, banned in EU leave-on products. CGM approved in rinse-off products but patch test."
   }
 ];
 

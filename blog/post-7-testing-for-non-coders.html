@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing for Non-Coders: How to Know If It Actually Works — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--pink-500);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .warning-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--pink-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .warning-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--pink-500);
+            margin-bottom: 0.5rem;
+        }
+        .warning-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .example-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--lime-400);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .example-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--slate-700);
+            margin-bottom: 0.5rem;
+        }
+        .example-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .step-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--indigo-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .step-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--indigo-500);
+            margin-bottom: 0.5rem;
+        }
+        .step-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .series-banner {
+            background: var(--slate-900);
+            color: var(--white);
+            padding: 0.75rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+        .series-banner a { color: var(--lime-400); text-decoration: none; }
+        .series-banner a:hover { text-decoration: underline; }
+        .back-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--slate-900);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--slate-900);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { background: var(--slate-100); }
+        .checklist { list-style: none; padding-left: 0 !important; }
+        .checklist li { padding-left: 1.75rem; position: relative; }
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-size: 1.1rem;
+        }
+        .nav-series {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 3px solid var(--slate-900);
+        }
+        .nav-series a {
+            font-weight: 800;
+            font-size: 0.875rem;
+            color: var(--slate-900);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--slate-900);
+        }
+        .nav-series a:hover { background: var(--slate-100); }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="article-body">
+            <a href="../blog.html" class="back-link">&larr; All Posts</a>
+
+            <div class="series-banner">The Stackless Guide &middot; Part 2 of 3 &middot; <a href="post-6-security-for-non-coders.html">&larr; Part 1</a> &middot; <a href="post-8-non-coders-toolkit.html">Part 3 &rarr;</a></div>
+
+            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+                <span class="tag" style="background: var(--indigo-500); color: white; border-color: var(--indigo-500);">Testing</span>
+                <span class="tag" style="background: var(--yellow-300); border-color: var(--yellow-300);">Guide</span>
+            </div>
+
+            <h1>Testing for Non-Coders: How to Know If It Actually Works</h1>
+            <div class="article-meta">15 min read &middot; February 2026 &middot; The Stackless Guide Part 2</div>
+
+            <p>You've built something with an AI tool. A dashboard, a web app, a script that processes your data. It looks right. The AI said it works. But does it? How would you know?</p>
+
+            <p>Testing is one of those things that professional developers spend entire careers mastering, with frameworks, methodologies, and job titles dedicated to it. But the core idea is something anyone can understand: checking that the thing you built actually does what you think it does, and doesn't do things you don't want it to do.</p>
+
+            <p>This is Part 2 of The Stackless Guide, a series for non-coders who are building real things with AI tools. <a href="post-6-security-for-non-coders.html">Part 1 covered security and privacy</a>. This part covers how to test your work without needing a computer science degree.</p>
+
+            <div class="warning-card">
+                <h4>Disclaimer</h4>
+                <p>This guide reflects my personal experience building projects with AI tools. I'm not a professional developer or QA engineer. For anything with real-world consequences (medical tools, financial calculations, anything people depend on), get proper testing from a qualified professional. You use these techniques and tools at your own risk.</p>
+            </div>
+
+            <h2>Why Testing Matters More for AI-Built Projects</h2>
+
+            <p>When a professional developer writes code, they (usually) understand every line. They know what the code does because they wrote it deliberately.</p>
+
+            <p>When you build with AI, something different happens. The AI generates code you didn't write and may not fully understand. It works, probably. But you're trusting an AI that is, by nature, confident about everything, even when it's wrong.</p>
+
+            <p>I've had Claude Code generate a dashboard that looked perfect, had all the right charts, all the right labels, and was calculating one column completely wrong. The average spending was being divided by the wrong number of months. It looked plausible. If I hadn't checked the actual numbers against my spreadsheet, I'd never have caught it.</p>
+
+            <p>That's the risk: AI-generated code is fluent but not always correct. It passes the "looks right" test because AI is very good at producing things that look right. Your job is to check whether it actually is right.</p>
+
+            <h2>The Three Levels of Testing You Actually Need</h2>
+
+            <p>Forget about unit tests, integration tests, regression tests, and all the other terminology that makes testing sound like a university course. As a non-coder, you need three things:</p>
+
+            <h3>Level 1: Does It Open?</h3>
+
+            <p>This sounds trivial. It's not. A surprising number of AI-generated projects have basic errors that prevent them from running at all: a missing closing bracket, a reference to a file that doesn't exist, a typo in a variable name.</p>
+
+            <div class="step-card">
+                <h4>Step by Step: Basic Smoke Test</h4>
+                <p>1. Open the file (double-click the HTML, run the Python script, whatever your project needs).</p>
+                <p>2. Does it load without errors? Check the browser console (F12 in Chrome/Edge, click "Console" tab) for red error messages.</p>
+                <p>3. Does it look roughly like what you expected? If you asked for a dashboard with 4 charts and you see 3, something's wrong.</p>
+                <p>4. Click every button. Does every button do something? Or do some of them just sit there?</p>
+                <p>5. Try the obvious paths: if there's a search box, search for something. If there's a dropdown, change it. If there's a form, fill it in.</p>
+            </div>
+
+            <p>I call this the "click everything once" test. It takes about two minutes and catches about 50% of problems. If you do nothing else, do this.</p>
+
+            <h3>Level 2: Does It Calculate Correctly?</h3>
+
+            <p>This is where most non-coders stop, and it's where the most dangerous bugs hide. The app works, it loads, the buttons work, but the numbers are wrong.</p>
+
+            <div class="step-card">
+                <h4>Step by Step: Data Verification</h4>
+                <p>1. Pick 3-5 specific data points that you can verify independently. For a finance dashboard, pick a few transactions and add them up with a calculator or spreadsheet.</p>
+                <p>2. Compare the AI's output to your manual calculation. Do the totals match? Do the percentages add up to 100%?</p>
+                <p>3. Check the edge cases: what happens with zero values? Negative numbers? Very large numbers? Missing data?</p>
+                <p>4. Look for the "off by one" error: if your data covers January to December, does the dashboard show 12 months or 11?</p>
+                <p>5. If you're processing dates, check that the AI is using the right date format. UK dates (DD/MM/YYYY) are famously confused with US dates (MM/DD/YYYY). Is 03/04/2025 the 3rd of April or the 4th of March?</p>
+            </div>
+
+            <div class="example-card">
+                <h4>Real Example: Grocery Dashboard</h4>
+                <p>When I built the grocery spending dashboard, I had it categorise about 400 items from Tesco order history. The totals looked right. The charts looked great. But when I checked individual items, some were in the wrong category. "Oat Milk" was in "Dairy" instead of "Plant-Based Alternatives." "Chicken Stock Cubes" was in "Fresh Meat" instead of "Cooking Essentials."</p>
+                <p>Each individual error was small. But 20 small errors meant the category breakdowns were meaningfully wrong. I had to go through and check a sample, identify the patterns in the mistakes, give the AI better rules, and re-run the categorisation.</p>
+            </div>
+
+            <p>The lesson: always verify a sample. If you're processing 1,000 items, manually check 20-30. If more than 2 or 3 are wrong, the whole batch probably needs re-doing with better instructions.</p>
+
+            <h3>Level 3: Does It Survive Real Use?</h3>
+
+            <p>This is what the software industry calls "UAT": User Acceptance Testing. It sounds formal, but it just means: can a real person actually use this thing for its intended purpose?</p>
+
+            <p>The difference between Level 2 and Level 3 is that Level 2 checks individual calculations, while Level 3 checks the whole experience. Does it make sense? Is it usable? Does it actually help?</p>
+
+            <div class="step-card">
+                <h4>Step by Step: UAT for Non-Coders</h4>
+                <p>1. Use the thing yourself, for real. Don't just test it: actually use it for its intended purpose for a day or a week.</p>
+                <p>2. Note every time you think "that's annoying" or "I expected that to work differently." Those are bugs, even if the code is technically correct.</p>
+                <p>3. Give it to someone else. Watch them use it without helping. Where do they get confused? What do they click first? Where do they get stuck?</p>
+                <p>4. Try to break it. What happens if you put letters in a number field? What if you upload a CSV with extra columns? What if you use it on your phone?</p>
+                <p>5. Ask: does this actually solve the problem I built it for? Sometimes the answer is "sort of, but I need to change the approach."</p>
+            </div>
+
+            <h2>The "What Am I Actually Checking?" Framework</h2>
+
+            <p>Before you test anything, write down (literally, on paper or in a note) what "correct" looks like. This forces you to think about what you expect before you see the result. Once you've seen the result, your brain will convince you that's what you expected all along.</p>
+
+            <p>For a dashboard:</p>
+            <ul>
+                <li>What should the total be? (Check against your source data)</li>
+                <li>What should the top category be? (You probably know this already)</li>
+                <li>What date range should it cover?</li>
+                <li>How many items/rows/entries should there be?</li>
+            </ul>
+
+            <p>For a web app:</p>
+            <ul>
+                <li>What happens when I search for something I know exists?</li>
+                <li>What happens when I search for something that doesn't exist?</li>
+                <li>Does the result make sense? Not just "does it return a result" but "is this the right result?"</li>
+            </ul>
+
+            <p>For a script that processes data:</p>
+            <ul>
+                <li>How many items went in? How many came out? Same number?</li>
+                <li>Pick 5 items at random. Are they processed correctly?</li>
+                <li>Are there any items that got skipped or duplicated?</li>
+            </ul>
+
+            <h2>The Sample-Then-Scale Approach</h2>
+
+            <p>This is the single most useful testing technique I've learned, and it applies to everything.</p>
+
+            <blockquote>Never process your full dataset first. Always test on a small sample, verify it's correct, then scale up.</blockquote>
+
+            <p>Here's the exact process I follow:</p>
+
+            <ol>
+                <li><strong>Start with 5-10 items.</strong> Process them. Check every single one manually. Are they all correct?</li>
+                <li><strong>If not, fix the instructions.</strong> Tell the AI what went wrong. Be specific: "You categorised oat milk as dairy, but it should be plant-based. Check for 'oat', 'soy', 'almond', 'coconut' in the name and categorise those as Plant-Based."</li>
+                <li><strong>Re-run the small sample.</strong> Check again. All correct now?</li>
+                <li><strong>Scale to 50-100 items.</strong> Spot-check 10 of them. Any new errors? New edge cases you didn't think of?</li>
+                <li><strong>Scale to the full dataset.</strong> Spot-check 20-30 items from different parts of the data (beginning, middle, end, different categories).</li>
+            </ol>
+
+            <p>This approach caught errors in my email organiser (16,000 emails), my grocery dashboard (400+ items), and my finance dashboard (thousands of transactions). Every single time, the first pass had mistakes. Every single time, the second pass after corrections was dramatically better.</p>
+
+            <div class="example-card">
+                <h4>Real Example: Email Categorisation</h4>
+                <p>Processing 16,000 emails, I started with a batch of 100. Checked 20 of them. Found that "delivery notification" emails from Amazon were being categorised as "Shopping" instead of "Delivery Updates." Also found that newsletter unsubscribe confirmations were categorised as "Newsletters" when they should have been "Account Management."</p>
+                <p>Updated the rules, re-ran 100, checked 20 more. Better, but now some Deliveroo order confirmations were in "Food" instead of "Delivery." Added more rules. Third pass: 19 out of 20 checked correctly. Good enough to scale up.</p>
+                <p>If I'd run all 16,000 first, I'd have had to re-do the entire batch multiple times. By testing small first, I only re-did 100 emails three times, which took minutes instead of hours.</p>
+            </div>
+
+            <h2>"Good Enough" is a Real Standard</h2>
+
+            <p>Professional software has bugs. Your bank's app has bugs. Google has bugs. The question is never "is this perfect?" because nothing is perfect. The question is "is this good enough for what I need?"</p>
+
+            <p>Here's how I think about "good enough":</p>
+
+            <ul>
+                <li><strong>Personal use only?</strong> If only you are using it, 90% accuracy might be fine. You'll notice the errors as you use it and fix them over time.</li>
+                <li><strong>Sharing with friends/family?</strong> Aim for 95%+. Check the main paths thoroughly. Accept that edge cases might be imperfect.</li>
+                <li><strong>Selling it or sharing publicly?</strong> This needs more rigorous testing. Get someone else to try it. Test on different devices. Check accessibility basics (does it work on a phone? can you read the text?).</li>
+                <li><strong>Anything involving money, health, or other people's data?</strong> "Good enough" is a much higher bar. Consider whether you should be building this at all without professional help.</li>
+            </ul>
+
+            <div class="warning-card">
+                <h4>When to Stop Building</h4>
+                <p>If you're building something that calculates medication doses, manages other people's money, or handles sensitive personal data, "testing it myself" is not sufficient. These domains have regulations, liability implications, and safety requirements that go far beyond what any AI tool or self-taught testing can cover. Know your limits. The worst outcome isn't a bug: it's a bug that hurts someone.</p>
+            </div>
+
+            <h2>The Iteration Loop: How Testing Actually Works in Practice</h2>
+
+            <p>In reality, testing isn't a separate phase. It's woven into everything you do. Here's what a typical session looks like for me:</p>
+
+            <ol>
+                <li><strong>Tell the AI what I want.</strong> "Build me a dashboard that shows my spending by category, with a chart and a table."</li>
+                <li><strong>Open it, look at it.</strong> Does it roughly match what I imagined? Usually yes, with some things I'd change.</li>
+                <li><strong>Check the numbers.</strong> Open my source data, pick a category, add it up manually. Does it match? If not, tell the AI: "The 'Food' category shows &pound;340 but my spreadsheet says &pound;312. Something is being included that shouldn't be."</li>
+                <li><strong>Fix and re-check.</strong> The AI fixes it. I check again. Better? Good. Next issue.</li>
+                <li><strong>Use it for real for a few days.</strong> Notice things. "The chart is unreadable on my phone." "The date filter doesn't work for January." "I keep wanting a button that doesn't exist."</li>
+                <li><strong>Tell the AI to fix those things.</strong> Re-check. Repeat until I'm happy.</li>
+            </ol>
+
+            <p>This loop, build a little, check a little, fix a little, is how professional development works too. The difference is that professionals have automated tools to speed up the checking. You have your own eyes and a calculator. Both are valid.</p>
+
+            <h2>What to Check on Different Devices</h2>
+
+            <p>If you're building something web-based (HTML files, web apps), check it on more than one device. At minimum:</p>
+
+            <ul>
+                <li><strong>Your computer's browser.</strong> This is where the AI built it, so it usually works here.</li>
+                <li><strong>Your phone.</strong> A shocking number of AI-generated websites look terrible on mobile. Text overflows, buttons are too small to tap, charts are unreadable. Ask the AI to "make it responsive" if it isn't.</li>
+                <li><strong>A different browser.</strong> If you normally use Chrome, check in Edge or Firefox. Most things work everywhere, but occasionally something breaks.</li>
+            </ul>
+
+            <p>You don't need to test on 15 different devices. But phone + computer covers about 95% of real-world use.</p>
+
+            <h2>The Console Is Your Friend</h2>
+
+            <p>If you're building web things (HTML, JavaScript), learn this one thing: how to open the browser's developer console.</p>
+
+            <ul>
+                <li><strong>Chrome/Edge:</strong> Press F12, click "Console" tab</li>
+                <li><strong>Firefox:</strong> Press F12, click "Console" tab</li>
+                <li><strong>Safari:</strong> Enable "Develop" menu in settings first, then Cmd+Option+C</li>
+            </ul>
+
+            <p>Red text in the console means something is broken. You don't need to understand what the error means. Just copy it and paste it to your AI tool: "I'm getting this error in the console: [paste error]. Can you fix it?"</p>
+
+            <p>Yellow warnings are usually fine. Red errors are problems. No text at all is ideal.</p>
+
+            <div class="example-card">
+                <h4>Real Example: Ingredient Checker</h4>
+                <p>My Curly Girl ingredient checker looked perfect. All the buttons worked, the search worked, everything seemed fine. But some ingredients weren't being detected. I opened the console and saw a red error: a function was failing because of a missing comma in the data file. Pasted the error to Claude Code, it fixed the comma, and everything worked.</p>
+                <p>Without the console, I would have spent ages trying to figure out why certain ingredients weren't showing results. With the console, the fix took 30 seconds.</p>
+            </div>
+
+            <h2>A Testing Checklist You Can Actually Use</h2>
+
+            <p>Print this out or save it. Run through it for every project:</p>
+
+            <ul class="checklist">
+                <li>Does it open/run without errors?</li>
+                <li>Does it look roughly like what I asked for?</li>
+                <li>Have I clicked every button and link?</li>
+                <li>Have I checked 3-5 specific data points against my source data?</li>
+                <li>Do the totals add up?</li>
+                <li>Does it work on my phone?</li>
+                <li>Are there any red errors in the browser console?</li>
+                <li>Have I tried searching/filtering/sorting (if those features exist)?</li>
+                <li>What happens when I enter wrong or weird input?</li>
+                <li>Have I used it for its actual intended purpose for at least a day?</li>
+                <li>Has anyone else tried using it?</li>
+                <li>Am I comfortable sharing/selling/relying on this?</li>
+            </ul>
+
+            <h2>When the AI Says "It Works" But It Doesn't</h2>
+
+            <p>AI tools are very good at sounding confident. When you report a problem, the AI will often say "I've fixed it" or "that should work now." Trust, but verify. Every time.</p>
+
+            <p>I have a rule: if the AI says it's fixed something, I check the specific thing it claims to have fixed before moving on. Not "does the page still load?" but "does the exact problem I reported actually not happen anymore?" Because sometimes the AI's "fix" introduces a new problem, or doesn't actually fix the original one but changes something nearby that makes it look different.</p>
+
+            <p>The AI is not trying to deceive you. It genuinely thinks it's fixed the problem. But "thinking it's fixed" and "actually fixed" are different things, and you're the only one who can verify.</p>
+
+            <h2>Version Everything</h2>
+
+            <p>This connects back to the security post (Part 1 of this series): use git, or at minimum, save copies before making changes.</p>
+
+            <p>Here's why this matters for testing: you will have a working version, ask for a change, and the change will break something that was working before. If you saved the previous version, you can go back. If you didn't, you're trying to recreate it from memory.</p>
+
+            <div class="step-card">
+                <h4>Step by Step: Save Before Changing</h4>
+                <p>1. You have a working version. It's not perfect, but the core thing works.</p>
+                <p>2. Before asking the AI to make changes, commit what you have (if using git) or copy the working files to a folder called "backup-YYYY-MM-DD" or "version-1-working".</p>
+                <p>3. Ask the AI for the change.</p>
+                <p>4. Test the change. If it broke something, you can go back to your saved version and try a different approach.</p>
+                <p>5. If the change works, save again. Now you have two known-good states.</p>
+            </div>
+
+            <p>I've lost count of how many times this has saved me. "It was working 20 minutes ago" is only useful if 20-minutes-ago is saved somewhere.</p>
+
+            <h2>Getting Someone Else to Test</h2>
+
+            <p>The most valuable testing you can do is the simplest: hand it to someone who wasn't involved in building it and watch them use it.</p>
+
+            <p>Don't explain anything. Don't say "you click here first, then there." Just say "have a look at this, it's supposed to [whatever it does]." Then watch. Where do they hesitate? What do they click first? Do they find the main feature, or do they get lost?</p>
+
+            <p>Every time I've done this, I've learned something. My partner looked at my finance dashboard and immediately said "where's the monthly view?" I hadn't built one because I was thinking in terms of categories. But a regular person wants to see "what did I spend this month?" as the first thing. That's not a bug in the code. It's a bug in my thinking about what the tool should do.</p>
+
+            <h2>The Honest Truth About Testing</h2>
+
+            <p>Testing is not fun. It's not the exciting part. The exciting part is telling the AI what to build and watching it appear. The testing part is the slow, careful "ok but does 42.50 + 17.30 actually equal what the chart says?" part.</p>
+
+            <p>But skipping it is how you end up with a beautiful dashboard that shows the wrong numbers. Or a web app that works perfectly on your computer and crashes on everyone else's phone. Or a script that processed 10,000 items and got 2,000 of them wrong.</p>
+
+            <p>The good news: it gets faster. Once you've tested a few projects, you develop a sense for where AI tools make mistakes. You learn to check the calculations first (because that's where AI is weakest). You learn to check mobile (because AI always forgets mobile). You learn to try edge cases (because AI builds for the happy path).</p>
+
+            <p>And the better news: the AI is your testing partner too. You can literally say: "I'm worried the calculations might be wrong. Can you walk me through exactly how the Food category total is calculated, step by step?" The AI will explain its logic, and often in explaining it, you'll spot the mistake together.</p>
+
+            <div class="warning-card">
+                <h4>Final Disclaimer</h4>
+                <p>Testing techniques described here are based on personal experience building projects with AI tools. They are not a substitute for professional quality assurance, especially for software that handles sensitive data, financial calculations, or anything with health/safety implications. You build, test, and deploy at your own risk. When in doubt, get expert help.</p>
+            </div>
+
+            <div class="nav-series">
+                <a href="post-6-security-for-non-coders.html">&larr; Part 1: Security</a>
+                <a href="post-8-non-coders-toolkit.html">Part 3: The Toolkit &rarr;</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+    </footer>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">&times;</button>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../shop/index.html">Shop</a>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+</body>
+</html>

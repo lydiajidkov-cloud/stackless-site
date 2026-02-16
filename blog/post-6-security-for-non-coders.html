@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security for Non-Coders: How I Protect Myself (And You Should Too) — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--pink-500);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .warning-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--pink-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .warning-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--pink-500);
+            margin-bottom: 0.5rem;
+        }
+        .warning-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .example-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--lime-400);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .example-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--slate-700);
+            margin-bottom: 0.5rem;
+        }
+        .example-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .back-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--slate-900);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--slate-900);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { background: var(--slate-100); }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="article-body">
+            <a href="../blog.html" class="back-link">&larr; All Posts</a>
+
+            <div style="background: var(--slate-900); color: var(--white); padding: 0.75rem 1rem; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.5rem; display: inline-block;">The Stackless Guide &middot; Part 1 of 3 &middot; <a href="post-7-testing-for-non-coders.html" style="color: #a3e635; text-decoration: none;">Part 2 &rarr;</a></div>
+
+            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+                <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">Security</span>
+                <span class="tag" style="background: var(--yellow-300); border-color: var(--yellow-300);">Guide</span>
+            </div>
+
+            <h1>Security for Non-Coders: How I Protect Myself (And You Should Too)</h1>
+            <div class="article-meta">12 min read &middot; February 2026</div>
+
+            <p>I'm not a security expert. I'm not a developer. I'm someone who uses AI tools to build things, and along the way I've learned that security isn't something you bolt on at the end. It's a mindset you start with, even if you don't know what half the terminology means.</p>
+
+            <p>This post is the guide I wish I'd had when I started. It's written for people like me: non-coders using AI tools like Claude Code, Cursor, or similar, who want to build things without accidentally exposing their bank details to the internet.</p>
+
+            <div class="warning-card">
+                <h4>Disclaimer</h4>
+                <p>Everything in this post is based on my personal experience and common sense, not formal security training. If you're handling medical data, financial systems, or anything where a breach could cause real harm, get proper security advice from a professional. Tools like Claude Code are powerful, and that power comes with real responsibility. You use these tools at your own risk.</p>
+            </div>
+
+            <h2>Rule Zero: Start with boring data</h2>
+
+            <p>The single most important piece of advice I can give: do not start your AI tool journey with data you can't afford to lose or expose.</p>
+
+            <p>Don't start with:</p>
+            <ul>
+                <li>Your health records or medical data</li>
+                <li>Your banking details or financial statements with account numbers</li>
+                <li>Your wedding photos (especially if you only have one copy)</li>
+                <li>Client data from your job</li>
+                <li>Anything with other people's personal information in it</li>
+            </ul>
+
+            <p>Do start with:</p>
+            <ul>
+                <li>A dummy dataset you made up</li>
+                <li>Public data from government websites</li>
+                <li>Your own notes or documents that contain nothing sensitive</li>
+                <li>A small test project with fake names and fake numbers</li>
+            </ul>
+
+            <p>I started with a finance dashboard, which meant working with my own bank transactions. Before I let any AI tool near that data, I stripped out account numbers, sort codes, and anything that could identify my bank accounts. The spending categories and amounts were fine to work with. The identifiers were not.</p>
+
+            <p>Think of it this way: if someone found this file on the street, what's the worst they could do with it? If the answer is "steal my money" or "steal my identity," that data needs protecting before it goes anywhere near an AI tool.</p>
+
+            <h2>The "Move, Don't Delete" Rule</h2>
+
+            <p>When I built a project that processed 16,000 emails from my Google account, I established a rule before the AI touched anything: nothing gets deleted. Ever. Only moved.</p>
+
+            <div class="example-card">
+                <h4>Real Example: Gmail Organizer</h4>
+                <p>The AI was going to sort and categorise thousands of emails. My explicit instruction: "Do not delete any emails. If something needs to be removed from the main view, move it to a folder called 'For Review'. I will manually check and delete later."</p>
+                <p>This meant that if the AI miscategorised something, or moved something important, I could always find it. Nothing was permanently lost. The worst case was "I have to move some emails back."</p>
+            </div>
+
+            <p>This principle applies everywhere:</p>
+            <ul>
+                <li><strong>Files:</strong> Move to a "review" folder instead of deleting</li>
+                <li><strong>Code:</strong> Comment out instead of removing (or use git so you can recover)</li>
+                <li><strong>Data:</strong> Archive instead of purging</li>
+                <li><strong>Backups:</strong> Keep the original, work on a copy</li>
+            </ul>
+
+            <p>AI tools are confident. They will happily delete things if you ask them to, and they won't hesitate or ask "are you sure?" unless you've explicitly told them to. The safety net is yours to build.</p>
+
+            <h2>What is PII and Why Should You Care?</h2>
+
+            <p>PII stands for Personally Identifiable Information. It's any data that could be used to identify a specific person. The obvious ones: names, addresses, phone numbers, email addresses, National Insurance numbers, bank details. The less obvious ones: combinations of data that together identify someone (your postcode plus your date of birth plus your job title might be unique to you).</p>
+
+            <p>Why this matters for AI tool users:</p>
+            <ol>
+                <li><strong>Anything you type into a cloud AI might be stored.</strong> Even if the provider says they don't train on your data, the data still travels through the internet to their servers. Local tools (like Claude Code running on your machine) are better, but files you create might still end up on GitHub if you're not careful.</li>
+                <li><strong>Git remembers everything.</strong> If you accidentally commit a file with your bank details, then delete the file and commit again, the bank details are still in the git history. Anyone who clones your repository can find them.</li>
+                <li><strong>AI tools don't know what's sensitive.</strong> Claude doesn't know that the string "12-34-56" is your sort code. You have to tell it, or better yet, never give it that data in the first place.</li>
+            </ol>
+
+            <h3>Practical PII Protection</h3>
+
+            <p>Here's what I actually do:</p>
+
+            <p><strong>1. The .gitignore file.</strong> This is a file that tells git "never track these files." Mine includes patterns for common sensitive files:</p>
+            <ul>
+                <li><code>.env</code> files (where people store API keys and passwords)</li>
+                <li><code>*credentials*</code> (any file with "credentials" in the name)</li>
+                <li><code>*secret*</code>, <code>*private*</code> (obvious ones)</li>
+                <li>Any file containing raw personal data (I name these with a <code>-PRIVATE</code> suffix)</li>
+            </ul>
+
+            <p><strong>2. Pre-commit hooks.</strong> These are scripts that run automatically before git lets you save your changes. Mine scans for patterns that look like sensitive data (email addresses, things that look like account numbers) and blocks the commit if it finds any. I didn't write this script myself: I described what I wanted to Claude Code and it built it for me. The irony of using AI to protect yourself from AI mistakes is not lost on me.</p>
+
+            <p><strong>3. Separate data files.</strong> I keep sensitive data in files that are explicitly excluded from git. The dashboard reads from a local data file that never leaves my machine. The template I share has sample data with fake values.</p>
+
+            <h2>Git: Your Safety Net (If You Use It Right)</h2>
+
+            <p>Git is version control. Think of it as an unlimited "undo" button for your entire project. Every time you "commit" (save a snapshot), you can always go back to that exact state.</p>
+
+            <p>For non-coders, here's what you need to know:</p>
+
+            <ul>
+                <li><strong>Commit often.</strong> Before making big changes, save the current state. "It was working 5 minutes ago" is only useful if you saved the state 5 minutes ago.</li>
+                <li><strong>Write descriptive messages.</strong> "Fixed stuff" is useless. "Added category filter to dashboard" tells you exactly what changed.</li>
+                <li><strong>Don't push sensitive data.</strong> "Push" means uploading to GitHub (the cloud). Everything on GitHub is potentially public, even "private" repositories if your account gets compromised. See the .gitignore section above.</li>
+                <li><strong>Don't force-push.</strong> Force-pushing overwrites history. It's the git equivalent of "permanently delete." Normal pushes are safe; force pushes can destroy your collaborators' work (or your own previous work).</li>
+            </ul>
+
+            <div class="warning-card">
+                <h4>The Git History Trap</h4>
+                <p>If you commit a file with your password in it, then delete the file and commit again, the password is STILL in the git history. Pushing this to GitHub means your password is now on the internet, forever, in the history of your repository. If this happens, change the password immediately. Don't try to "clean" the history: treat the old password as compromised.</p>
+            </div>
+
+            <h2>The Principle of Least Damage</h2>
+
+            <p>Every time you give an AI tool a capability, ask: "What's the worst that could happen if this goes wrong?"</p>
+
+            <ul>
+                <li><strong>Reading files:</strong> Low risk. The AI sees your data but doesn't change anything.</li>
+                <li><strong>Writing files:</strong> Medium risk. It might overwrite something important. (Solution: git commit before writing.)</li>
+                <li><strong>Deleting files:</strong> High risk. If it deletes the wrong thing and you have no backup, it's gone.</li>
+                <li><strong>Running commands:</strong> Highest risk. A command can do anything your computer can do, including deleting files, sending data over the internet, or installing software.</li>
+                <li><strong>Accessing the internet:</strong> High risk if combined with your data. An AI that can read your files AND make web requests could theoretically send your data somewhere.</li>
+            </ul>
+
+            <p>Claude Code has a permission system for exactly this reason. It asks before running commands. Don't just click "allow" on everything. Read what it's about to do. If you don't understand a command, ask the AI to explain it before running it.</p>
+
+            <h3>Real Examples of Being Careful</h3>
+
+            <div class="example-card">
+                <h4>Example: Processing Bank Data</h4>
+                <p>When I built my finance dashboard, I needed to process bank transaction CSVs. Before giving them to Claude Code, I opened the CSV, deleted the "Account Number" and "Sort Code" columns, and saved a new file called "transactions-CLEANED.csv". The AI only ever saw the cleaned version. The original stayed in a folder excluded from git.</p>
+            </div>
+
+            <div class="example-card">
+                <h4>Example: The "Just Move It" Instruction</h4>
+                <p>For the email organiser, my core safety instruction was: "This is a read-and-organise task. You may create new labels and move emails between labels. You may NOT delete emails, send emails, or modify email content. If you need to remove something from view, move it to a label called 'AI-Sorted/For Review'."</p>
+                <p>Being this explicit matters. AI tools follow instructions literally. If you say "clean up my inbox," it might interpret "clean up" as "delete." If you say "organise by moving to labels, never delete," there's no ambiguity.</p>
+            </div>
+
+            <h2>Backups: The Boring Thing That Saves You</h2>
+
+            <p>Before you start any project with data you care about:</p>
+            <ol>
+                <li><strong>Copy the original data somewhere safe.</strong> A different folder, an external drive, a cloud backup. Somewhere the AI tool cannot reach.</li>
+                <li><strong>Work on a copy.</strong> Always. If the copy gets corrupted, you still have the original.</li>
+                <li><strong>Test on a small sample first.</strong> Before processing 16,000 emails, process 10. Check the results. Then do 100. Then 1,000. Then all of them.</li>
+            </ol>
+
+            <p>This is especially important for irreplaceable data. Your wedding photos, your child's first drawings scanned as PDFs, your deceased parent's letters. If you only have one copy, do not let an AI tool anywhere near it until you've made a backup. This isn't paranoia: it's basic file hygiene that most people skip until something goes wrong.</p>
+
+            <h2>API Keys and Secrets</h2>
+
+            <p>If you use any services that give you an API key (a long string of characters that acts as your password to that service), here's the rule: never put it in your code files. Never.</p>
+
+            <p>Instead:</p>
+            <ul>
+                <li>Put it in a <code>.env</code> file (a special file for secrets)</li>
+                <li>Add <code>.env</code> to your <code>.gitignore</code> (so it never gets uploaded)</li>
+                <li>Tell the AI tool: "Read the API key from the environment variable, do not hardcode it"</li>
+            </ul>
+
+            <p>If you accidentally publish an API key to GitHub, revoke it immediately and generate a new one. Bots scan GitHub constantly for exposed API keys, and they will find yours within minutes.</p>
+
+            <h2>What About Docker?</h2>
+
+            <p>You'll see developers talk about Docker. In simple terms, Docker creates an isolated "container" on your computer, like a sealed room where your application runs. Nothing inside the container can access your main computer's files unless you explicitly allow it.</p>
+
+            <p>For non-coders, Docker is relevant because:</p>
+            <ul>
+                <li><strong>It's a safety boundary.</strong> If you run an AI tool inside Docker, it can only access files you've shared with the container. It can't accidentally read your Documents folder or your browser passwords.</li>
+                <li><strong>It's reproducible.</strong> A Docker container runs the same way on every computer. No "it works on my machine" problems.</li>
+                <li><strong>It's how many AI tools are deployed.</strong> If you build something and want to share it, Docker packages everything together.</li>
+            </ul>
+
+            <p>You don't need Docker to get started. I don't use it for most of my projects. Plain files in a folder work fine. But if you're handling sensitive data or want an extra layer of isolation, Docker is worth learning about. It's one of those things that sounds intimidating but is actually just "run this one command and it sets up a sealed environment for you."</p>
+
+            <h2>Mac Minis and Always-On AI</h2>
+
+            <p>There's a growing community of people buying Mac Minis (or similar small computers) specifically to run AI tools 24/7. The idea is: instead of running AI on your main computer where it can access everything, you run it on a separate machine that only has the files you've deliberately put there.</p>
+
+            <p>Why people do this:</p>
+            <ul>
+                <li><strong>Isolation.</strong> The AI can't access your main computer's files, emails, or browser data.</li>
+                <li><strong>Always on.</strong> It can run overnight tasks (like my night-night skill) without keeping your main computer awake.</li>
+                <li><strong>Cost control.</strong> A Mac Mini runs your AI workloads while your main computer sleeps, saving electricity and wear.</li>
+                <li><strong>Experimentation without risk.</strong> If something goes wrong on the Mac Mini, your main computer is untouched.</li>
+            </ul>
+
+            <p>I don't have this setup (yet), but the security benefit is clear: physical separation is the strongest security boundary there is. An AI running on a different computer literally cannot access files on your main computer unless you copy them over.</p>
+
+            <h2>Common Sense Checklist</h2>
+
+            <p>Before starting any project with AI tools, run through this:</p>
+
+            <ol>
+                <li><strong>What data am I using?</strong> Is any of it sensitive? Can I use fake data instead?</li>
+                <li><strong>What's the worst case?</strong> If the AI goes rogue and does the opposite of what I asked, what's the damage?</li>
+                <li><strong>Do I have a backup?</strong> Of the original data, before the AI touches it?</li>
+                <li><strong>Am I working on a copy?</strong> Never modify originals directly.</li>
+                <li><strong>Is anything going to the internet?</strong> Git push, API calls, cloud storage? Check what's included.</li>
+                <li><strong>Have I told the AI what NOT to do?</strong> "Move, don't delete." "Read only, don't modify." Explicit constraints.</li>
+                <li><strong>Am I reading the commands before approving them?</strong> Don't just click "allow" on everything.</li>
+                <li><strong>Is my .gitignore set up?</strong> Before the first commit, not after.</li>
+            </ol>
+
+            <h2>The Honest Truth</h2>
+
+            <p>I have made mistakes. I've committed files that probably shouldn't have been committed. I've given AI tools more access than they needed. I've had to go back and clean things up.</p>
+
+            <p>The difference between a bad outcome and a disaster is preparation. Every mistake I've made with proper backups in place was a "well, that's annoying, let me restore from the backup." Every mistake without backups would have been a crisis.</p>
+
+            <p>Security for non-coders isn't about being perfect. It's about being aware, being cautious with sensitive data, and building habits that protect you when things go wrong. Because things will go wrong. That's not a failure: that's how learning works. The goal is to make sure the consequences are recoverable.</p>
+
+            <div class="warning-card">
+                <h4>Final Disclaimer</h4>
+                <p>The tools, techniques, and approaches described in this post and across this website are shared for educational purposes. I am not a security professional. You use AI tools, code, and any techniques described here entirely at your own risk. Always test with non-sensitive data first. Always keep backups. If you're unsure about something, ask a professional before proceeding. I take no responsibility for any data loss, security incidents, or other consequences arising from following this guide.</p>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 3rem; padding-top: 2rem; border-top: 3px solid var(--slate-900);">
+                <a href="post-7-testing-for-non-coders.html" style="font-weight: 800; font-size: 0.875rem; color: var(--slate-900); text-decoration: none; padding: 0.5rem 1rem; border: 2px solid var(--slate-900);">Part 2: Testing &rarr;</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+    </footer>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">&times;</button>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../shop/index.html">Shop</a>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+</body>
+</html>

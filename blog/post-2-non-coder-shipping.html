@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From "Almost a Coder" to Actually Shipping Products — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--indigo-500);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .article-body .callout {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--indigo-500);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .article-body .callout h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .back-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--slate-900);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--slate-900);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { background: var(--slate-100); }
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border: 2px solid var(--slate-200);
+        }
+        .timeline-day {
+            font-weight: 900;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--indigo-600);
+            white-space: nowrap;
+            min-width: 60px;
+        }
+        .timeline-desc {
+            color: var(--slate-700);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="article-body">
+            <a href="../blog.html" class="back-link">&larr; All Posts</a>
+
+            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+                <span class="tag" style="background: var(--amber-400); border-color: var(--amber-400);">Career</span>
+            </div>
+
+            <h1>From "Almost a Coder" to Actually Shipping Products</h1>
+            <div class="article-meta">7 min read &middot; February 2026</div>
+
+            <p>I built my own PC. I had a Raspberry Pi. I tried to learn Python three times. I understood variables and loops but never got past the tutorial stage. Every attempt hit the same wall: the gap between "I understand the concept" and "I can build something useful" was too wide.</p>
+
+            <p>Then AI tools happened.</p>
+
+            <p>In 18 days, I went from zero shipped products to running a small digital products business with 5 templates, a free web app, a deployed website, and a content library. I'm tracking every session, and the data tells a story I didn't expect.</p>
+
+            <h2>The timeline (condensed)</h2>
+
+            <div class="timeline-item">
+                <span class="timeline-day">Day 1</span>
+                <span class="timeline-desc">First HTML/JS dashboard. A grocery price comparison tool. I didn't write the code, but I specified what it should do and iterated on the output.</span>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-day">Day 3</span>
+                <span class="timeline-desc">Automated a daily AI newsletter via GitHub Actions. First time touching CI/CD, triggered by a cron schedule.</span>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-day">Day 4</span>
+                <span class="timeline-desc">Processed 16,000 emails with AI classification. 92 parallel agents. Built a searchable knowledge base from the results.</span>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-day">Day 8</span>
+                <span class="timeline-desc">First custom skill for Claude Code: a reusable research methodology. Started treating AI tools as extensible, not just conversational.</span>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-day">Day 11</span>
+                <span class="timeline-desc">Built a complete HTML5 merge game. 184 creatures, 16 biomes, power-ups, island progression. It wasn't fun (more on that later), but it was real.</span>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-day">Day 16</span>
+                <span class="timeline-desc">Professional-grade clinical informatics deliverable: 7-layer EHR pathway template with verified clinical accuracy.</span>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-day">Day 18</span>
+                <span class="timeline-desc">5 products packaged, website deployed, content library written. A real business, not a side project.</span>
+            </div>
+
+            <h2>What I actually do</h2>
+
+            <p>I don't write code. I specify what I want, review what the AI produces, and iterate. My value isn't in the typing: it's in knowing what to build, what questions to ask, and when something is wrong.</p>
+
+            <p>Here's what a typical session looks like:</p>
+
+            <ol>
+                <li>I describe what I want in plain language, usually one sentence</li>
+                <li>The AI builds it, makes mistakes, I catch them, we iterate</li>
+                <li>I test it by using it, spot what doesn't feel right, and describe the fix</li>
+                <li>We go back and forth until it works properly</li>
+            </ol>
+
+            <p>The "coding" is maybe 5% of my input. The other 95% is product thinking: what should this do, who is it for, what's the simplest version, and is this actually useful.</p>
+
+            <h2>What I got wrong</h2>
+
+            <h3>The merge game</h3>
+            <p>I spent significant time building a mobile merge game. 184 creatures, economy systems, power-ups, island progression. The problem? The core merge mechanic wasn't fun. I'd built the restaurant's pricing menu before the food tasted good.</p>
+
+            <p>The lesson was painful but important: AI tools make it dangerously easy to add features. You can build so fast that you skip the step where you check if the foundation works. Speed without direction is just efficient waste.</p>
+
+            <h3>Over-engineering</h3>
+            <p>Early projects grew too complex too fast. A finance dashboard that started as "show me my spending" turned into a 6-tab Streamlit app with budget modelling and life-change projections. It works, but I could have shipped something useful in a quarter of the time.</p>
+
+            <p>I now force myself to ship the simplest version first. The fancy stuff can come in iteration 2, if iteration 1 proves the basic concept works.</p>
+
+            <h3>Not verifying AI output</h3>
+            <p>AI tools are confidently wrong. They'll give you a SNOMED code that's plausible but incorrect. They'll write a product description that sounds good but makes claims you can't support. They'll structure a document that looks professional but has cross-reference errors.</p>
+
+            <p>I learned to verify everything that matters. Not every line of CSS, but every clinical fact, every data claim, every product promise.</p>
+
+            <h2>What surprised me</h2>
+
+            <h3>Skills compound weirdly</h3>
+            <p>Building a grocery dashboard taught me about Chart.js, which I used in a finance dashboard, which taught me about data structures, which helped me build a game, which taught me about UX, which made my next dashboard better.</p>
+
+            <p>None of these skills are deep. I can't write a Chart.js plugin from scratch. But I can specify one precisely enough for AI to build it, because I've seen enough to know what's possible and what good looks like.</p>
+
+            <h3>Domain knowledge is the moat</h3>
+            <p>Anyone can ask AI to build a dashboard. The reason my clinical pathway template has value isn't the HTML: it's the 12 governance decision points, the SNOMED coding strategy, the NICOR audit mapping. That comes from years of working in health informatics, not from a prompt.</p>
+
+            <p>AI tools amplify domain knowledge. If you know a lot about a subject, you can now produce output at a pace that was previously impossible. If you don't know anything, you'll produce plausible-looking rubbish very quickly.</p>
+
+            <h3>The process is the product</h3>
+            <p>I've spent 61 sessions over 18 days. My evolution dashboard tracks every session: what was built, how long it took, what skills were used. The data shows I've produced roughly 760 hours' worth of professional-equivalent work.</p>
+
+            <p>The individual products are useful. But the process, the workflow, the skill library, the session management system: that's what has lasting value. It's a methodology for turning domain expertise into shipped products using AI tools.</p>
+
+            <h2>The honest numbers</h2>
+
+            <p>In 18 days:</p>
+            <ul>
+                <li>61 working sessions</li>
+                <li>13 projects touched</li>
+                <li>10 skill areas developed (web dev, data analysis, prompt engineering, clinical informatics, game design, research, automation, project management, financial analysis, AI tools)</li>
+                <li>5 packaged products ready to sell</li>
+                <li>1 free web app deployed</li>
+                <li>760+ hours of equivalent professional work</li>
+            </ul>
+
+            <p>Those numbers aren't magic. They reflect a specific combination: existing domain knowledge + AI tools + a willingness to ship imperfect things and iterate. Remove any of those three and the numbers would be very different.</p>
+
+            <h2>What I'd tell someone starting</h2>
+
+            <ol>
+                <li><strong>Start with something you already know about.</strong> Your first AI project should use your existing expertise, not teach you a new domain simultaneously.</li>
+                <li><strong>Ship the ugly version.</strong> A working prototype with bad CSS is infinitely more valuable than a beautiful mockup that does nothing.</li>
+                <li><strong>Verify what matters.</strong> If it's going to someone else, check it. If it's just for you, let it be rough.</li>
+                <li><strong>Build the process, not just the product.</strong> Every project should leave you with reusable patterns, skills, and workflows. The compound effect is where the real value lives.</li>
+                <li><strong>Don't learn to code.</strong> Learn to specify. Learn to review. Learn to iterate. The code is the cheapest part now.</li>
+            </ol>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+    </footer>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">&times;</button>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../shop/index.html">Shop</a>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+</body>
+</html>

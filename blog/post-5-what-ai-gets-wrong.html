@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What AI Gets Wrong (And How I Catch It) — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--pink-500);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .mistake-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--pink-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .mistake-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--pink-500);
+            margin-bottom: 0.5rem;
+        }
+        .mistake-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .back-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--slate-900);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--slate-900);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { background: var(--slate-100); }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="article-body">
+            <a href="../blog.html" class="back-link">&larr; All Posts</a>
+
+            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+                <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">AI</span>
+            </div>
+
+            <h1>What AI Gets Wrong (And How I Catch It)</h1>
+            <div class="article-meta">6 min read &middot; February 2026</div>
+
+            <p>I use AI tools to build everything I ship. I also catch AI making mistakes in almost every session. These two facts aren't contradictory: they're the whole point.</p>
+
+            <p>If you're using AI tools and you're not catching mistakes, you're not checking carefully enough. Here's what I've found after 61 sessions of building with AI.</p>
+
+            <h2>The categories of wrong</h2>
+
+            <h3>1. Confidently incorrect facts</h3>
+            <p>This is the most dangerous category. The AI states something as fact, with no hedging or uncertainty, and it's wrong. It doesn't know it's wrong. The confidence is identical whether the information is correct or fabricated.</p>
+
+            <div class="mistake-card">
+                <h4>Real example</h4>
+                <p>While building a clinical pathway template, the AI cited specific NICOR field numbers for heart failure audit data. Three of the field numbers were wrong: they were close, plausible, from the right range, but they referenced the wrong data items. Without checking against the actual NICOR NHFA v5.0 specification, these errors would have shipped in a clinical document.</p>
+            </div>
+
+            <p>The pattern: AI is worst at specific identifiers (codes, reference numbers, version numbers, prices). It's better at structure and relationships. Always verify specifics against primary sources.</p>
+
+            <h3>2. Outdated information</h3>
+            <p>AI training data has a cutoff. Standards change, products get discontinued, guidelines get updated. The AI doesn't know about changes after its training date, and it won't tell you its information might be stale.</p>
+
+            <div class="mistake-card">
+                <h4>Real example</h4>
+                <p>The AI recommended a QOF indicator for heart failure that had been retired in the 2024/25 update. The indicator code was real, the description was accurate, but it no longer existed in the active QOF framework. A GP practice using this template would have been tracking a metric that no longer counts toward their funding.</p>
+            </div>
+
+            <p>The fix: force the AI to search the web for current information rather than relying on training data. I built a custom research skill that mandates live web searches for every factual claim.</p>
+
+            <h3>3. Plausible but wrong structure</h3>
+            <p>The AI sometimes creates cross-references between things that don't actually connect. It knows that System A and System B exist, and it knows they should probably talk to each other, so it writes an integration spec. But the specific data fields, message formats, or trigger conditions might be invented.</p>
+
+            <div class="mistake-card">
+                <h4>Real example</h4>
+                <p>In an integration spec, the AI described an HL7v2 ADT message flow from ambulance to ED that included specific segment codes. The message type was correct, the direction was correct, but the specific trigger event code was wrong for the UK ambulance to hospital context. It used a generic US hospital transfer trigger instead.</p>
+            </div>
+
+            <p>This is the hardest category to catch because the structure looks right. You need domain knowledge to spot that the specifics are off.</p>
+
+            <h3>4. Scope creep via enthusiasm</h3>
+            <p>Not a factual error, but a consistent problem: the AI will add features you didn't ask for. A simple dashboard request becomes a 6-tab application with budget modelling. A basic ingredient checker becomes a full web app with quizzes and product databases.</p>
+
+            <p>The AI is trying to be helpful, but unchecked, it produces over-engineered solutions. I now use a scope-check skill that challenges every addition against the actual project requirements.</p>
+
+            <h2>How I catch mistakes</h2>
+
+            <h3>The verification protocol</h3>
+            <ol>
+                <li><strong>Primary source check.</strong> Every specific claim (code, number, price, standard reference) gets checked against the original source. Not another AI output, not a summary, the actual specification or guideline.</li>
+                <li><strong>Parallel verification.</strong> For important documents, I run multiple independent AI checks against different source materials. If 5 separate checks all agree, confidence is high. If they disagree, I dig into why.</li>
+                <li><strong>Use it yourself.</strong> The best test is using the product for its intended purpose. Open the dashboard, try the quiz, follow the pathway. Most errors become obvious when you actually use the thing.</li>
+                <li><strong>Sleep on it.</strong> Seriously. Fresh eyes catch what tired eyes miss. I review overnight AI output in the morning before doing anything with it.</li>
+            </ol>
+
+            <h3>The trust hierarchy</h3>
+            <p>Not all AI output needs the same level of verification:</p>
+            <ul>
+                <li><strong>HTML/CSS layout:</strong> Low risk. If it looks wrong, I can see it. Quick visual check.</li>
+                <li><strong>JavaScript logic:</strong> Medium risk. Test it by using it. Edge cases are where errors hide.</li>
+                <li><strong>Factual claims:</strong> High risk. Verify against primary sources. No exceptions.</li>
+                <li><strong>Clinical/safety content:</strong> Critical risk. Multiple independent verification checks. Would not ship without expert review.</li>
+            </ul>
+
+            <h2>The uncomfortable truth</h2>
+
+            <p>AI tools are the most productive technology I've ever used. They're also the most confidently wrong technology I've ever used. Both of these are true at the same time.</p>
+
+            <p>The people who will get the most value from AI tools are the people who already know enough about their subject to catch the mistakes. The people who know the least will produce the most plausible-looking errors.</p>
+
+            <p>This isn't an argument against using AI. It's an argument for using it honestly, with verification, with domain knowledge, and with the humility to check your output before shipping it.</p>
+
+            <p>Every product I sell has been through verification. That's not a feature: it's the minimum standard. If you can't verify it, you shouldn't ship it.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+    </footer>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">&times;</button>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../shop/index.html">Shop</a>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+</body>
+</html>

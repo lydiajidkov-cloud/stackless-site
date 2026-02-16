@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What I Learned Building an EHR Pathway Template with AI — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--pink-500);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .article-body .callout {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--pink-500);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .article-body .callout h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .back-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--slate-900);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--slate-900);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { background: var(--slate-100); }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="article-body">
+            <a href="../blog.html" class="back-link">&larr; All Posts</a>
+
+            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+                <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">Healthcare</span>
+            </div>
+
+            <h1>What I Learned Building an EHR Pathway Template with AI</h1>
+            <div class="article-meta">8 min read &middot; February 2026</div>
+
+            <p>I built a 7-layer vendor-agnostic EHR pathway template for acute heart failure. It has SNOMED CT codes, NICOR audit mapping, HL7v2/FHIR integration specs, a DCB0160 clinical safety case, and 8 synthetic test patients. It took about 3 hours of my time across two sessions. Without AI tools, this would have been 2-4 weeks of consulting work.</p>
+
+            <p>Here's what I learned about what AI can and can't do in clinical informatics.</p>
+
+            <h2>What the template actually is</h2>
+
+            <p>An acute heart failure pathway isn't a simple flowchart. It's a multi-layered specification that tells an NHS Trust exactly how to configure their EHR system to support the clinical pathway from admission to discharge and beyond.</p>
+
+            <p>The 7 layers:</p>
+            <ol>
+                <li><strong>Clinical Pathway</strong> - the clinician-facing route map, with 12 decision points that need local governance sign-off</li>
+                <li><strong>Governance Decision Log</strong> - those 12 decisions, structured for sign-off by clinical director, medical director, and HF lead</li>
+                <li><strong>Clinical Informatics Spec</strong> - data model, SNOMED coding strategy, NICOR quality indicator calculations, GP transfer coding</li>
+                <li><strong>Technical Build Spec</strong> - 15 EHR forms, 13 decision rules in pseudocode, 12 alerts, 10 auto-calculations</li>
+                <li><strong>Integration Spec</strong> - 8 system-to-system data flows: ambulance, lab, echo, pharmacy, NICOR, GP, virtual ward, point-of-care testing</li>
+                <li><strong>Testing & Validation</strong> - 8 synthetic patients covering all phenotypes, 30 validation queries, clinical safety hazard log</li>
+                <li><strong>Patient Materials Spec</strong> - 9 patient-facing documents with EHR triggers</li>
+            </ol>
+
+            <p>Each layer references the others. The SNOMED codes in Layer 3 feed the decision rules in Layer 4. The integration flows in Layer 5 depend on the data model in Layer 3. The test patients in Layer 6 exercise the decision rules in Layer 4. It's not a collection of documents: it's an interlocking system.</p>
+
+            <h2>What AI did well</h2>
+
+            <h3>Structure and cross-referencing</h3>
+            <p>Clinical pathway specifications are structurally complex. You're mapping between clinical guidelines (NICE, ESC, GIRFT), coding standards (SNOMED CT, ICD-10, Read codes), audit requirements (NICOR NHFA), quality frameworks (QOF), and technical standards (HL7v2, FHIR). Keeping all of those aligned across 7 layers is where most human error creeps in.</p>
+
+            <p>AI is genuinely good at this. Give it the right source material and it will maintain cross-references that would take a human hours of checking and rechecking.</p>
+
+            <h3>Boilerplate with precision</h3>
+            <p>A lot of clinical informatics documentation is structured repetition. Hazard log entries follow a pattern. Integration specs follow a pattern. Test patients follow a pattern. AI turns these from hours of template-filling into minutes.</p>
+
+            <h3>Research synthesis</h3>
+            <p>I pointed the AI at NICE CG187 and NG106, ESC 2021 and 2023 guidelines, GIRFT benchmarks, and the NICOR NHFA v5.0 dataset specification. It synthesised the areas of agreement, flagged the 12 places where guidelines conflict, and identified 15 gaps that need local governance decisions.</p>
+
+            <p>A human would find these too, but it would take days of careful reading and comparison. The AI did it in one pass.</p>
+
+            <h2>What AI can't do</h2>
+
+            <h3>Clinical judgement</h3>
+            <p>The template has 12 "DECISION REQUIRED" boxes. These are places where the evidence is ambiguous, guidelines disagree, or local factors matter. The AI identified these correctly but couldn't resolve them, because they require clinical governance decisions made by real clinicians who know their Trust's context.</p>
+
+            <p>For example: when to initiate sacubitril/valsartan in-hospital versus waiting for outpatient titration. NICE and ESC disagree. Your local pharmacy formulary has an opinion. Your heart failure nurses have a workflow. No AI can make that call.</p>
+
+            <h3>Verification</h3>
+            <p>After building the template, I ran 5 separate verification checks against the source guidelines. The AI got most things right, but it made confident-sounding errors in a few places: wrong NICOR field numbers, a QOF indicator that had been retired, a SNOMED code that was close but not quite right.</p>
+
+            <div class="callout">
+                <h4>The uncomfortable truth</h4>
+                <p>AI doesn't know when it's wrong. It presents incorrect SNOMED codes with the same confidence as correct ones. Clinical informatics work must be verified against primary sources. The AI accelerates the work, but someone with domain knowledge must check it.</p>
+            </div>
+
+            <h3>Context and politics</h3>
+            <p>Every NHS Trust has workarounds, local policies, and historical decisions baked into their systems. A pathway template is a starting point. The real work is adapting it to the mess of reality: the EPR that doesn't support conditional alerting, the lab system that sends results in a non-standard format, the consultant who refuses to use electronic prescribing.</p>
+
+            <p>No template covers this. No AI can either. This is where consulting expertise lives.</p>
+
+            <h2>The value question</h2>
+
+            <p>If I'd charged a consulting day rate for 3 hours of work, it wouldn't cover much. But the output is equivalent to 2-4 weeks of specialist consulting time. The value isn't in the hours: it's in the output.</p>
+
+            <p>This is the shift that AI tools create. A single person with domain expertise and AI tools can produce work that previously required a team. The bottleneck moves from production to verification and decision-making.</p>
+
+            <p>For clinical informatics specifically, that means:</p>
+            <ul>
+                <li>The 90% of pathway documentation that is structured, cross-referenced, and evidence-based can be AI-assisted</li>
+                <li>The 10% that requires clinical judgement, local context, and governance sign-off cannot</li>
+                <li>The verification step is non-negotiable, and currently requires someone who can read both the clinical guidelines and the technical specifications</li>
+            </ul>
+
+            <h2>What I'd do differently</h2>
+
+            <p>I'd start with verification. I built the full 7-layer template first, then verified it. Next time I'd verify each layer as it's built, catching errors before they propagate into downstream layers.</p>
+
+            <p>I'd also involve a second clinical reviewer earlier. Solo work with AI is fast, but clinical safety documentation specifically benefits from a second pair of expert eyes, not because the AI makes obvious mistakes, but because the subtle ones are the dangerous ones.</p>
+
+            <h2>The bottom line</h2>
+
+            <p>AI tools make clinical informatics consulting dramatically faster. They don't make it easier, because the hard parts were never the typing. The hard parts are knowing what to build, knowing what the guidelines actually say, knowing where they disagree, and making defensible decisions in the gaps.</p>
+
+            <p>If you don't have that domain knowledge, AI tools won't give it to you. If you do, they'll let you work at a pace that would have been impossible three years ago.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+    </footer>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">&times;</button>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../shop/index.html">Shop</a>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+</body>
+</html>

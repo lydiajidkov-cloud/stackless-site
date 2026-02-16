@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why I Share My Process, Not My Code — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--indigo-500);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .article-body .callout {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--lime-400);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .article-body .callout h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .back-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--slate-900);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--slate-900);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { background: var(--slate-100); }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="article-body">
+            <a href="../blog.html" class="back-link">&larr; All Posts</a>
+
+            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+                <span class="tag" style="background: var(--indigo-500); color: white; border-color: var(--indigo-500);">Business</span>
+            </div>
+
+            <h1>Why I Share My Process, Not My Code</h1>
+            <div class="article-meta">5 min read &middot; February 2026</div>
+
+            <p>Everything I sell could be rebuilt by anyone with the same tools I use. The code isn't proprietary. The HTML isn't special. The JavaScript is straightforward. So why would anyone pay for it?</p>
+
+            <p>Because the code was never the valuable part.</p>
+
+            <h2>The rebuild test</h2>
+
+            <p>Take my EHR clinical pathway template. It's HTML files with some CSS. Anyone could inspect the source, copy the structure, and have the same layout in an hour.</p>
+
+            <p>But they wouldn't have:</p>
+            <ul>
+                <li>The 12 governance decision points that reflect where NICE and ESC guidelines actually conflict</li>
+                <li>The SNOMED CT coding strategy that maps correctly to NICOR audit requirements</li>
+                <li>The 15 identified gaps that need local Trust decisions before implementation</li>
+                <li>The integration spec that accounts for 8 real system-to-system data flows in an NHS acute setting</li>
+                <li>The clinical safety hazard log that follows DCB0160</li>
+            </ul>
+
+            <p>Rebuilding the HTML takes an hour. Rebuilding the clinical informatics content takes weeks of specialist work, or years of domain experience to know what to include.</p>
+
+            <h2>What I actually sell</h2>
+
+            <p>I sell decisions. Every template I produce is a compressed version of hundreds of small decisions:</p>
+
+            <ul>
+                <li>What to include and what to leave out</li>
+                <li>How to structure information so it's usable, not just complete</li>
+                <li>Which edge cases matter and which don't</li>
+                <li>What the real-world constraints are that a theoretical approach would miss</li>
+                <li>Where the gotchas are that only experience reveals</li>
+            </ul>
+
+            <p>The finance dashboard isn't valuable because it shows charts. It's valuable because the 50+ spending categories were designed through iterative classification of real spending data, tested against real patterns, with overflow categories kept below 2%.</p>
+
+            <p>The grocery dashboard isn't valuable because it compares prices. It's valuable because the NOVA food classification system is applied correctly, the category structure maps to how people actually shop (not how nutritionists think they should shop), and the "hide top item" toggle exists because the first thing everyone does is get annoyed that one massive purchase dominates every chart.</p>
+
+            <h2>Why sharing the process is safe</h2>
+
+            <p>I write openly about how I build things. The blog posts describe my tools, my workflow, my mistakes. This might seem like giving away the secret sauce.</p>
+
+            <p>But the process isn't the competitive advantage. The process is:</p>
+            <ol>
+                <li>Have domain knowledge about a subject</li>
+                <li>Use AI tools to turn that knowledge into products</li>
+                <li>Iterate until the product is genuinely useful</li>
+            </ol>
+
+            <p>Anyone can follow these steps. The results will be different because the domain knowledge is different. A dentist following this process would build dental tools. A teacher would build teaching tools. The process is universal: the output depends entirely on what you know.</p>
+
+            <p>Sharing the process actually helps the business. It demonstrates competence, builds trust, and attracts people who want templates built with real expertise rather than generic AI output.</p>
+
+            <h2>The pricing philosophy</h2>
+
+            <p>Everything in the shop is &pound;5. Flat. No tiered pricing, no premium vs basic, no "most popular" badge on the middle option.</p>
+
+            <p>The reasoning:</p>
+            <ul>
+                <li>&pound;5 is low enough that you don't need to think about it. If it's useful, it's worth &pound;5.</li>
+                <li>The templates are starting points, not finished products. They need your data, your context, your decisions. Charging &pound;79 for a starting point feels wrong.</li>
+                <li>I'd rather 100 people use something at &pound;5 than 5 people use it at &pound;79.</li>
+                <li>There's also a donations page. If you got value, you can pay what you think it was worth. No pressure.</li>
+            </ul>
+
+            <div class="callout">
+                <h4>The milestone</h4>
+                <p>First target: earn enough from templates and donations to cover the Claude Code subscription that makes all of this possible. That's roughly &pound;80/month. After that, everything above is proof that this model works.</p>
+            </div>
+
+            <h2>What this means for "AI products"</h2>
+
+            <p>The fear with AI-generated products is that they're commoditised. If AI can build it, anyone can build it, so it has no value.</p>
+
+            <p>This is true for generic output. An AI-generated "personal finance template" with default categories and no domain insight is worthless. There are thousands of them.</p>
+
+            <p>But an AI-accelerated product built by someone who deeply understands the problem space is different. The AI is a tool, like a power drill. A power drill doesn't make everyone a carpenter. It makes carpenters faster.</p>
+
+            <p>I share the process because the process isn't the moat. The knowledge is.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+    </footer>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">&times;</button>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../shop/index.html">Shop</a>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Non-Coder's Toolkit: AI Tools, Automation, and Building Your Workflow — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--pink-500);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .warning-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--pink-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .warning-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--pink-500);
+            margin-bottom: 0.5rem;
+        }
+        .warning-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .example-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--lime-400);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .example-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--slate-700);
+            margin-bottom: 0.5rem;
+        }
+        .example-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .step-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--indigo-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .step-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--indigo-500);
+            margin-bottom: 0.5rem;
+        }
+        .step-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .tool-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--yellow-300);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .tool-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--slate-700);
+            margin-bottom: 0.5rem;
+        }
+        .tool-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .series-banner {
+            background: var(--slate-900);
+            color: var(--white);
+            padding: 0.75rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+        .series-banner a { color: var(--lime-400); text-decoration: none; }
+        .series-banner a:hover { text-decoration: underline; }
+        .back-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--slate-900);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--slate-900);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { background: var(--slate-100); }
+        .nav-series {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 3px solid var(--slate-900);
+        }
+        .nav-series a {
+            font-weight: 800;
+            font-size: 0.875rem;
+            color: var(--slate-900);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--slate-900);
+        }
+        .nav-series a:hover { background: var(--slate-100); }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="article-body">
+            <a href="../blog.html" class="back-link">&larr; All Posts</a>
+
+            <div class="series-banner">The Stackless Guide &middot; Part 3 of 3 &middot; <a href="post-7-testing-for-non-coders.html">&larr; Part 2</a></div>
+
+            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+                <span class="tag" style="background: var(--yellow-300); border-color: var(--yellow-300);">Toolkit</span>
+                <span class="tag" style="background: var(--lime-400); border-color: var(--lime-400);">Automation</span>
+            </div>
+
+            <h1>The Non-Coder's Toolkit: AI Tools, Automation, and Building Your Workflow</h1>
+            <div class="article-meta">18 min read &middot; February 2026 &middot; The Stackless Guide Part 3</div>
+
+            <p>This is the final part of The Stackless Guide. <a href="post-6-security-for-non-coders.html">Part 1 covered security</a>. <a href="post-7-testing-for-non-coders.html">Part 2 covered testing</a>. This part is about the tools themselves: what they are, how to pick between them, and how to build an increasingly powerful workflow without writing a single line of code yourself.</p>
+
+            <p>When I started using AI coding tools, I thought the tool was the whole thing. You type what you want, the AI builds it. That's it, right?</p>
+
+            <p>It's not. Over months of building real projects, I've assembled a toolkit of techniques, scripts, and habits that multiply what I can accomplish. The AI does the coding. But the workflow around it, how I manage context, how I recover from crashes, how I run things overnight, that's the real multiplier.</p>
+
+            <div class="warning-card">
+                <h4>Disclaimer</h4>
+                <p>All tools mentioned here are what I personally use or have evaluated. I'm not sponsored by or affiliated with any of them. Prices and features change frequently, so verify current details before purchasing. You use all tools and techniques described here at your own risk.</p>
+            </div>
+
+            <h2>The AI Tools Landscape: What's What</h2>
+
+            <p>There are now dozens of AI coding tools. Here are the ones I've actually used or seriously evaluated, organised by what they're good at:</p>
+
+            <h3>Claude Code (Anthropic)</h3>
+
+            <div class="tool-card">
+                <h4>What It Is</h4>
+                <p>A command-line tool that runs on your computer. You type instructions in plain English, and it reads your files, writes code, runs commands, and builds things. It works directly with your file system: no browser tab, no web editor, just your files on your machine.</p>
+                <p><strong>Best for:</strong> Complex projects, multi-file work, anything that needs to read/write local files, automation, building backend logic.</p>
+                <p><strong>Cost:</strong> Requires a Claude subscription (currently ~$20/month for Pro, ~$100/month for Max with 5x usage).</p>
+                <p><strong>Learning curve:</strong> Medium. You need to be comfortable with a terminal (command prompt). But you don't need to know commands: you just type what you want in plain English.</p>
+            </div>
+
+            <p>This is my primary tool. Every project on this site was built with Claude Code. Its strength is working with entire projects: it can read file A, understand its relationship to file B, and make coordinated changes across both. It also stays on your machine, which matters for privacy (see <a href="post-6-security-for-non-coders.html">Part 1</a>).</p>
+
+            <h3>Gemini with Canvas (Google)</h3>
+
+            <div class="tool-card">
+                <h4>What It Is</h4>
+                <p>Google's AI assistant, with a "Canvas" feature that lets you see and edit code or documents in a side panel. It works in your browser: no installation needed.</p>
+                <p><strong>Best for:</strong> Quick front-end work (HTML/CSS), visual design iteration, one-file projects, getting a prototype fast. Also excellent for content writing with real-time preview.</p>
+                <p><strong>Cost:</strong> Free tier available. Gemini Advanced is ~$20/month.</p>
+                <p><strong>Learning curve:</strong> Low. It's a chat window with a code preview panel. If you can use ChatGPT, you can use this.</p>
+            </div>
+
+            <p>Gemini Canvas is great for visual work. If I need a quick landing page, a styled component, or I want to iterate on how something looks, Canvas lets me see changes immediately in the browser. It's less powerful than Claude Code for multi-file projects, but the visual feedback loop is faster.</p>
+
+            <p>My typical workflow: start a project's visual design in Gemini Canvas (fast iteration, immediate preview), then move to Claude Code for the full build (multi-file, backend, data processing).</p>
+
+            <h3>ChatGPT with Canvas (OpenAI)</h3>
+
+            <div class="tool-card">
+                <h4>What It Is</h4>
+                <p>Similar to Gemini Canvas. ChatGPT's version of a side-panel code editor where you can see, edit, and run code alongside the conversation.</p>
+                <p><strong>Best for:</strong> Single-file projects, Python scripts, quick prototypes, people already using ChatGPT for other things.</p>
+                <p><strong>Cost:</strong> ChatGPT Plus is ~$20/month.</p>
+                <p><strong>Learning curve:</strong> Low. Same as Gemini Canvas, essentially.</p>
+            </div>
+
+            <h3>Cursor / Windsurf / Copilot</h3>
+
+            <div class="tool-card">
+                <h4>What It Is</h4>
+                <p>These are AI-enhanced code editors (IDEs). Think of them as Microsoft Word but for code, with an AI assistant built in that can suggest, write, and modify code as you work.</p>
+                <p><strong>Best for:</strong> People who want to learn coding alongside AI assistance. The editor shows you the code, highlights syntax, and the AI helps you write it.</p>
+                <p><strong>Cost:</strong> Free tiers available for all. Paid plans $10-20/month.</p>
+                <p><strong>Learning curve:</strong> Higher. These are professional developer tools with AI bolted on. If you're comfortable in a code editor, they're excellent. If you've never used one, you'll spend time learning the editor itself.</p>
+            </div>
+
+            <p>I don't use these regularly because I prefer to describe what I want in plain English rather than work inside a code editor. But if you want to gradually learn coding while building things, these tools teach you by showing you the code as it's written.</p>
+
+            <h3>v0 (Vercel)</h3>
+
+            <div class="tool-card">
+                <h4>What It Is</h4>
+                <p>A web-based tool specifically for generating front-end components and web interfaces. You describe what you want, it generates a React component with a live preview.</p>
+                <p><strong>Best for:</strong> Beautiful UI components, modern web design, getting a polished look quickly. Exports React code you can use in larger projects.</p>
+                <p><strong>Cost:</strong> Free tier with limits. Paid plans from $20/month.</p>
+                <p><strong>Learning curve:</strong> Low for generating. Higher if you want to integrate the output into a real project.</p>
+            </div>
+
+            <h3>Bolt / Lovable / Replit Agent</h3>
+
+            <div class="tool-card">
+                <h4>What It Is</h4>
+                <p>Full app builders. You describe an app, they generate the entire thing: frontend, backend, database, deployment. "Build me an app that..." and they do.</p>
+                <p><strong>Best for:</strong> Complete apps that need a server, user accounts, databases. Getting from idea to deployed app as fast as possible.</p>
+                <p><strong>Cost:</strong> Free tiers with limits. Paid plans $20-50/month.</p>
+                <p><strong>Learning curve:</strong> Low to start. But debugging when things go wrong is harder because there's more invisible complexity.</p>
+            </div>
+
+            <h2>How I Pick the Right Tool</h2>
+
+            <p>Here's my actual decision process:</p>
+
+            <ul>
+                <li><strong>Quick visual prototype?</strong> Gemini Canvas or v0. Fastest path to "I can see something."</li>
+                <li><strong>Processing local data (spreadsheets, files)?</strong> Claude Code. It needs to be on my machine to read my files.</li>
+                <li><strong>Multi-file project with coordinated changes?</strong> Claude Code. Nothing else handles project-wide context as well.</li>
+                <li><strong>Need a full app with user accounts/database?</strong> Bolt or Replit Agent. They handle the server stuff I don't want to learn.</li>
+                <li><strong>Just need a quick answer or one-off script?</strong> ChatGPT or Gemini, whichever tab is already open.</li>
+                <li><strong>Sensitive data involved?</strong> Claude Code (local) or nothing cloud-based at all.</li>
+            </ul>
+
+            <p>Don't get locked into one tool. I regularly use 2-3 tools on the same project. Generate the design in Canvas, build the full app in Claude Code, use ChatGPT to explain a concept I don't understand. Each tool has strengths. The skill is knowing which to reach for.</p>
+
+            <h2>The Skill That Changes Everything: Custom Instructions</h2>
+
+            <p>Every AI tool lets you set custom instructions (sometimes called "system prompts" or "custom profiles"). This is a document that the AI reads before every conversation, telling it who you are, what you prefer, and how to work with you.</p>
+
+            <p>This is probably the single highest-impact thing a non-coder can learn, because it transforms the AI from a generic assistant into one that knows your preferences, your projects, and your way of working.</p>
+
+            <div class="step-card">
+                <h4>Step by Step: Setting Up Custom Instructions</h4>
+                <p>1. Create a plain text file (or use the built-in custom instructions field in ChatGPT/Gemini settings).</p>
+                <p>2. Write down: who you are, what you're building, what tools/languages you prefer, and what style you like.</p>
+                <p>3. Add specific rules: "I'm not a developer, give me complete working solutions." "Use UK English." "Don't add features I didn't ask for."</p>
+                <p>4. Save it. The AI will read it before every interaction.</p>
+            </div>
+
+            <div class="example-card">
+                <h4>Real Example: My Claude Code Instructions (Simplified)</h4>
+                <p>My custom instructions for Claude Code are extensive (over a page long). But the core parts:</p>
+                <p>"I'm not a developer. Give me complete working solutions. Use UK English. Default stack: Python for data, HTML/CSS/JS for web apps. Don't add features I didn't request. Push to GitHub at regular intervals. When I say 'yes' or a number, execute immediately."</p>
+                <p>These save me typing the same things every session. The AI already knows I want UK English, already knows not to over-engineer, already knows to commit to git regularly. I can focus on what I want to build instead of repeating how I want to work.</p>
+            </div>
+
+            <p>In Claude Code, this file is called <code>CLAUDE.md</code> and lives in your project folder. ChatGPT has "Custom Instructions" in settings. Gemini has "Gems" that serve a similar purpose. Cursor has <code>.cursorrules</code>. Different names, same concept: teaching the AI about you once, so you don't have to repeat yourself forever.</p>
+
+            <h2>Building Automation: From Manual to Overnight</h2>
+
+            <p>This is where things get powerful. And I want to be honest: this part took me months to figure out, building one piece at a time. You don't need all of this on day one. But I want to show you where you can get to, so you know what's possible.</p>
+
+            <h3>Level 1: Saving Repetitive Prompts</h3>
+
+            <p>If you find yourself typing the same kind of instruction over and over, save it as a template. This is the most basic automation there is, and it works with any tool.</p>
+
+            <div class="example-card">
+                <h4>Real Example: Blog Post Template</h4>
+                <p>Every time I ask Claude Code to write a blog post, I'd be typing: "Use the same HTML structure as the other posts, match the nav, use the neo-brutalist style, include a disclaimer..." Instead, I have a saved instruction that covers all of this. I just say "write a blog post about [topic]" and the template handles the rest.</p>
+            </div>
+
+            <h3>Level 2: Custom Skills (Claude Code Specific)</h3>
+
+            <p>Claude Code lets you create "skills", which are reusable commands you trigger with a slash. I've built 12 of these so far, each one saving me repetitive work:</p>
+
+            <ul>
+                <li><strong>/checkpoint</strong> saves my current progress (commits to git, writes a state file)</li>
+                <li><strong>/wrap-up</strong> runs end-of-session tasks (saves progress, updates my personal dashboard, extracts lessons learned)</li>
+                <li><strong>/pickup</strong> reads the state file from last session and resumes where I left off</li>
+                <li><strong>/research</strong> performs deep web research on any topic, saves findings to files</li>
+                <li><strong>/organize</strong> audits and cleans up my file structure</li>
+            </ul>
+
+            <p>Each skill started as something I did manually. After doing it manually 3-4 times, I told Claude Code: "Turn what I just did into a reusable skill." It built the skill file, I tested it, and now it's a one-word command.</p>
+
+            <div class="step-card">
+                <h4>Step by Step: Creating Your First Skill</h4>
+                <p>1. Notice something you do repeatedly. "Every time I start a session, I check git status, read my notes, and look at what I did last time."</p>
+                <p>2. Tell Claude Code: "I want to create a custom skill called /startup that does these three things automatically."</p>
+                <p>3. Claude Code creates a skill file in your settings folder.</p>
+                <p>4. Next time, just type /startup and it all happens automatically.</p>
+                <p>5. Iterate: "Add a step that also checks for any uncommitted changes and warns me."</p>
+            </div>
+
+            <h3>Level 3: Hooks (Automatic Reactions)</h3>
+
+            <p>Hooks are scripts that run automatically when certain things happen. Think of them as "if this, then that" for your AI tool.</p>
+
+            <p>For example, I built a notification hook: when Claude Code finishes a long task or hits a rate limit, a desktop notification pops up so I know to come back. Without this, I'd be constantly checking whether it was done yet.</p>
+
+            <p>Hooks are powerful but can cause problems if you're not careful. I learned this the hard way when a hook I built started scanning my conversation for keywords and triggering false alerts whenever I merely discussed the concept of "rate limits" rather than actually hitting one. The fix was simple (make it read system messages, not the conversation) but the lesson was important: hooks run automatically, so test them well before relying on them.</p>
+
+            <h3>Level 4: Overnight Automation</h3>
+
+            <p>This is the most advanced thing I do, and I'm sharing it because it shows what's possible, not because you should try it on day one.</p>
+
+            <p>I built a custom skill that runs Claude Code while I sleep. It scans my projects for useful work to do (expanding content, fixing known issues, running research), executes tasks in careful loops with regular saves, and handles rate limits by pausing and restarting automatically.</p>
+
+            <p>The practical setup on Windows:</p>
+            <ol>
+                <li>A PowerShell script monitors the Claude Code process</li>
+                <li>If Claude Code hits a rate limit and pauses, the script waits for the cooldown period and then resumes</li>
+                <li>Regular checkpoint saves mean that if anything crashes, work isn't lost</li>
+                <li>A context management system compresses long conversations so the AI doesn't lose track of what it's doing</li>
+            </ol>
+
+            <p>People with Mac Minis take this further: they dedicate an entire machine to running AI tasks 24/7. The Mac Mini sits on a shelf, connected to the internet, running coding tasks while the owner sleeps, works, or lives their life. It's essentially a personal AI employee working on a dedicated workstation.</p>
+
+            <div class="warning-card">
+                <h4>Caution: Overnight Automation</h4>
+                <p>Running any AI tool unattended carries risk. The AI could misunderstand an instruction and make wrong changes across many files. Always use version control (git), always work on a branch (not main), and always review what the AI did before accepting its work. I've had sessions where the overnight work was great, and sessions where I had to revert everything. The safety net is git and the discipline to review before merging.</p>
+            </div>
+
+            <h2>The Iterative Learning Approach</h2>
+
+            <p>Here's something important that no tool's marketing page will tell you: the first thing you build will be rough. The second will be better. By the tenth, you'll be building things you couldn't have imagined at the start.</p>
+
+            <p>This is not about learning to code. It's about learning to communicate with the AI effectively, to set up your environment, to recognise when something is wrong, and to build habits that compound over time.</p>
+
+            <blockquote>I went from "how do I open a terminal?" to running overnight automation in about four months. Not because I'm clever, but because each project taught me something I applied to the next one.</blockquote>
+
+            <p>Here's the actual progression:</p>
+
+            <ol>
+                <li><strong>Month 1: First project.</strong> A simple dashboard. Learned: how to open Claude Code, what a file path is, how to open HTML files in a browser, what git is and why it matters.</li>
+                <li><strong>Month 2: Second and third projects.</strong> More dashboards, a web app. Learned: how to work with data files, how to debug using browser console, that AI makes mistakes and I need to verify.</li>
+                <li><strong>Month 3: Multiple parallel projects.</strong> Learned: custom instructions (game changer), git branching, the sample-then-scale approach, how to structure bigger projects across multiple files.</li>
+                <li><strong>Month 4: Automation and workflow.</strong> Built custom skills, hooks, a notification system. Started running sessions overnight. Learned: the tool is 20% of the value, the workflow is 80%.</li>
+            </ol>
+
+            <p>Each month wasn't planned. I didn't sit down and think "I will learn git branching this month." I just hit a problem (I lost some work), figured out the solution (git), and never had that problem again. That's how iterative learning works: you learn what you need when you need it.</p>
+
+            <h2>What You Actually Need to Get Started</h2>
+
+            <p>If you're reading this and haven't started yet, here's the minimum setup for different approaches:</p>
+
+            <h3>Absolute Minimum (No Installation)</h3>
+
+            <div class="step-card">
+                <h4>Step by Step: Start in 5 Minutes</h4>
+                <p>1. Go to gemini.google.com or chatgpt.com (or claude.ai for Anthropic's chat interface).</p>
+                <p>2. Create an account (free).</p>
+                <p>3. Type: "Build me a simple HTML page that [describes what you want]."</p>
+                <p>4. Copy the code the AI gives you. Open Notepad (Windows) or TextEdit (Mac). Paste it. Save as "mypage.html".</p>
+                <p>5. Double-click the file. It opens in your browser. You've built a web page.</p>
+                <p>That's it. No terminal, no installation, no git, nothing. Just an AI chat and a text editor.</p>
+            </div>
+
+            <h3>Next Level (Local AI Tool)</h3>
+
+            <div class="step-card">
+                <h4>Step by Step: Install Claude Code</h4>
+                <p>1. Install Node.js from nodejs.org (click the big green download button, run the installer, accept all defaults).</p>
+                <p>2. Open your terminal (search "Terminal" on Mac, "Command Prompt" or "Windows Terminal" on Windows).</p>
+                <p>3. Type: npm install -g @anthropic-ai/claude-code</p>
+                <p>4. Type: claude</p>
+                <p>5. Follow the sign-in steps. You'll need a Claude account with an active subscription.</p>
+                <p>6. Navigate to a folder where you want to build things: cd Documents/my-project</p>
+                <p>7. Type claude again. Start talking to it: "Create a folder called test-project and make a simple HTML page with a blue background and the text Hello World."</p>
+                <p>That's your first Claude Code project. From here, just keep building and learning.</p>
+            </div>
+
+            <h3>The Mac Mini Setup (Dedicated AI Workstation)</h3>
+
+            <p>If you're serious about AI-assisted building and want a dedicated machine, the Mac Mini is the popular choice in the community. Here's why and how:</p>
+
+            <ul>
+                <li><strong>Why Mac Mini?</strong> Low cost (~&pound;500-800 for the M-series models), low power consumption (runs 24/7 for pennies), macOS has good terminal/developer tool support, small form factor (lives on a shelf or behind a monitor).</li>
+                <li><strong>The setup:</strong> Install Node.js, install Claude Code (or whichever AI tool you prefer), set up remote access so you can control it from your main computer.</li>
+                <li><strong>How people use it:</strong> SSH (remote terminal access) from their main computer or phone. Start a Claude Code session on the Mini, let it run, check back later. The Mini handles the AI work while your main computer stays free for everything else.</li>
+                <li><strong>Security benefit:</strong> Your sensitive files stay on your main computer. The Mini only has the project files you deliberately copy to it. Physical isolation: the strongest security boundary.</li>
+            </ul>
+
+            <p>You absolutely do not need a Mac Mini to start. I don't have one (yet). But if you find yourself running into rate limits, wanting to run things overnight, or just wanting to keep AI work separate from your personal computing, it's a genuinely practical investment.</p>
+
+            <h2>Docker: The Isolation Layer Explained</h2>
+
+            <p>Docker comes up a lot in AI tool discussions. In Part 1, I mentioned it as a security tool. Here's the practical side for non-coders:</p>
+
+            <p>Think of Docker as a sealed room inside your computer. You put your project in the room, the AI works on it inside the room, and nothing inside can access anything outside unless you explicitly open a door.</p>
+
+            <div class="step-card">
+                <h4>Step by Step: Understanding Docker (No Installation Needed)</h4>
+                <p>1. Your computer has all your files: photos, documents, browser data, everything.</p>
+                <p>2. Docker creates a "container" that has only what you put in it. Just your project files, the code tools, and nothing else.</p>
+                <p>3. An AI tool running inside Docker can only see what's inside the container. It literally cannot access your photos, your documents, your browser, or anything else on your computer.</p>
+                <p>4. When you're done, you can delete the container. Everything inside it disappears. Your computer is exactly as it was before.</p>
+                <p>5. This is useful for: running untrusted code, testing things safely, keeping AI tools away from sensitive files, sharing projects that "just work" on any computer.</p>
+            </div>
+
+            <p>If you want to try Docker:</p>
+            <ol>
+                <li>Install Docker Desktop from docker.com (free for personal use)</li>
+                <li>It adds a "Docker" app to your computer. Open it.</li>
+                <li>From there, you can run containers. Many AI tools provide Docker images (pre-made containers) that you can run with one command.</li>
+            </ol>
+
+            <p>Docker is not required for anything in this guide. It's an advanced safety tool. But understanding what it is helps you understand conversations in the AI builder community, and when someone says "just run it in Docker," you'll know what they mean.</p>
+
+            <h2>Maximising Your AI Subscription</h2>
+
+            <p>Most AI subscriptions have usage limits. Claude Pro gives you a certain amount of usage per day, ChatGPT Plus has limits, Gemini Advanced has limits. Here's how to get the most from what you're paying for:</p>
+
+            <h3>Be Specific, Not Vague</h3>
+            <p>Vague prompts waste tokens (and therefore usage). "Make it better" requires the AI to guess what "better" means. "Make the chart labels larger and change the colour scheme to dark blue and white" is one round trip instead of three.</p>
+
+            <h3>Batch Your Requests</h3>
+            <p>Instead of asking for one thing at a time across five separate messages, list everything you want in a single message. "Change these five things: 1) make the header smaller, 2) add a footer with copyright, 3) change the font to Inter, 4) make the background light grey, 5) add a mobile menu." One message, one response, five changes.</p>
+
+            <h3>Use the Right Model for the Task</h3>
+            <p>Many tools offer different models at different costs. In Claude Code, I use the faster model (Sonnet) for routine work like file organisation and simple edits, and the more powerful model (Opus) for complex architecture, nuanced writing, or debugging that stumped the faster model. This stretches my subscription significantly: most tasks don't need the most powerful model.</p>
+
+            <h3>Context Management</h3>
+            <p>AI tools have a "context window", how much they can remember from the current conversation. As the conversation gets longer, the AI starts forgetting earlier details. I manage this by:</p>
+            <ul>
+                <li>Saving progress regularly (so I can start fresh without losing work)</li>
+                <li>Compacting conversations (a Claude Code feature that summarises the history)</li>
+                <li>Starting new sessions for new topics instead of continuing one massive conversation</li>
+                <li>Keeping important information in files (like CLAUDE.md) that the AI reads at the start, rather than relying on conversation memory</li>
+            </ul>
+
+            <h2>The "Don't Be Afraid to Try" Philosophy</h2>
+
+            <p>I want to end with this because it's the most important thing in the whole guide.</p>
+
+            <p>You are going to break things. Files will have errors. The dashboard will show wrong numbers. The web app will look terrible on your phone. A git commit will include something it shouldn't. You'll accidentally overwrite something and have to figure out how to get it back.</p>
+
+            <p>All of this is normal. All of this is how learning works.</p>
+
+            <p>The reason I can build things now that I couldn't six months ago isn't that I became a developer. It's that I tried, failed, fixed, and tried again enough times that the patterns became familiar. I know what the browser console looks like. I know what "git status" shows me. I know to save before making changes. I know to check the numbers against my source data.</p>
+
+            <p>None of this came from a course or a tutorial. It came from doing the work, making the mistakes, and building the safety nets (git, backups, the "move don't delete" rule) that make those mistakes recoverable.</p>
+
+            <blockquote>The only real mistake is not trying. Everything else is just debugging.</blockquote>
+
+            <p>So here's my actual advice for getting started:</p>
+
+            <ol>
+                <li>Pick one project. Something small that you'd actually use. A birthday tracker, a recipe organiser, a simple budget calculator.</li>
+                <li>Pick one tool. Gemini Canvas for the easiest start. Claude Code if you want more power and are willing to use a terminal.</li>
+                <li>Build it. It will be rough. That's fine.</li>
+                <li>Use it for a week. Note what's wrong, what's missing, what's annoying.</li>
+                <li>Fix those things. Ask the AI for each fix.</li>
+                <li>Start your next project. You'll be noticeably faster and more confident.</li>
+                <li>Repeat forever. Each project teaches you something the last one didn't.</li>
+            </ol>
+
+            <p>That's it. That's the whole method. Try things, check if they work (<a href="post-7-testing-for-non-coders.html">Part 2</a>), keep your data safe (<a href="post-6-security-for-non-coders.html">Part 1</a>), and build the tooling around you as you go.</p>
+
+            <p>Welcome to building without the stack.</p>
+
+            <div class="warning-card">
+                <h4>Final Disclaimer</h4>
+                <p>All tools, techniques, and approaches described in this series are shared for educational purposes based on personal experience. I am not a professional developer, security expert, or software tester. Tools and their pricing change frequently. You use AI tools, code, and any techniques described here entirely at your own risk. Always test with non-sensitive data first. Always keep backups. If you're building anything that handles other people's data, money, or health information, get proper professional advice. I take no responsibility for any data loss, security incidents, or other consequences arising from following this guide.</p>
+            </div>
+
+            <div class="nav-series">
+                <a href="post-7-testing-for-non-coders.html">&larr; Part 2: Testing</a>
+                <a href="../blog.html">All Posts &rarr;</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+    </footer>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">&times;</button>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../shop/index.html">Shop</a>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+</body>
+</html>

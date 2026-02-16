@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Non-Coder's Stack: Tools I Actually Use — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--lime-400);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .tool-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 rgba(0,0,0,1);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .tool-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        .tool-card .tool-role {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--indigo-600);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+        .tool-card p {
+            font-size: 0.95rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        .back-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--slate-900);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--slate-900);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { background: var(--slate-100); }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="article-body">
+            <a href="../blog.html" class="back-link">&larr; All Posts</a>
+
+            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+                <span class="tag" style="background: var(--lime-400); border-color: var(--lime-400);">Tools</span>
+            </div>
+
+            <h1>The Non-Coder's Stack: Tools I Actually Use</h1>
+            <div class="article-meta">6 min read &middot; February 2026</div>
+
+            <p>Developers have strong opinions about their tech stacks. React vs Vue. TypeScript vs JavaScript. Vim vs everything else. I have no opinions about any of this because I don't write code.</p>
+
+            <p>Here's what I actually use to build and ship products, and why each tool earned its place.</p>
+
+            <h2>The core tools</h2>
+
+            <div class="tool-card">
+                <h4>Claude Code (CLI)</h4>
+                <div class="tool-role">Primary builder</div>
+                <p>This is where 90% of building happens. Claude Code runs in my terminal and can read, write, and edit files directly. I describe what I want, it builds it, I review and iterate.</p>
+                <p>The key feature: it has persistent context. I've built a library of custom skills (reusable prompts) that encode my workflow preferences, quality standards, and project conventions. When I start a session, it already knows how I work.</p>
+                <p><strong>Cost:</strong> Max plan subscription. Worth it if you're building daily. The overnight autonomous work alone would justify it.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4>GitHub</h4>
+                <div class="tool-role">Version control + deployment trigger</div>
+                <p>I use GitHub for two things: keeping a history of my work, and triggering deployments. When I push code to the repository, Render automatically deploys the updated site.</p>
+                <p>I don't use branches, pull requests, or code review. It's just me. A single main branch with descriptive commit messages is all I need.</p>
+                <p><strong>Cost:</strong> Free tier.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4>Render</h4>
+                <div class="tool-role">Hosting</div>
+                <p>Static site hosting with auto-deploy from GitHub. I push, it deploys, the site updates. No servers to manage, no build pipelines to configure.</p>
+                <p>I chose Render over Netlify and Vercel because it was the first one that worked when I tried it. That's genuinely the level of evaluation I did.</p>
+                <p><strong>Cost:</strong> Free tier for static sites.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4>VS Code</h4>
+                <div class="tool-role">File viewer (barely)</div>
+                <p>I open VS Code to look at files sometimes. I don't really edit in it. Claude Code does the editing. But it's useful for seeing the file tree and occasionally checking what something looks like.</p>
+                <p><strong>Cost:</strong> Free.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4>Obsidian</h4>
+                <div class="tool-role">Documentation + knowledge management</div>
+                <p>All my project documentation, research files, and session notes live in an Obsidian vault. It's a local markdown editor with graph view and backlinks. My entire project structure is also my documentation structure.</p>
+                <p><strong>Cost:</strong> Free for local use.</p>
+            </div>
+
+            <h2>The occasional tools</h2>
+
+            <div class="tool-card">
+                <h4>Streamlit</h4>
+                <div class="tool-role">Python dashboards</div>
+                <p>For data-heavy projects where I need charts, filters, and interactivity with real data processing (not just display), Streamlit turns a Python script into a web app. My family finance dashboard uses it.</p>
+                <p>For simpler visualisations, I use Chart.js in plain HTML. The decision point: if it needs to process data on load, use Streamlit. If the data is pre-processed, use HTML.</p>
+                <p><strong>Cost:</strong> Free (runs locally).</p>
+            </div>
+
+            <div class="tool-card">
+                <h4>Gemini</h4>
+                <div class="tool-role">UI design</div>
+                <p>I use Google's Gemini for visual design. It generates React component code from UI descriptions, which I then hand to Claude Code to adapt into my project. It's a cross-AI workflow: Gemini designs, Claude builds.</p>
+                <p>The Stackless website's neo-brutalist design came from a Gemini-generated React component that Claude then converted to my stack.</p>
+                <p><strong>Cost:</strong> Free tier.</p>
+            </div>
+
+            <h2>What I don't use</h2>
+
+            <p>No frameworks (React is in one project, but I don't understand it). No package managers. No TypeScript. No Docker. No databases. No testing frameworks. No linters.</p>
+
+            <p>My projects are static HTML/CSS/JS files that you can open by double-clicking. Data lives in JavaScript files loaded via script tags, not fetched from APIs. Everything runs locally with zero dependencies.</p>
+
+            <p>This is deliberate. Every dependency is a thing that can break. Every build tool is a thing I don't understand. Every framework is a thing that will need updating. Plain HTML works in every browser, runs from the filesystem, and will still work in 10 years.</p>
+
+            <h2>The anti-pattern that works</h2>
+
+            <p>Developers would look at my setup and cringe. No tests. No type safety. Inline styles in some places. Global variables in data files. Script tags instead of module imports.</p>
+
+            <p>Here's why it works for me:</p>
+
+            <ul>
+                <li><strong>Zero build step.</strong> I change a file, refresh the browser, it's updated. No webpack, no compilation, no "npm run build".</li>
+                <li><strong>Zero dependencies.</strong> Nothing to install, nothing to update, nothing that breaks when a library releases a new version.</li>
+                <li><strong>Portable.</strong> I can copy my project folder to a USB stick, open it on any computer with a browser, and it works.</li>
+                <li><strong>AI-friendly.</strong> Claude Code can read and edit plain HTML/JS files perfectly. The more complex the stack, the more the AI struggles with configuration, imports, and build tool quirks.</li>
+            </ul>
+
+            <h2>Cost breakdown</h2>
+
+            <p>Monthly cost to run everything:</p>
+            <ul>
+                <li>Claude Code Max: the subscription cost (this is the only paid tool)</li>
+                <li>GitHub: free</li>
+                <li>Render: free</li>
+                <li>Obsidian: free</li>
+                <li>VS Code: free</li>
+                <li>Domain (stackless.tech): a few pounds per year</li>
+            </ul>
+
+            <p>Total: one subscription and a domain name. Everything else is free.</p>
+
+            <h2>When to add complexity</h2>
+
+            <p>I'll add tools when a real problem forces me to, not before. If I need a database, I'll add one. If I need server-side processing, I'll use Streamlit or a serverless function. If I need real-time updates, I'll figure that out then.</p>
+
+            <p>But I won't add complexity because someone on the internet says I should. The stack that ships is better than the stack that's theoretically correct.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+    </footer>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">&times;</button>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../shop/index.html">Shop</a>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+</body>
+</html>

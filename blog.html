@@ -23,6 +23,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="projects.html">Projects</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
                 <li><a href="shop/index.html">Shop</a></li>
                 <li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>
             </ul>
@@ -42,46 +43,94 @@
                 Thoughts on building with AI, learning by doing, and the future of non-traditional development.
             </p>
 
-            <div class="article-list">
-                <div class="article-item">
-                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
-                        <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">Healthcare</span>
-                        <span class="tag" style="background: var(--slate-100);">Coming Soon</span>
-                    </div>
-                    <h3>What I Learned Building an EHR Pathway Template with AI</h3>
-                    <p class="meta">8 min read</p>
-                    <p>A healthcare pathway requires clinical accuracy, technical precision, and real-world usability. Here's what it takes to build one with AI tools, and what you can't automate away.</p>
+            <!-- The Stackless Guide Series -->
+            <div style="background: var(--slate-900); color: var(--white); padding: 1.5rem; margin-bottom: 2rem; border: 3px solid var(--slate-900);">
+                <h2 style="color: var(--lime-400); font-size: 1rem; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 900;">The Stackless Guide</h2>
+                <p style="color: var(--slate-300); font-weight: 500; margin-bottom: 1rem;">A 3-part step-by-step guide to AI coding tools for non-coders. From security to testing to building your toolkit.</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                    <a href="blog/post-6-security-for-non-coders.html" style="color: var(--lime-400); font-weight: 800; font-size: 0.875rem; text-decoration: none;">Part 1: Security &amp; Privacy</a>
+                    <span style="color: var(--slate-500);">&middot;</span>
+                    <a href="blog/post-7-testing-for-non-coders.html" style="color: var(--lime-400); font-weight: 800; font-size: 0.875rem; text-decoration: none;">Part 2: Testing &amp; Validation</a>
+                    <span style="color: var(--slate-500);">&middot;</span>
+                    <a href="blog/post-8-non-coders-toolkit.html" style="color: var(--lime-400); font-weight: 800; font-size: 0.875rem; text-decoration: none;">Part 3: The Toolkit</a>
                 </div>
+            </div>
 
-                <div class="article-item">
+            <div class="article-list">
+                <a href="blog/post-8-non-coders-toolkit.html" class="article-item" style="text-decoration: none; color: inherit; display: block;">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="tag" style="background: var(--yellow-300); border-color: var(--yellow-300);">Toolkit</span>
+                        <span class="tag" style="background: var(--slate-900); color: var(--lime-400); border-color: var(--slate-900); font-size: 0.7rem;">GUIDE PT.3</span>
+                    </div>
+                    <h3>The Non-Coder's Toolkit: AI Tools, Automation, and Building Your Workflow</h3>
+                    <p class="meta">18 min read &middot; February 2026</p>
+                    <p>Claude Code, Gemini Canvas, ChatGPT, Cursor, v0, Bolt. What each tool does, when to use which, and how to build automation that works while you sleep.</p>
+                </a>
+
+                <a href="blog/post-7-testing-for-non-coders.html" class="article-item" style="text-decoration: none; color: inherit; display: block;">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="tag" style="background: var(--indigo-500); color: white; border-color: var(--indigo-500);">Testing</span>
+                        <span class="tag" style="background: var(--slate-900); color: var(--lime-400); border-color: var(--slate-900); font-size: 0.7rem;">GUIDE PT.2</span>
+                    </div>
+                    <h3>Testing for Non-Coders: How to Know If It Actually Works</h3>
+                    <p class="meta">15 min read &middot; February 2026</p>
+                    <p>The AI says it works. But does it? Three levels of testing anyone can do, the sample-then-scale approach, and a checklist you can actually use.</p>
+                </a>
+
+                <a href="blog/post-6-security-for-non-coders.html" class="article-item" style="text-decoration: none; color: inherit; display: block;">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">Security</span>
+                        <span class="tag" style="background: var(--slate-900); color: var(--lime-400); border-color: var(--slate-900); font-size: 0.7rem;">GUIDE PT.1</span>
+                    </div>
+                    <h3>Security for Non-Coders: How I Protect Myself (And You Should Too)</h3>
+                    <p class="meta">12 min read &middot; February 2026</p>
+                    <p>Rule Zero: start with boring data. Plus .gitignore, pre-commit hooks, the "move don't delete" rule, Docker, Mac Minis, and a common sense checklist.</p>
+                </a>
+
+                <a href="blog/post-5-what-ai-gets-wrong.html" class="article-item" style="text-decoration: none; color: inherit; display: block;">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">AI</span>
+                    </div>
+                    <h3>What AI Gets Wrong (And How I Catch It)</h3>
+                    <p class="meta">6 min read &middot; February 2026</p>
+                    <p>AI tools are the most productive and most confidently wrong technology I've ever used. Both are true at the same time. Here's what I've found after 61 sessions.</p>
+                </a>
+
+                <a href="blog/post-4-process-not-code.html" class="article-item" style="text-decoration: none; color: inherit; display: block;">
                     <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
                         <span class="tag" style="background: var(--indigo-500); color: white; border-color: var(--indigo-500);">Business</span>
-                        <span class="tag" style="background: var(--slate-100);">Coming Soon</span>
                     </div>
                     <h3>Why I Share My Process, Not My Code</h3>
-                    <p class="meta">5 min read</p>
-                    <p>The code is not the valuable part. The process, the domain knowledge, and the decision-making are what matter. Here's why I share one and sell the other.</p>
-                </div>
+                    <p class="meta">5 min read &middot; February 2026</p>
+                    <p>Everything I sell could be rebuilt by anyone with the same tools. The code isn't the valuable part. The domain knowledge and decisions are.</p>
+                </a>
 
-                <div class="article-item">
+                <a href="blog/post-3-tools-i-use.html" class="article-item" style="text-decoration: none; color: inherit; display: block;">
                     <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
                         <span class="tag" style="background: var(--lime-400); border-color: var(--lime-400);">Tools</span>
-                        <span class="tag" style="background: var(--slate-100);">Coming Soon</span>
                     </div>
                     <h3>The Non-Coder's Stack: Tools I Actually Use</h3>
-                    <p class="meta">6 min read</p>
-                    <p>Claude, Cursor, GitHub, Streamlit, and a handful of other tools. No framework debates, no dependency hell, just practical tools that get the job done.</p>
-                </div>
+                    <p class="meta">6 min read &middot; February 2026</p>
+                    <p>Claude Code, GitHub, Render, Obsidian, and not much else. No frameworks, no dependencies, no build tools. Here's why that works.</p>
+                </a>
 
-                <div class="article-item">
+                <a href="blog/post-2-non-coder-shipping.html" class="article-item" style="text-decoration: none; color: inherit; display: block;">
                     <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
                         <span class="tag" style="background: var(--amber-400); border-color: var(--amber-400);">Career</span>
-                        <span class="tag" style="background: var(--slate-100);">Coming Soon</span>
                     </div>
                     <h3>From "Almost a Coder" to Actually Shipping Products</h3>
-                    <p class="meta">7 min read</p>
-                    <p>Built my own PC, had a Raspberry Pi, tried to learn Python three times. AI tools finally closed the gap. The path was not planned, the skills compound in unexpected ways.</p>
-                </div>
+                    <p class="meta">7 min read &middot; February 2026</p>
+                    <p>Built my own PC, had a Raspberry Pi, tried to learn Python three times. AI tools finally closed the gap. 61 sessions, 13 projects, and counting.</p>
+                </a>
+
+                <a href="blog/post-1-ehr-pathway.html" class="article-item" style="text-decoration: none; color: inherit; display: block;">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">Healthcare</span>
+                    </div>
+                    <h3>What I Learned Building an EHR Pathway Template with AI</h3>
+                    <p class="meta">8 min read &middot; February 2026</p>
+                    <p>A 7-layer clinical pathway built with AI tools. What worked, what didn't, and why the hardest parts can't be automated.</p>
+                </a>
             </div>
         </div>
     </main>
@@ -95,6 +144,7 @@
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
         <a href="shop/index.html">Shop</a>
     </div>
 

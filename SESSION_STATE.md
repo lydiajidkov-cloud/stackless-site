@@ -24,10 +24,11 @@
 - EHR removed (moved to Clinformatix for bespoke work)
 - "Why £5?" section, milestone tracker, donations placeholder
 
-### Curly Girl Wavy Girl UK (5 pages)
-- index.html, quiz.html, checker.html, about.html, faq.html
-- 113-ingredient database, 257-product database, 50-question FAQ
-- Self-contained styles and JS
+### Curly Girl Wavy Girl UK (6 pages)
+- index.html, quiz.html, checker.html, products.html, about.html, faq.html
+- Smart Checker: 3 input methods (Search Product, Snap Ingredients via OCR, Scan Barcode)
+- 113-ingredient database, 332-product database (257 CG + 75 non-CG), 50-question FAQ
+- Self-contained styles and JS, OCR/barcode libs lazy-loaded from CDN
 
 ## Architecture
 ```
@@ -52,7 +53,7 @@ stackless-site/
     styles.css        - curly girl styles
     app.js            - app logic
     ingredients-data.js  - 113 ingredients + rules
-    products-data.js     - 257 UK products
+    products-data.js     - 332 UK products (257 CG + 75 non-CG)
 ```
 
 ## What's Pending

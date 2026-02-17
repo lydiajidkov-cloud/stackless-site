@@ -28,7 +28,7 @@
   <main class="container" style="padding-top:2rem; padding-bottom:3rem;">
     <section class="hero" style="padding-bottom:2rem;">
       <h1 style="font-size:clamp(2rem, 5vw, 3rem);">Ingredient <span class="highlight">Scanner</span></h1>
-      <p>Paste your ingredient list below to check for CGM compatibility. Search our database of 286+ UK haircare products.</p>
+      <p>Paste your ingredient list below to check for CGM compatibility. Search our database of 330+ UK haircare products, including common non-CG brands.</p>
     </section>
 
     <section style="padding-top:0;">
@@ -54,10 +54,30 @@
         <!-- Tab: Snap Ingredients -->
         <div class="tab-panel" id="tab-snap">
           <div class="card">
-            <div class="coming-soon">
-              <div class="coming-soon-icon">&#128247;</div>
-              <h3>Snap Ingredients</h3>
-              <p class="text-muted">Take a photo of the ingredient list on the back of your product and we'll check every ingredient. Coming soon.</p>
+            <div class="ocr-container">
+              <p class="text-muted mb-2">Take a photo of the ingredient list on the back of your product. We'll read it and check every ingredient.</p>
+              <input type="file" accept="image/*" capture="environment" id="ocrFileInput" class="ocr-file-input" onchange="handleOCRFile(this)">
+              <button class="camera-btn" onclick="document.getElementById('ocrFileInput').click()">
+                <span class="camera-btn-icon">&#128247;</span> Snap Ingredient List
+              </button>
+              <div class="ocr-preview" id="ocrPreview">
+                <img id="ocrImagePreview" class="ocr-image-preview" alt="Photo preview">
+              </div>
+              <div class="ocr-progress" id="ocrProgress">
+                <div class="ocr-progress-bar">
+                  <div class="ocr-progress-fill" id="ocrProgressFill"></div>
+                </div>
+                <div class="ocr-progress-text" id="ocrProgressText">Loading OCR engine...</div>
+              </div>
+              <div class="ocr-review" id="ocrReview">
+                <p class="text-muted mb-2" style="font-size:0.85rem; text-align:left;">Review the extracted text below. Fix any mistakes, then check the ingredients.</p>
+                <textarea class="ocr-review-textarea" id="ocrReviewText" placeholder="Extracted ingredients will appear here..."></textarea>
+                <div class="ocr-review-actions">
+                  <button class="btn btn-primary btn-sm" onclick="checkOCRIngredients()" style="flex:1; border-radius:2rem;">&#128270; Check These Ingredients</button>
+                  <button class="btn btn-secondary btn-sm" onclick="resetOCR()" style="border-radius:2rem;">Try Again</button>
+                </div>
+              </div>
+              <div class="results-container" id="ocrResults"></div>
             </div>
           </div>
         </div>
@@ -65,10 +85,15 @@
         <!-- Tab: Scan Barcode -->
         <div class="tab-panel" id="tab-scan">
           <div class="card">
-            <div class="coming-soon">
-              <div class="coming-soon-icon">&#128722;</div>
-              <h3>Scan Barcode</h3>
-              <p class="text-muted">Scan the barcode on your product to look it up in the Open Beauty Facts database. Coming soon.</p>
+            <div class="barcode-container">
+              <p class="text-muted mb-2">Scan the barcode on your product to look it up. Coverage is limited for UK haircare, so if your product isn't found, try Search or Snap instead.</p>
+              <button class="camera-btn" id="barcodeScanBtn" onclick="startBarcodeScanner()">
+                <span class="camera-btn-icon">&#128722;</span> Scan Barcode
+              </button>
+              <div class="barcode-scanner-box" id="barcodeScannerBox">
+                <div id="barcodeReader" style="width:100%;"></div>
+              </div>
+              <div class="barcode-result" id="barcodeResult"></div>
             </div>
           </div>
         </div>

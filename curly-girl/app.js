@@ -106,6 +106,317 @@ function formatCategory(cat) {
   return cat.replace(/-/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
 }
 
+// ============ OCR (SNAP INGREDIENTS) ============
+
+var tesseractLoaded = false;
+var tesseractWorker = null;
+
+function loadTesseract(callback) {
+  if (tesseractLoaded) { callback(); return; }
+  var script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+  script.onload = function() { tesseractLoaded = true; callback(); };
+  script.onerror = function() {
+    var progress = document.getElementById('ocrProgress');
+    var progressText = document.getElementById('ocrProgressText');
+    if (progress) progress.classList.add('active');
+    if (progressText) progressText.textContent = 'Failed to load OCR engine. Check your internet connection.';
+  };
+  document.head.appendChild(script);
+}
+
+function handleOCRFile(input) {
+  if (!input.files || !input.files[0]) return;
+  var file = input.files[0];
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var preview = document.getElementById('ocrPreview');
+    var img = document.getElementById('ocrImagePreview');
+    if (preview && img) {
+      img.src = e.target.result;
+      preview.classList.add('active');
+    }
+    // Hide previous results
+    var review = document.getElementById('ocrReview');
+    var results = document.getElementById('ocrResults');
+    if (review) review.classList.remove('active');
+    if (results) results.innerHTML = '';
+    runOCR(e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function runOCR(imageData) {
+  var progress = document.getElementById('ocrProgress');
+  var progressFill = document.getElementById('ocrProgressFill');
+  var progressText = document.getElementById('ocrProgressText');
+  if (progress) progress.classList.add('active');
+  if (progressFill) progressFill.style.width = '5%';
+  if (progressText) progressText.textContent = 'Loading OCR engine...';
+
+  loadTesseract(function() {
+    if (progressText) progressText.textContent = 'Recognising text...';
+    if (progressFill) progressFill.style.width = '20%';
+
+    Tesseract.recognize(imageData, 'eng', {
+      logger: function(m) {
+        if (m.status === 'recognizing text' && typeof m.progress === 'number') {
+          var pct = Math.round(20 + m.progress * 75);
+          if (progressFill) progressFill.style.width = pct + '%';
+          if (progressText) progressText.textContent = 'Reading ingredients... ' + Math.round(m.progress * 100) + '%';
+        }
+      }
+    }).then(function(result) {
+      if (progressFill) progressFill.style.width = '100%';
+      if (progressText) progressText.textContent = 'Done!';
+      setTimeout(function() {
+        if (progress) progress.classList.remove('active');
+      }, 800);
+
+      var text = result.data.text || '';
+      // Clean up OCR artifacts
+      text = text.replace(/\n+/g, ', ').replace(/\s{2,}/g, ' ').trim();
+
+      var review = document.getElementById('ocrReview');
+      var reviewText = document.getElementById('ocrReviewText');
+      if (review) review.classList.add('active');
+      if (reviewText) reviewText.value = text;
+    }).catch(function(err) {
+      if (progressText) progressText.textContent = 'OCR failed: ' + (err.message || 'Unknown error');
+      if (progressFill) progressFill.style.width = '0%';
+    });
+  });
+}
+
+function checkOCRIngredients() {
+  var reviewText = document.getElementById('ocrReviewText');
+  var resultsEl = document.getElementById('ocrResults');
+  if (!reviewText || !resultsEl) return;
+
+  var raw = reviewText.value.trim();
+  if (!raw) return;
+
+  var items = parseIngredients(raw);
+  var results = [];
+  var hasNotApproved = false;
+  var hasCaution = false;
+
+  for (var i = 0; i < items.length; i++) {
+    var match = matchIngredient(items[i]);
+    if (match) {
+      results.push({ input: items[i], name: match.name, status: match.status, reason: match.reason, category: match.category });
+      if (match.status === 'not_approved') hasNotApproved = true;
+      if (match.status === 'caution') hasCaution = true;
+    } else {
+      results.push({ input: items[i], name: items[i], status: 'unknown', reason: 'Not in our database. Check CurlsBot.com for verification.', category: 'unknown' });
+    }
+  }
+
+  var verdictClass, verdictText;
+  if (hasNotApproved) {
+    verdictClass = 'verdict-not-approved';
+    verdictText = 'Not CG Approved: contains problematic ingredients';
+  } else if (hasCaution) {
+    verdictClass = 'verdict-caution';
+    verdictText = 'Caution: some ingredients may cause buildup';
+  } else {
+    verdictClass = 'verdict-approved';
+    verdictText = 'CG Approved: all ingredients look good!';
+  }
+
+  var html = '<div class="verdict-banner ' + verdictClass + '" style="margin-top:1rem;">' + verdictText + '</div>';
+  html += '<div class="ingredient-list">';
+  for (var i = 0; i < results.length; i++) {
+    var r = results[i];
+    var badgeLabel = r.status === 'not_approved' ? 'Not Approved' :
+                     r.status === 'approved' ? 'Approved' :
+                     r.status === 'caution' ? 'Caution' : 'Unknown';
+    html += '<div class="ingredient-item">';
+    html += '  <div class="ingredient-dot dot-' + r.status + '"></div>';
+    html += '  <div class="ingredient-info">';
+    html += '    <div class="ingredient-name status-' + r.status + '">' + escHtml(r.name) + '</div>';
+    html += '    <div class="ingredient-reason">' + escHtml(r.reason) + '</div>';
+    html += '  </div>';
+    html += '  <span class="ingredient-badge badge-' + r.status.replace('not_approved', 'not-approved') + '">' + badgeLabel + '</span>';
+    html += '</div>';
+  }
+  html += '</div>';
+  resultsEl.innerHTML = html;
+}
+
+function resetOCR() {
+  var preview = document.getElementById('ocrPreview');
+  var progress = document.getElementById('ocrProgress');
+  var review = document.getElementById('ocrReview');
+  var results = document.getElementById('ocrResults');
+  var fileInput = document.getElementById('ocrFileInput');
+  if (preview) preview.classList.remove('active');
+  if (progress) progress.classList.remove('active');
+  if (review) review.classList.remove('active');
+  if (results) results.innerHTML = '';
+  if (fileInput) fileInput.value = '';
+}
+
+// ============ BARCODE SCANNER ============
+
+var html5QrcodeLoaded = false;
+var html5QrcodeScanner = null;
+
+function loadHtml5Qrcode(callback) {
+  if (html5QrcodeLoaded) { callback(); return; }
+  var script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js';
+  script.onload = function() { html5QrcodeLoaded = true; callback(); };
+  script.onerror = function() {
+    var result = document.getElementById('barcodeResult');
+    if (result) {
+      result.classList.add('active');
+      result.innerHTML = '<div class="info-box"><div class="info-box-icon">&#9888;</div><div>Failed to load barcode scanner. Check your internet connection.</div></div>';
+    }
+  };
+  document.head.appendChild(script);
+}
+
+function startBarcodeScanner() {
+  var scannerBox = document.getElementById('barcodeScannerBox');
+  var scanBtn = document.getElementById('barcodeScanBtn');
+  var resultEl = document.getElementById('barcodeResult');
+
+  if (html5QrcodeScanner) {
+    html5QrcodeScanner.stop().then(function() {
+      html5QrcodeScanner = null;
+      if (scannerBox) scannerBox.classList.remove('active');
+      if (scanBtn) scanBtn.innerHTML = '<span class="camera-btn-icon">&#128722;</span> Scan Barcode';
+    }).catch(function() {});
+    return;
+  }
+
+  if (resultEl) { resultEl.classList.remove('active'); resultEl.innerHTML = ''; }
+  if (scanBtn) scanBtn.innerHTML = '<span class="camera-btn-icon">&#9209;</span> Stop Scanner';
+
+  loadHtml5Qrcode(function() {
+    if (scannerBox) scannerBox.classList.add('active');
+    html5QrcodeScanner = new Html5Qrcode('barcodeReader');
+    html5QrcodeScanner.start(
+      { facingMode: 'environment' },
+      { fps: 10, qrbox: { width: 250, height: 150 }, aspectRatio: 1.5 },
+      function(decodedText) {
+        // Barcode scanned successfully
+        html5QrcodeScanner.stop().then(function() {
+          html5QrcodeScanner = null;
+          if (scannerBox) scannerBox.classList.remove('active');
+          if (scanBtn) scanBtn.innerHTML = '<span class="camera-btn-icon">&#128722;</span> Scan Again';
+          lookupBarcode(decodedText);
+        });
+      },
+      function() { /* ignore scan errors, keep scanning */ }
+    ).catch(function(err) {
+      if (scannerBox) scannerBox.classList.remove('active');
+      if (scanBtn) scanBtn.innerHTML = '<span class="camera-btn-icon">&#128722;</span> Scan Barcode';
+      if (resultEl) {
+        resultEl.classList.add('active');
+        var msg = 'Could not access camera.';
+        if (err && err.toString().indexOf('NotAllowedError') !== -1) {
+          msg = 'Camera permission denied. Please allow camera access in your browser settings and try again.';
+        } else if (err && err.toString().indexOf('NotFoundError') !== -1) {
+          msg = 'No camera found on this device. Try the Search or Snap tab instead.';
+        }
+        resultEl.innerHTML = '<div class="info-box"><div class="info-box-icon">&#9888;</div><div><p>' + msg + '</p></div></div>';
+      }
+    });
+  });
+}
+
+function lookupBarcode(barcode) {
+  var resultEl = document.getElementById('barcodeResult');
+  if (!resultEl) return;
+
+  resultEl.classList.add('active');
+  resultEl.innerHTML = '<div class="info-box" style="justify-content:center;"><div class="info-box-icon" style="animation:spin 1s linear infinite;">&#9881;</div><div>Looking up barcode ' + escHtml(barcode) + '...</div></div>';
+
+  fetch('https://world.openfoodfacts.org/api/v2/product/' + encodeURIComponent(barcode) + '.json')
+    .then(function(response) { return response.json(); })
+    .then(function(data) {
+      if (data.status === 1 && data.product) {
+        var p = data.product;
+        var name = p.product_name || 'Unknown product';
+        var brand = p.brands || 'Unknown brand';
+        var ingredients = p.ingredients_text || p.ingredients_text_en || '';
+
+        var html = '<div class="card" style="margin-top:1rem; text-align:left;">';
+        html += '<h4 style="margin-bottom:0.25rem;">' + escHtml(name) + '</h4>';
+        html += '<p class="text-muted" style="font-size:0.85rem;">' + escHtml(brand) + ' &middot; Barcode: ' + escHtml(barcode) + '</p>';
+
+        if (ingredients) {
+          html += '<p style="font-size:0.85rem; margin-top:0.75rem; color:var(--text-muted);">Ingredients found. Checking CGM compatibility...</p>';
+          html += '</div>';
+
+          // Run ingredient check
+          var items = parseIngredients(ingredients);
+          var results = [];
+          var hasNotApproved = false;
+          var hasCaution = false;
+
+          for (var i = 0; i < items.length; i++) {
+            var match = matchIngredient(items[i]);
+            if (match) {
+              results.push({ input: items[i], name: match.name, status: match.status, reason: match.reason, category: match.category });
+              if (match.status === 'not_approved') hasNotApproved = true;
+              if (match.status === 'caution') hasCaution = true;
+            } else {
+              results.push({ input: items[i], name: items[i], status: 'unknown', reason: 'Not in our database.', category: 'unknown' });
+            }
+          }
+
+          var verdictClass, verdictText;
+          if (hasNotApproved) {
+            verdictClass = 'verdict-not-approved';
+            verdictText = 'Not CG Approved: contains problematic ingredients';
+          } else if (hasCaution) {
+            verdictClass = 'verdict-caution';
+            verdictText = 'Caution: some ingredients may cause buildup';
+          } else {
+            verdictClass = 'verdict-approved';
+            verdictText = 'CG Approved: all ingredients look good!';
+          }
+
+          html += '<div class="verdict-banner ' + verdictClass + '">' + verdictText + '</div>';
+          html += '<div class="ingredient-list">';
+          for (var i = 0; i < results.length; i++) {
+            var r = results[i];
+            var badgeLabel = r.status === 'not_approved' ? 'Not Approved' :
+                             r.status === 'approved' ? 'Approved' :
+                             r.status === 'caution' ? 'Caution' : 'Unknown';
+            html += '<div class="ingredient-item">';
+            html += '  <div class="ingredient-dot dot-' + r.status + '"></div>';
+            html += '  <div class="ingredient-info">';
+            html += '    <div class="ingredient-name status-' + r.status + '">' + escHtml(r.name) + '</div>';
+            html += '    <div class="ingredient-reason">' + escHtml(r.reason) + '</div>';
+            html += '  </div>';
+            html += '  <span class="ingredient-badge badge-' + r.status.replace('not_approved', 'not-approved') + '">' + badgeLabel + '</span>';
+            html += '</div>';
+          }
+          html += '</div>';
+        } else {
+          html += '<div class="info-box" style="margin-top:0.75rem;"><div class="info-box-icon">&#128533;</div><div>Product found but no ingredient list available in the database. Try the <strong>Snap</strong> tab to photograph the ingredients instead.</div></div>';
+          html += '</div>';
+        }
+
+        resultEl.innerHTML = html;
+      } else {
+        resultEl.innerHTML = '<div class="card" style="margin-top:1rem; text-align:center;">' +
+          '<div style="font-size:2rem; margin-bottom:0.75rem;">&#128533;</div>' +
+          '<h4>Product not found</h4>' +
+          '<p class="text-muted" style="font-size:0.85rem;">Barcode ' + escHtml(barcode) + ' isn\'t in the Open Beauty Facts database. UK haircare coverage is limited.</p>' +
+          '<p class="text-muted" style="font-size:0.85rem; margin-top:0.5rem;">Try <strong>Search Product</strong> to check our 300+ UK product database, or <strong>Snap Ingredients</strong> to photograph the label.</p>' +
+          '</div>';
+      }
+    })
+    .catch(function() {
+      resultEl.innerHTML = '<div class="info-box"><div class="info-box-icon">&#9888;</div><div>Network error looking up barcode. Check your internet connection and try again.</div></div>';
+    });
+}
+
 // ============ INGREDIENT CHECKER ============
 
 function parseIngredients(text) {

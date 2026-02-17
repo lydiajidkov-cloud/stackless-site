@@ -1,5 +1,5 @@
 // Curly Girl Wavy Girl UK — Product Database
-// 332 products: 257 CGM-reviewed + 75 common non-CG UK products
+// 335 products: 260 CGM-reviewed + 75 common non-CG UK products
 // Structure: window.CG_PRODUCTS global for file:// compatibility
 // Source: research-uk-products-expanded.md (2026-02-15), research-non-cgm-products.js (2026-02-17)
 
@@ -404,7 +404,12 @@ window.CG_PRODUCTS = [
   { id: 329, name: "John Frieda Sheer Blonde Go Blonder Conditioner 250ml", brand: "John Frieda", price: "£5-7", retailer: "Boots / Superdrug / Tesco", category: "conditioner", cgm: "not_approved", hairType: "all", weight: "n/a", tags: ["warning"], notes: "Contains dimethicone + phenyl trimethicone. Extra gloss but extra buildup." },
   { id: 330, name: "John Frieda Brilliant Brunette Midnight Conditioner 250ml", brand: "John Frieda", price: "£5-7", retailer: "Boots / Superdrug / Tesco", category: "conditioner", cgm: "not_approved", hairType: "all", weight: "n/a", tags: ["warning"], notes: "Contains dimethicone + dimethiconol + amodimethicone. Triple silicone formula." },
   { id: 331, name: "John Frieda Frizz Ease Miraculous Recovery Conditioner 250ml", brand: "John Frieda", price: "£5-7", retailer: "Boots / Superdrug / Tesco", category: "conditioner", cgm: "not_approved", hairType: "all", weight: "n/a", tags: ["warning"], notes: "Contains dimethicone + amodimethicone. 'Miraculous recovery' is silicone coating, not real repair." },
-  { id: 332, name: "John Frieda Frizz Ease Flawlessly Straight Shampoo 250ml", brand: "John Frieda", price: "£5-7", retailer: "Boots / Superdrug / Tesco", category: "shampoo", cgm: "not_approved", hairType: "all", weight: "n/a", tags: ["warning"], notes: "Contains dimethicone + SLES. Designed to straighten, opposite of CGM goals." }
+  { id: 332, name: "John Frieda Frizz Ease Flawlessly Straight Shampoo 250ml", brand: "John Frieda", price: "£5-7", retailer: "Boots / Superdrug / Tesco", category: "shampoo", cgm: "not_approved", hairType: "all", weight: "n/a", tags: ["warning"], notes: "Contains dimethicone + SLES. Designed to straighten, opposite of CGM goals." },
+
+  // Reset / clarifying shampoos (used in quiz Step 0)
+  { id: 333, name: "Johnson's Baby Shampoo", brand: "Johnson's", price: "£1.50-2.50", retailer: "Boots / Superdrug / Tesco / ASDA", category: "shampoo", cgm: "caution", hairType: "all", weight: "lightweight", tags: ["budget-starter"], notes: "Classic CGM reset wash. Contains SLS (sulphate) but no silicones, making it ideal for the one-time clarifying wash before starting CGM. Not for regular use." },
+  { id: 334, name: "Alberto Balsam Shampoo", brand: "Alberto Balsam", price: "£1-1.50", retailer: "Boots / Superdrug / Tesco / ASDA", category: "shampoo", cgm: "caution", hairType: "all", weight: "lightweight", tags: ["budget-starter"], notes: "Budget clarifying shampoo. Contains SLS but no silicones. Popular CGM reset wash choice. Not for regular use on CGM." },
+  { id: 335, name: "Pretty Curly Girl Reset Shampoo", brand: "Pretty Curly Girl", price: "£8-10", retailer: "Amazon UK / Pretty Curly Girl website", category: "shampoo", cgm: "approved", hairType: "all", weight: "lightweight", tags: [], notes: "Dedicated CGM reset shampoo from a small UK curly hair brand. Sulphate-free clarifying formula designed specifically for the CGM reset wash." }
 ];
 
 // Discontinued / reformulated products — warn users

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Canvas Changed How I Build Frontends — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--lime-400);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .tool-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 rgba(0,0,0,1);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .tool-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        .tool-card .tool-role {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--indigo-600);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+        .tool-card p {
+            font-size: 0.95rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 2px solid var(--slate-900);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .comparison-table th {
+            background: var(--slate-900);
+            color: var(--white);
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+        .comparison-table td { font-weight: 600; }
+        .comparison-table tr:nth-child(even) { background: var(--slate-100); }
+        .back-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--slate-900);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--slate-900);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { background: var(--slate-100); }
+        .workflow-step {
+            background: var(--white);
+            border: 2px solid var(--slate-900);
+            padding: 1.25rem;
+            margin: 0.75rem 0;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .step-number {
+            background: var(--indigo-600);
+            color: var(--white);
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+        .step-text { font-size: 0.9375rem; font-weight: 600; color: var(--slate-700); line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="article-body">
+            <a href="../blog.html" class="back-link">&larr; All Posts</a>
+
+            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+                <span class="tag" style="background: var(--lime-400); border-color: var(--lime-400);">Tools</span>
+                <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">AI</span>
+            </div>
+
+            <h1>Gemini Canvas Changed How I Build Frontends</h1>
+            <div class="article-meta">8 min read &middot; February 2026</div>
+
+            <p>I mentioned Gemini briefly in my <a href="post-3-tools-i-use.html">tools post</a> as "the UI design tool." That was underselling it. Six months later, Gemini Canvas has become the most impressive visual AI tool I've used, and it's reshaped how I approach any project that needs a frontend.</p>
+
+            <p>This is the tool that makes me go: <em>this is actually magic</em>. Not "magic" in the marketing sense. Magic in the "I described a website and it appeared in front of me, working, in 30 seconds" sense.</p>
+
+            <h2>What Gemini Canvas Actually Is</h2>
+
+            <p>Canvas is a workspace inside Google's Gemini app (launched March 2025) where your AI-generated content lives in a separate editing space, not buried in a chat log. For code, this means: you describe what you want, it generates HTML/CSS/JavaScript in a code tab, and a live preview renders alongside it.</p>
+
+            <p>The key: you can edit the code directly and see the preview update in real time. Or you can keep describing changes in natural language and watch them happen. Or both. It's not one mode or the other: it's a continuous loop between talking and tweaking.</p>
+
+            <h2>Why This Matters for Non-Coders</h2>
+
+            <p>Before Canvas, my workflow for any visual component was:</p>
+
+            <ol>
+                <li>Describe what I want to Claude Code (text-only terminal)</li>
+                <li>Claude generates the HTML</li>
+                <li>Open the file in a browser to see what it looks like</li>
+                <li>Go back to the terminal, describe what's wrong</li>
+                <li>Repeat steps 2-4 until it looks right</li>
+            </ol>
+
+            <p>That loop works. I've built entire websites with it. But it's <strong>slow for visual work</strong> because you're constantly context-switching between describing and seeing. Every iteration costs a round trip.</p>
+
+            <p>With Canvas, the loop collapses. You see the result as you describe it. Visual feedback is instant. You can point at something on screen and say "make that bigger" or "change the colour of that section" and watch it happen. For someone who thinks visually but works in text, this is the gap that needed closing.</p>
+
+            <h2>My Cross-AI Workflow</h2>
+
+            <p>I don't use Canvas for everything. I use it for the part it's best at: <strong>visual design and prototyping</strong>. Then I hand the result to Claude Code for the part <em>it's</em> best at: <strong>integration, logic, and multi-file project management</strong>.</p>
+
+            <div class="workflow-step">
+                <div class="step-number">1</div>
+                <div class="step-text"><strong>Design in Canvas:</strong> Describe the page layout, colour scheme, component structure. Iterate visually until it looks right. Canvas generates clean HTML/CSS.</div>
+            </div>
+            <div class="workflow-step">
+                <div class="step-number">2</div>
+                <div class="step-text"><strong>Copy to Claude Code:</strong> Take the generated code and hand it to Claude in my terminal. "Here's the design I made in Gemini Canvas. Adapt it to my project's existing styles and structure."</div>
+            </div>
+            <div class="workflow-step">
+                <div class="step-number">3</div>
+                <div class="step-text"><strong>Integrate and extend:</strong> Claude handles the boring bits: matching CSS variables, connecting to data files, adding mobile responsiveness, wiring up interactivity, making it work with the rest of the codebase.</div>
+            </div>
+            <div class="workflow-step">
+                <div class="step-number">4</div>
+                <div class="step-text"><strong>Iterate both sides:</strong> If I need a new visual element, back to Canvas. If I need logic changes, stay in Claude. Each tool stays in its lane.</div>
+            </div>
+
+            <p>This is how the Stackless website's neo-brutalist design came together. Canvas gave me the visual identity (bold borders, box shadows, punchy colours). Claude Code made it a real, deployable site with multiple pages, a blog system, and a shop.</p>
+
+            <h2>What Canvas Is Best At</h2>
+
+            <div class="tool-card">
+                <h4>Instant Visual Prototyping</h4>
+                <div class="tool-role">Strongest feature</div>
+                <p>"Build me a landing page for a clinical informatics consultancy. Navy and teal colour scheme, professional, with a hero section, three service tiers, and a case study preview." Result: working page in under a minute.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4>Screenshot-to-Code</h4>
+                <div class="tool-role">Genuinely useful</div>
+                <p>Upload a screenshot of a website you like, and Canvas generates a working replica. Not pixel-perfect, but structurally accurate enough to start from. I've used this to reverse-engineer layouts I admire.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4>Iterative Design Refinement</h4>
+                <div class="tool-role">Where it shines vs chat-only AI</div>
+                <p>"Make the heading bigger. Move the CTA above the fold. Add more whitespace between sections. Change the font to Inter." Each instruction updates the preview instantly. This is the workflow that's hard to replicate in a terminal.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4>Interactive Components</h4>
+                <div class="tool-role">Surprisingly capable</div>
+                <p>Canvas can build working quizzes, dashboards with Chart.js, filterable product catalogues, and tabbed interfaces, complete with JavaScript. The auto-error resolution feature means it catches its own runtime bugs and fixes them.</p>
+            </div>
+
+            <h2>What Canvas Is Not Great At</h2>
+
+            <p>Honesty time. Canvas has clear limitations that matter for anyone doing serious work:</p>
+
+            <ul>
+                <li><strong>Design polish varies wildly.</strong> Without specific prompts about typography, spacing, and colour systems, you get generic-looking output. You need to direct the aesthetics, not just the structure.</li>
+                <li><strong>Solo only.</strong> No shared editing, no collaboration. It's a personal workspace.</li>
+                <li><strong>Single-file thinking.</strong> Canvas generates self-contained HTML files. It doesn't understand multi-page sites, shared stylesheets, or project architecture. That's why I hand off to Claude Code for integration.</li>
+                <li><strong>No version control.</strong> There's no "undo history" beyond basic browser back. No Git, no snapshots. If you iterate past something good, it's gone.</li>
+                <li><strong>Business/Workspace restrictions.</strong> Google Workspace accounts have limitations on sharing Canvas content that contains Workspace data.</li>
+            </ul>
+
+            <h2>How It Compares</h2>
+
+            <p>I've used most of the visual AI tools out there. Here's my honest take as a non-coder:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Tool</th>
+                        <th>Best For</th>
+                        <th>Non-Coder Friendly?</th>
+                        <th>Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Gemini Canvas</strong></td>
+                        <td>Visual prototyping, rapid iteration, screenshot-to-code</td>
+                        <td>Very: instant visual feedback</td>
+                        <td>Free tier available</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Claude Code</strong></td>
+                        <td>Multi-file projects, logic, integration, automation</td>
+                        <td>Yes, but text-only (no visual preview)</td>
+                        <td>Subscription</td>
+                    </tr>
+                    <tr>
+                        <td><strong>v0 (Vercel)</strong></td>
+                        <td>React/Tailwind components</td>
+                        <td>Somewhat: assumes React knowledge</td>
+                        <td>Free tier</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bolt.new</strong></td>
+                        <td>Full-stack app scaffolding</td>
+                        <td>Moderate: needs framework decisions</td>
+                        <td>Free tier</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Claude Artifacts</strong></td>
+                        <td>Quick component previews in chat</td>
+                        <td>Yes, very approachable</td>
+                        <td>Included in Claude</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>My take: <strong>Canvas and Claude Code together</strong> is the most productive combination for a non-coder. Canvas for eyes, Claude for hands. Each tool covers the other's weakness.</p>
+
+            <h2>The Bigger Picture</h2>
+
+            <p>A year ago, the idea of a non-coder building a professional website with multiple pages, interactive features, a shop, and a blog would have seemed absurd. Now I've done it three times (Stackless, Curly Girl Wavy Girl, and now a clinical informatics site).</p>
+
+            <p>Visual AI tools like Canvas are the final piece that makes this genuinely practical. Not because they're perfect, but because they close the feedback loop. You describe, you see, you adjust. No waiting, no context-switching, no "I'll open the browser and check."</p>
+
+            <p>The tools are getting better fast. Canvas in February 2026 is notably more capable than Canvas in March 2025. Auto-error resolution, data persistence, screenshot-to-code: these features didn't exist at launch. By this time next year, the gap between "described it" and "shipped it" will be even smaller.</p>
+
+            <p>If you're a non-coder thinking about building something visual: start with Canvas. Get the design right. Then bring it to your builder of choice. The combination is genuinely powerful.</p>
+
+            <blockquote>
+                "I don't write code. I describe things and iterate until they're right. Canvas makes the iteration loop instant for visual work, and that changes everything."
+            </blockquote>
+
+            <h2>Related Posts</h2>
+            <ul>
+                <li><a href="post-3-tools-i-use.html">The Non-Coder's Stack: Tools I Actually Use</a> (the full tools overview)</li>
+                <li><a href="post-8-non-coders-toolkit.html">The Non-Coder's Toolkit</a> (deep-dive on all AI coding tools)</li>
+                <li><a href="post-2-non-coder-shipping.html">How a Non-Coder Shipped a Finance Dashboard</a> (a build story)</li>
+                <li><a href="post-5-what-ai-gets-wrong.html">What AI Gets Wrong (And How I Catch It)</a></li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>Stackless &copy; 2026 &mdash; Built with Claude Code. No devs were hired.</p>
+    </footer>
+
+    <script>
+        document.getElementById('hamburger')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('show');
+        });
+    </script>
+</body>
+</html>

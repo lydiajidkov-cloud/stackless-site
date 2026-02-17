@@ -7,6 +7,105 @@ function toggleNav() {
   if (links) links.classList.toggle('open');
 }
 
+// ============ TAB SWITCHING ============
+
+function switchTab(tabName) {
+  // Update tab buttons
+  var tabs = document.querySelectorAll('.checker-tab');
+  for (var i = 0; i < tabs.length; i++) {
+    tabs[i].classList.remove('active');
+    if (tabs[i].getAttribute('data-tab') === tabName) {
+      tabs[i].classList.add('active');
+    }
+  }
+  // Update panels
+  var panels = document.querySelectorAll('.tab-panel');
+  for (var i = 0; i < panels.length; i++) {
+    panels[i].classList.remove('active');
+  }
+  var target = document.getElementById('tab-' + tabName);
+  if (target) target.classList.add('active');
+}
+
+// ============ PRODUCT SEARCH ============
+
+function searchProducts() {
+  var input = document.getElementById('productSearchInput');
+  var resultsEl = document.getElementById('productSearchResults');
+  if (!input || !resultsEl) return;
+
+  var query = input.value.trim().toLowerCase();
+  if (query.length < 2) {
+    resultsEl.innerHTML = '';
+    return;
+  }
+
+  var products = window.CG_PRODUCTS || [];
+  var matches = [];
+
+  for (var i = 0; i < products.length; i++) {
+    var p = products[i];
+    var searchable = (p.brand + ' ' + p.name).toLowerCase();
+    if (searchable.indexOf(query) !== -1) {
+      matches.push(p);
+      if (matches.length >= 15) break;
+    }
+  }
+
+  if (matches.length === 0) {
+    resultsEl.innerHTML = '<p class="text-muted mt-1" style="font-size:0.9rem;">No products found. Try a different name, or paste the ingredient list below.</p>';
+    return;
+  }
+
+  var html = '';
+  for (var i = 0; i < matches.length; i++) {
+    var m = matches[i];
+    var verdictClass = 'product-' + m.cgm;
+    var verdictLabel = m.cgm === 'approved' ? 'CG Approved' :
+                       m.cgm === 'caution' ? 'Caution' : 'Not Approved';
+    var badgeClass = 'badge-' + m.cgm.replace('not_approved', 'not-approved');
+
+    html += '<div class="product-card ' + verdictClass + '" onclick="toggleProductDetail(this)">';
+    html += '  <div class="product-card-main">';
+    html += '    <div class="product-card-info">';
+    html += '      <div class="product-card-name">' + escHtml(m.name) + '</div>';
+    html += '      <div class="product-card-meta">' + escHtml(m.brand) + ' &middot; ' + escHtml(m.retailer) + ' &middot; ' + escHtml(m.price) + '</div>';
+    html += '    </div>';
+    html += '    <span class="ingredient-badge ' + badgeClass + '">' + verdictLabel + '</span>';
+    html += '  </div>';
+    html += '  <div class="product-card-detail">';
+    html += '    <div class="product-detail-row"><span class="product-detail-label">Category:</span> ' + escHtml(formatCategory(m.category)) + '</div>';
+    html += '    <div class="product-detail-row"><span class="product-detail-label">Hair type:</span> ' + escHtml(m.hairType) + '</div>';
+    html += '    <div class="product-detail-row"><span class="product-detail-label">Weight:</span> ' + escHtml(m.weight) + '</div>';
+    if (m.notes) {
+      html += '  <div class="product-detail-row"><span class="product-detail-label">Notes:</span> ' + escHtml(m.notes) + '</div>';
+    }
+    if (m.tags && m.tags.length > 0) {
+      html += '  <div class="product-detail-tags">';
+      for (var j = 0; j < m.tags.length; j++) {
+        html += '<span class="product-tag">' + escHtml(m.tags[j]) + '</span>';
+      }
+      html += '  </div>';
+    }
+    html += '  </div>';
+    html += '</div>';
+  }
+
+  if (matches.length >= 15) {
+    html += '<p class="text-muted mt-1" style="font-size:0.85rem;">Showing first 15 results. Type more to narrow down.</p>';
+  }
+
+  resultsEl.innerHTML = html;
+}
+
+function toggleProductDetail(card) {
+  card.classList.toggle('expanded');
+}
+
+function formatCategory(cat) {
+  return cat.replace(/-/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+}
+
 // ============ INGREDIENT CHECKER ============
 
 function parseIngredients(text) {

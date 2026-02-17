@@ -3,56 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ingredient Checker | Curly Girl Wavy Girl UK</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Ingredient Scanner | Curly Girl Wavy Girl UK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Navigation -->
   <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">Curly Girl Wavy Girl <span>UK</span></a>
-      <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-icon">&#127754;</span>
+        CurlMagic UK
+      </a>
       <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="quiz.html">Find My Routine</a></li>
-        <li><a href="checker.html" class="active">Ingredient Checker</a></li>
-        <li><a href="products.html">Products</a></li>
-        <li><a href="faq.html">FAQ</a></li>
-        <li><a href="about.html">The Method</a></li>
+        <li><a href="index.html">&#10024; Home</a></li>
+        <li><a href="checker.html" class="active">&#128270; Scanner</a></li>
+        <li><a href="products.html">&#128218; Products</a></li>
+        <li><a href="quiz.html">&#9889; Quiz</a></li>
+        <li><a href="faq.html">&#128172; FAQ</a></li>
       </ul>
+      <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
     </div>
   </nav>
 
-  <div class="container">
-    <!-- Hero -->
-    <section class="hero">
-      <h1>Is your product <span class="highlight">Curly Girl approved</span>?</h1>
-      <p>Paste your product's ingredient list below and we'll check every ingredient against the Curly Girl Method database. Built for the UK curly community.</p>
+  <main class="container" style="padding-top:2rem; padding-bottom:3rem;">
+    <section class="hero" style="padding-bottom:2rem;">
+      <h1 style="font-size:clamp(2rem, 5vw, 3rem);">Ingredient <span class="highlight">Scanner</span></h1>
+      <p>Paste your ingredient list below to check for CGM compatibility. Search our database of 286+ UK haircare products.</p>
     </section>
 
-    <!-- Ingredient Checker -->
-    <section class="section" id="checker">
+    <section style="padding-top:0;">
       <div class="checker-wrap">
-        <div class="card">
-          <h2>Ingredient Checker</h2>
-          <p class="text-muted mb-2">Paste a full ingredient list from the back of your product. We'll separate and analyse each one.</p>
-          <textarea class="checker-textarea" id="ingredientInput" placeholder="e.g. Aqua, Cetearyl Alcohol, Glycerin, Dimethicone, Behentrimonium Chloride, Panthenol..."></textarea>
-          <div class="checker-actions">
-            <button class="btn btn-primary" onclick="checkIngredients()">Check Ingredients</button>
-            <button class="btn btn-secondary" onclick="clearChecker()">Clear</button>
-            <button class="btn btn-secondary btn-small" onclick="loadExample()">Try Example</button>
+        <!-- Tab Bar -->
+        <div class="checker-tabs">
+          <button class="checker-tab active" data-tab="search" onclick="switchTab('search')">Search Product</button>
+          <button class="checker-tab" data-tab="snap" onclick="switchTab('snap')">Snap Ingredients</button>
+          <button class="checker-tab" data-tab="scan" onclick="switchTab('scan')">Scan Barcode</button>
+        </div>
+
+        <!-- Tab: Search Product -->
+        <div class="tab-panel active" id="tab-search">
+          <div class="card">
+            <p class="text-muted mb-2">Type a product or brand name to check if it's Curly Girl approved.</p>
+            <div class="search-box">
+              <input type="text" class="search-input" id="productSearchInput" placeholder="e.g. XHC Banana, Shea Moisture, Cantu..." oninput="searchProducts()" autocomplete="off">
+            </div>
+            <div id="productSearchResults" class="product-results"></div>
           </div>
+        </div>
+
+        <!-- Tab: Snap Ingredients -->
+        <div class="tab-panel" id="tab-snap">
+          <div class="card">
+            <div class="coming-soon">
+              <div class="coming-soon-icon">&#128247;</div>
+              <h3>Snap Ingredients</h3>
+              <p class="text-muted">Take a photo of the ingredient list on the back of your product and we'll check every ingredient. Coming soon.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Scan Barcode -->
+        <div class="tab-panel" id="tab-scan">
+          <div class="card">
+            <div class="coming-soon">
+              <div class="coming-soon-icon">&#128722;</div>
+              <h3>Scan Barcode</h3>
+              <p class="text-muted">Scan the barcode on your product to look it up in the Open Beauty Facts database. Coming soon.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paste Ingredients -->
+        <div class="card" style="margin-top:0.75rem;">
+          <details id="pasteDetails">
+            <summary class="paste-toggle">&#128203; Paste a full ingredient list instead</summary>
+            <div class="paste-content">
+              <p class="text-muted mb-2">Paste the ingredient list from the back of your product. We'll check each one.</p>
+              <textarea class="checker-textarea" id="ingredientInput" placeholder="Water (Aqua), Cetearyl Alcohol, Dimethicone..."></textarea>
+              <div class="checker-actions">
+                <button class="btn btn-primary btn-sm" onclick="checkIngredients()" style="flex:1; border-radius:2rem;">&#128270; Run Analysis</button>
+                <button class="btn btn-secondary btn-sm" onclick="clearChecker()" style="border-radius:2rem;">Clear</button>
+                <a href="#" class="try-example-link" onclick="loadExample(); return false;">Try an example</a>
+              </div>
+            </div>
+          </details>
         </div>
         <div class="results-container" id="results"></div>
       </div>
     </section>
 
-    <!-- Individual Search -->
-    <section class="section" id="search">
+    <!-- Individual Ingredient Search -->
+    <section style="margin-top:2rem;">
       <div class="checker-wrap">
         <div class="card">
-          <h2>Search Individual Ingredients</h2>
+          <h3>&#128269; Search Individual Ingredients</h3>
           <p class="text-muted mb-2">Not sure about a specific ingredient? Search our database.</p>
           <div class="search-box">
             <input type="text" class="search-input" id="searchInput" placeholder="Start typing an ingredient name..." oninput="searchIngredients()">
@@ -62,15 +106,25 @@
       </div>
     </section>
 
-  </div>
+    <!-- Info Box -->
+    <div class="checker-wrap">
+      <div class="info-box">
+        <div class="info-box-icon">&#128161;</div>
+        <div>
+          <h5>Did you know?</h5>
+          <p>Ingredients are listed by concentration. If a 'bad' ingredient is at the very end (after preservatives like Phenoxyethanol), it might be present in less than 1% and potentially less harmful. The strictest CGM followers avoid them entirely, though!</p>
+        </div>
+      </div>
+    </div>
+  </main>
 
-  <!-- Footer -->
   <footer class="footer">
     <p>Built by <a href="../index.html">Stackless</a> &copy; 2026</p>
-    <p class="disclaimer">This tool is for informational purposes only. It is not a medical or dermatological tool. Always patch test new products.</p>
+    <p class="disclaimer">This tool is for informational purposes only. Always patch test new products.</p>
   </footer>
 
   <script src="ingredients-data.js"></script>
+  <script src="products-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

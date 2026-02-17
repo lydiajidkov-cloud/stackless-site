@@ -1,44 +1,62 @@
 # Stackless Site - Session State
 
-## Last Updated: 2026-02-15 18:30
+## Last Updated: 2026-02-17
 
-## Status: DEPLOYED ON RENDER (content updates needed)
+## Status: DEPLOYED ON RENDER, content current
 
 ## What's Done
-- GitHub repo: github.com/lydiajidkov-cloud/stackless-site
-- Render deployment: stackless-brand.onrender.com (single static site)
-- Structure: brand pages at root, shop/ and curly-girl/ as subfolders
-- All internal nav links working across pages
-- Auto-deploy from GitHub push configured
+- GitHub repo: (private repo, auto-deploys to Render)
+- Render deployment: stackless-brand.onrender.com (auto-deploy on push)
+- Domain: stackless.tech purchased, DNS setup pending (husband configuring)
 
-## What's Pending
-1. **CRITICAL: Remove EHR/clinical content** from index.html, projects.html, shop/index.html, blog.html
-2. Custom domain: stackless.tech DNS setup (husband configuring when home)
-3. Lemon Squeezy integration for product purchases
-4. LinkedIn content publication
+### Brand Pages
+- index.html, about.html, projects.html, blog.html with consistent nav
+
+### Blog (10 posts live)
+- Posts 1-5: standalone articles (EHR, shipping, tools, process, AI mistakes)
+- Posts 6-8: "The Stackless Guide" series with prev/next navigation (security, testing, toolkit)
+- Post 9: "Gemini Canvas Changed How I Build Frontends" (standalone, tools + AI tags)
+- Post 10: "What I Actually Ship With AI: A Solo Builder's Real Stack" (standalone, tools + AI + workflow tags)
+- Blog index lists all 10 posts with series banner
+
+### Shop
+- £5 flat pricing for all products (finance dashboard, AI portfolio, grocery dashboard)
+- EHR removed (moved to Clinformatix for bespoke work)
+- "Why £5?" section, milestone tracker, donations placeholder
+
+### Curly Girl Wavy Girl UK (5 pages)
+- index.html, quiz.html, checker.html, about.html, faq.html
+- 113-ingredient database, 257-product database, 50-question FAQ
+- Self-contained styles and JS
 
 ## Architecture
 ```
 stackless-site/
-  index.html          ← brand homepage
-  about.html          ← about page
-  projects.html       ← project showcase
-  blog.html           ← blog posts
-  styles.css          ← shared brand CSS
+  index.html          - brand homepage
+  about.html          - about page
+  projects.html       - project showcase
+  blog.html           - blog index
+  styles.css          - shared brand CSS
+  blog/
+    post-1 through post-10 - 10 blog posts
   shop/
-    index.html        ← product shop (loads ../styles.css)
-    styles.css        ← shop-specific styles
-    script.js         ← shop interactivity
+    index.html        - product shop
+    styles.css        - shop-specific styles
+    script.js         - shop interactivity
   curly-girl/
-    index.html        ← ingredient checker
-    quiz.html         ← hair quiz
-    about.html        ← about page
-    styles.css        ← curly girl styles
-    app.js            ← app logic
-    ingredients-data.js ← product database
+    index.html        - landing page
+    quiz.html         - hair quiz
+    checker.html      - ingredient checker
+    about.html        - the method + science
+    faq.html          - searchable FAQ (50 Q&As)
+    styles.css        - curly girl styles
+    app.js            - app logic
+    ingredients-data.js  - 113 ingredients + rules
+    products-data.js     - 257 UK products
 ```
 
-## Notes
-- Render free tier, no build step needed (pure static HTML/CSS/JS)
-- Shop page references ../styles.css for shared brand look
-- Curly-girl is self-contained with own styles
+## What's Pending
+1. Custom domain: stackless.tech DNS setup
+2. Payment platform: Payhip setup — full research done (`research/research-payhip-integration.md`)
+3. Connect Buy Now buttons to Payhip payment links
+4. Ko-fi donations page setup

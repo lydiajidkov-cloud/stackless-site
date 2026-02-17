@@ -4,175 +4,204 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Curly Girl Wavy Girl UK | Your Guide to the Curly Girl Method</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Navigation -->
   <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">Curly Girl Wavy Girl <span>UK</span></a>
-      <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-icon">&#127754;</span>
+        CurlMagic UK
+      </a>
       <ul class="nav-links" id="navLinks">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="quiz.html">Find My Routine</a></li>
-        <li><a href="checker.html">Ingredient Checker</a></li>
-        <li><a href="products.html">Products</a></li>
-        <li><a href="faq.html">FAQ</a></li>
-        <li><a href="about.html">The Method</a></li>
+        <li><a href="index.html" class="active">&#10024; Home</a></li>
+        <li><a href="checker.html">&#128270; Scanner</a></li>
+        <li><a href="products.html">&#128218; Products</a></li>
+        <li><a href="quiz.html">&#9889; Quiz</a></li>
+        <li><a href="faq.html">&#128172; FAQ</a></li>
       </ul>
+      <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
     </div>
   </nav>
 
-  <div class="container">
+  <main class="container" style="padding-top:2rem; padding-bottom:3rem;">
     <!-- Hero -->
-    <section class="hero">
-      <h1>Your guide to the <span class="highlight">Curly Girl Method</span></h1>
-      <p>Built for the UK curly and wavy community. Find your routine, discover UK products, and learn what actually works for your hair type.</p>
-      <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="quiz.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">Find My Routine</a>
-        <a href="about.html" class="btn btn-secondary" style="font-size: 1.1rem; padding: 1rem 2rem;">Learn the Method</a>
+    <section class="hero" style="padding-top:3rem; padding-bottom:4rem; margin-bottom:3rem;">
+      <div class="hero-glow"></div>
+      <div class="hero-badge">&#128578; Celebrate your curls</div>
+      <h1>Texture is <br><span class="highlight">Pure Magic.</span></h1>
+      <p>Say goodbye to frizz and hello to bounce. Your companion app for the Curly Girl Method, built for UK products, at UK prices, with a bit of joy.</p>
+      <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:1rem;">
+        <a href="checker.html" class="btn btn-primary" style="font-size:1.1rem; padding:1.15rem 2.5rem; border-radius:2rem;">
+          &#128270; Analyze Products
+        </a>
+        <a href="about.html" class="btn btn-secondary" style="font-size:1.1rem; padding:1.15rem 2.5rem; border-radius:2rem;">
+          View The Guide
+        </a>
       </div>
     </section>
 
-    <!-- Why UK -->
-    <section class="section">
-      <div class="checker-wrap">
-        <h2>Why UK-focused?</h2>
-        <p class="text-muted mb-2">Most CGM resources recommend American products you can't find here, and barely mention wavy hair. We use UK products, from UK shops, at UK prices, for curly and wavy hair alike.</p>
-        <div class="explainer-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-          <div class="explainer-card">
-            <h4 style="color: var(--accent);">UK Products</h4>
-            <p>Products from Boots, Superdrug, Poundland, Savers, Pak's, Lidl, Aldi, Amazon UK, and specialist curly shops. Starter kits from 99p.</p>
-          </div>
-          <div class="explainer-card">
-            <h4 style="color: var(--accent);">Wavy to Coily</h4>
-            <p>Type 2A waves to 4C coils. Fine strands to coarse. Wavies aren't an afterthought here, you get equal coverage.</p>
-          </div>
-          <div class="explainer-card">
-            <h4 style="color: var(--accent);">Personalised</h4>
-            <p>7 questions, then a routine tailored to your texture, porosity, strand width, and budget.</p>
-          </div>
-        </div>
+    <!-- Feature Highlights -->
+    <div class="highlight-grid" style="margin-bottom:4rem;">
+      <div class="highlight-card bg-sky">
+        <div class="highlight-card-icon" style="color:#0ea5e9;">&#128167;</div>
+        <h3>Hydration Hub</h3>
+        <p>Learn why moisture is the foundation of every healthy curl pattern. UK-specific hard water advice included.</p>
       </div>
-    </section>
-
-    <!-- Quick Start -->
-    <section class="section">
-      <div class="checker-wrap">
-        <h2>How it works</h2>
-        <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
-          <div class="explainer-card" style="display: flex; align-items: flex-start; gap: 1rem;">
-            <span class="routine-step-number" style="flex-shrink: 0;">1</span>
-            <div>
-              <h4 style="font-size: 1rem; margin-bottom: 0.25rem;">Take the quiz</h4>
-              <p>Answer 7 quick questions about your hair texture, porosity, and concerns. Takes about 2 minutes.</p>
-            </div>
-          </div>
-          <div class="explainer-card" style="display: flex; align-items: flex-start; gap: 1rem;">
-            <span class="routine-step-number" style="flex-shrink: 0;">2</span>
-            <div>
-              <h4 style="font-size: 1rem; margin-bottom: 0.25rem;">Get your routine</h4>
-              <p>Receive a step-by-step CGM routine personalised to your hair type, with UK product suggestions at your budget.</p>
-            </div>
-          </div>
-          <div class="explainer-card" style="display: flex; align-items: flex-start; gap: 1rem;">
-            <span class="routine-step-number" style="flex-shrink: 0;">3</span>
-            <div>
-              <h4 style="font-size: 1rem; margin-bottom: 0.25rem;">Start your journey</h4>
-              <p>Your results are saved locally, so they're always here when you come back. Retake anytime as your hair changes.</p>
-            </div>
-          </div>
-        </div>
-        <div style="text-align: center; margin-top: 2rem;">
-          <a href="quiz.html" class="btn btn-primary" style="font-size: 1rem; padding: 0.85rem 2rem;">Take the Quiz</a>
-        </div>
+      <div class="highlight-card bg-orange">
+        <div class="highlight-card-icon" style="color:#f97316;">&#9889;</div>
+        <h3>Hair Profile Quiz</h3>
+        <p>7 quick questions about your texture, porosity, and concerns. Get a personalised CGM routine in 2 minutes.</p>
       </div>
-    </section>
-
-    <!-- What is CGM (brief) -->
-    <section class="section">
-      <div class="checker-wrap">
-        <h2>What is the Curly Girl Method?</h2>
-        <p class="text-muted">Created by Lorraine Massey in 2001, CGM is a hair care approach built on a simple idea: stop using ingredients that damage curls and start working with your natural texture.</p>
-        <p class="text-muted mb-2">The method avoids harsh sulphates, non-soluble silicones, and drying alcohols. It replaces them with gentle cleansers, rich conditioners, and styling products that enhance your natural curl pattern.</p>
-
-        <div class="explainer-grid">
-          <div class="explainer-card">
-            <h4 class="avoid-label">Avoid: Sulphates</h4>
-            <p>Harsh cleansers that strip your hair's natural oils. Look for names ending in "-sulfate" or "-sulphate".</p>
-          </div>
-          <div class="explainer-card">
-            <h4 class="avoid-label">Avoid: Non-Soluble Silicones</h4>
-            <p>Coat hair and block moisture. Need sulphates to remove, creating a damaging cycle.</p>
-          </div>
-          <div class="explainer-card">
-            <h4 class="safe-label">Safe: Fatty Alcohols</h4>
-            <p>Not all alcohols are bad. Cetyl, cetearyl, and stearyl alcohols are moisturising and conditioning.</p>
-          </div>
-          <div class="explainer-card">
-            <h4 class="safe-label">Sneaky Exception</h4>
-            <p>Behentrimonium Methosulfate sounds like a sulphate but is actually a gentle conditioning agent. CGM approved.</p>
-          </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 1.5rem;">
-          <a href="about.html" class="btn btn-secondary">Read the Full Guide</a>
-        </div>
+      <div class="highlight-card bg-rose">
+        <div class="highlight-card-icon" style="color:#f43f5e;">&#10084;&#65039;</div>
+        <h3>Ingredient Scanner</h3>
+        <p>We've catalogued 200+ ingredients so you don't have to. Paste any product's list and get instant results.</p>
       </div>
-    </section>
+    </div>
 
-    <!-- Budget Starter Kits -->
-    <section class="section">
-      <div class="checker-wrap">
-        <h2>UK starter kits from 99p</h2>
-        <p class="text-muted mb-2">You don't need expensive products. Some of the UK curly community's favourites cost under a pound.</p>
-        <div class="card">
-          <h3>Budget Starter Kit (under &pound;5)</h3>
-          <p class="text-muted" style="font-size: 0.9rem;">Available at Poundland, Savers, Boots, and Superdrug.</p>
-          <div class="product-suggestions mt-1">
-            <span class="product-suggestion">XHC Banana Conditioner - &pound;1</span>
-            <span class="product-suggestion">XHC Papaya Shampoo - &pound;1</span>
-            <span class="product-suggestion">Boots Essentials Gel - 99p</span>
+    <!-- How It Works -->
+    <section style="text-align:center; margin-bottom:4rem;">
+      <h2 style="margin-bottom:0.5rem;">The Golden Routine</h2>
+      <p class="section-subtitle" style="margin-bottom:2.5rem;">A simple ritual to unlock your hair's natural texture and bounce.</p>
+
+      <div class="step-grid">
+        <div class="step-card">
+          <span class="step-card-num">01</span>
+          <div class="step-card-content">
+            <div class="step-card-icon">&#127754;</div>
+            <h4>Take the Quiz</h4>
+            <p>Answer 7 quick questions about your hair texture, porosity, and concerns. Takes about 2 minutes.</p>
+            <span class="step-tag">&#10003; Hair Profiling</span>
           </div>
         </div>
-        <div style="text-align: center; margin-top: 1.5rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
-          <a href="quiz.html" class="btn btn-primary">Get Personalised Recommendations</a>
-          <a href="products.html" class="btn btn-secondary">Browse All 257 Products</a>
+
+        <div class="step-card">
+          <span class="step-card-num">02</span>
+          <div class="step-card-content">
+            <div class="step-card-icon">&#128167;</div>
+            <h4>Get Your Routine</h4>
+            <p>Receive a step-by-step CGM routine personalised to your hair type, with UK product suggestions at your budget.</p>
+            <span class="step-tag">&#10003; Personalisation</span>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <span class="step-card-num">03</span>
+          <div class="step-card-content">
+            <div class="step-card-icon">&#128270;</div>
+            <h4>Scan Products</h4>
+            <p>Paste any product's ingredient list into the Scanner. It flags every ingredient against the CGM database instantly.</p>
+            <span class="step-tag">&#10003; Ingredient Analysis</span>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <span class="step-card-num">04</span>
+          <div class="step-card-content">
+            <div class="step-card-icon">&#10024;</div>
+            <h4>Style & Define</h4>
+            <p>Apply gel to wet hair using 'praying hands' and scrunch to encourage curl clumps. Let the gel cast form.</p>
+            <span class="step-tag">&#10003; Define & Set</span>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <span class="step-card-num">05</span>
+          <div class="step-card-content">
+            <div class="step-card-icon">&#10084;&#65039;</div>
+            <h4>Plop & Dry</h4>
+            <p>Wrap your hair in a cotton T-shirt for 20 minutes to absorb excess water without frizz. Then diffuse or air dry.</p>
+            <span class="step-tag">&#10003; Drying Technique</span>
+          </div>
+        </div>
+
+        <div class="step-card-cta">
+          <div class="cta-icon">&#127804;</div>
+          <h4>Trust the Process</h4>
+          <p>Hair transition can take 4-12 weeks. Don't give up on your natural magic!</p>
         </div>
       </div>
     </section>
 
-    <!-- Tools -->
-    <section class="section">
-      <div class="checker-wrap">
-        <h2>Tools</h2>
-        <div class="explainer-grid" style="grid-template-columns: 1fr 1fr;">
-          <a href="quiz.html" class="explainer-card" style="text-decoration: none; transition: border-color 0.2s;">
-            <h4 style="color: var(--accent);">Find My Routine</h4>
-            <p>7-question quiz with personalised CGM routine and UK product suggestions at three budget tiers.</p>
-          </a>
-          <a href="checker.html" class="explainer-card" style="text-decoration: none; transition: border-color 0.2s;">
-            <h4 style="color: var(--accent);">Ingredient Checker</h4>
-            <p>Paste a product's ingredient list and check every ingredient against the CGM database.</p>
-          </a>
-          <a href="products.html" class="explainer-card" style="text-decoration: none; transition: border-color 0.2s;">
-            <h4 style="color: var(--accent);">Product Guide</h4>
-            <p>Browse 257 CGM-reviewed UK products. Filter by category, retailer, hair type, and budget.</p>
-          </a>
-          <a href="faq.html" class="explainer-card" style="text-decoration: none; transition: border-color 0.2s;">
-            <h4 style="color: var(--accent);">FAQ</h4>
-            <p>50 answers to common curly and wavy hair questions, from transition tips to UK-specific advice.</p>
-          </a>
+    <!-- Budget -->
+    <section style="margin-bottom:3rem;">
+      <div class="card" style="text-align:center;">
+        <h2 style="font-size:1.75rem;">UK Starter Kits from 99p</h2>
+        <p class="text-muted" style="max-width:500px; margin:0 auto 1.5rem;">You don't need expensive products. Some of the UK curly community's favourites cost under a pound.</p>
+        <div class="product-suggestions" style="justify-content:center; margin-bottom:1.5rem;">
+          <span class="product-suggestion">XHC Banana Conditioner &mdash; &pound;1</span>
+          <span class="product-suggestion">XHC Papaya Shampoo &mdash; &pound;1</span>
+          <span class="product-suggestion">Boots Essentials Gel &mdash; 99p</span>
+        </div>
+        <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
+          <a href="quiz.html" class="btn btn-primary btn-sm" style="border-radius:2rem;">Get Personalised Recs</a>
+          <a href="products.html" class="btn btn-secondary btn-sm" style="border-radius:2rem;">Browse 257 Products</a>
         </div>
       </div>
     </section>
-  </div>
+
+    <!-- Tools Grid -->
+    <section>
+      <h2 style="text-align:center; margin-bottom:0.5rem;">Everything in One Place</h2>
+      <p class="section-subtitle text-center" style="margin-bottom:2rem;">Your toolkit for healthier, happier curls.</p>
+      <div class="explainer-grid" style="grid-template-columns: 1fr 1fr;">
+        <a href="quiz.html" class="explainer-card" style="text-decoration:none;">
+          <h4>&#9889; Find My Routine</h4>
+          <p>7-question quiz with personalised CGM routine and UK product suggestions at three budget tiers.</p>
+        </a>
+        <a href="checker.html" class="explainer-card" style="text-decoration:none;">
+          <h4>&#128270; Ingredient Scanner</h4>
+          <p>Paste a product's ingredient list and check every ingredient against the CGM database.</p>
+        </a>
+        <a href="products.html" class="explainer-card" style="text-decoration:none;">
+          <h4>&#128218; Product Guide</h4>
+          <p>Browse 257 CGM-reviewed UK products. Filter by category, retailer, hair type, and budget.</p>
+        </a>
+        <a href="faq.html" class="explainer-card" style="text-decoration:none;">
+          <h4>&#128172; Knowledge Base</h4>
+          <p>50 answers to common curly and wavy hair questions, from transition tips to UK-specific advice.</p>
+        </a>
+      </div>
+    </section>
+  </main>
 
   <!-- Footer -->
   <footer class="footer">
-    <p>Built by <a href="../">Stackless</a> &copy; 2026</p>
-    <p class="disclaimer">This tool is for informational purposes only. It is not a medical or dermatological tool. Always patch test new products.</p>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-brand-logo">
+          <span class="logo-icon">&#127754;</span>
+          <h2>CurlMagic UK</h2>
+        </div>
+        <p>Empowering texture through education and science. We believe every curl pattern deserves to be celebrated.</p>
+        <div class="footer-social">
+          <a href="../index.html">&#127968;</a>
+        </div>
+      </div>
+      <div class="footer-nav">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="quiz.html">Hair Quiz</a></li>
+          <li><a href="checker.html">Scanner</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="about.html">The Method</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav">
+        <h4>More</h4>
+        <ul>
+          <li><a href="../index.html">Stackless</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Curly Girl Wavy Girl UK &bull; Made for the Bouncy & Brave</p>
+    </div>
+    <p class="disclaimer" style="margin-top:1rem;">This tool is for informational purposes only. Always patch test new products.</p>
   </footer>
 
   <script src="app.js"></script>

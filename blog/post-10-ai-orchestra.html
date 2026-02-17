@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What I Actually Ship With AI: A Solo Builder's Real Stack — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--lime-400);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .article-body a {
+            color: var(--indigo-600);
+            font-weight: 700;
+            text-decoration: underline;
+        }
+        .tool-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 rgba(0,0,0,1);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .tool-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+        .tool-card .tool-role {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--indigo-600);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+        .tool-card p {
+            font-size: 0.95rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        .tool-card ul {
+            font-size: 0.9rem !important;
+            margin-top: 0.5rem !important;
+        }
+        .back-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--slate-900);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--slate-900);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { background: var(--slate-100); }
+        .reality-check {
+            background: var(--yellow-300);
+            border: 3px solid var(--slate-900);
+            padding: 1.25rem;
+            margin: 2rem 0;
+            box-shadow: 4px 4px 0 0 rgba(0,0,0,1);
+        }
+        .reality-check h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .reality-check p {
+            font-size: 0.9375rem !important;
+            margin-bottom: 0 !important;
+        }
+        .project-example {
+            background: var(--slate-100);
+            border-left: 4px solid var(--indigo-600);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .project-example strong {
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--slate-900);
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+        }
+        .project-example p {
+            font-size: 0.95rem !important;
+            margin-top: 0.5rem !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="article-body">
+            <a href="../blog.html" class="back-link">&larr; All Posts</a>
+
+            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+                <span class="tag" style="background: var(--lime-400); border-color: var(--lime-400);">Tools</span>
+                <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">AI</span>
+                <span class="tag" style="background: var(--indigo-500); color: white; border-color: var(--indigo-500);">Workflow</span>
+            </div>
+
+            <h1>What I Actually Ship With AI: A Solo Builder's Real Stack</h1>
+            <div class="article-meta">12 min read &middot; February 2026</div>
+
+            <p>I'm a clinical lead, not a developer. I've built 13 projects in the past six months: websites, dashboards, a clinical pathway template, a curly hair app, a finance tracker. All of them work. All of them shipped. None of them required hiring a developer.</p>
+
+            <p>People ask: "What tool do you use?" Wrong question. I use five different AI tools, sometimes three in the same hour. The real question is: "What does each tool do that the others can't?"</p>
+
+            <p>This is the honest breakdown of my AI orchestra. Not a product review, not a ranking. Just what each instrument does in the ensemble, and why I need all of them.</p>
+
+            <h2>The Core Instruments</h2>
+
+            <div class="tool-card">
+                <h4>Claude Code</h4>
+                <div class="tool-role">The Conductor</div>
+                <p><strong>What it does:</strong> Multi-file projects, logic, automation, integration work, research, thinking alongside me as I figure out what I'm building.</p>
+                <p><strong>Best at:</strong> Working with my existing codebase. Claude Code reads files, edits them in place, understands project structure, runs git commands, handles errors. It's a terminal tool with full access to my machine. When I say "add this page to the site and wire up the navigation," it just does it.</p>
+                <p><strong>Worst at:</strong> Visual feedback. It's text-only. I describe what I want, it generates the code, I open it in a browser to see if it looks right. The loop works, but it's slower for visual work.</p>
+                <p><strong>When I use it:</strong> 80% of my building time. It's my default. If I'm writing, organizing, debugging, or making something work across multiple files, I'm in Claude Code.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4>Gemini Canvas</h4>
+                <div class="tool-role">The Designer</div>
+                <p><strong>What it does:</strong> Visual prototyping with instant preview. I describe a layout, it renders the page live, I tweak it in natural language while watching it update in real time.</p>
+                <p><strong>Best at:</strong> Getting the design right fast. Canvas collapses the feedback loop for visual work from minutes to seconds. "Make that section navy, move the heading up, add more padding" — instant.</p>
+                <p><strong>Worst at:</strong> Multi-page sites, project integration, anything beyond a single HTML file. It doesn't understand shared stylesheets or how pages connect.</p>
+                <p><strong>When I use it:</strong> When I need a new page layout, component design, or visual prototype. I build it in Canvas until it looks right, then hand the code to Claude Code to integrate.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4>ChatGPT</h4>
+                <div class="tool-role">The Researcher and Strategist</div>
+                <p><strong>What it does:</strong> Research, strategy, content generation, explaining things I don't understand, working through ideas before I build them.</p>
+                <p><strong>Best at:</strong> Conversational thinking. When I need to figure out <em>what</em> to build before I build it, I talk to ChatGPT. It's also great at pulling together information: "What are the current UK guidelines for X?" or "Summarize these three approaches."</p>
+                <p><strong>Worst at:</strong> Code execution. It can write code, but it can't run it, test it, or see what breaks. No file system access.</p>
+                <p><strong>When I use it:</strong> Planning, research, content writing, learning. When I need information or need to think through a decision. Also: rewriting text that sounds too AI-ish.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4>NotebookLM</h4>
+                <div class="tool-role">The Synthesizer</div>
+                <p><strong>What it does:</strong> Takes documents I upload, synthesizes them into summaries, Q&A, or (the magic part) AI-generated podcasts that explain the content in natural conversation.</p>
+                <p><strong>Best at:</strong> Making dense information digestible. I upload clinical guidelines, policy documents, or research, and get back a 20-minute podcast where two AI hosts discuss it like humans. I learn while walking.</p>
+                <p><strong>Worst at:</strong> Creating anything new. It only synthesizes what you give it. No code generation, no building.</p>
+                <p><strong>When I use it:</strong> Learning new domains fast, preparing for projects that require domain expertise, turning my own work into shareable summaries.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4>Cursor / Windsurf</h4>
+                <div class="tool-role">The Alternative Builders</div>
+                <p><strong>What they do:</strong> AI-powered code editors. Similar to Claude Code: they edit files, understand context, generate code.</p>
+                <p><strong>Best at:</strong> Visual editing (you see files open), inline suggestions as you type, codebase-wide refactoring.</p>
+                <p><strong>Worst at:</strong> Requiring you to be in editor-mode thinking. I don't think like a developer. I think in tasks: "build this thing." Terminal tools match how I work. Editors assume I know what file to open.</p>
+                <p><strong>When I use them:</strong> Rarely. I've tried both. They're excellent tools, just not how my brain works. If you're more visually oriented or came from coding, they might fit better.</p>
+            </div>
+
+            <h2>How They Work Together</h2>
+
+            <p>Here's the part that matters: these tools don't compete. They compose. A typical project uses three or four of them in sequence or in parallel. The workflow looks like this.</p>
+
+            <div class="project-example">
+                <strong>Example: Curly Girl Wavy Girl UK App</strong>
+                <p><strong>ChatGPT:</strong> Research current curly hair methods, UK product availability, quiz frameworks. Draft the quiz questions and logic.<br>
+                <strong>Gemini Canvas:</strong> Design the landing page layout, quiz UI, results page. Get the visual identity right.<br>
+                <strong>Claude Code:</strong> Build the multi-page site, integrate the quiz logic, connect the ingredient database, wire up the product search.<br>
+                <strong>NotebookLM:</strong> Upload the Curly Girl Handbook and three research papers on hair science, generate a podcast to learn the domain deeply.</p>
+            </div>
+
+            <div class="project-example">
+                <strong>Example: Clinical EHR Pathway</strong>
+                <p><strong>NotebookLM:</strong> Upload NICE guidelines, ESC guidelines, GIRFT report. Get podcast summaries of each.<br>
+                <strong>ChatGPT:</strong> Cross-reference the guidelines, identify gaps, draft the pathway structure.<br>
+                <strong>Gemini Canvas:</strong> Design the interactive workflow visualizer.<br>
+                <strong>Claude Code:</strong> Build the 7-layer pathway template, generate the HTML portfolio, package the deliverable.</p>
+            </div>
+
+            <div class="project-example">
+                <strong>Example: This Website</strong>
+                <p><strong>Gemini Canvas:</strong> Designed the neo-brutalist aesthetic, built component prototypes.<br>
+                <strong>Claude Code:</strong> Built the actual site structure, blog system, shop, wired up navigation, deployed to Render.<br>
+                <strong>ChatGPT:</strong> Helped refine the brand voice, edited blog posts to sound less like marketing copy.</p>
+            </div>
+
+            <p>Notice the pattern: each tool handles the part it's best at. I'm not "picking a tool." I'm orchestrating them.</p>
+
+            <h2>What About the "New Shiny Tool"?</h2>
+
+            <p>Every week there's a new AI coding tool. v0. Bolt. Replit Agent. Lovable. I've tried most of them. Here's my honest take.</p>
+
+            <p><strong>v0 (Vercel):</strong> Great for React components if you work in React. I don't. I build vanilla HTML/CSS/JS because it's simpler for me to understand and modify. v0 assumes framework knowledge I don't have.</p>
+
+            <p><strong>Bolt.new:</strong> Impressive at scaffolding full-stack apps fast. Overkill for most of what I build. If I needed a database-backed app with auth, I'd use it. I mostly build static sites and client-side tools.</p>
+
+            <p><strong>Replit Agent:</strong> Fun, fast, conversational. Good for quick prototypes. Less good for serious multi-page projects where I need control over structure.</p>
+
+            <p><strong>Claude Artifacts:</strong> Underrated. When I just want to see a quick component preview without leaving the chat, Artifacts is perfect. It's built into Claude, so no context-switching.</p>
+
+            <p>None of these replace my core tools. They're good for specific use cases. But the problem with chasing every new tool is you never get deep enough with any of them to build real fluency.</p>
+
+            <h2>The Real Skills I've Built</h2>
+
+            <p>Here's what six months of building with AI has actually taught me. It's not coding. It's something else.</p>
+
+            <p><strong>Describing systems clearly.</strong> The better I can articulate what I want, the faster I get it. This is a writing skill, not a technical skill. "Build a quiz" gets garbage. "Build a multi-step quiz with conditional branching based on hair type, porosity, and styling goals, with results that recommend a routine from a predefined set" gets something usable.</p>
+
+            <p><strong>Recognizing when AI is wrong.</strong> AI tools are confidently wrong all the time. They'll generate code that looks right but doesn't run. They'll cite best practices that don't exist. I've learned to spot the patterns: overcomplicated solutions, made-up function names, logic that doesn't match the requirements. This takes reps.</p>
+
+            <p><strong>Iterating fast without attachment.</strong> The first version is always wrong. The second version is less wrong. By version five, it works. I don't get precious about any single iteration. I throw away code constantly. The AI makes it cheap to start over.</p>
+
+            <p><strong>Knowing which tool for which job.</strong> This is the real skill. When I hit a problem, I don't just throw it at whichever AI is open. I think: is this a design problem, a logic problem, a research problem? Then I pick the right instrument.</p>
+
+            <p><strong>Building automation that runs while I sleep.</strong> GitHub Actions, scheduled scripts, automated deployments. Once you realize you can describe a process and have AI write the automation, you stop doing repetitive tasks. My <a href="https://github.com/lydiajidkov-cloud/daily-ai-podcast">Daily AI Podcast</a> curates and publishes every morning without me touching it.</p>
+
+            <h2>The Honest Limitations</h2>
+
+            <div class="reality-check">
+                <h4>Reality Check</h4>
+                <p>I can't build everything. Complex backend systems, real-time multiplayer games, high-performance data processing: not in my wheelhouse. I build static sites, client-side tools, dashboards, content systems. Know your lane.</p>
+            </div>
+
+            <p>Things I still can't do without help:</p>
+
+            <ul>
+                <li><strong>Deep debugging of complex errors.</strong> When something breaks in a way I don't understand, I can ask AI to help, but if it's truly obscure (library conflicts, environment issues), I hit a wall.</li>
+                <li><strong>Performance optimization.</strong> I can build something that works. I can't make it scale to 10,000 users or load in under 100ms. That requires real engineering knowledge.</li>
+                <li><strong>Security at depth.</strong> I follow checklists (don't commit secrets, sanitize inputs, fail closed). But I can't audit code for subtle vulnerabilities. For anything handling real user data, I'd need a security review.</li>
+                <li><strong>Architectural decisions for large systems.</strong> My projects are small. When they grow past a certain size, I'll need an actual developer to help me structure them properly.</li>
+            </ul>
+
+            <p>The tools let me build real things. They don't make me a software engineer. Those are different statements, and both are true.</p>
+
+            <h2>Why Multiple Tools Matter</h2>
+
+            <p>The question people ask: "Which AI tool should I use?"</p>
+
+            <p>The answer: "More than one."</p>
+
+            <p>Every tool has a local maximum. Claude Code is incredible at project work but blind to visual design. Gemini Canvas is unmatched for visual iteration but useless for multi-file logic. ChatGPT is brilliant at research but can't execute code. NotebookLM synthesizes like nothing else but can't create.</p>
+
+            <p>Using one tool means accepting its weaknesses. Using multiple tools means leveraging each one's strengths. The workflow isn't "pick the best tool." It's "assemble the tools into a system that covers all the bases."</p>
+
+            <p>This is what I mean by the AI orchestra: different instruments, different sounds, one composition. I'm not the musician. I'm the conductor. The tools are the players.</p>
+
+            <blockquote>
+                "I don't code. I describe, iterate, orchestrate, and ship. The tools handle the syntax. I handle the thinking."
+            </blockquote>
+
+            <h2>What This Means For Non-Coders</h2>
+
+            <p>If you're reading this and thinking "I could never do that," I hear you. Six months ago I thought the same thing. I'd tried to learn Python three times. I'd given up every time.</p>
+
+            <p>What changed wasn't my ability to code. What changed was that the tools closed the gap between "I can describe what I want" and "It exists." That gap used to be six months of learning syntax and debugging. Now it's an afternoon of iterating with AI.</p>
+
+            <p>You don't need to become a developer. You need to become good at three things:</p>
+
+            <ol>
+                <li><strong>Describing what you want clearly.</strong> This is writing, not coding.</li>
+                <li><strong>Recognizing when something is wrong.</strong> This is testing, not coding.</li>
+                <li><strong>Choosing the right tool for the job.</strong> This is judgment, not coding.</li>
+            </ol>
+
+            <p>The rest? The tools handle it. Not perfectly. Not always on the first try. But well enough that you can ship real things.</p>
+
+            <p>Start with one project. Make it small. Build something boring first (a dashboard, a simple site, a content organizer). Get fluent with one tool, then add a second. Six months from now, you'll have a stack that works for you.</p>
+
+            <p>You won't be a developer. You'll be something else. A builder who thinks in systems and ships with AI. That's enough.</p>
+
+            <h2>Related Posts</h2>
+            <ul>
+                <li><a href="post-9-gemini-canvas-frontends.html">Gemini Canvas Changed How I Build Frontends</a> (deep dive on Canvas)</li>
+                <li><a href="post-8-non-coders-toolkit.html">The Non-Coder's Toolkit</a> (comprehensive guide to all the tools)</li>
+                <li><a href="post-3-tools-i-use.html">The Non-Coder's Stack: Tools I Actually Use</a> (the foundation post)</li>
+                <li><a href="post-5-what-ai-gets-wrong.html">What AI Gets Wrong (And How I Catch It)</a> (on recognizing failures)</li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>Stackless &copy; 2026 &mdash; Built with Claude Code. No devs were hired.</p>
+    </footer>
+
+    <script>
+        document.getElementById('hamburger')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('show');
+        });
+    </script>
+</body>
+</html>

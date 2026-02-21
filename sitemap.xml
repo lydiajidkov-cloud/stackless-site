@@ -31,11 +31,6 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://stackless.tech/blog/post-1-ehr-pathway.html</loc>
-    <priority>0.6</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
     <loc>https://stackless.tech/blog/post-2-non-coder-shipping.html</loc>
     <priority>0.6</priority>
     <changefreq>monthly</changefreq>

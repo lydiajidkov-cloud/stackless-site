@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Agent Teams: How I Use Multiple AIs Together — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+
+    <!-- SEO -->
+    <meta name="description" content="One AI is useful. Multiple AIs working together are genuinely powerful. Here's how to think about agent teams — and how to build them without a single line of code.">
+    <link rel="canonical" href="https://stackless.tech/blog/post-12-building-agent-teams.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Building Agent Teams: How I Use Multiple AIs Together">
+    <meta property="og:description" content="One AI is useful. Multiple AIs working together are genuinely powerful. Here's how to think about agent teams — and how to build them without a single line of code.">
+    <meta property="og:url" content="https://stackless.tech/blog/post-12-building-agent-teams.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://stackless.tech/og-image.png">
+    <meta property="og:site_name" content="Stackless">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Building Agent Teams: How I Use Multiple AIs Together">
+    <meta name="twitter:description" content="One AI is useful. Multiple AIs working together are genuinely powerful. Here's how to think about agent teams without writing any code.">
+    <meta name="twitter:image" content="https://stackless.tech/og-image.png">
+
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--indigo-600);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .team-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--indigo-600);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .team-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--indigo-600);
+            margin-bottom: 0.5rem;
+        }
+        .team-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .team-card ul { font-size: 0.9375rem !important; margin-bottom: 0; }
+        .pattern-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--orange-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .pattern-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--orange-500);
+            margin-bottom: 0.5rem;
+        }
+        .pattern-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .warning-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--pink-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .warning-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--pink-500);
+            margin-bottom: 0.5rem;
+        }
+        .warning-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .pipeline {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--lime-400);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+        }
+        .pipeline h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            color: var(--slate-700);
+        }
+        .pipeline-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--slate-100);
+        }
+        .pipeline-step:last-child { border-bottom: none; }
+        .step-num {
+            font-size: 0.75rem;
+            font-weight: 900;
+            background: var(--slate-900);
+            color: var(--bg);
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .step-content { flex: 1; }
+        .step-content strong {
+            display: block;
+            font-weight: 800;
+            font-size: 0.9375rem;
+            margin-bottom: 0.2rem;
+        }
+        .step-content span {
+            font-size: 0.875rem;
+            color: var(--slate-500);
+            font-weight: 500;
+        }
+        .article-nav {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 3px solid var(--slate-900);
+            flex-wrap: wrap;
+        }
+        .article-nav a {
+            font-weight: 800;
+            font-size: 0.875rem;
+            text-decoration: none;
+            color: var(--slate-900);
+            border: 2px solid var(--slate-900);
+            padding: 0.6rem 1rem;
+            transition: all 0.15s;
+        }
+        .article-nav a:hover {
+            background: var(--slate-900);
+            color: var(--white);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            background: var(--slate-100);
+            border: 2px solid var(--slate-900);
+            padding: 0.2rem 0.6rem;
+            margin-right: 0.4rem;
+        }
+
+        /* Dark mode */
+        [data-theme="dark"] .article-body p,
+        [data-theme="dark"] .article-body ul,
+        [data-theme="dark"] .article-body ol { color: var(--slate-700); }
+        [data-theme="dark"] .article-body blockquote { background: var(--slate-100); }
+        [data-theme="dark"] .team-card,
+        [data-theme="dark"] .pattern-card,
+        [data-theme="dark"] .warning-card,
+        [data-theme="dark"] .pipeline { background: var(--white); }
+        [data-theme="dark"] .article-nav a { color: var(--slate-900); border-color: var(--slate-700); }
+        [data-theme="dark"] .article-nav a:hover { background: var(--slate-700); color: var(--white); }
+    </style>
+</head>
+<body>
+    <!-- Nav -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-logo">Stackless</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../blog.html" class="active">Blog</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+                <li><a href="../fleet.html">The Fleet</a></li>
+                <li><a href="../shop/index.html" class="nav-cta">Shop</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><span class="icon-sun">☀️</span><span class="icon-moon">🌙</span></button>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+        </div>
+    </nav>
+
+    <!-- Article -->
+    <main class="article-body">
+
+        <div class="article-meta">
+            <span class="tag">Agents</span>
+            <span class="tag">AI Workflow</span>
+            <span class="tag">No-Code</span>
+            <span style="margin-left: 0.5rem;">February 2026 &bull; 9 min read</span>
+        </div>
+
+        <h1>Building Agent Teams: How I Use Multiple AIs Together</h1>
+
+        <p>There's a moment when you first get an AI to do something useful, and it feels like magic. Then you hit a wall. The task is too big, too complex, or too specialised for one prompt. That's where most people stop.</p>
+
+        <p>But it's also where things get genuinely interesting. Because the real power isn't one AI doing everything — it's multiple AIs with different specialisations, working on different parts of a problem, passing work between them.</p>
+
+        <p>This is called an agent team. And you don't need to write a single line of code to build one.</p>
+
+        <h2>What's an agent, exactly?</h2>
+
+        <p>An agent is just an AI with a specific job, some context about that job, and (sometimes) the ability to take actions — like searching the web, reading a file, or sending output to the next agent in the chain.</p>
+
+        <p>The simplest agent is a chat window with a system prompt: "You are a researcher. Your job is to find information and summarise it in bullet points." That's an agent. It has a role, it has a task, it produces output.</p>
+
+        <p>A team is what happens when you connect agents so that the output of one becomes the input of the next.</p>
+
+        <blockquote>"Think of it like a production line. Each station does one thing well. Together, they make something that no single station could."</blockquote>
+
+        <h2>Why teams beat solo agents</h2>
+
+        <p>Single-agent prompts have a problem: they try to do too many things at once. Research, structure, write, fact-check, format — all in one go. The result is usually mediocre at all of them.</p>
+
+        <p>When you split the work across agents with different roles, each agent can go deep on its specific task. The researcher doesn't worry about formatting. The writer doesn't worry about accuracy. The reviewer doesn't worry about tone.</p>
+
+        <p>You also get checkpoints. Between each agent handoff, you can review the output and decide whether to continue, correct, or restart. This makes the whole process more controllable.</p>
+
+        <h2>The four agent roles you need</h2>
+
+        <p>Most productive agent teams use some version of these four roles. You don't always need all four, but knowing them helps you design the right team for the job.</p>
+
+        <div class="team-card">
+            <h4>&#128270; The Researcher</h4>
+            <p>Finds and summarises information. Searches the web, reads documents, pulls out the facts that matter. Output: bullet points, notes, a raw information dump.</p>
+            <p><strong>Good for:</strong> Market research, competitive analysis, fact-finding, reading long documents so you don't have to.</p>
+        </div>
+
+        <div class="team-card">
+            <h4>&#9997;&#65039; The Writer</h4>
+            <p>Takes raw information and turns it into readable content. Knows about tone, structure, audience, and format. Doesn't do its own research — works from what the Researcher produces.</p>
+            <p><strong>Good for:</strong> Blog posts, emails, proposals, documentation, anything that needs to be read by humans.</p>
+        </div>
+
+        <div class="team-card">
+            <h4>&#128270; The Reviewer</h4>
+            <p>Checks the Writer's output. Looks for factual errors, gaps, inconsistencies, or anything that doesn't match the original brief. Provides specific feedback rather than rewrites.</p>
+            <p><strong>Good for:</strong> Quality control, catching hallucinations, ensuring accuracy before you publish or send.</p>
+        </div>
+
+        <div class="team-card">
+            <h4>&#127760; The Coordinator</h4>
+            <p>Manages the whole process. Breaks down the original request, hands tasks to the right agents, collects outputs, decides what happens next. This is often you — but it can also be an AI.</p>
+            <p><strong>Good for:</strong> Complex multi-step projects where decisions need to be made about what to do next.</p>
+        </div>
+
+        <h2>Three patterns that actually work</h2>
+
+        <p>Agent teams aren't magic — they work because of specific patterns. Here are three that I use constantly.</p>
+
+        <h3>Pattern 1: The Pipeline</h3>
+
+        <p>Sequential. Each agent's output feeds directly into the next. Simple, predictable, easy to debug.</p>
+
+        <div class="pipeline">
+            <h4>Example: Blog post from scratch</h4>
+            <div class="pipeline-step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <strong>Researcher</strong>
+                    <span>"Find 5 recent examples of [topic]. Pull the most interesting fact from each."</span>
+                </div>
+            </div>
+            <div class="pipeline-step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <strong>Outliner</strong>
+                    <span>"Given these facts, create a blog post structure with 5 sections. Include a hook and a conclusion."</span>
+                </div>
+            </div>
+            <div class="pipeline-step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <strong>Writer</strong>
+                    <span>"Write the full post based on this outline. Tone: direct, practical, no fluff. 800 words."</span>
+                </div>
+            </div>
+            <div class="pipeline-step">
+                <div class="step-num">4</div>
+                <div class="step-content">
+                    <strong>Reviewer</strong>
+                    <span>"Check this against the original brief and the research. What's wrong, missing, or overstated?"</span>
+                </div>
+            </div>
+        </div>
+
+        <h3>Pattern 2: The Parallel Team</h3>
+
+        <p>Multiple agents work on different parts of the same problem at the same time. A coordinator collects the outputs and synthesises them.</p>
+
+        <div class="pattern-card">
+            <h4>Example: Competitive analysis</h4>
+            <p>Three researcher agents each cover one competitor simultaneously. A synthesis agent takes all three outputs and produces a comparison. A writer agent turns the comparison into an executive summary.</p>
+            <p>This is faster than sequential — but you need a coordinator (usually you, or a capable AI) to manage the merging step.</p>
+        </div>
+
+        <h3>Pattern 3: The Loop</h3>
+
+        <p>An agent produces output. A reviewer evaluates it. If it passes, you're done. If not, the output goes back to the original agent with specific feedback. Repeat until good enough.</p>
+
+        <div class="pattern-card">
+            <h4>Example: Writing until it's right</h4>
+            <p>Writer produces a draft. Reviewer checks it against a specific rubric. Reviewer outputs either "APPROVED" or specific numbered feedback. If feedback: Writer revises. If approved: done. Usually takes 2-3 loops maximum.</p>
+            <p>The key is giving the Reviewer a concrete checklist, not vague instructions like "make it better."</p>
+        </div>
+
+        <h2>How to build this without code</h2>
+
+        <p>You have two main options, depending on how much automation you want.</p>
+
+        <h3>Option 1: Manual orchestration (easiest)</h3>
+
+        <p>You are the coordinator. You run each agent manually in separate chat windows or conversations, copy-paste outputs between them, and review at each stage.</p>
+
+        <p>This sounds tedious. It's actually quite fast, and you stay in control of every step. Good for occasional tasks or when you're still figuring out the workflow.</p>
+
+        <ul>
+            <li>Open three tabs: one for research, one for writing, one for review</li>
+            <li>Give each tab a different system prompt at the start of the conversation</li>
+            <li>Copy the output from tab 1 into tab 2's message, and so on</li>
+            <li>Review before each handoff</li>
+        </ul>
+
+        <h3>Option 2: Claude Code or similar tools (more automation)</h3>
+
+        <p>Tools like Claude Code let you run agents that can read files, search the web, write files, and hand off to other agents — all in one session. You describe what you want in plain English and the tool figures out how to break it down and execute it.</p>
+
+        <p>This is more like having an actual team running while you do something else. The tradeoff is less visibility into each step, and occasionally an agent going off in an unexpected direction.</p>
+
+        <div class="warning-card">
+            <h4>&#9888;&#65039; The main failure mode</h4>
+            <p>The most common mistake with agent teams is giving agents too much freedom and too little context. An agent with a vague brief will produce vague output. Be specific about the role, the task, the format of the output, and any constraints.</p>
+            <p>Think of each system prompt as a job description for a contractor. The better the brief, the better the work.</p>
+        </div>
+
+        <h2>Real examples I've built</h2>
+
+        <p>Here are actual agent teams I've used to build things, without writing code for any of them:</p>
+
+        <h3>The blog series team</h3>
+
+        <p>Three agents: a researcher who finds recent examples and statistics on a given topic, a writer who produces the draft from a consistent template, and a style reviewer who checks the output matches the Stackless voice. I run these sequentially for each post in a series.</p>
+
+        <h3>The product database builder</h3>
+
+        <p>For the Curly Girl product database (330+ UK haircare products), I used a research agent to find products by category, a data formatter to structure each product into a consistent JSON format, and a quality checker to flag missing fields or inconsistent values. What would have taken days took a single overnight run.</p>
+
+        <h3>The analysis team</h3>
+
+        <p>For competitive research: a researcher per competitor, a comparator to identify patterns across all of them, and a strategist to make recommendations. The coordinator (me) reviewed at each stage and decided whether to go deeper on any thread.</p>
+
+        <h2>The coordination problem</h2>
+
+        <p>The hardest part of agent teams isn't building them — it's coordination. Who decides what happens next? Who catches errors? Who makes the call when two agents produce conflicting outputs?</p>
+
+        <p>For simple pipelines, you can let the process be linear and review at the end. For anything more complex, you need an explicit coordination step — either you doing it manually, or a coordinator agent with a clear decision framework.</p>
+
+        <p>A practical rule: the more consequential the output (something that goes to a client, something public-facing, something financial), the more you want to be the coordinator rather than automating that role.</p>
+
+        <h2>Where to start</h2>
+
+        <p>Pick one task you currently do with a single AI prompt that produces mediocre results. Split it into three parts: gather, create, check. Run each part with a different focused prompt. See if the output is better.</p>
+
+        <p>It almost always is. And once you've done it once, you'll start seeing teams everywhere.</p>
+
+        <div class="article-nav">
+            <a href="post-11-privacy-for-non-coders.html">&#8592; Privacy for Non-Coders</a>
+            <a href="../blog.html">All Posts</a>
+            <a href="post-13-content-creator-agent.html">Content Creator Agent &#8594;</a>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <a href="../index.html" style="font-weight: 900; font-size: 1.25rem; text-decoration: none; color: var(--slate-900);">Stackless</a>
+                <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--slate-500);">Digital products and tools for curious non-coders.</p>
+            </div>
+            <div>
+                <a href="../blog.html" style="font-weight: 700; font-size: 0.875rem; margin-right: 1.5rem; text-decoration: none; color: var(--slate-700);">Blog</a>
+                <a href="../shop/index.html" style="font-weight: 700; font-size: 0.875rem; text-decoration: none; color: var(--slate-700);">Shop</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Stackless. Built without code (mostly).</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            var btn = document.getElementById('themeToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('stackless-theme', next);
+            });
+        })();
+    </script>
+</body>
+</html>

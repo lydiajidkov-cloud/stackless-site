@@ -6,6 +6,7 @@
     <title>Resources — Podcasts & Infographics | Stackless</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
 
     <!-- SEO -->
     <meta name="description" content="Free podcasts and infographics from Stackless — AI tools, personal finance, curly hair science, and more. Generated with NotebookLM.">
@@ -235,6 +236,10 @@
                 <li><a href="shop/index.html">Shop</a></li>
                 <li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>
             </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span class="icon-sun">☀️</span>
+                <span class="icon-moon">🌙</span>
+            </button>
             <button class="hamburger" id="hamburger" aria-label="Open menu">
                 <span></span><span></span><span></span>
             </button>
@@ -454,6 +459,18 @@
         hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
         mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
         mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+    <script>
+        (function() {
+            var btn = document.getElementById('themeToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('stackless-theme', next);
+            });
+        })();
     </script>
 </body>
 </html>

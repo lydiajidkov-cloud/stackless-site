@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Content Creator Agent: Your AI Writing Team for £0 — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+
+    <!-- SEO -->
+    <meta name="description" content="A practical guide to building your own AI content team: researcher, writer, editor, social adapter. No code, no subscriptions beyond what you already have.">
+    <link rel="canonical" href="https://stackless.tech/blog/post-13-content-creator-agent.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Content Creator Agent: Your AI Writing Team for £0">
+    <meta property="og:description" content="A practical guide to building your own AI content team: researcher, writer, editor, social adapter. No code, no subscriptions beyond what you already have.">
+    <meta property="og:url" content="https://stackless.tech/blog/post-13-content-creator-agent.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://stackless.tech/og-image.png">
+    <meta property="og:site_name" content="Stackless">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Content Creator Agent: Your AI Writing Team for £0">
+    <meta name="twitter:description" content="Build your own AI content team with agents for research, writing, editing and social. No code required.">
+    <meta name="twitter:image" content="https://stackless.tech/og-image.png">
+
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--indigo-600);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .agent-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--indigo-600);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .agent-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--indigo-600);
+            margin-bottom: 0.5rem;
+        }
+        .agent-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .agent-card .prompt-box {
+            background: var(--slate-100);
+            border: 2px solid var(--slate-900);
+            padding: 0.75rem 1rem;
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+            font-family: monospace;
+            font-weight: 600;
+            color: var(--slate-700);
+            line-height: 1.6;
+        }
+        .tip-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--orange-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .tip-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--orange-500);
+            margin-bottom: 0.5rem;
+        }
+        .tip-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .warning-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--pink-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .warning-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--pink-500);
+            margin-bottom: 0.5rem;
+        }
+        .warning-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .flow-box {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--lime-400);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+        }
+        .flow-box h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            color: var(--slate-700);
+        }
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.9375rem;
+            font-weight: 600;
+        }
+        .flow-step .arrow {
+            font-size: 1rem;
+            color: var(--slate-500);
+        }
+        .flow-label {
+            background: var(--slate-900);
+            color: var(--bg);
+            font-size: 0.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 0.15rem 0.5rem;
+            white-space: nowrap;
+        }
+        .article-nav {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 3px solid var(--slate-900);
+            flex-wrap: wrap;
+        }
+        .article-nav a {
+            font-weight: 800;
+            font-size: 0.875rem;
+            text-decoration: none;
+            color: var(--slate-900);
+            border: 2px solid var(--slate-900);
+            padding: 0.6rem 1rem;
+            transition: all 0.15s;
+        }
+        .article-nav a:hover {
+            background: var(--slate-900);
+            color: var(--white);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            background: var(--slate-100);
+            border: 2px solid var(--slate-900);
+            padding: 0.2rem 0.6rem;
+            margin-right: 0.4rem;
+        }
+
+        /* Dark mode */
+        [data-theme="dark"] .article-body p,
+        [data-theme="dark"] .article-body ul,
+        [data-theme="dark"] .article-body ol { color: var(--slate-700); }
+        [data-theme="dark"] .article-body blockquote { background: var(--slate-100); }
+        [data-theme="dark"] .agent-card,
+        [data-theme="dark"] .tip-card,
+        [data-theme="dark"] .warning-card,
+        [data-theme="dark"] .flow-box { background: var(--white); }
+        [data-theme="dark"] .agent-card .prompt-box { background: var(--slate-100); }
+        [data-theme="dark"] .article-nav a { color: var(--slate-900); border-color: var(--slate-700); }
+        [data-theme="dark"] .article-nav a:hover { background: var(--slate-700); color: var(--white); }
+    </style>
+</head>
+<body>
+    <!-- Nav -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-logo">Stackless</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../blog.html" class="active">Blog</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+                <li><a href="../fleet.html">The Fleet</a></li>
+                <li><a href="../shop/index.html" class="nav-cta">Shop</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><span class="icon-sun">☀️</span><span class="icon-moon">🌙</span></button>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+        </div>
+    </nav>
+
+    <!-- Article -->
+    <main class="article-body">
+
+        <div class="article-meta">
+            <span class="tag">Agents</span>
+            <span class="tag">Content</span>
+            <span class="tag">Workflow</span>
+            <span style="margin-left: 0.5rem;">February 2026 &bull; 10 min read</span>
+        </div>
+
+        <h1>The Content Creator Agent: Your AI Writing Team for £0</h1>
+
+        <p>Content is one of the best uses of AI I've found. Not because AI writes brilliantly on its own — it often doesn't — but because content creation maps perfectly onto the agent team model. Research. Outline. Draft. Edit. Adapt. Each of those is a distinct job, and each benefits from focused attention rather than one overcrowded prompt.</p>
+
+        <p>What I'm going to show you is how to build a personal content creation system using AI agents. No tools to buy. No subscriptions beyond what you already have. Just a set of focused prompts that work together as a team.</p>
+
+        <h2>The problem with one-shot content</h2>
+
+        <p>Most people use AI for content like this: "Write me a blog post about X." The result is usually fine. Maybe 70% of the way there. Structurally okay, missing any distinctive voice, occasionally factually thin, probably a bit generic.</p>
+
+        <p>The issue is that you've asked one agent to do everything at once. The AI is simultaneously figuring out what to say, how to say it, what order to say it in, what tone to use, and what facts to include. That's too many constraints in conflict with each other.</p>
+
+        <p>When you break it apart, you can go much deeper at each stage. And the final output genuinely reflects your thinking, not just a statistical average of everyone else's writing on the topic.</p>
+
+        <blockquote>"The goal isn't AI that writes for you. It's AI that handles the mechanical parts so you can focus on the thinking."</blockquote>
+
+        <h2>The five agents in your content team</h2>
+
+        <p>Here's the team I've built up over time. Each agent has a specific role, a focused prompt, and a defined output format. You don't need all five for every piece — but knowing what each does helps you pick the right ones.</p>
+
+        <div class="agent-card">
+            <h4>&#128270; Agent 1: The Researcher</h4>
+            <p>Finds what's actually worth saying about your topic. Not just "what is X" — but what's interesting, recent, surprising, or counterintuitive about X. Output: bullet points only, no prose.</p>
+            <div class="prompt-box">
+You are a research specialist. Your job is to find the most interesting, recent, and non-obvious information about a topic. Do NOT write prose. Output bullet points only.
+
+For each point: state the fact, its source type (academic / news / industry), and why it's surprising or useful.
+
+Topic: [TOPIC]
+Goal of the piece: [GOAL — e.g. "help non-technical people understand AI privacy risks"]
+Target audience: [AUDIENCE]
+
+Find 8-10 bullet points. Flag any that you're uncertain about.</div>
+        </div>
+
+        <div class="agent-card">
+            <h4>&#128196; Agent 2: The Outliner</h4>
+            <p>Takes the research and builds a structure. Not the content — just the skeleton. Decides what goes in, what order, and why. Output: numbered sections with one-line descriptions.</p>
+            <div class="prompt-box">
+You are a content strategist. Your job is to turn research into a compelling structure.
+
+Here is the research: [PASTE RESEARCHER OUTPUT]
+Here is the goal: [GOAL]
+Here is the audience: [AUDIENCE]
+
+Create a numbered outline with:
+- A hook (the opening angle)
+- 4-6 main sections, each with a one-line description of what it covers
+- A conclusion that gives the reader something to do
+
+No prose. Structure only. If a research point doesn't fit, leave it out.</div>
+        </div>
+
+        <div class="agent-card">
+            <h4>&#9997;&#65039; Agent 3: The Writer</h4>
+            <p>Writes the piece from the outline. Has a specific voice brief, knows the format, and doesn't go off-brief. This is where your style guidelines live.</p>
+            <div class="prompt-box">
+You are a writer for [PUBLICATION/BRAND NAME]. Here is our voice:
+- Direct and practical. No fluff.
+- Short sentences. Active voice.
+- No em dashes. No "Furthermore" or "Additionally".
+- Examples over explanations. Show, don't theorise.
+- Write to the reader as "you".
+
+Write a [FORMAT: blog post / email / LinkedIn post] based on this outline:
+[PASTE OUTLINER OUTPUT]
+
+Use this research for facts:
+[PASTE RESEARCHER OUTPUT]
+
+Target length: [WORD COUNT]. Do not pad. Stop when you've said what needs saying.</div>
+        </div>
+
+        <div class="agent-card">
+            <h4>&#128270; Agent 4: The Reviewer</h4>
+            <p>Checks the draft against specific criteria. Produces structured feedback, not rewrites. Output: pass/fail per criterion, with notes.</p>
+            <div class="prompt-box">
+You are an editorial reviewer. Check this draft against the following criteria and output a verdict (PASS / NEEDS WORK) for each, with one specific note:
+
+1. Does it match the goal? [GOAL]
+2. Is the opening hook strong enough to keep the reader?
+3. Are there any factual claims that aren't supported by the research?
+4. Does it match the voice brief? (direct, practical, no fluff, no em dashes)
+5. Does the conclusion give the reader something clear to do?
+6. Is there anything missing that the research contained but the draft didn't use?
+
+Draft: [PASTE WRITER OUTPUT]
+Research: [PASTE RESEARCHER OUTPUT]
+
+Do NOT rewrite. Only evaluate and flag.</div>
+        </div>
+
+        <div class="agent-card">
+            <h4>&#128241; Agent 5: The Social Adapter</h4>
+            <p>Takes the finished piece and creates platform-specific versions. Different length, different format, same core message. One prompt to produce all your distribution content.</p>
+            <div class="prompt-box">
+You are a social media specialist. Take this article and produce the following distribution content:
+
+1. LinkedIn post (200-250 words, professional tone, ends with a question to drive comments)
+2. Twitter/X thread (5-7 tweets, each standalone, first tweet is a hook, last tweet links back)
+3. Email subject line (5 options, A/B test style, no clickbait)
+4. One-sentence summary for SEO description (under 160 characters)
+
+Article: [PASTE FINAL ARTICLE]
+
+Match the voice: direct, practical, no fluff. No "excited to share" or "thrilled to announce".</div>
+        </div>
+
+        <h2>How to run the team in practice</h2>
+
+        <p>You don't need special software. You need a chat interface (Claude, ChatGPT, Gemini — whatever you use) and somewhere to store the prompts so you're not retyping them.</p>
+
+        <div class="flow-box">
+            <h4>Full content pipeline — one piece of content</h4>
+            <div class="flow-step">
+                <span class="flow-label">You</span>
+                <span class="arrow">&#8594;</span>
+                <span>Define: topic, goal, audience, format, word count</span>
+            </div>
+            <div class="flow-step">
+                <span class="flow-label">Researcher</span>
+                <span class="arrow">&#8594;</span>
+                <span>8-10 research bullets (review before continuing)</span>
+            </div>
+            <div class="flow-step">
+                <span class="flow-label">Outliner</span>
+                <span class="arrow">&#8594;</span>
+                <span>Numbered structure (review and adjust)</span>
+            </div>
+            <div class="flow-step">
+                <span class="flow-label">Writer</span>
+                <span class="arrow">&#8594;</span>
+                <span>Full draft</span>
+            </div>
+            <div class="flow-step">
+                <span class="flow-label">Reviewer</span>
+                <span class="arrow">&#8594;</span>
+                <span>Structured feedback</span>
+            </div>
+            <div class="flow-step">
+                <span class="flow-label">Writer (again)</span>
+                <span class="arrow">&#8594;</span>
+                <span>Revised draft if needed</span>
+            </div>
+            <div class="flow-step">
+                <span class="flow-label">Social Adapter</span>
+                <span class="arrow">&#8594;</span>
+                <span>LinkedIn, Twitter thread, email subject lines, SEO description</span>
+            </div>
+            <div class="flow-step">
+                <span class="flow-label">You</span>
+                <span class="arrow">&#8594;</span>
+                <span>Final review, personal touches, publish</span>
+            </div>
+        </div>
+
+        <p>The whole thing takes about 20-30 minutes for a 1,000-word piece, including your review time. Compare that to writing from scratch, which for most people is 2-3 hours.</p>
+
+        <h2>Where to store the prompts</h2>
+
+        <p>The simplest approach: a document or notes file with all five prompts saved as templates. When you start a new piece, you copy the right prompt, fill in the brackets, and paste it in.</p>
+
+        <p>If you're on Claude, you can use Projects to store your prompts and keep context across conversations. Each agent gets its own project, or you can keep them in one project and switch between them.</p>
+
+        <p>If you write a lot of content, it's worth spending an hour customising the voice brief in Agent 3 to match exactly how you want to sound. That's the prompt that has the most leverage — everything flows from the Writer's output.</p>
+
+        <h2>Making it more automatic</h2>
+
+        <p>Once you're comfortable with the manual version, you can start connecting agents more directly.</p>
+
+        <p>Claude Code lets you run all five agents in sequence with outputs passing automatically between them. You describe the piece you want, the team runs, and you come back to a draft and social content ready for review. I've used this for this blog — articles I wrote at night while asleep.</p>
+
+        <div class="tip-card">
+            <h4>&#128161; The overnight run</h4>
+            <p>One practical use: queue up three or four pieces before you go to bed. The agent team runs overnight. In the morning you have drafts to review. The revision step — adding your examples, adjusting the voice, catching anything that feels off — takes 10-15 minutes per piece.</p>
+            <p>You go from "I need to write more content" to "I have content, I just need to make it mine." That's a different problem. A much easier one.</p>
+        </div>
+
+        <h2>What the AI can't do</h2>
+
+        <p>This system is genuinely useful, but it has real limits. Here's what you have to provide yourself:</p>
+
+        <ul>
+            <li><strong>Original insights.</strong> The Researcher can find facts. It can't have your experience, your perspective, or your original take on something. That has to come from you — either in the brief or in the revision step.</li>
+            <li><strong>Real-world examples from your life.</strong> Generic examples from AI are noticeably weaker than specific examples from experience. The best use of the system is to let AI handle the structure and facts, then swap in your own examples.</li>
+            <li><strong>Fact verification.</strong> Especially for recent events. The Reviewer prompt asks the agent to flag uncertain claims, but you should still check anything where being wrong would matter.</li>
+            <li><strong>Your voice.</strong> The Writer prompt helps, but it still needs editing to sound like you. The more specific your voice brief, the less editing you need — but some editing is always required.</li>
+        </ul>
+
+        <div class="warning-card">
+            <h4>&#9888;&#65039; The authenticity problem</h4>
+            <p>Content that feels obviously AI-generated is less trusted, less read, and less shared. The whole point of this system is to make content that sounds like you — using AI to handle the mechanical work, not replace the thinking.</p>
+            <p>If you skip the revision step and publish raw AI output, you'll get content that's technically fine and distinctly forgettable. The system only works if you show up for the final 20%.</p>
+        </div>
+
+        <h2>Scaling to a content series</h2>
+
+        <p>The real value shows up when you're producing a series — not just one piece, but ten, twenty, fifty on related topics. At that point:</p>
+
+        <ul>
+            <li>The Researcher builds up a shared knowledge base that subsequent posts draw on</li>
+            <li>The Writer gets better at your voice because you've refined the prompt over multiple iterations</li>
+            <li>The Social Adapter produces content for every platform from every piece, not just the big ones</li>
+            <li>You develop a library of content that covers your territory comprehensively</li>
+        </ul>
+
+        <p>The Stackless blog runs on exactly this model. Each post in the non-expert series (privacy, security, agents, this one) went through the same team. The voice brief evolved slightly each time based on what worked. The series ended up consistent because the process was consistent.</p>
+
+        <h2>Your first piece</h2>
+
+        <p>Take a topic you know something about — or want to know more about. Fill in the brackets in the Researcher prompt. Run it. See what comes back.</p>
+
+        <p>Don't aim for perfection on the first run. Aim for something you can edit into shape in under 30 minutes. That's the bar. Once you've done it once, you'll know where the prompts need adjusting for your use case.</p>
+
+        <p>The team's there. You just need to give it a brief.</p>
+
+        <div class="article-nav">
+            <a href="post-12-building-agent-teams.html">&#8592; Building Agent Teams</a>
+            <a href="../blog.html">All Posts</a>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <a href="../index.html" style="font-weight: 900; font-size: 1.25rem; text-decoration: none; color: var(--slate-900);">Stackless</a>
+                <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--slate-500);">Digital products and tools for curious non-coders.</p>
+            </div>
+            <div>
+                <a href="../blog.html" style="font-weight: 700; font-size: 0.875rem; margin-right: 1.5rem; text-decoration: none; color: var(--slate-700);">Blog</a>
+                <a href="../shop/index.html" style="font-weight: 700; font-size: 0.875rem; text-decoration: none; color: var(--slate-700);">Shop</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Stackless. Built without code (mostly).</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            var btn = document.getElementById('themeToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('stackless-theme', next);
+            });
+        })();
+    </script>
+</body>
+</html>

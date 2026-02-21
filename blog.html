@@ -6,6 +6,7 @@
     <title>Blog — AI Tools, Non-Coder Dev, Digital Products | Stackless</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
 
     <!-- SEO -->
     <meta name="description" content="The Stackless blog — practical guides on building with AI, shipping digital products, and doing it without a dev team.">
@@ -47,6 +48,10 @@
                 <li><a href="shop/index.html">Shop</a></li>
                 <li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>
             </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span class="icon-sun">☀️</span>
+                <span class="icon-moon">🌙</span>
+            </button>
             <button class="hamburger" id="hamburger" aria-label="Open menu">
                 <span></span><span></span><span></span>
             </button>
@@ -76,7 +81,54 @@
                 </div>
             </div>
 
+            <!-- The Non-Expert Series -->
+            <div style="background: var(--slate-900); color: var(--white); padding: 1.5rem; margin-bottom: 2rem; border: 3px solid var(--slate-900);">
+                <h2 style="color: var(--pink-500); font-size: 1rem; text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 900;">The Non-Expert Series</h2>
+                <p style="color: var(--slate-300); font-weight: 500; margin-bottom: 1rem;">Privacy, security, agents, and AI workflows — explained for people who build things without a CS degree.</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                    <a href="blog/post-11-privacy-for-non-coders.html" style="color: var(--pink-500); font-weight: 800; font-size: 0.875rem; text-decoration: none;">Privacy for Non-Coders</a>
+                    <span style="color: var(--slate-500);">&middot;</span>
+                    <a href="blog/post-12-building-agent-teams.html" style="color: var(--pink-500); font-weight: 800; font-size: 0.875rem; text-decoration: none;">Building Agent Teams</a>
+                    <span style="color: var(--slate-500);">&middot;</span>
+                    <a href="blog/post-13-content-creator-agent.html" style="color: var(--pink-500); font-weight: 800; font-size: 0.875rem; text-decoration: none;">Content Creator Agent</a>
+                </div>
+            </div>
+
             <div class="article-list">
+
+                <a href="blog/post-13-content-creator-agent.html" class="article-item" style="text-decoration: none; color: inherit; display: block;">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">Agents</span>
+                        <span class="tag" style="background: var(--indigo-600); color: white; border-color: var(--indigo-600);">Content</span>
+                        <span class="tag" style="background: var(--slate-900); color: var(--pink-500); border-color: var(--slate-900); font-size: 0.7rem;">NON-EXPERT</span>
+                    </div>
+                    <h3>The Content Creator Agent: Your AI Writing Team for £0</h3>
+                    <p class="meta">10 min read &middot; February 2026</p>
+                    <p>Five specialised AI agents working together: researcher, outliner, writer, reviewer, social adapter. The prompts, the workflow, and what only you can provide.</p>
+                </a>
+
+                <a href="blog/post-12-building-agent-teams.html" class="article-item" style="text-decoration: none; color: inherit; display: block;">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">Agents</span>
+                        <span class="tag" style="background: var(--lime-400); border-color: var(--lime-400);">AI Workflow</span>
+                        <span class="tag" style="background: var(--slate-900); color: var(--pink-500); border-color: var(--slate-900); font-size: 0.7rem;">NON-EXPERT</span>
+                    </div>
+                    <h3>Building Agent Teams: How I Use Multiple AIs Together</h3>
+                    <p class="meta">9 min read &middot; February 2026</p>
+                    <p>One AI is useful. Multiple AIs with different roles working in sequence are genuinely powerful. The four agent roles, three patterns, and how to start without any code.</p>
+                </a>
+
+                <a href="blog/post-11-privacy-for-non-coders.html" class="article-item" style="text-decoration: none; color: inherit; display: block;">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <span class="tag" style="background: var(--indigo-600); color: white; border-color: var(--indigo-600);">Privacy</span>
+                        <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">Security</span>
+                        <span class="tag" style="background: var(--slate-900); color: var(--pink-500); border-color: var(--slate-900); font-size: 0.7rem;">NON-EXPERT</span>
+                    </div>
+                    <h3>Privacy for Non-Coders: What Stays Local, What Doesn't</h3>
+                    <p class="meta">10 min read &middot; February 2026</p>
+                    <p>What data actually leaves your machine when you use AI tools? A traffic light guide to data classification, API keys, Git, and what "local" actually means.</p>
+                </a>
+
                 <a href="blog/post-10-ai-orchestra.html" class="article-item" style="text-decoration: none; color: inherit; display: block;">
                     <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
                         <span class="tag" style="background: var(--lime-400); border-color: var(--lime-400);">Tools</span>
@@ -190,6 +242,18 @@
         hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
         mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
         mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+    <script>
+        (function() {
+            var btn = document.getElementById('themeToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('stackless-theme', next);
+            });
+        })();
     </script>
 </body>
 </html>

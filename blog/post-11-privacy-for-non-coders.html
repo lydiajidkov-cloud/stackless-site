@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy for Non-Coders: What Stays Local, What Doesn't — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+
+    <!-- SEO -->
+    <meta name="description" content="What data actually leaves your machine when you use AI tools? A non-coder's practical guide to understanding AI privacy — what to share, what to protect, and the questions to ask.">
+    <link rel="canonical" href="https://stackless.tech/blog/post-11-privacy-for-non-coders.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Privacy for Non-Coders: What Stays Local, What Doesn't">
+    <meta property="og:description" content="What data actually leaves your machine when you use AI tools? A non-coder's practical guide to understanding AI privacy — what to share, what to protect, and the questions to ask.">
+    <meta property="og:url" content="https://stackless.tech/blog/post-11-privacy-for-non-coders.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://stackless.tech/og-image.png">
+    <meta property="og:site_name" content="Stackless">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Privacy for Non-Coders: What Stays Local, What Doesn't">
+    <meta name="twitter:description" content="What data actually leaves your machine when you use AI tools? A non-coder's practical guide to understanding AI privacy.">
+    <meta name="twitter:image" content="https://stackless.tech/og-image.png">
+
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--indigo-600);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .privacy-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--indigo-600);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .privacy-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--indigo-600);
+            margin-bottom: 0.5rem;
+        }
+        .privacy-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .warning-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--pink-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .warning-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--pink-500);
+            margin-bottom: 0.5rem;
+        }
+        .warning-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .checklist {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--lime-400);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+        }
+        .checklist h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            color: var(--slate-700);
+        }
+        .checklist ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .checklist li {
+            padding: 0.4rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-weight: 600;
+            font-size: 0.9375rem;
+        }
+        .checklist li::before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            font-weight: 900;
+        }
+        .traffic-light {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .tl-green, .tl-amber, .tl-red {
+            border: 3px solid var(--slate-900);
+            padding: 1rem;
+        }
+        .tl-green { background: #d1fae5; }
+        .tl-amber { background: #fef3c7; }
+        .tl-red { background: #fee2e2; }
+        .tl-label {
+            font-weight: 900;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+        .tl-green .tl-label { color: #065f46; }
+        .tl-amber .tl-label { color: #92400e; }
+        .tl-red .tl-label { color: #991b1b; }
+        .tl-items { font-size: 0.85rem; font-weight: 600; color: var(--slate-700); line-height: 1.7; }
+        .series-nav {
+            background: var(--slate-900);
+            color: var(--white);
+            padding: 1.5rem;
+            margin-top: 3rem;
+        }
+        .series-nav p {
+            color: var(--slate-300) !important;
+            font-size: 0.875rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        .series-nav a { color: var(--lime-400); font-weight: 800; }
+
+        /* Dark mode overrides */
+        [data-theme="dark"] .article-body h1,
+        [data-theme="dark"] .article-body h2,
+        [data-theme="dark"] .article-body h3 { color: var(--slate-900); }
+        [data-theme="dark"] .article-body p,
+        [data-theme="dark"] .article-body li { color: var(--slate-700); }
+        [data-theme="dark"] .article-meta { color: var(--slate-500); border-bottom-color: rgba(255,255,255,0.12); }
+        [data-theme="dark"] .article-body blockquote { background: #2a2a38; }
+        [data-theme="dark"] .privacy-card,
+        [data-theme="dark"] .warning-card,
+        [data-theme="dark"] .checklist { background: #1e1e28; border-color: rgba(255,255,255,0.12); }
+        [data-theme="dark"] .tl-green { background: #1a3028; }
+        [data-theme="dark"] .tl-amber { background: #2a2010; }
+        [data-theme="dark"] .tl-red { background: #2a1010; }
+        [data-theme="dark"] .tl-green .tl-label { color: #6ee7b7; }
+        [data-theme="dark"] .tl-amber .tl-label { color: #fcd34d; }
+        [data-theme="dark"] .tl-red .tl-label { color: #fca5a5; }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../blog.html" class="active">Blog</a></li>
+                <li><a href="../fleet.html">The Fleet</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+                <li><a href="../shop/index.html" class="nav-cta">Browse Products</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span class="icon-sun">☀️</span>
+                <span class="icon-moon">🌙</span>
+            </button>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="article-body">
+            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+                <span class="tag" style="background: var(--indigo-500); color: white; border-color: var(--indigo-500);">Privacy</span>
+                <span class="tag" style="background: var(--pink-500); color: white; border-color: var(--pink-500);">Security</span>
+            </div>
+
+            <h1>Privacy for Non-Coders: What Stays Local, What Doesn't</h1>
+            <div class="article-meta">10 min read &middot; February 2026</div>
+
+            <p>Every time you paste something into an AI chat window, you are sending data somewhere. That's not a reason to stop using these tools. It's a reason to be deliberate about what you send.</p>
+
+            <p>Most people using AI tools to build things have no idea what happens to their data. The privacy policies exist, they're just written for lawyers, not for non-coders who are trying to build a finance dashboard or an ingredient checker on a Saturday afternoon.</p>
+
+            <p>This isn't a scare piece. It's a map. Here's what I've actually figured out from building 13+ projects with AI tools — what goes where, what stays local, and the mental model I use before I paste anything sensitive.</p>
+
+            <h2>The Core Question: Where Does the Data Go?</h2>
+
+            <p>When you type something into Claude, ChatGPT, Gemini, or any AI tool, that text travels to the company's servers, gets processed, and a response comes back. The text you sent is now on their infrastructure.</p>
+
+            <p>What happens to it after that depends on the tool, the plan you're on, and what you've agreed to in settings. The default for most free tiers is: your conversations can be used to improve the model. The default for paid/API tiers varies but is generally more protective.</p>
+
+            <div class="privacy-card">
+                <h4>The key distinction</h4>
+                <p><strong>Conversations via the chat interface</strong> (claude.ai, ChatGPT.com, Gemini.google.com): Your inputs are processed server-side. Whether they're retained for training depends on your account settings and plan.</p>
+                <p><strong>Conversations via the API</strong> (including Claude Code): By default, Anthropic and OpenAI do not use API data to train models. You're paying for inference only.</p>
+            </div>
+
+            <p>Claude Code sits in the API category. What I type here isn't going into model training. The same is true for direct API access. This is one reason professional developers pay for API access rather than using the chat interface for sensitive work.</p>
+
+            <h2>What I Actually Do Before Pasting Data</h2>
+
+            <p>I have a single question I ask before pasting anything: <strong>Would I be comfortable if this appeared in a training dataset?</strong></p>
+
+            <p>If yes, paste away. If no, either anonymise it first, or don't use AI for that specific step.</p>
+
+            <p>This is my practical traffic light:</p>
+
+            <div class="traffic-light">
+                <div class="tl-green">
+                    <div class="tl-label">Fine to share</div>
+                    <div class="tl-items">Sample/dummy data<br>Public information<br>Generic questions<br>Code without credentials<br>Anonymised examples</div>
+                </div>
+                <div class="tl-amber">
+                    <div class="tl-label">Think first</div>
+                    <div class="tl-items">Your own spending data<br>Business financial data<br>Health information<br>Anything with real names<br>Work documents</div>
+                </div>
+                <div class="tl-red">
+                    <div class="tl-label">Never paste</div>
+                    <div class="tl-items">API keys / passwords<br>Other people's private data<br>Patient data (if healthcare)<br>Credit card numbers<br>Login credentials</div>
+                </div>
+            </div>
+
+            <p>The amber zone is where you need to make a judgment call. I've pasted my own spending data into Claude Code when building my finance dashboard. That was a deliberate choice I made after reading the relevant policy. I wouldn't paste someone else's financial data without explicit permission and a clear reason.</p>
+
+            <h2>The API Key Problem</h2>
+
+            <p>This is the most common real-world mistake. API keys are credentials — they're the equivalent of a password to a service you're paying for. If you paste an API key into an AI chat window, you've just handed that key to a third party's server.</p>
+
+            <div class="warning-card">
+                <h4>The Pattern That Causes This</h4>
+                <p>You're building something. You hit a bug. You copy the entire code file — including the line that says <code>API_KEY = "sk-..."</code> — and paste it into the chat for help.</p>
+                <p>The AI helps you fix the bug. But the API key is now in their system.</p>
+                <p>The fix: use environment variables, even in small personal projects. Never hardcode credentials. Your code should read <code>API_KEY = os.environ["MY_KEY"]</code>, not the actual key value.</p>
+            </div>
+
+            <p>I learned this the hard way early on. The first time I built something that called an external API, I had the key right in the file. Claude Code pointed it out before I pushed it to GitHub, but that was lucky. Now I treat environment variables as non-negotiable from day one.</p>
+
+            <h2>The Git and GitHub Problem</h2>
+
+            <p>Version control is another place data goes places it shouldn't. If you commit a file containing real data or credentials, that goes into your repository history. Even if you delete the file later, it's in the history unless you explicitly rewrite it.</p>
+
+            <p>The practical rules I follow:</p>
+
+            <ul>
+                <li><strong>.gitignore first, always.</strong> Before I write a single line of code in a new project, I create a .gitignore file. It tells Git which files to ignore. Anything with real data, credentials, or sensitive content goes in there.</li>
+                <li><strong>Sample data in repos, real data local.</strong> If I'm building something that processes real CSV files, the repo contains example CSVs with dummy data. The real files stay on my machine.</li>
+                <li><strong>Public repos get extra scrutiny.</strong> If I'm putting a project on GitHub, I review every file before pushing. Private repos are slightly more forgiving but still deserve the same caution.</li>
+            </ul>
+
+            <h2>What "Local" Actually Means</h2>
+
+            <p>When I say something "stays local," I mean it never leaves my machine in an uncontrolled way. The Claude Code CLI runs locally — the tool calls happen on my computer. But the AI reasoning about what to do still happens on Anthropic's servers. So:</p>
+
+            <ul>
+                <li>The files Claude Code reads are on my machine</li>
+                <li>The content of those files gets sent to Anthropic's API as part of the conversation</li>
+                <li>The API processes it and sends back instructions</li>
+                <li>Claude Code executes those instructions locally</li>
+            </ul>
+
+            <p>So "running locally" doesn't mean "stays on my machine entirely." It means the execution happens locally. The AI context still travels to the server. This is true of any agentic tool that uses a cloud AI model.</p>
+
+            <p>The tools that genuinely run entirely locally are tools running a local model — Ollama, LM Studio, or similar. These are legitimate options for genuinely sensitive work, at the cost of significantly reduced capability.</p>
+
+            <h2>Other People's Data</h2>
+
+            <p>This is the category most people miss entirely. Most data privacy conversations focus on your own data. But if you're building a tool that processes information about other people, the rules are different.</p>
+
+            <p>GDPR (if you're in the UK or EU) applies to processing personal data about living individuals. Processing includes sending that data to an AI service. If you're building a tool for a business that involves customer data, employee data, patient data, or any data about people who haven't given permission for it to be sent to an AI service — that's a legal issue, not just a privacy preference.</p>
+
+            <p>I stay out of that territory entirely. Everything I build either uses sample/anonymised data, or processes only the user's own data. The moment a product touches data about other people, the compliance questions are beyond what I can sensibly navigate as a non-expert.</p>
+
+            <h2>The Mental Model I Actually Use</h2>
+
+            <p>I think of it like this: every AI tool I use is like a very capable assistant who works for a company I don't own. I can share things with that assistant that I'd share with any competent freelancer. I wouldn't share things I'd want to stay in my building — literally or professionally.</p>
+
+            <p>That framing has never caused me a problem and it keeps the decision fast. Not everything needs a privacy audit. Most things are clearly fine. The few things that aren't are usually obvious.</p>
+
+            <div class="checklist">
+                <h4>Before You Paste — Quick Check</h4>
+                <ul>
+                    <li>Does this contain anyone else's personal information?</li>
+                    <li>Does this contain API keys, passwords, or credentials?</li>
+                    <li>Would I be comfortable if this text appeared publicly?</li>
+                    <li>Is this on a free tier (higher training risk) or paid/API (lower risk)?</li>
+                    <li>If it's data — is this sample data or real data?</li>
+                    <li>Does my .gitignore cover anything in this project folder with real data?</li>
+                </ul>
+            </div>
+
+            <p>You don't need to be a privacy lawyer to build sensibly. You just need to know where the data goes and make deliberate choices about what you send. That's it.</p>
+
+            <div class="series-nav">
+                <p>Part of the Stackless Guide series for non-coder builders:</p>
+                <a href="post-6-security-for-non-coders.html">Part 1: Security &amp; Privacy Foundations</a> &middot;
+                <a href="post-7-testing-for-non-coders.html">Part 2: Testing &amp; Validation</a> &middot;
+                <a href="post-8-non-coders-toolkit.html">Part 3: The Toolkit</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+    </footer>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" id="mobileClose">&times;</button>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../projects.html">Projects</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../fleet.html">The Fleet</a>
+        <a href="../resources.html">Resources</a>
+        <a href="../shop/index.html">Shop</a>
+    </div>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+        hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+        mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+        mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => mobileMenu.classList.remove('open')));
+    </script>
+    <script>
+        (function() {
+            var btn = document.getElementById('themeToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('stackless-theme', next);
+            });
+        })();
+    </script>
+</body>
+</html>

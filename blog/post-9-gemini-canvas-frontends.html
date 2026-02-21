@@ -6,6 +6,7 @@
     <title>Gemini Canvas Changed How I Build Frontends — Stackless</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
+    <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
     <style>
         .article-body {
             max-width: 720px;
@@ -141,6 +142,48 @@
             flex-shrink: 0;
         }
         .step-text { font-size: 0.9375rem; font-weight: 600; color: var(--slate-700); line-height: 1.5; }
+
+        /* Dark mode overrides for blog posts */
+        [data-theme="dark"] .article-body {
+            color: var(--slate-900);
+        }
+        [data-theme="dark"] .article-body h1,
+        [data-theme="dark"] .article-body h2,
+        [data-theme="dark"] .article-body h3 {
+            color: var(--slate-900);
+        }
+        [data-theme="dark"] .article-body p,
+        [data-theme="dark"] .article-body li {
+            color: var(--slate-700);
+        }
+        [data-theme="dark"] .article-meta {
+            color: var(--slate-500);
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        [data-theme="dark"] .warning-card,
+        [data-theme="dark"] .example-card,
+        [data-theme="dark"] .callout,
+        [data-theme="dark"] .tip-box,
+        [data-theme="dark"] .checklist-card,
+        [data-theme="dark"] .highlight-box,
+        [data-theme="dark"] .tool-card,
+        [data-theme="dark"] .step-card {
+            background: #1e1e28;
+            border-color: rgba(255,255,255,0.12);
+        }
+        [data-theme="dark"] .article-body blockquote {
+            background: #1e1e28;
+            border-left-color: var(--pink-500);
+        }
+        [data-theme="dark"] .article-body code {
+            background: #2a2a38;
+            color: var(--lime-400);
+        }
+        [data-theme="dark"] .article-nav,
+        [data-theme="dark"] .series-nav {
+            background: #1e1e28;
+            border-color: rgba(255,255,255,0.12);
+        }
     </style>
 </head>
 <body>
@@ -162,6 +205,10 @@
                 <li><a href="../blog.html">Blog</a></li>
                 <li><a href="../shop/index.html">Shop</a></li>
             </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span class="icon-sun">☀️</span>
+                <span class="icon-moon">🌙</span>
+            </button>
             <button class="hamburger" id="hamburger" aria-label="Open menu">
                 <span></span><span></span><span></span>
             </button>
@@ -348,6 +395,18 @@
         document.getElementById('hamburger')?.addEventListener('click', function() {
             document.querySelector('.nav-links').classList.toggle('show');
         });
+    </script>
+    <script>
+        (function() {
+            var btn = document.getElementById('themeToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('stackless-theme', next);
+            });
+        })();
     </script>
 </body>
 </html>

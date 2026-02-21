@@ -6,6 +6,7 @@
     <title>Stackless — Practical tools. Built with AI. No dev team.</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
 
     <!-- SEO -->
     <meta name="description" content="A non-coder's experiment building real digital products with AI. Finance dashboards, consumer apps, and practical templates — open and £5.">
@@ -66,6 +67,10 @@
                 <li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>
             </ul>
 
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span class="icon-sun">☀️</span>
+                <span class="icon-moon">🌙</span>
+            </button>
             <button class="hamburger" id="hamburger" aria-label="Open menu">
                 <span></span>
                 <span></span>
@@ -356,6 +361,18 @@
                 filterBtns[0].classList.add('active');
             }
         });
+    </script>
+    <script>
+        (function() {
+            var btn = document.getElementById('themeToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('stackless-theme', next);
+            });
+        })();
     </script>
 </body>
 </html>

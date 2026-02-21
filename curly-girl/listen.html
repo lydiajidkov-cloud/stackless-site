@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listen — Curly Girl Wavy Girl UK Podcasts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .listen-hero {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      margin-bottom: 2rem;
+    }
+    .listen-hero .badge {
+      display: inline-block;
+      background: var(--rose-100);
+      color: var(--rose-600);
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-pill);
+      margin-bottom: 1rem;
+      letter-spacing: 0.03em;
+    }
+    .listen-hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .listen-hero p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .notebooklm-credit {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--sky-50);
+      border: 1.5px solid var(--sky-500);
+      color: var(--sky-800);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--radius-pill);
+      margin-top: 1.25rem;
+    }
+    .episodes-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    @media (min-width: 700px) {
+      .episodes-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .episodes-grid .episode-card:first-child {
+        grid-column: 1 / -1;
+      }
+    }
+    .episode-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .episode-card:hover {
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-2px);
+    }
+    .episode-color-bar {
+      height: 6px;
+      width: 100%;
+    }
+    .episode-body {
+      padding: 1.5rem;
+    }
+    .episode-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+    .episode-number {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .episode-duration {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+    .episode-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--rose-300);
+    }
+    .episode-card h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 0.6rem;
+      color: var(--text);
+    }
+    .episode-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+    .episode-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .episode-topic {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-pill);
+      background: var(--rose-100);
+      color: var(--rose-800);
+    }
+    .audio-placeholder {
+      background: var(--bg);
+      border: 2px dashed var(--rose-200);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .play-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--rose-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      opacity: 0.4;
+    }
+    .play-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: white;
+      margin-left: 2px;
+    }
+    .audio-placeholder-text {
+      flex: 1;
+    }
+    .audio-placeholder-text strong {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+    .audio-placeholder-text span {
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+    .progress-bar-wrap {
+      background: var(--rose-100);
+      height: 4px;
+      border-radius: 99px;
+      flex: 1;
+      overflow: hidden;
+    }
+    .coming-soon-banner {
+      text-align: center;
+      background: var(--emerald-50);
+      border: 2px solid var(--emerald-200);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+    .coming-soon-banner h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--emerald-800);
+      margin-bottom: 0.5rem;
+    }
+    .coming-soon-banner p {
+      font-size: 0.9rem;
+      color: var(--emerald-800);
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-icon">&#127754;</span>
+        CurlMagic UK
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">&#10024; Home</a></li>
+        <li><a href="checker.html">&#128270; Scanner</a></li>
+        <li><a href="products.html">&#128218; Products</a></li>
+        <li><a href="quiz.html">&#9889; Quiz</a></li>
+        <li><a href="faq.html">&#128172; FAQ</a></li>
+        <li><a href="listen.html" class="active">&#127911; Listen</a></li>
+      </ul>
+      <button class="nav-toggle" onclick="toggleNav()" aria-label="Toggle menu">&#9776;</button>
+    </div>
+  </nav>
+
+  <main class="container" style="padding-top:2rem; padding-bottom:4rem;">
+
+    <div class="listen-hero">
+      <div class="badge">&#127911; Podcast Series</div>
+      <h1>Curl Science,<br><span class="highlight">Explained.</span></h1>
+      <p>Five deep-dive episodes on the science and practice of curly hair care. Perfect for your wash day or morning walk.</p>
+      <div class="notebooklm-credit">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Generated with NotebookLM — AI podcasts from real sources
+      </div>
+    </div>
+
+    <div class="coming-soon-banner">
+      <h2>&#127897;&#65039; Episodes dropping soon</h2>
+      <p>Audio is being generated from curated curly hair science sources. Subscribe to know when they go live.</p>
+    </div>
+
+    <div class="episodes-grid">
+
+      <!-- Episode 1 — Featured -->
+      <div class="episode-card">
+        <div class="episode-color-bar" style="background: linear-gradient(90deg, var(--rose-400), var(--orange-400));"></div>
+        <div class="episode-body">
+          <div class="episode-meta">
+            <span class="episode-number">Episode 1 &middot; Featured</span>
+            <div class="episode-dot"></div>
+            <span class="episode-duration">~20 min</span>
+          </div>
+          <h3>Moisture, Protein & Porosity: The Holy Trinity of Curly Hair</h3>
+          <p>Why does curly hair dry out so fast? Why do some products work brilliantly and others leave your hair crunchy or limp? It all comes down to three concepts: moisture, protein, and porosity. This episode breaks down the science and tells you exactly what to do with it.</p>
+          <div class="episode-topics">
+            <span class="episode-topic">Porosity</span>
+            <span class="episode-topic">Protein balance</span>
+            <span class="episode-topic">Moisture retention</span>
+            <span class="episode-topic">LOC method</span>
+          </div>
+          <div class="audio-placeholder">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <div class="audio-placeholder-text">
+              <strong>Coming soon</strong>
+              <span>Audio episode in production</span>
+            </div>
+            <div class="progress-bar-wrap"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Episode 2 -->
+      <div class="episode-card">
+        <div class="episode-color-bar" style="background: var(--sky-500);"></div>
+        <div class="episode-body">
+          <div class="episode-meta">
+            <span class="episode-number">Episode 2</span>
+            <div class="episode-dot"></div>
+            <span class="episode-duration">~18 min</span>
+          </div>
+          <h3>UK Hard Water & Your Curls: The Hidden Problem</h3>
+          <p>Most of England has hard water. Most CGM advice was written for the US. This episode covers what hard water actually does to your hair, why your routine might not be working even when you're doing everything right, and the UK-specific fixes that actually help.</p>
+          <div class="episode-topics">
+            <span class="episode-topic">Hard water</span>
+            <span class="episode-topic">Mineral buildup</span>
+            <span class="episode-topic">Chelating shampoo</span>
+            <span class="episode-topic">UK-specific</span>
+          </div>
+          <div class="audio-placeholder">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <div class="audio-placeholder-text">
+              <strong>Coming soon</strong>
+              <span>Audio episode in production</span>
+            </div>
+            <div class="progress-bar-wrap"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Episode 3 -->
+      <div class="episode-card">
+        <div class="episode-color-bar" style="background: var(--emerald-500);"></div>
+        <div class="episode-body">
+          <div class="episode-meta">
+            <span class="episode-number">Episode 3</span>
+            <div class="episode-dot"></div>
+            <span class="episode-duration">~22 min</span>
+          </div>
+          <h3>Building Your Wash Day: A Step-by-Step Routine That Actually Sticks</h3>
+          <p>CGM routines can look overwhelming. This episode breaks wash day into clear steps — from pre-poo to plopping to diffusing — and explains why each step matters, so you understand what you're doing and can adapt it to your own hair.</p>
+          <div class="episode-topics">
+            <span class="episode-topic">Wash day</span>
+            <span class="episode-topic">Co-washing</span>
+            <span class="episode-topic">Plopping</span>
+            <span class="episode-topic">Diffusing</span>
+            <span class="episode-topic">Techniques</span>
+          </div>
+          <div class="audio-placeholder">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <div class="audio-placeholder-text">
+              <strong>Coming soon</strong>
+              <span>Audio episode in production</span>
+            </div>
+            <div class="progress-bar-wrap"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Episode 4 -->
+      <div class="episode-card">
+        <div class="episode-color-bar" style="background: var(--orange-500);"></div>
+        <div class="episode-body">
+          <div class="episode-meta">
+            <span class="episode-number">Episode 4</span>
+            <div class="episode-dot"></div>
+            <span class="episode-duration">~15 min</span>
+          </div>
+          <h3>Reading the Label: Ingredients That Help, Hurt, and Hide</h3>
+          <p>Silicones, sulfates, alcohols — not all of them are the enemy. This episode gives you a practical mental model for reading ingredient lists, explains the CGM rules and where they're flexible, and tells you what to actually look for on UK product labels.</p>
+          <div class="episode-topics">
+            <span class="episode-topic">Silicones</span>
+            <span class="episode-topic">Sulfates</span>
+            <span class="episode-topic">Alcohols</span>
+            <span class="episode-topic">Humectants</span>
+            <span class="episode-topic">Labels</span>
+          </div>
+          <div class="audio-placeholder">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <div class="audio-placeholder-text">
+              <strong>Coming soon</strong>
+              <span>Audio episode in production</span>
+            </div>
+            <div class="progress-bar-wrap"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Episode 5 -->
+      <div class="episode-card">
+        <div class="episode-color-bar" style="background: linear-gradient(90deg, var(--rose-400), var(--rose-600));"></div>
+        <div class="episode-body">
+          <div class="episode-meta">
+            <span class="episode-number">Episode 5</span>
+            <div class="episode-dot"></div>
+            <span class="episode-duration">~17 min</span>
+          </div>
+          <h3>Curls on a Budget: The Best UK Products From 99p to Premium</h3>
+          <p>You do not need to spend £30 on a conditioner. This episode covers the real budget-friendly options available in UK supermarkets and drugstores, what actually matters in a product versus what's just marketing, and how to build an effective routine without spending a fortune.</p>
+          <div class="episode-topics">
+            <span class="episode-topic">Budget picks</span>
+            <span class="episode-topic">Superdrug</span>
+            <span class="episode-topic">Boots</span>
+            <span class="episode-topic">Poundland</span>
+            <span class="episode-topic">Value vs premium</span>
+          </div>
+          <div class="audio-placeholder">
+            <div class="play-btn">
+              <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <div class="audio-placeholder-text">
+              <strong>Coming soon</strong>
+              <span>Audio episode in production</span>
+            </div>
+            <div class="progress-bar-wrap"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer style="text-align:center; padding: 2rem 1rem; color: var(--text-light); font-size:0.85rem; border-top: 1px solid var(--rose-100);">
+    <p>CurlMagic UK &mdash; free, independent, no affiliation with any brand.</p>
+  </footer>
+
+  <script>
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>

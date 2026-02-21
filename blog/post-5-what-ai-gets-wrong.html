@@ -137,7 +137,7 @@
 
             <div class="mistake-card">
                 <h4>Real example</h4>
-                <p>While building a <a href="post-1-ehr-pathway.html">clinical pathway template</a>, the AI cited specific NICOR field numbers for heart failure audit data. Three of the field numbers were wrong: they were close, plausible, from the right range, but they referenced the wrong data items. Without checking against the actual NICOR NHFA v5.0 specification, these errors would have shipped in a clinical document.</p>
+                <p>While building the grocery dashboard, the AI described the NOVA food classification system with specific category rules. Two of the rules were subtly wrong: plausible, consistent with the general framework, but not what the actual NOVA specification says. Without checking against the original INSERM research, the classification logic would have been wrong in the product.</p>
             </div>
 
             <p>The pattern: AI is worst at specific identifiers (codes, reference numbers, version numbers, prices). It's better at structure and relationships. Always verify specifics against primary sources.</p>
@@ -147,7 +147,7 @@
 
             <div class="mistake-card">
                 <h4>Real example</h4>
-                <p>The AI recommended a QOF indicator for heart failure that had been retired in the 2024/25 update. The indicator code was real, the description was accurate, but it no longer existed in the active QOF framework. A GP practice using this template would have been tracking a metric that no longer counts toward their funding.</p>
+                <p>While writing a blog post about AI tools, the AI cited a feature in a specific tool version that had been removed in a recent update. The description was accurate for the old version, the feature name was real, but it no longer existed. Anyone following the instructions would hit a dead end and blame themselves.</p>
             </div>
 
             <p>The fix: force the AI to search the web for current information rather than relying on training data. I built a custom research skill that mandates live web searches for every factual claim.</p>
@@ -157,7 +157,7 @@
 
             <div class="mistake-card">
                 <h4>Real example</h4>
-                <p>In an integration spec, the AI described an HL7v2 ADT message flow from ambulance to ED that included specific segment codes. The message type was correct, the direction was correct, but the specific trigger event code was wrong for the UK ambulance to hospital context. It used a generic US hospital transfer trigger instead.</p>
+                <p>While building the curly hair app, the AI described the ingredient checker logic correctly at a high level, but the specific ingredient interactions it flagged as incompatible were wrong for the CGM framework. The structure looked right. The categories were right. The specific rules were invented. Without cross-checking against the actual CGM guidance, bad advice would have shipped to real users.</p>
             </div>
 
             <p>This is the hardest category to catch because the structure looks right. You need domain knowledge to spot that the specifics are off.</p>

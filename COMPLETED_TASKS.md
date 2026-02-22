@@ -958,3 +958,94 @@
 **Files to check:** `styles.css`, `index.html`, `about.html`, `projects.html`, `blog.html`, `fleet.html`, `resources.html`, `shop/index.html`
 
 ---
+
+## Task 16: UI/UX audit and fixes for CurlMagic sub-site (7 pages, products priority)
+**Status:** [x] Complete
+**Completed:** 2026-02-22 10:38:58
+**Duration:** 6m 18s
+**Commits:**
+- cc62816 CurlMagic UI/UX audit: products filters, accessibility, consistency across 7 pages
+
+**Context:** The CurlMagic (Curly Girl Wavy Girl UK) sub-site has 7 HTML pages, 1 shared CSS file (2,437 lines), and 3 JS files. The site is well-built with consistent navigation, working dark mode, and responsive design using clamp() and a single 768px breakpoint. However, several UI/UX issues exist across pages. The Products page (priority) lacks a "Clear all filters" button, has no loading indicator on "Load More", and filter dropdowns could be improved. Cross-site issues include: inconsistent footers (3 different variants), listen.html has ~200 lines of inline CSS not in the shared stylesheet, theme toggle logic is duplicated in every page instead of being in app.js, quiz lacks a visible "Question X of Y" indicator, no skip-to-main-content link, no aria-live regions on dynamic content, and the about page is very long with no jump-to-section navigation.
+
+**Plan:**
+
+**Phase 1 — Products page (priority)**
+1. **Add "Clear all filters" button** in `products.html` — add a button after the filter chips area; in `app.js` add a `clearAllFilters()` function that resets all 6 dropdowns, clears search input, removes all filter chips, and re-runs `filterProducts()`
+2. **Add loading state to "Load More"** — in `app.js`, add a brief visual indicator (button text changes to "Loading..." or spinner class) when `showMore()` is triggered, especially useful for large result sets
+3. **Add aria-live region** to the products results container in `products.html` so screen readers announce filter result count changes
+4. **Add "no results" empty state** — in `app.js` `filterProducts()`, display a friendly message when zero products match filters
+
+**Phase 2 — Cross-site consistency**
+5. **Standardise footers** — choose the home page's rich footer variant and apply it consistently to all 7 pages (currently home has a full footer, 5 pages have a minimal 2-line footer, listen.html has an inline-styled footer)
+6. **Move listen.html inline styles** (~200 lines) into `styles.css` under properly namespaced classes (`.listen-*`, `.episode-*`)
+7. **Deduplicate theme toggle script** — move the inline theme toggle JS from each page's footer into `app.js`, keep only the FOUC-prevention snippet in `<head>`
+
+**Phase 3 — Accessibility improvements**
+8. **Add skip-to-main-content link** to all 7 pages — visually hidden, appears on keyboard focus
+9. **Add quiz progress indicator** — show "Question X of 7" text alongside the progress bar in `quiz.html`; add `aria-label` and `aria-valuenow` to the progress bar
+10. **Add aria-live regions** to FAQ search results counter and scanner results areas in `faq.html` and `checker.html`
+
+**Phase 4 — Content UX**
+11. **Add table of contents** to `about.html` — a sticky or top-anchored jump-to-section nav for the long educational page (What is CGM, What to Avoid, Modified CGM, Transition, Myths, Science, UK-Focused, About)
+
+**Acceptance Criteria:**
+- [x] Products page has a visible "Clear all filters" button that resets all dropdowns, search, and chips
+- [x] Products page shows loading state on "Load More" and a friendly empty state when no results match
+- [x] Products results container has `aria-live="polite"` announcing result count changes
+- [x] All 7 pages have consistent footer structure (`.footer` class)
+- [x] listen.html has zero inline `<style>` blocks — all styles moved to styles.css
+- [x] Theme toggle JS exists only in app.js (plus FOUC snippet in `<head>`), not duplicated per page
+- [x] All 7 pages have a skip-to-main-content link
+- [x] Quiz shows "Question X of 7" and progress bar has proper ARIA attributes
+- [x] FAQ counter and scanner results have `aria-live` attributes
+- [x] About page has a clickable table of contents linking to sections
+- [x] All pages render correctly in light and dark mode after changes (dark mode CSS overrides already in styles.css)
+- [x] No test framework — static site, manual validation passed
+
+**Files to check:** `curly-girl/products.html`, `curly-girl/app.js`, `curly-girl/styles.css`, `curly-girl/index.html`, `curly-girl/about.html`, `curly-girl/faq.html`, `curly-girl/checker.html`, `curly-girl/quiz.html`, `curly-girl/listen.html`
+
+---
+## Task 16: UI/UX audit and fixes for CurlMagic sub-site (7 pages, products priority)
+**Status:** [x] Complete
+
+**Context:** The CurlMagic (Curly Girl Wavy Girl UK) sub-site has 7 HTML pages, 1 shared CSS file (2,437 lines), and 3 JS files. The site is well-built with consistent navigation, working dark mode, and responsive design using clamp() and a single 768px breakpoint. However, several UI/UX issues exist across pages. The Products page (priority) lacks a "Clear all filters" button, has no loading indicator on "Load More", and filter dropdowns could be improved. Cross-site issues include: inconsistent footers (3 different variants), listen.html has ~200 lines of inline CSS not in the shared stylesheet, theme toggle logic is duplicated in every page instead of being in app.js, quiz lacks a visible "Question X of Y" indicator, no skip-to-main-content link, no aria-live regions on dynamic content, and the about page is very long with no jump-to-section navigation.
+
+**Plan:**
+
+**Phase 1 — Products page (priority)**
+1. **Add "Clear all filters" button** in `products.html` — add a button after the filter chips area; in `app.js` add a `clearAllFilters()` function that resets all 6 dropdowns, clears search input, removes all filter chips, and re-runs `filterProducts()`
+2. **Add loading state to "Load More"** — in `app.js`, add a brief visual indicator (button text changes to "Loading..." or spinner class) when `showMore()` is triggered, especially useful for large result sets
+3. **Add aria-live region** to the products results container in `products.html` so screen readers announce filter result count changes
+4. **Add "no results" empty state** — in `app.js` `filterProducts()`, display a friendly message when zero products match filters
+
+**Phase 2 — Cross-site consistency**
+5. **Standardise footers** — choose the home page's rich footer variant and apply it consistently to all 7 pages (currently home has a full footer, 5 pages have a minimal 2-line footer, listen.html has an inline-styled footer)
+6. **Move listen.html inline styles** (~200 lines) into `styles.css` under properly namespaced classes (`.listen-*`, `.episode-*`)
+7. **Deduplicate theme toggle script** — move the inline theme toggle JS from each page's footer into `app.js`, keep only the FOUC-prevention snippet in `<head>`
+
+**Phase 3 — Accessibility improvements**
+8. **Add skip-to-main-content link** to all 7 pages — visually hidden, appears on keyboard focus
+9. **Add quiz progress indicator** — show "Question X of 7" text alongside the progress bar in `quiz.html`; add `aria-label` and `aria-valuenow` to the progress bar
+10. **Add aria-live regions** to FAQ search results counter and scanner results areas in `faq.html` and `checker.html`
+
+**Phase 4 — Content UX**
+11. **Add table of contents** to `about.html` — a sticky or top-anchored jump-to-section nav for the long educational page (What is CGM, What to Avoid, Modified CGM, Transition, Myths, Science, UK-Focused, About)
+
+**Acceptance Criteria:**
+- [x] Products page has a visible "Clear all filters" button that resets all dropdowns, search, and chips
+- [x] Products page shows loading state on "Load More" and a friendly empty state when no results match
+- [x] Products results container has `aria-live="polite"` announcing result count changes
+- [x] All 7 pages have consistent footer structure (`.footer` class)
+- [x] listen.html has zero inline `<style>` blocks — all styles moved to styles.css
+- [x] Theme toggle JS exists only in app.js (plus FOUC snippet in `<head>`), not duplicated per page
+- [x] All 7 pages have a skip-to-main-content link
+- [x] Quiz shows "Question X of 7" and progress bar has proper ARIA attributes
+- [x] FAQ counter and scanner results have `aria-live` attributes
+- [x] About page has a clickable table of contents linking to sections
+- [x] All pages render correctly in light and dark mode after changes (dark mode CSS overrides already in styles.css)
+- [x] No test framework — static site, manual validation passed
+
+**Files to check:** `curly-girl/products.html`, `curly-girl/app.js`, `curly-girl/styles.css`, `curly-girl/index.html`, `curly-girl/about.html`, `curly-girl/faq.html`, `curly-girl/checker.html`, `curly-girl/quiz.html`, `curly-girl/listen.html`
+
+---

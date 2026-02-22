@@ -671,3 +671,82 @@
 **Files to check:** `shop/index.html`, `index.html`, `projects.html`, `research/research-payhip-integration.md`
 
 ---
+
+## Task 12: Add Mailchimp email signup form between Non-Expert Series banner and article list
+**Status:** [x] Complete
+**Completed:** 2026-02-22 10:18:57
+**Duration:** 1m 54s
+**Commits:**
+- b0d896e Add Mailchimp email signup form to blog page
+
+**Context:** The blog page (`blog.html`) is a static HTML page with no build tools or frameworks. It has two series banners (Stackless Guide and Non-Expert Series) followed by an `.article-list` div containing 13 articles. The site uses a neo-brutalist aesthetic with CSS custom properties (`var(--slate-900)`, `var(--pink-500)`, `var(--lime-400)`, etc.), 3px solid borders, offset box shadows, and Inter font. Dark mode is handled via `[data-theme]` attribute and CSS variables, so inline styles using variables work automatically in both themes. No existing newsletter or Mailchimp integration exists anywhere in the codebase. The insertion point is between the closing `</div>` of the Non-Expert Series banner (line ~94) and the `<div class="article-list">` (line ~96) in `blog.html`.
+
+**Plan:**
+1. **Create a Mailchimp account and audience list** (manual step) — sign up at mailchimp.com, create a free account, set up an audience/list, and get the embedded form action URL (looks like `https://<dc>.list-manage.com/subscribe/post?u=<id>&amp;id=<list_id>`)
+2. **Add the signup form HTML to `blog.html`** — Insert a new `<div>` between the Non-Expert Series banner and the `.article-list` div. The form will:
+   - Use a dark background matching the series banners (`var(--slate-900)`) but with an accent border colour (`var(--indigo-600)`) to visually distinguish it
+   - Include a short heading ("Get new posts by email") and one-line description
+   - Have a single email input field + submit button in a horizontal flex layout
+   - Point the form `action` to the Mailchimp subscribe endpoint (POST)
+   - Include the hidden Mailchimp fields (`u` and `id` values)
+   - Include a honeypot field (Mailchimp's bot protection) hidden via CSS
+   - Use `target="_blank"` to open Mailchimp's confirmation page in a new tab
+3. **Style the form inline** (matching site conventions — all other banners use inline styles):
+   - Container: `background: var(--slate-900); color: var(--white); padding: 1.5rem; margin-bottom: 2rem; border: 3px solid var(--indigo-600); box-shadow: 6px 6px 0 0 rgba(0,0,0,1);`
+   - Input: white background, 3px solid border, `padding: 0.75rem 1rem; font-family: inherit; font-weight: 600; border: 3px solid var(--slate-900); flex: 1;`
+   - Button: `background: var(--indigo-600); color: white; border: none; padding: 0.75rem 1.5rem; font-weight: 800; text-transform: uppercase; cursor: pointer; font-family: inherit;`
+   - Responsive: flex-wrap on the input+button row so it stacks on mobile
+4. **Add a placeholder Mailchimp URL** in the form action with a clear `<!-- TODO: Replace with your Mailchimp form action URL -->` comment, since the actual URL requires the manual Mailchimp setup step
+5. **Test locally** — open `blog.html` in browser, verify placement, check dark mode toggle, check mobile responsiveness
+
+**Acceptance Criteria:**
+- [x] Email signup form appears between Non-Expert Series banner and article list
+- [x] Form has email input field and subscribe button
+- [x] Form posts to Mailchimp endpoint (or has clearly marked placeholder URL)
+- [x] Includes Mailchimp honeypot bot protection field (hidden)
+- [x] Styling matches site's neo-brutalist aesthetic (3px borders, bold type, CSS variables)
+- [x] Works in both light and dark mode
+- [x] Responsive — stacks properly on mobile
+- [x] No JavaScript dependencies added (pure HTML form submission)
+- [x] Run tests and ensure they pass (no test framework — static HTML site)
+
+**Files to check:** `blog.html`, `styles.css`
+
+---
+## Task 12: Add Mailchimp email signup form between Non-Expert Series banner and article list
+**Status:** [x] Complete
+
+**Context:** The blog page (`blog.html`) is a static HTML page with no build tools or frameworks. It has two series banners (Stackless Guide and Non-Expert Series) followed by an `.article-list` div containing 13 articles. The site uses a neo-brutalist aesthetic with CSS custom properties (`var(--slate-900)`, `var(--pink-500)`, `var(--lime-400)`, etc.), 3px solid borders, offset box shadows, and Inter font. Dark mode is handled via `[data-theme]` attribute and CSS variables, so inline styles using variables work automatically in both themes. No existing newsletter or Mailchimp integration exists anywhere in the codebase. The insertion point is between the closing `</div>` of the Non-Expert Series banner (line ~94) and the `<div class="article-list">` (line ~96) in `blog.html`.
+
+**Plan:**
+1. **Create a Mailchimp account and audience list** (manual step) — sign up at mailchimp.com, create a free account, set up an audience/list, and get the embedded form action URL (looks like `https://<dc>.list-manage.com/subscribe/post?u=<id>&amp;id=<list_id>`)
+2. **Add the signup form HTML to `blog.html`** — Insert a new `<div>` between the Non-Expert Series banner and the `.article-list` div. The form will:
+   - Use a dark background matching the series banners (`var(--slate-900)`) but with an accent border colour (`var(--indigo-600)`) to visually distinguish it
+   - Include a short heading ("Get new posts by email") and one-line description
+   - Have a single email input field + submit button in a horizontal flex layout
+   - Point the form `action` to the Mailchimp subscribe endpoint (POST)
+   - Include the hidden Mailchimp fields (`u` and `id` values)
+   - Include a honeypot field (Mailchimp's bot protection) hidden via CSS
+   - Use `target="_blank"` to open Mailchimp's confirmation page in a new tab
+3. **Style the form inline** (matching site conventions — all other banners use inline styles):
+   - Container: `background: var(--slate-900); color: var(--white); padding: 1.5rem; margin-bottom: 2rem; border: 3px solid var(--indigo-600); box-shadow: 6px 6px 0 0 rgba(0,0,0,1);`
+   - Input: white background, 3px solid border, `padding: 0.75rem 1rem; font-family: inherit; font-weight: 600; border: 3px solid var(--slate-900); flex: 1;`
+   - Button: `background: var(--indigo-600); color: white; border: none; padding: 0.75rem 1.5rem; font-weight: 800; text-transform: uppercase; cursor: pointer; font-family: inherit;`
+   - Responsive: flex-wrap on the input+button row so it stacks on mobile
+4. **Add a placeholder Mailchimp URL** in the form action with a clear `<!-- TODO: Replace with your Mailchimp form action URL -->` comment, since the actual URL requires the manual Mailchimp setup step
+5. **Test locally** — open `blog.html` in browser, verify placement, check dark mode toggle, check mobile responsiveness
+
+**Acceptance Criteria:**
+- [x] Email signup form appears between Non-Expert Series banner and article list
+- [x] Form has email input field and subscribe button
+- [x] Form posts to Mailchimp endpoint (or has clearly marked placeholder URL)
+- [x] Includes Mailchimp honeypot bot protection field (hidden)
+- [x] Styling matches site's neo-brutalist aesthetic (3px borders, bold type, CSS variables)
+- [x] Works in both light and dark mode
+- [x] Responsive — stacks properly on mobile
+- [x] No JavaScript dependencies added (pure HTML form submission)
+- [x] Run tests and ensure they pass (no test framework — static HTML site)
+
+**Files to check:** `blog.html`, `styles.css`
+
+---

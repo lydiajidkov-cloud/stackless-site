@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>£5 Digital Tools — Finance Dashboards, AI Templates | Stackless</title>
+    <title>Tutorials &amp; Tools — Pick Your Use Case | Stackless</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
     <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
@@ -11,7 +11,7 @@
     <script src="https://payhip.com/payhip.js"></script>
 
     <!-- SEO -->
-    <meta name="description" content="Browse Stackless digital tools. Finance dashboards, AI portfolio templates, grocery trackers — practical templates built with AI, all priced at £5.">
+    <meta name="description" content="Step-by-step tutorials and data tools built with AI. Find your use case — gamer, finance, food — and ship something real. Everything £5.">
     <link rel="canonical" href="https://stackless.tech/shop/index.html">
 
     <!-- Open Graph -->
@@ -502,21 +502,86 @@
     <main>
         <!-- Hero -->
         <section class="shop-hero">
-            <h1>Everything's<br><span class="accent">&pound;5</span></h1>
-            <p>Templates and tools built with AI, guided by domain knowledge. Every product is a starting point you make your own. No subscriptions, no tiered pricing, no tricks.</p>
+            <h1>Pick Your<br><span class="accent">Use Case</span></h1>
+            <p>Step-by-step tutorials and ready-to-use tools built with AI. Find your situation, follow the guide, ship something real. Everything &pound;5.</p>
+        </section>
+
+        <!-- Tutorials Section -->
+        <section id="tutorials" class="products-section">
+            <h2 style="font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.5rem; color: var(--slate-500);">Tutorials</h2>
+            <div class="products-grid">
+                <!-- MSI Claw Tutorial -->
+                <div class="product-card portfolio" id="buy-claw-tutorial">
+                    <div class="product-bar indigo"></div>
+                    <div class="product-body">
+                        <span class="product-category-tag" style="background: var(--amber-400);">Gamer</span>
+                        <h3 class="product-title">Map any game to your MSI Claw 8</h3>
+                        <p class="product-subtitle" style="font-size:0.9rem; font-weight:700; color:var(--slate-500); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.25rem;">MSI Claw Controller Setup Guide</p>
+                        <p class="product-price">&pound;5</p>
+                        <p class="product-desc">Full step-by-step guide to configuring Steam Input for the MSI Claw 8 AI+. Includes action layers, gyro setup, radial menus, and ready-to-import VDF config files for popular games.</p>
+                        <ul class="product-features">
+                            <li>Steam Input walkthrough from scratch</li>
+                            <li>Pre-built configs for MSI Claw 8 AI+</li>
+                            <li>Action layer templates (combat, camera, UI)</li>
+                            <li>One-click VDF import files included</li>
+                        </ul>
+                        <a href="https://payhip.com/b/CLAW_TUTORIAL_ID" class="payhip-buy-button btn-buy indigo" data-theme="none" data-product="CLAW_TUTORIAL_ID" target="_blank" rel="noopener">Buy Now &mdash; &pound;5</a>
+                        <p style="font-size:0.75rem; color:var(--slate-500); font-weight:600; margin-top:0.75rem; text-align:center;">Instant download via Payhip. PDF guide + VDF config files.</p>
+                    </div>
+                </div>
+
+                <!-- Coming Soon: Busy Parent -->
+                <div class="product-card" style="opacity: 0.7;">
+                    <div class="product-bar" style="background: var(--pink-500);"></div>
+                    <div class="product-body">
+                        <span class="product-category-tag" style="background: var(--pink-500); color: white;">Busy Parent</span>
+                        <h3 class="product-title">Track what your family actually eats</h3>
+                        <p class="product-subtitle" style="font-size:0.9rem; font-weight:700; color:var(--slate-500); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.25rem;">Grocery Health Audit — Tutorial</p>
+                        <p class="product-price" style="color: var(--slate-500);">Coming Soon</p>
+                        <p class="product-desc">How to use the Grocery Spending Dashboard with your own Tesco or Amazon Fresh data. Includes a walkthrough, category setup, and how to read your NOVA ultra-processed score.</p>
+                        <ul class="product-features">
+                            <li>Data export walkthrough (Tesco &amp; Amazon Fresh)</li>
+                            <li>Category setup for a family shop</li>
+                            <li>Reading your NOVA scores</li>
+                            <li>What to change first</li>
+                        </ul>
+                        <button class="btn-buy pink" disabled style="opacity:0.5; cursor:not-allowed;">Coming Soon</button>
+                    </div>
+                </div>
+
+                <!-- Coming Soon: Solo Finance -->
+                <div class="product-card" style="opacity: 0.7;">
+                    <div class="product-bar" style="background: var(--lime-400);"></div>
+                    <div class="product-body">
+                        <span class="product-category-tag" style="background: var(--lime-400);">Finance</span>
+                        <h3 class="product-title">Finally understand your money</h3>
+                        <p class="product-subtitle" style="font-size:0.9rem; font-weight:700; color:var(--slate-500); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.25rem;">Personal Finance Audit — Tutorial</p>
+                        <p class="product-price" style="color: var(--slate-500);">Coming Soon</p>
+                        <p class="product-desc">End-to-end guide for setting up the Personal Finance Dashboard with your own bank exports. Walks through Monzo, Starling, or legacy bank CSV formats, category mapping, and reading your results.</p>
+                        <ul class="product-features">
+                            <li>Bank export walkthroughs (Monzo, Starling, legacy banks)</li>
+                            <li>Category mapping for real spending patterns</li>
+                            <li>Deploying free on Streamlit Cloud</li>
+                            <li>Reading the trends that matter</li>
+                        </ul>
+                        <button class="btn-buy lime" disabled style="opacity:0.5; cursor:not-allowed; color: var(--slate-900);">Coming Soon</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- Milestone -->
         <section style="max-width: 1280px; margin: 0 auto; padding: 0 1rem 2rem;">
             <div style="background: var(--white); border: 3px solid var(--slate-900); box-shadow: 6px 6px 0 0 var(--lime-400); padding: 1.5rem 2rem; max-width: 48rem; margin: 0 auto; text-align: center;">
                 <p style="font-weight: 900; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 0.5rem;">Current milestone</p>
-                <p style="font-weight: 700; color: var(--slate-700); font-size: 1.125rem;">Cover the Claude Code subscription that makes all of this possible: ~&pound;80/month</p>
+                <p style="font-weight: 700; color: var(--slate-700); font-size: 1.125rem;">Cover the AI subscription that makes all of this possible: ~&pound;80/month</p>
                 <p style="font-weight: 600; color: var(--slate-500); font-size: 0.875rem; margin-top: 0.5rem;">That's 16 sales. After that, everything above is proof this model works.</p>
             </div>
         </section>
 
-        <!-- Products -->
+        <!-- Templates / Tools Section -->
         <section id="products" class="products-section">
+            <h2 style="font-size: 1rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 1.5rem; color: var(--slate-500);">Tools &amp; Templates</h2>
             <div class="products-grid">
                 <!-- Finance -->
                 <div class="product-card finance" id="buy-finance">
@@ -608,7 +673,7 @@
             <div class="about-card">
                 <h2>Why &pound;5?</h2>
                 <p>&pound;5 is low enough that you don't need to think about it. If it's useful, it's worth &pound;5. These templates are starting points, not finished products: they need your data, your context, your decisions. Charging &pound;79 for a starting point feels wrong.</p>
-                <p>The first milestone is simple: earn enough to cover the Claude Code subscription (~&pound;80/month) that makes all of this possible. After that, everything above is proof that non-coders building real products is a viable model.</p>
+                <p>The first milestone is simple: earn enough to cover the AI subscription (~&pound;80/month) that makes all of this possible. After that, everything above is proof that non-coders building real products is a viable model.</p>
             </div>
         </section>
     </main>

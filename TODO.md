@@ -1,27 +1,25 @@
 # TODO
 
+## Done
+- [x] Remove duplicate "Browse Products" nav button from all main site pages
+- [x] Fix post-6 Cursor mention
+- [x] Fix CurlMagic product card tag hierarchy — brand/retailer/category now plain text, badges on own row, Good SOTC typo fixed
+- [x] Non-Coder Start Guide (post-14) written and added to Guides page
+- [x] Blog renamed to "Guides" with tutorial framing
+- [x] Email signup form added to Guides page
+- [x] sitemap.xml created
+- [x] MSI Claw mapper blog post written (post-16)
+- [x] Projects page — CurlMagic moved to first, Agentcy + Zoe Recipe Finder + Acute HF EHR added
+- [x] Blog posts audit — Cursor/Windsurf/Copilot/v0/Bolt references removed from post-8, post-9, post-10
 
 ---
 
-- [ ] **Fix CurlMagic product card tag hierarchy** — Convert brand/retailer/category meta pills to plain dot-separated text. Move LIGHTWEIGHT + CGM badges to their own row. Give community tags (Holy Grail, Budget Starter etc.) a distinct style. Fix "Good Sotc" → "Good SOTC" typo in products-data.js.
+## Still To Do
 
-- [ ] **Homepage overhaul** — Reframe messaging from "code" to AI tools broadly. Move CurlMagic (free) to top of projects list. Fix dark mode bug: white text on bright green background is invisible. Fix disorganised bottom of page. Expand lab feed beyond Finance + Consumer.
+- [ ] **Homepage overhaul** — CurlMagic still 4th in homepage project cards (fixed on projects page but not homepage). Messaging still narrow. Dark mode green contrast. Disorganised footer.
 
+- [ ] **Rethink the shop** — Still sells £5 dashboards. No tutorial products yet. MSI Claw is the natural first tutorial. Different use cases for different people (gamer, busy parent etc.).
 
-- [ ] **Rethink the shop — sell tutorials** — Shift from £5 digital products to tutorials for different use cases (non-coding gamer, busy parent etc.). MSI Claw is the natural first tutorial product.
+- [ ] **Set up LinkedIn page for Stackless** — *(human action)* Posts 11-13 ready to repurpose using Social Adapter prompt from post-13.
 
-
-- [ ] **Projects page — add missing projects** — Add The Agentcy (game), Zoe Recipe Finder, Acute HF EHR Pathway. Move CurlMagic to first position (currently buried 4th behind paid products). Add 2-3 spotlight projects with more detail.
-
-- [ ] **Audit blog posts — remove unverified tool references** — post-8 (Cursor/Windsurf/Copilot, v0, Bolt/Lovable/Replit sections), post-10 (Cursor/Windsurf tool card + unverified claims), post-9 (v0 and Bolt in comparison table).
-
-
-
-
-- [ ] **Create sitemap.xml** — Cover all main pages + 13 blog posts + curly-girl sub-site. Submit to Google Search Console.
-
-- [ ] **MSI Claw mapper: blog post + push to GitHub** — claw-mapper/ is built but not pushed. Write blog post. Reference from fleet page.
-
-
-
-- [ ] **Set up LinkedIn page for Stackless** — *(human action)* Posts 11-13 ready to repurpose immediately using Social Adapter prompt from post-13.
+- [ ] **QA testing — guide + automation setup** — Two angles: (1) a guide post explaining what QA testing is for non-coders (why it matters, what it catches, manual vs automated), and (2) actually setting up automated tests for the Stackless site itself — e.g. Playwright or a simple link checker to catch broken links, missing pages, dark mode regressions. Could become a "Behind the Build" blog post: "How I Added QA Testing to My Site Without Being a Developer".

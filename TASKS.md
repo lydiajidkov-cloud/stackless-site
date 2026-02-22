@@ -20,7 +20,7 @@
 Interesting — post-12 and post-13 already have the pattern where `nav-cta` is used on a "Shop" label (no duplicate). So the CSS class is still needed. Now I have everything.
 
 ## Task 2: Remove duplicate "Browse Products" nav button
-**Status:** [ ] Incomplete
+**Status:** [x] Complete
 
 **Context:** The site navigation has both a regular "Shop" link and a styled "Browse Products" CTA button (`class="nav-cta"`) that both point to the same destination (`shop/index.html`). This creates redundancy in the nav. The "Browse Products" `<li>` should be removed from the desktop nav (`<ul class="nav-links">`) and the equivalent `<a>` from the mobile menu (`<div class="mobile-menu">`) in every affected file. The `.nav-cta` CSS class must be kept because blog posts 12 and 13 use it on their "Shop" nav link.
 

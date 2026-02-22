@@ -715,10 +715,31 @@ nav {
 
 /* Footer */
 footer {
-  padding: 4rem 1rem;
+  padding: 3rem 1rem;
   border-top: 4px solid var(--slate-900);
   text-align: center;
   background: var(--white);
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--slate-900);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+}
+
+.footer-links a:hover {
+  color: var(--indigo-600);
 }
 
 footer p {
@@ -1059,6 +1080,7 @@ footer p {
   --slate-300: #3a3a4e;
   --slate-400: #5a5e74;
   --slate-600: #8a90a8;
+  --lime-400: #86efac;
 }
 
 [data-theme="dark"] body {
@@ -1094,6 +1116,14 @@ footer p {
 
 [data-theme="dark"] footer p {
   color: var(--slate-700);
+}
+
+[data-theme="dark"] .footer-links a {
+  color: var(--slate-700);
+}
+
+[data-theme="dark"] .footer-links a:hover {
+  color: var(--lime-400);
 }
 
 /* Cards and white surfaces */

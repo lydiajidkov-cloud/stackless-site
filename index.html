@@ -93,7 +93,7 @@
                 </h1>
 
                 <p class="hero-subtitle">
-                    A non-coder's playground for building real tools with <span class="highlight">Claude Code</span>. Finance dashboards, consumer apps, and practical templates, all shared openly.
+                    A non-coder's playground for building real <span class="highlight">AI tools</span>. Finance dashboards, consumer apps, and practical templates — built with AI, shared openly.
                 </p>
 
                 <div class="hero-buttons">
@@ -149,6 +149,7 @@
                         <button class="filter-btn active" data-filter="All">All</button>
                         <button class="filter-btn" data-filter="Finance">Finance</button>
                         <button class="filter-btn" data-filter="Consumer">Consumer</button>
+                        <button class="filter-btn" data-filter="Free">Free</button>
                     </div>
                 </div>
                 <div class="feed-search">
@@ -158,6 +159,34 @@
             </div>
 
             <div class="card-grid" id="cardGrid">
+                <!-- Curly Girl Wavy Girl -->
+                <div class="project-card" data-category="Free">
+                    <div class="card-color-bar bar-lime"></div>
+                    <div class="card-body">
+                        <div class="card-meta">
+                            <span class="card-category" style="background: var(--lime-400);">Consumer</span>
+                            <span class="card-date">Free</span>
+                        </div>
+                        <h3 class="card-title">Curly Girl Wavy Girl UK</h3>
+                        <p class="card-desc">Ingredient checker, hair type quiz, and product guide for the UK curly and wavy community. Science-backed recommendations with products from Boots to Poundland.</p>
+                        <div class="card-tags">
+                            <span class="tag">#WebApp</span>
+                            <span class="tag">#Ingredients</span>
+                            <span class="tag">#UK</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-status">
+                                <div class="status-dot live"></div>
+                                <span class="status-label">Live</span>
+                            </div>
+                            <a href="curly-girl/index.html" class="card-link">
+                                Try It
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Finance Dashboard -->
                 <div class="project-card" data-category="Finance">
                     <div class="card-color-bar bar-yellow"></div>
@@ -242,34 +271,6 @@
                     </div>
                 </div>
 
-                <!-- Curly Girl Wavy Girl -->
-                <div class="project-card" data-category="Consumer">
-                    <div class="card-color-bar bar-lime"></div>
-                    <div class="card-body">
-                        <div class="card-meta">
-                            <span class="card-category" style="background: var(--lime-400);">Consumer</span>
-                            <span class="card-date">Free</span>
-                        </div>
-                        <h3 class="card-title">Curly Girl Wavy Girl UK</h3>
-                        <p class="card-desc">Ingredient checker, hair type quiz, and product guide for the UK curly and wavy community. Science-backed recommendations with products from Boots to Poundland.</p>
-                        <div class="card-tags">
-                            <span class="tag">#WebApp</span>
-                            <span class="tag">#Ingredients</span>
-                            <span class="tag">#UK</span>
-                        </div>
-                        <div class="card-footer">
-                            <div class="card-status">
-                                <div class="status-dot live"></div>
-                                <span class="status-label">Live</span>
-                            </div>
-                            <a href="curly-girl/index.html" class="card-link">
-                                Try It
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </section>
 
@@ -279,7 +280,7 @@
                 <h2 class="mission-title">The "Stackless" Vibe</h2>
                 <p class="mission-text">
                     I'm not a coder. No technical background. Just curious enough to try, and AI tools finally made it possible to actually build and ship real products.
-                    Every product here started with a problem I wanted to solve and a conversation with Claude Code.
+                    Every product here started with a problem I wanted to solve and a conversation with an AI.
                     No frameworks, no dependencies, no mystery. Just practical tools, shared openly.
                 </p>
                 <div class="social-icons">
@@ -298,7 +299,14 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="projects.html">Projects</a>
+            <a href="blog.html">Guides</a>
+            <a href="shop/index.html">Shop</a>
+            <a href="about.html">About</a>
+        </div>
+        <p>&copy; 2026 Stackless. Built by AI, guided by a human.</p>
     </footer>
 
     <!-- Mobile Menu -->

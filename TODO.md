@@ -23,7 +23,7 @@
 
 ## Still To Do
 
-- [ ] **Rethink the shop** — Still sells £5 dashboards. Shift to selling tutorials for different use cases (gamer, busy parent etc.). MSI Claw is the natural first tutorial product.
+- [x] **Rethink the shop** — Tutorials section added (MSI Claw live, Busy Parent + Finance coming soon). Dashboards moved to secondary "Tools & Templates" section.
 
 - [ ] **QA testing** — Guide post explaining what QA is for non-coders + set up automated tests for the site (Playwright or link checker). Could become a Behind the Build post.
 

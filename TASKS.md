@@ -61,7 +61,7 @@ I now have all the information needed. Here's the plan:
 
 
 ## Task 9: Audit blog posts — remove unverified tool references
-**Status:** [ ] Incomplete
+**Status:** [x] Complete
 
 **Context:** Posts 8, 9, and 10 contain claims about third-party tools (Cursor, Windsurf, Copilot, v0, Bolt, Lovable, Replit) including pricing, capabilities, and comparisons that haven't been verified against current product pages. These claims risk being outdated or inaccurate. The task is to remove these unverified sections while keeping the posts coherent and focused on the tools actually used (Claude Code, Gemini Canvas, ChatGPT, NotebookLM, Claude Artifacts).
 
@@ -86,12 +86,12 @@ I now have all the information needed. Here's the plan:
 4. Rewrite the closing paragraph (line 325) to not reference "chasing every new tool" since the removed tools no longer appear; instead reinforce the core-tools-plus-Artifacts message
 
 **Acceptance Criteria:**
-- [ ] post-8: No mentions of Cursor, Windsurf, Copilot, v0, Bolt, Lovable, or Replit remain
-- [ ] post-9: Comparison table contains only Gemini Canvas, Claude Code, and Claude Artifacts rows
-- [ ] post-10: Cursor/Windsurf tool card removed; "New Shiny Tool" section reworked to only mention Claude Artifacts
-- [ ] All three posts read coherently after removals (no dangling references, broken transitions, or orphaned headings)
-- [ ] No broken HTML structure (unclosed tags, empty sections)
-- [ ] Run tests and ensure they pass
+- [x] post-8: No mentions of Cursor, Windsurf, Copilot, v0, Bolt, Lovable, or Replit remain
+- [x] post-9: Comparison table contains only Gemini Canvas, Claude Code, and Claude Artifacts rows
+- [x] post-10: Cursor/Windsurf tool card removed; "New Shiny Tool" section reworked to only mention Claude Artifacts
+- [x] All three posts read coherently after removals (no dangling references, broken transitions, or orphaned headings)
+- [x] No broken HTML structure (unclosed tags, empty sections)
+- [x] Run tests and ensure they pass
 
 **Files to check:** `blog/post-8-non-coders-toolkit.html`, `blog/post-9-gemini-canvas-frontends.html`, `blog/post-10-ai-orchestra.html`
 

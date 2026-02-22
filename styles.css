@@ -147,26 +147,6 @@ nav {
 .nav-links a:hover { color: var(--pink-500); }
 .nav-links a.active { color: var(--indigo-600); }
 
-.nav-cta {
-  background: var(--lime-400);
-  border: 2px solid var(--slate-900);
-  padding: 0.5rem 1.5rem;
-  box-shadow: 4px 4px 0 0 rgba(0,0,0,1);
-  font-weight: 900;
-  text-transform: uppercase;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: all 0.15s;
-  text-decoration: none;
-  color: var(--slate-900);
-  display: inline-block;
-}
-
-.nav-cta:hover {
-  box-shadow: none;
-  transform: translate(1px, 1px);
-}
-
 .hamburger {
   display: none;
   padding: 0.5rem;
@@ -774,14 +754,6 @@ footer p {
   color: var(--slate-900);
 }
 
-.mobile-menu .nav-cta {
-  margin-top: 2rem;
-  font-size: 1.5rem;
-  padding: 1.25rem 3rem;
-  background: var(--white);
-  box-shadow: 8px 8px 0 0 rgba(0,0,0,1);
-}
-
 /* Price tag */
 .card-price {
   font-size: 1.5rem;
@@ -1201,10 +1173,6 @@ footer p {
 }
 
 [data-theme="dark"] .btn-hero-secondary {
-  color: var(--slate-900);
-}
-
-[data-theme="dark"] .nav-cta {
   color: var(--slate-900);
 }
 

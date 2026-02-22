@@ -83,18 +83,6 @@ body {
   color: var(--text);
 }
 
-.nav-cta {
-  background-color: var(--accent);
-  color: var(--text) !important;
-  padding: 8px 16px;
-  border-radius: var(--radius);
-  transition: background-color 0.2s;
-}
-
-.nav-cta:hover {
-  background-color: var(--accent-hover);
-}
-
 /* Hero Section */
 .hero {
   padding: 120px 0 80px;
@@ -440,10 +428,6 @@ body {
     font-size: 13px;
   }
 
-  .nav-cta {
-    padding: 6px 12px;
-    font-size: 13px;
-  }
 
   .hero {
     padding: 80px 0 60px;

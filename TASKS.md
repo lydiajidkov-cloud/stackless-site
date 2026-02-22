@@ -68,7 +68,7 @@ Interesting — post-12 and post-13 already have the pattern where `nav-cta` is 
 ---
 
 ## Task 4: Remove duplicate "Browse Products" nav button across all pages
-**Status:** [ ] Incomplete
+**Status:** [x] Complete
 
 **Context:** The site navigation contains both a "Shop" link and a "Browse Products" CTA button, both pointing to `shop/index.html`. This is redundant — the CTA styled button (`class="nav-cta"`) duplicates the plain "Shop" link. The "Browse Products" button appears in 9 HTML files across desktop nav (`<li>` wrapped) and mobile menu (plain `<a>` tag) variants. After removal, the `.nav-cta` CSS rules in `styles.css` and `shop/styles.css` become dead code and should also be removed.
 

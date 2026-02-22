@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security for Non-Coders: What Actually Happens When You Get Hacked — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+
+    <!-- SEO -->
+    <meta name="description" content="Phishing, credential stuffing, and what hackers actually do once they're in. A plain-English guide to how attacks work and what you can do right now.">
+    <link rel="canonical" href="https://stackless.tech/blog/post-15-security-what-happens-when-hacked.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Security for Non-Coders: What Actually Happens When You Get Hacked">
+    <meta property="og:description" content="Phishing, credential stuffing, and what hackers actually do once they're in. A plain-English guide to how attacks work and what you can do right now.">
+    <meta property="og:url" content="https://stackless.tech/blog/post-15-security-what-happens-when-hacked.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://stackless.tech/og-image.png">
+    <meta property="og:site_name" content="Stackless">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Security for Non-Coders: What Actually Happens When You Get Hacked">
+    <meta name="twitter:description" content="Phishing, credential stuffing, and what hackers actually do once they're in. Plain-English security for non-coders.">
+    <meta name="twitter:image" content="https://stackless.tech/og-image.png">
+
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--indigo-600);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .attack-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--indigo-600);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .attack-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--indigo-600);
+            margin-bottom: 0.5rem;
+        }
+        .attack-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .warning-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--pink-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .warning-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--pink-500);
+            margin-bottom: 0.5rem;
+        }
+        .warning-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .checklist {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--lime-400);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .checklist h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--slate-700);
+            margin-bottom: 0.75rem;
+        }
+        .checklist ul { margin-bottom: 0; }
+        .checklist li { font-size: 0.95rem; }
+        .scenario-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--orange-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .scenario-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--orange-500);
+            margin-bottom: 0.5rem;
+        }
+        .scenario-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .article-nav {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 3px solid var(--slate-900);
+            flex-wrap: wrap;
+        }
+        .article-nav a {
+            font-weight: 800;
+            font-size: 0.875rem;
+            text-decoration: none;
+            color: var(--slate-900);
+            border: 2px solid var(--slate-900);
+            padding: 0.6rem 1rem;
+            transition: all 0.15s;
+        }
+        .article-nav a:hover {
+            background: var(--slate-900);
+            color: var(--white);
+        }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            background: var(--slate-100);
+            border: 2px solid var(--slate-900);
+            padding: 0.2rem 0.6rem;
+            margin-right: 0.4rem;
+        }
+
+        /* Dark mode */
+        [data-theme="dark"] .article-body p,
+        [data-theme="dark"] .article-body ul,
+        [data-theme="dark"] .article-body ol { color: var(--slate-700); }
+        [data-theme="dark"] .article-body blockquote { background: var(--slate-100); }
+        [data-theme="dark"] .attack-card,
+        [data-theme="dark"] .warning-card,
+        [data-theme="dark"] .checklist,
+        [data-theme="dark"] .scenario-card { background: var(--white); }
+        [data-theme="dark"] .article-nav a { color: var(--slate-900); border-color: var(--slate-700); }
+        [data-theme="dark"] .article-nav a:hover { background: var(--slate-700); color: var(--white); }
+    </style>
+</head>
+<body>
+    <!-- Nav -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-logo">Stackless</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../blog.html" class="active">Guides</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+                <li><a href="../fleet.html">The Fleet</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><span class="icon-sun">&#9728;&#65039;</span><span class="icon-moon">&#127769;</span></button>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+        </div>
+    </nav>
+
+    <!-- Article -->
+    <main class="article-body">
+
+        <div class="article-meta">
+            <span class="tag">Security</span>
+            <span class="tag">Privacy</span>
+            <span class="tag">Non-Expert</span>
+            <span style="margin-left: 0.5rem;">February 2026 &bull; 10 min read</span>
+        </div>
+
+        <h1>Security for Non-Coders: What Actually Happens When You Get Hacked</h1>
+
+        <p>Most security advice tells you what to do. Use strong passwords. Turn on two-factor authentication. Don't click suspicious links. Fine. But it never explains <em>why</em> those things matter, or what actually happens when they fail.</p>
+
+        <p>That's a problem. Because when you don't understand the threat, the advice feels arbitrary. You skip it. You half-do it. You think "that wouldn't happen to me" because you can't picture what "that" actually looks like.</p>
+
+        <p>This post is different. I'm going to walk you through what actually happens during the most common types of attack. Not in theory. In practice. What the attacker does, step by step, and why it works.</p>
+
+        <blockquote>"You don't need to be a security expert. You need to understand enough that the advice makes sense. Then you'll actually follow it."</blockquote>
+
+        <h2>The kill chain in plain English</h2>
+
+        <p>Security professionals talk about a "kill chain" when describing an attack. It sounds dramatic, but it's just a sequence of steps. Every hack follows roughly the same pattern:</p>
+
+        <ol>
+            <li><strong>Get in.</strong> Find a way into someone's account or device. This is the hardest part for the attacker.</li>
+            <li><strong>Look around.</strong> Once in, figure out what's there. Emails, files, contacts, other accounts.</li>
+            <li><strong>Dig deeper.</strong> Use what you found to access more things. One account leads to another.</li>
+            <li><strong>Take what's valuable.</strong> Data, money, access to other people, or a foothold for later.</li>
+            <li><strong>Stay hidden.</strong> If possible, keep access for future use without the victim noticing.</li>
+        </ol>
+
+        <p>The key insight: step 1 is where you have the most power to stop things. Once an attacker is past step 1, everything else gets much harder to prevent. That's why "get in" is where all the security advice focuses.</p>
+
+        <h2>Phishing: the attack that works on everyone</h2>
+
+        <p>Phishing is the single most common way people get hacked. Not because people are stupid. Because phishing is genuinely good at what it does.</p>
+
+        <p>Here's what a modern phishing attack actually looks like, step by step.</p>
+
+        <div class="attack-card">
+            <h4>&#127907; How a phishing attack works</h4>
+            <p><strong>Step 1: The message arrives.</strong> An email that looks like it's from your bank, your email provider, Microsoft, Amazon, or your employer. The sender address looks right (it's spoofed or from a lookalike domain like "rnicrosoft.com"). The formatting matches. The logo is real.</p>
+            <p><strong>Step 2: Urgency is created.</strong> "Your account has been locked." "Suspicious login detected." "Payment failed." The message creates a reason to act quickly without thinking.</p>
+            <p><strong>Step 3: You click the link.</strong> It takes you to a page that looks exactly like the real login page. Same colours, same layout, same URL structure (except the domain is slightly different).</p>
+            <p><strong>Step 4: You enter your credentials.</strong> The fake page captures your username and password, then redirects you to the real site. You log in normally and think nothing happened.</p>
+            <p><strong>Step 5: The attacker now has your password.</strong> They try it within minutes, often automated. If you don't have two-factor authentication, they're in.</p>
+        </div>
+
+        <p>Why does this work? Because phishing doesn't attack technology. It attacks attention. You're busy. The email looks legitimate. The request seems reasonable. You're on autopilot.</p>
+
+        <p>The people who get phished aren't careless. They're just human. Security researchers have shown that even people who know about phishing can be caught by a well-crafted message that arrives at the right moment.</p>
+
+        <div class="warning-card">
+            <h4>&#9888;&#65039; What phishing looks like now</h4>
+            <p>Phishing has evolved well beyond the "Nigerian prince" emails. Modern phishing uses AI to write flawless English, copies real email templates pixel for pixel, and targets you based on information scraped from LinkedIn, social media, and data breaches. Some attacks even reference your real colleagues by name.</p>
+        </div>
+
+        <h2>Credential stuffing: when one breach becomes twenty</h2>
+
+        <p>This is the attack most people don't know about, and it's arguably more dangerous than phishing because it requires zero interaction from you.</p>
+
+        <div class="attack-card">
+            <h4>&#128274; How credential stuffing works</h4>
+            <p><strong>Step 1: A company gets breached.</strong> Some service you signed up for years ago gets hacked. Their database of usernames and passwords is stolen. This happens constantly. Billions of credentials have been leaked.</p>
+            <p><strong>Step 2: Your credentials appear in a dump.</strong> Your email and the password you used for that site are now in a list being shared or sold online.</p>
+            <p><strong>Step 3: Automated tools try your credentials everywhere.</strong> Software runs your email/password combination against hundreds of popular sites: Gmail, Amazon, Netflix, banking sites, social media, PayPal. Thousands of accounts per minute.</p>
+            <p><strong>Step 4: Wherever you reused that password, the attacker gets in.</strong> If your old forum password was the same as your email password, your email is now compromised. From email, everything else falls.</p>
+        </div>
+
+        <p>This is why password reuse is the single most dangerous habit in digital security. Not because any one password is weak. Because when one site gets breached (and they do, constantly), every account sharing that password is exposed.</p>
+
+        <div class="scenario-card">
+            <h4>&#128161; A real scenario</h4>
+            <p>You signed up for a recipe website in 2019 using your email and your go-to password. The recipe site gets breached in 2024. You never hear about it. In 2025, someone buys the leaked database and runs your credentials against 500 popular services. Your email uses the same password. They're in your inbox within an hour. From your inbox, they reset your Amazon password, your PayPal, and your cloud storage. You find out when your bank texts you about an unfamiliar purchase.</p>
+        </div>
+
+        <p>You can check whether your email has appeared in known breaches at <strong>haveibeenpwned.com</strong>. It's run by a security researcher, it's free, and it doesn't require you to enter your password. Just your email address.</p>
+
+        <h2>What hackers actually do once they're in</h2>
+
+        <p>This is the part that most security advice skips entirely. What happens after the password is compromised? Understanding this makes the "why" behind every piece of prevention advice click into place.</p>
+
+        <h3>First minutes: the email takeover</h3>
+
+        <p>Email is the master key. If an attacker gets into your email, they can reset the password on almost any other account you have. Here's what they do first:</p>
+
+        <ul>
+            <li><strong>Set up mail forwarding.</strong> A rule that silently forwards all incoming mail to the attacker's address. Even if you change your password later, they keep getting your emails.</li>
+            <li><strong>Search for financial accounts.</strong> They search your inbox for "bank", "PayPal", "password", "verification code". In seconds they know every service you use.</li>
+            <li><strong>Reset passwords.</strong> Starting with the highest-value accounts: banking, payment services, crypto, cloud storage. The reset emails arrive in your inbox. The attacker catches them. You might not even see them.</li>
+        </ul>
+
+        <h3>First hours: lateral movement</h3>
+
+        <p>"Lateral movement" is the security term for using access to one thing to get access to other things. From your email:</p>
+
+        <ul>
+            <li><strong>Cloud storage (Google Drive, Dropbox, iCloud):</strong> Personal documents, tax returns, photos, identity documents. Some people store scans of their passport or driving licence.</li>
+            <li><strong>Social media:</strong> Used to impersonate you. Send messages to your contacts. "Hey, I'm in a bind, can you send me some money?" It works because the message comes from your real account.</li>
+            <li><strong>Work email or tools:</strong> If your personal and work emails are linked, the attacker can now potentially access your employer's systems. This is how many corporate breaches start.</li>
+        </ul>
+
+        <div class="warning-card">
+            <h4>&#9888;&#65039; The quiet persistence trick</h4>
+            <p>Smart attackers don't drain your bank account immediately. They set up hidden access (email forwarding rules, recovery phone numbers changed, app passwords created) so they can come back later. You change your password thinking you're safe. They still have access through a backdoor you don't know about.</p>
+        </div>
+
+        <h3>What they take</h3>
+
+        <p>It depends on the attacker's motivation. Most automated attacks are looking for:</p>
+
+        <ul>
+            <li><strong>Money:</strong> Direct transfers, fraudulent purchases, crypto theft</li>
+            <li><strong>Identity documents:</strong> Passport scans, driving licences, utility bills (used for identity fraud, opening accounts in your name)</li>
+            <li><strong>Access to sell:</strong> Compromised accounts are valuable. A verified PayPal account, a social media account with followers, a corporate email login. These are sold in bulk.</li>
+            <li><strong>A foothold for bigger targets:</strong> You might not be the goal. Your employer, your contacts, or someone in your address book might be.</li>
+        </ul>
+
+        <h2>The three things that actually stop most attacks</h2>
+
+        <p>Now that you understand how the attacks work, the standard advice makes more sense. But instead of a long list, here are the three things that block the overwhelming majority of attacks on personal accounts.</p>
+
+        <div class="checklist">
+            <h4>&#9989; 1. Use a password manager</h4>
+            <ul>
+                <li>Every account gets a unique, random password. You don't need to remember them.</li>
+                <li>Credential stuffing becomes useless because no two accounts share a password.</li>
+                <li>Password managers also detect fake login pages (they won't autofill on "rnicrosoft.com").</li>
+                <li>Good free options: Bitwarden. Good paid options: 1Password.</li>
+                <li><strong>Start here:</strong> Install Bitwarden. Add your 5 most important accounts. Change those passwords to generated ones. Do the rest over the next week.</li>
+            </ul>
+        </div>
+
+        <div class="checklist">
+            <h4>&#9989; 2. Turn on two-factor authentication everywhere</h4>
+            <ul>
+                <li>Even if an attacker has your password, they can't log in without the second factor.</li>
+                <li>Use an authenticator app (Google Authenticator, Authy, or your password manager's built-in TOTP). Avoid SMS codes if you can. SIM swapping is a real attack.</li>
+                <li><strong>Priority order:</strong> Email first (it's the master key), then banking, then cloud storage, then everything else.</li>
+                <li>For your most critical accounts (email, banking), consider a hardware security key (YubiKey). It's the strongest form of 2FA and stops phishing entirely because the key checks the actual website domain.</li>
+            </ul>
+        </div>
+
+        <div class="checklist">
+            <h4>&#9989; 3. Check your email forwarding rules right now</h4>
+            <ul>
+                <li>If you've ever been compromised without knowing it, this is the most likely thing an attacker left behind.</li>
+                <li><strong>Gmail:</strong> Settings > See all settings > Forwarding and POP/IMAP. Also check Settings > Filters and Blocked Addresses for any rules you don't recognise.</li>
+                <li><strong>Outlook:</strong> Settings > Mail > Forwarding. Check that forwarding is disabled or only pointing where you expect.</li>
+                <li>If you find anything you didn't set up, change your password immediately and review all connected app permissions.</li>
+            </ul>
+        </div>
+
+        <h2>Quick wins you can do today</h2>
+
+        <p>If the full checklist feels like too much, start with these five things. Each one takes under 5 minutes and meaningfully reduces your risk.</p>
+
+        <ol>
+            <li><strong>Check haveibeenpwned.com.</strong> Enter your email. If you're in known breaches, change those passwords today.</li>
+            <li><strong>Turn on 2FA for your email.</strong> This one action blocks the majority of account takeover attacks.</li>
+            <li><strong>Check email forwarding rules.</strong> Takes 30 seconds. If something's there that shouldn't be, you've found a problem.</li>
+            <li><strong>Install a password manager.</strong> Bitwarden is free. Add your top 5 accounts.</li>
+            <li><strong>Update your most-reused password.</strong> You know the one. The password you've used on 15 different sites. Change it everywhere, using unique generated passwords.</li>
+        </ol>
+
+        <h2>What to do if you think you've been hacked</h2>
+
+        <p>If you notice suspicious activity or get a breach notification, speed matters. Here's the order of operations:</p>
+
+        <ol>
+            <li><strong>Secure your email first.</strong> Change the password. Check and remove any forwarding rules. Review connected apps and revoke anything unfamiliar.</li>
+            <li><strong>Change passwords on financial accounts.</strong> Banking, PayPal, any service with payment methods. Use your password manager to generate new ones.</li>
+            <li><strong>Check for unauthorised activity.</strong> Recent logins, unfamiliar devices, transactions you don't recognise. Most services show this in security settings.</li>
+            <li><strong>Enable 2FA on everything</strong> you haven't already.</li>
+            <li><strong>Contact your bank</strong> if you see any unfamiliar transactions. Faster reporting generally means better outcomes for fraud recovery.</li>
+        </ol>
+
+        <div class="scenario-card">
+            <h4>&#128161; The 15-minute rule</h4>
+            <p>Security incident response follows a simple principle: the faster you act, the less damage occurs. Most automated attacks cash out within hours. If you catch and respond to a compromised account within 15-30 minutes, you can often prevent the worst outcomes. That's why breach notification emails exist, and why you shouldn't ignore them.</p>
+        </div>
+
+        <h2>The honest truth about security</h2>
+
+        <p>Perfect security doesn't exist. Every system can be compromised given enough time and resources. The goal isn't to be unhackable. It's to not be the easy target.</p>
+
+        <p>Attackers are lazy. They're efficient. They go after the accounts that are easiest to break into. A unique password and two-factor authentication make you significantly harder to compromise than someone without them. Most automated attacks will simply skip you and move on.</p>
+
+        <p>You don't need to understand cryptography. You don't need to run your own VPN. You need a password manager, 2FA on your email, and enough understanding of how attacks work to recognise when something isn't right.</p>
+
+        <p>That's the whole thing. The rest is details.</p>
+
+        <div class="article-nav">
+            <a href="post-13-content-creator-agent.html">&#8592; Content Creator Agent</a>
+            <a href="../blog.html">All Guides</a>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <a href="../index.html" style="font-weight: 900; font-size: 1.25rem; text-decoration: none; color: var(--slate-900);">Stackless</a>
+                <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--slate-500);">Digital products and tools for curious non-coders.</p>
+            </div>
+            <div>
+                <a href="../blog.html" style="font-weight: 700; font-size: 0.875rem; margin-right: 1.5rem; text-decoration: none; color: var(--slate-700);">Guides</a>
+                <a href="../shop/index.html" style="font-weight: 700; font-size: 0.875rem; text-decoration: none; color: var(--slate-700);">Shop</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Stackless. Built without code (mostly).</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            var btn = document.getElementById('themeToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('stackless-theme', next);
+            });
+        })();
+    </script>
+</body>
+</html>

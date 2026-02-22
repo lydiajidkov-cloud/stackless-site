@@ -63,8 +63,8 @@ I now have all the information needed. Here's the plan:
 
 Now I have all the information needed. Let me produce the implementation plan.
 
-## Task 10: Write post-14 "Security for Non-Coders: What Actually Happens When You Get Hacked"
-**Status:** [ ] Incomplete
+## Task 10: Write post-15 "Security for Non-Coders: What Actually Happens When You Get Hacked"
+**Status:** [x] Complete
 
 **Context:** Post-14 is the next entry in the Non-Expert Series (following posts 11-13). The content roadmap specifies the topic as "Security for Non-Coders: What Actually Happens When You Get Hacked" — covering phishing, credential stuffing, and what hackers do first, demystifying the threat rather than the defence. The post should follow the template established by posts 12-13 (simplified nav, article-nav footer, full custom footer, embedded scoped CSS with card components using 3px border + 6px box-shadow pattern, dark mode overrides, tags, reading time meta). Post-13's `article-nav` currently has no "Next Post" link — that needs updating. The blog index (blog.html) Non-Expert Series section and individual post listing also need updating.
 

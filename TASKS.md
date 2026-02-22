@@ -150,7 +150,7 @@ Good. Now I have everything I need. The next blog post would be post-14. Let me 
 Good - nav links are consistent across pages. Now I have all the information needed. Here's the plan:
 
 ## Task 15: UI/UX consistency audit across all 7 Stackless main pages
-**Status:** [ ] Incomplete
+**Status:** [x] Complete
 
 **Context:** The 7 main Stackless pages (index, about, projects, blog, fleet, resources, shop) share `styles.css` but fleet, resources, and shop also have extensive inline `<style>` blocks with page-specific classes. The main dark mode section in `styles.css` (lines 1029-1211) covers shared components well, but **none of the page-specific inline styles have dark mode overrides** for fleet (`.fleet-hero`, `.fleet-stats`, agent cards), resources (`.resource-card`, `.notebooklm-badge`, `.audio-stub`), or shop (`.product-card`, `.product-body`, `.btn-buy`). Additionally, 6 CSS custom properties (`--slate-50`, `--slate-200`, `--slate-300`, `--slate-400`, `--slate-600`) are used across 79 occurrences in 18 files but **never defined**, causing those styles to silently fail (transparent backgrounds, invisible borders). Mobile nav and desktop nav are structurally consistent across all 7 pages. Tag styling on blog.html uses hardcoded inline color styles rather than the `.tag` class pattern used on index/projects. The blog post cards on blog.html also lack dark mode coverage for their inline-styled elements.
 
@@ -197,14 +197,14 @@ Good - nav links are consistent across pages. Now I have all the information nee
 8. **Cross-page visual test** — open each page in browser, toggle dark mode, resize to mobile, verify no broken elements
 
 **Acceptance Criteria:**
-- [ ] All 6 missing `--slate-*` CSS variables defined in `:root` with dark mode equivalents
-- [ ] Fleet page renders correctly in dark mode (hero, stats, agent cards, CTA)
-- [ ] Resources page renders correctly in dark mode (resource cards, badges, stubs)
-- [ ] Shop page renders correctly in dark mode (product cards, buttons, FAQ)
-- [ ] Blog page tags use CSS classes instead of inline styles, with dark mode support
-- [ ] Shop products grid collapses to single column on mobile (768px)
-- [ ] No hardcoded light-only colors (e.g. `#e0f2fe`, `#075985`) without dark mode alternatives
-- [ ] Run tests and ensure they pass
+- [x] All 6 missing `--slate-*` CSS variables defined in `:root` with dark mode equivalents
+- [x] Fleet page renders correctly in dark mode (hero, stats, agent cards, CTA)
+- [x] Resources page renders correctly in dark mode (resource cards, badges, stubs)
+- [x] Shop page renders correctly in dark mode (product cards, buttons, FAQ)
+- [x] Blog page tags use CSS classes instead of inline styles, with dark mode support
+- [x] Shop products grid collapses to single column on mobile (768px)
+- [x] No hardcoded light-only colors (e.g. `#e0f2fe`, `#075985`) without dark mode alternatives
+- [x] Run tests and ensure they pass
 
 **Files to check:** `styles.css`, `index.html`, `about.html`, `projects.html`, `blog.html`, `fleet.html`, `resources.html`, `shop/index.html`
 

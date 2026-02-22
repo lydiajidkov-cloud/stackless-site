@@ -380,6 +380,87 @@
             }
         }
 
+        /* ── Dark Mode ── */
+        [data-theme="dark"] .shop-hero h1 {
+            color: var(--slate-900);
+        }
+        [data-theme="dark"] .shop-hero p {
+            color: var(--slate-700);
+        }
+        [data-theme="dark"] .product-card {
+            background: var(--white);
+            border-color: rgba(255,255,255,0.15);
+            box-shadow: 10px 10px 0 0 rgba(255,255,255,0.06);
+        }
+        [data-theme="dark"] .product-card:hover {
+            box-shadow: none;
+        }
+        [data-theme="dark"] .product-bar {
+            border-bottom-color: rgba(255,255,255,0.15);
+        }
+        [data-theme="dark"] .product-category-tag {
+            border-color: rgba(255,255,255,0.15);
+            color: var(--slate-900);
+        }
+        [data-theme="dark"] .product-title {
+            color: var(--slate-900);
+        }
+        [data-theme="dark"] .product-desc {
+            color: var(--slate-700);
+        }
+        [data-theme="dark"] .product-features li {
+            color: var(--slate-700);
+            border-bottom-color: rgba(255,255,255,0.1);
+        }
+        [data-theme="dark"] .product-features li::before {
+            border-color: rgba(255,255,255,0.3);
+        }
+        [data-theme="dark"] .btn-buy {
+            border-color: rgba(255,255,255,0.15);
+            box-shadow: 4px 4px 0 0 rgba(255,255,255,0.06);
+        }
+        [data-theme="dark"] .btn-buy:hover {
+            box-shadow: none;
+        }
+        [data-theme="dark"] .guide-card {
+            background: var(--white);
+            border-color: rgba(255,255,255,0.15);
+            box-shadow: 12px 12px 0 0 var(--indigo-600);
+        }
+        [data-theme="dark"] .guide-card h2 {
+            color: var(--slate-900);
+        }
+        [data-theme="dark"] .guide-card p {
+            color: var(--slate-700);
+        }
+        [data-theme="dark"] .guide-form input {
+            background: var(--white);
+            color: var(--slate-900);
+            border-color: rgba(255,255,255,0.15);
+        }
+        [data-theme="dark"] .guide-form input:focus {
+            background: var(--slate-100);
+        }
+        [data-theme="dark"] .guide-form button {
+            border-color: var(--pink-500);
+            box-shadow: 4px 4px 0 0 rgba(255,255,255,0.06);
+        }
+        [data-theme="dark"] .about-card {
+            background: var(--white);
+            border-color: rgba(255,255,255,0.15);
+            box-shadow: 8px 8px 0 0 var(--pink-500);
+        }
+        [data-theme="dark"] .about-card h2 {
+            color: var(--slate-900);
+        }
+        [data-theme="dark"] .about-card p {
+            color: var(--slate-700);
+        }
+        [data-theme="dark"] .delivery-note {
+            color: var(--slate-500);
+            border-top-color: rgba(255,255,255,0.15);
+        }
+
         @media (max-width: 480px) {
             .guide-form {
                 flex-direction: column;

@@ -8,6 +8,11 @@
   --slate-700: #334155;
   --slate-500: #64748b;
   --slate-100: #f1f5f9;
+  --slate-50: #f8fafc;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-600: #475569;
   --pink-500: #ec4899;
   --pink-600: #db2777;
   --indigo-600: #4f46e5;
@@ -572,6 +577,17 @@ nav {
   padding: 0.25rem 0.5rem;
 }
 
+.tag-lime { background: var(--lime-400); border-color: var(--lime-400); }
+.tag-amber { background: var(--amber-400); border-color: var(--amber-400); }
+.tag-yellow { background: var(--yellow-300); border-color: var(--yellow-300); }
+.tag-pink { background: var(--pink-500); color: white; border-color: var(--pink-500); }
+.tag-indigo { background: var(--indigo-600); color: white; border-color: var(--indigo-600); }
+.tag-indigo-light { background: var(--indigo-500); color: white; border-color: var(--indigo-500); }
+.tag-series { background: var(--slate-900); border-color: var(--slate-900); font-size: 0.7rem; }
+.tag-series-guide { color: var(--lime-400); }
+.tag-series-nonexpert { color: var(--pink-500); }
+.tag-series-start { color: var(--amber-400); }
+
 .card-footer {
   margin-top: auto;
   display: flex;
@@ -1038,6 +1054,11 @@ footer p {
   --slate-700: #a8b0c4;
   --slate-500: #68718a;
   --slate-100: #2a2a38;
+  --slate-50: #1a1a26;
+  --slate-200: #2e2e3e;
+  --slate-300: #3a3a4e;
+  --slate-400: #5a5e74;
+  --slate-600: #8a90a8;
 }
 
 [data-theme="dark"] body {
@@ -1131,6 +1152,17 @@ footer p {
   color: var(--slate-900);
   border-color: rgba(255,255,255,0.15);
 }
+
+[data-theme="dark"] .tag-lime { background: var(--lime-400); border-color: var(--lime-400); color: var(--slate-900); }
+[data-theme="dark"] .tag-amber { background: var(--amber-400); border-color: var(--amber-400); color: var(--slate-900); }
+[data-theme="dark"] .tag-yellow { background: var(--yellow-300); border-color: var(--yellow-300); color: var(--slate-900); }
+[data-theme="dark"] .tag-pink { background: var(--pink-500); border-color: var(--pink-500); color: white; }
+[data-theme="dark"] .tag-indigo { background: var(--indigo-600); border-color: var(--indigo-600); color: white; }
+[data-theme="dark"] .tag-indigo-light { background: var(--indigo-500); border-color: var(--indigo-500); color: white; }
+[data-theme="dark"] .tag-series { background: #1a1a2e; border-color: rgba(255,255,255,0.15); }
+[data-theme="dark"] .tag-series-guide { color: var(--lime-400); }
+[data-theme="dark"] .tag-series-nonexpert { color: var(--pink-500); }
+[data-theme="dark"] .tag-series-start { color: var(--amber-400); }
 
 [data-theme="dark"] .filter-btn {
   background: var(--white);

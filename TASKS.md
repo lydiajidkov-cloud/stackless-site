@@ -1,98 +1,633 @@
 # Tasks
 
-## Task 1: <title>
+
+
+
+This task is already fully completed. No "Browse Products" text remains in any HTML files. Here's the plan document reflecting the completed work:
+
+## Task 1: Remove duplicate "Browse Products" nav button from all main site pages
+**Status:** [x] Complete
+
+**Context:** The site navigation contained both a "Shop" link and a "Browse Products" CTA button (`class="nav-cta"`), both pointing to `shop/index.html`. This redundancy appeared across 9 HTML files in desktop nav (`<li>` wrapped) and mobile menu (plain `<a>` tag) variants. Two commits addressed this: `016ac4d` removed the duplicate buttons from all HTML files, and `2c857c4` cleaned up the now-dead `.nav-cta` CSS rules from `styles.css` and `shop/styles.css`.
+
+**Plan:**
+1. Remove `<li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>` from desktop nav in: `index.html`, `about.html`, `projects.html`, `blog.html`, `fleet.html`, `resources.html`, `shop/index.html`, `blog/post-11-privacy-for-non-coders.html`, `claw-mapper/index.html`
+2. Remove `<a href="shop/index.html" class="nav-cta">Browse Products</a>` from mobile menu in: `index.html`, `fleet.html`
+3. Remove all `.nav-cta` CSS rules from `styles.css` and `shop/styles.css` (dead code after button removal)
+4. Grep all HTML/CSS files for "Browse Products" and "nav-cta" to confirm no remnants
+
+**Acceptance Criteria:**
+- [x] No `<li>` or `<a>` containing "Browse Products" remains in any HTML file
+- [x] No `.nav-cta` CSS rules remain in any stylesheet
+- [x] "Shop" link still present and functional in all page navs
+- [x] Run tests and ensure they pass
+
+**Files to check:** index.html, about.html, projects.html, blog.html, fleet.html, resources.html, shop/index.html, blog/post-11-privacy-for-non-coders.html, claw-mapper/index.html, styles.css, shop/styles.css
+
+---
+
+This task is already complete. The commit `2a487f7` removed the Cursor mention from post-6. No "Cursor" references remain in the file.
+
+## Task 2: Remove Cursor mention from post-6 security blog post
+**Status:** [x] Complete
+
+**Context:** The blog post `blog/post-6-security-for-non-coders.html` previously referenced "Cursor, or similar" alongside Claude Code. To keep the blog aligned with the Stackless brand (which uses only Claude Code), the Cursor mention was removed. Commit `2a487f7` already applied this change — the phrase was edited to reference only Claude Code, and no "Cursor" references remain in the file.
+
+**Plan:**
+1. Open `blog/post-6-security-for-non-coders.html`
+2. Find the line mentioning "Cursor, or similar"
+3. Replace with a reference to only Claude Code
+4. Commit the change
+
+**Acceptance Criteria:**
+- [x] No mention of "Cursor" remains in `blog/post-6-security-for-non-coders.html`
+- [x] Blog post still reads naturally after the edit
+- [x] Change committed (commit `2a487f7`)
+
+**Files to check:** `blog/post-6-security-for-non-coders.html`
+
+---
+
+Now I have all the information needed. Here's the plan:
+
+## Task 3: Restructure product card tag hierarchy and fix SOTC typo
 **Status:** [ ] Incomplete
 
-**Context:** <detailed explanation of what needs to change and why>
+**Context:** Product cards in `curly-girl/products.html` currently render brand, retailer, category, weight, and CGM status all as styled pills inside a single `.product-meta` row. Community tags (Holy Grail, Budget Starter, etc.) render in a separate `.product-tags` row but look visually similar to meta pills. The task requires three visual hierarchy changes: (1) convert brand/retailer/category from styled pills to plain dot-separated text, (2) move LIGHTWEIGHT/weight and CGM badges to their own distinct row, and (3) give community tags a visually distinct style. Additionally, `formatLabel("good-sotc")` produces "Good Sotc" instead of "Good SOTC" — needs a special-case fix or data change.
 
 **Plan:**
-<step-by-step implementation plan with specific files and changes>
+
+1. **Fix the typo in `products-data.js`** (lines ~427-439, `CG_PRODUCT_TAGS` definition):
+   - The tag key `"good-sotc"` stays as-is (it's a slug used for CSS classes and filtering)
+   - Change the label in `CG_PRODUCT_TAGS["good-sotc"]` from `"Good SOTC"` (already correct in definition) — but `formatLabel()` is what renders it on cards, not the tag definition label
+   - The real fix: in `createProductCard()`, use `CG_PRODUCT_TAGS[t].label` instead of `formatLabel(t)` for tag rendering, so "Good SOTC" displays correctly from the definition
+
+2. **Restructure `createProductCard()` in `products.html`** (line 129-134):
+   - **Row 1 (meta text):** Replace brand/retailer/category pills with plain dot-separated text: `<div class="product-meta-text">Brand · Retailer · Category</div>`
+   - **Row 2 (badges):** Create a new `<div class="product-badges">` containing the weight pill (`meta-weight-*`) and CGM badge (`product-cgm cgm-*`)
+   - **Row 3 (community tags):** Keep `.product-tags` div but use `CG_PRODUCT_TAGS[t].label` for display text (fixes SOTC typo), and add a fallback to `formatLabel(t)` for unknown tags
+
+3. **Update CSS in `styles.css`**:
+   - **Add `.product-meta-text`:** Plain text style — `font-size: 0.65rem; color: var(--text-muted);` no background, no pill shape, dot separator
+   - **Add `.product-badges`:** Flex row with gap, holds weight + CGM badges (keep existing pill styling for these)
+   - **Restyle `.product-tag` community tags:** Give them a distinct look — e.g. outlined/bordered style instead of filled pills, or a softer background with a left border accent, to visually separate them from the weight/CGM badges
+   - **Remove** now-unused `.meta-brand`, `.meta-retailer`, `.meta-category` pill styles (or leave as dead CSS if cautious)
+
+4. **Dark mode check:** Verify dark mode overrides in styles.css still work for the restructured elements — the existing `.dark .product-meta-item` rules may need updating to target `.product-badges` children instead.
 
 **Acceptance Criteria:**
-- [ ] <specific, verifiable criterion>
-- [ ] <another criterion>
+- [ ] Brand, retailer, and category display as plain dot-separated text (no pill/badge styling)
+- [ ] Weight (LIGHTWEIGHT/MEDIUM/HEAVY) and CGM badges appear on their own row with existing pill styling preserved
+- [ ] Community tags (Holy Grail, Budget Starter, Good SOTC, etc.) have a visually distinct style from badges
+- [ ] "Good SOTC" displays with correct capitalisation (not "Good Sotc")
+- [ ] Tag filtering still works correctly via the filterTag dropdown
+- [ ] Dark mode renders all restructured elements correctly
 - [ ] Run tests and ensure they pass
 
-**Files to check:** <comma-separated list of relevant files>
+**Files to check:** `curly-girl/products.html`, `curly-girl/styles.css`, `curly-girl/products-data.js`
 
 ---
 
-Interesting — post-12 and post-13 already have the pattern where `nav-cta` is used on a "Shop" label (no duplicate). So the CSS class is still needed. Now I have everything.
+Now I have a comprehensive understanding of the codebase. Let me output the plan:
 
-## Task 2: Remove duplicate "Browse Products" nav button
-**Status:** [x] Complete
+## Task 5: Create "The Non-Coder Start Guide" page
+**Status:** [ ] Incomplete
 
-**Context:** The site navigation has both a regular "Shop" link and a styled "Browse Products" CTA button (`class="nav-cta"`) that both point to the same destination (`shop/index.html`). This creates redundancy in the nav. The "Browse Products" `<li>` should be removed from the desktop nav (`<ul class="nav-links">`) and the equivalent `<a>` from the mobile menu (`<div class="mobile-menu">`) in every affected file. The `.nav-cta` CSS class must be kept because blog posts 12 and 13 use it on their "Shop" nav link.
+**Context:** The stackless-site is a neo-brutalist static site targeting non-coders building with AI. It already has two blog series ("The Stackless Guide" 3-part, "The Non-Expert Series" 3-part) covering security, testing, toolkit, privacy, and agents. However, there is no foundational "start here" guide that covers the absolute beginning: getting a Claude subscription, installing Claude Code, understanding what a terminal is, and running your first project. This is the missing "step zero" content — the on-ramp before the existing guides. It should be written from Lydia's real experience as a non-coder, making it the key differentiator for the site. The page will be a new blog post (post-14) following established patterns: inline `<style>` for article-body, series badge, back-link, tags, meta, and the site's neo-brutalist card system (warning-card, example-card, step-card, tip-box). It also needs to be added to `blog.html` as a featured series/entry and linked from the homepage as a prominent CTA.
 
 **Plan:**
-1. **index.html** — Remove line 67 (`<li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav, and remove line 315 (`<a href="shop/index.html" class="nav-cta">Browse Products</a>`) from mobile menu.
-2. **about.html** — Remove line 49 (`<li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav. No matching mobile menu entry found (already clean).
-3. **projects.html** — Remove line 49 (`<li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav.
-4. **blog.html** — Remove line 49 (`<li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav.
-5. **fleet.html** — Remove line 426 (`<li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav, and remove line 764 (`<a href="shop/index.html" class="nav-cta">Browse Products</a>`) from mobile menu.
-6. **resources.html** — Remove line 237 (`<li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav.
-7. **shop/index.html** — Remove line 408 (`<li><a href="index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav. Mobile menu (line 536) already has only "Shop" with no duplicate.
-8. **blog/post-11-privacy-for-non-coders.html** — Remove line 223 (`<li><a href="../shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav. Mobile menu (line 371) already has only "Shop".
-9. **claw-mapper/index.html** — Remove line 236 (`<li><a href="../shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav. Mobile menu (line 440) already has only "Shop".
-10. **Keep all `.nav-cta` CSS** in `styles.css`, `shop/styles.css`, and `claw-mapper/index.html` — the class is still used by blog posts 12 and 13 for their "Shop" CTA styling.
-11. Verify no remaining "Browse Products" text exists in any HTML file (except TODO.md/ideas.md references).
+1. **Create `blog/post-14-non-coder-start-guide.html`** — New blog post following the exact template pattern from existing posts (post-8 is the closest reference as a toolkit/guide post):
+   - Standard `<head>`: charset, viewport, title, Google Fonts (Inter), `../styles.css`, theme toggle script, SEO meta, OG tags, Twitter cards, canonical URL
+   - Standard nav (all 7 links, none active since it's a blog subpage), theme toggle, hamburger
+   - `<main>` with `<div class="article-body">` (max-width: 720px, centered)
+   - Back link: `<a class="back-link" href="../blog.html">&larr; All Posts</a>`
+   - Series badge linking to the Stackless Guide series (or a new "Start Here" standalone badge)
+   - Tags: "Getting Started", "Claude Code", "Beginner"
+   - Title: "The Non-Coder Start Guide: From Zero to Your First AI Project"
+   - Meta: estimated ~20 min read, February 2026
+   - Inline `<style>` block matching existing blog post styles (article-body, h1-h3, p, blockquote, card classes)
+   - Dark mode support in the inline styles using `[data-theme="dark"]` selectors
+
+2. **Write the guide content** in these sections (using step-card, example-card, warning-card, tip-box patterns):
+   - **Why This Guide Exists** — Lydia's perspective: doctor, not a developer, built real products
+   - **Step 1: Get Claude Pro** — What it costs (£18/mo), what you get, why Claude specifically (vs ChatGPT/Gemini for code)
+   - **Step 2: What Is a Terminal?** — Demystify the terminal/command line for absolute beginners. Windows Terminal vs PowerShell vs Git Bash. "It's just a text box where you type commands"
+   - **Step 3: Install the Prerequisites** — Node.js (what it is, how to install), Git (what it is, how to install), GitHub account (what it is, why you need it)
+   - **Step 4: Install Claude Code** — `npm install -g @anthropic-ai/claude-code`, what that command means word by word
+   - **Step 5: Your First Run** — `claude` command, what happens, the permission prompts, how to talk to it
+   - **Step 6: Your First Project** — A simple practical example (e.g., "build me a personal website"), what to expect, how long it takes
+   - **Step 7: What Next** — Links to the existing Stackless Guide series (security, testing, toolkit), the Non-Expert Series, and the about page
+   - Use warning-cards for common mistakes (e.g., "Don't paste API keys"), example-cards for real terminal output, step-cards for each installation step
+
+3. **Update `blog.html`** — Add the new post:
+   - Add a new featured series block at the top (before "The Stackless Guide") styled as a prominent "START HERE" banner with a distinct color (amber/yellow to stand out). Or integrate it as a standalone featured item
+   - Add the article-item entry at the top of the article-list with tags "Getting Started", "Claude Code", "Beginner" and a "START HERE" series badge
+
+4. **Update `index.html`** — Add a visible CTA or mention in the hero section or Lab Feed area linking to the start guide as a key piece of content. Could be a new project card or a callout within the existing hero
+
+5. **Update `sitemap.xml`** — Add the new URL `https://stackless.tech/blog/post-14-non-coder-start-guide.html`
+
+6. **Standard footer, mobile menu, and theme toggle JS** — Copy from existing blog posts (post-8 or post-13 as reference)
 
 **Acceptance Criteria:**
-- [ ] No `<li>` or `<a>` containing "Browse Products" remains in any HTML file's nav or mobile menu
-- [ ] The "Shop" link still appears in every page's desktop nav and mobile menu
-- [ ] `.nav-cta` CSS rules are preserved (used by post-12, post-13)
-- [ ] All pages render correctly with no broken nav layout
+- [ ] `blog/post-14-non-coder-start-guide.html` exists and renders correctly with the site's neo-brutalist design
+- [ ] Page has full SEO (meta description, OG tags, Twitter cards, canonical URL, structured data)
+- [ ] Page has working dark mode toggle that persists
+- [ ] Page has responsive layout (mobile hamburger menu, readable on small screens)
+- [ ] Content covers the complete journey: subscription, terminal basics, prerequisites, Claude Code install, first run, first project
+- [ ] Uses the site's card system (step-card, warning-card, example-card) for key information
+- [ ] Written in Lydia's voice: direct, non-technical, from real experience
+- [ ] `blog.html` lists the new post prominently (featured "Start Here" section + article entry)
+- [ ] `sitemap.xml` updated with the new page URL
+- [ ] All internal links work (back to blog, series links to existing guides)
+- [ ] Nav links match all other pages (Home, About, Projects, Blog, The Fleet, Resources, Shop)
 - [ ] Run tests and ensure they pass
 
-**Files to check:** index.html, about.html, projects.html, blog.html, fleet.html, resources.html, shop/index.html, blog/post-11-privacy-for-non-coders.html, claw-mapper/index.html, styles.css, shop/styles.css
+**Files to check:** `blog.html`, `blog/post-8-non-coders-toolkit.html` (template reference), `blog/post-13-content-creator-agent.html` (latest post reference), `index.html`, `sitemap.xml`, `styles.css`
 
 ---
 
-## Task 3: Remove Cursor mention from post-6 security blog post
-**Status:** [x] Complete
+Good, post-11 doesn't have a back-link. I now have all the information needed to produce the plan.
 
-**Context:** In `blog/post-6-security-for-non-coders.html` line 196, the intro paragraph references "Claude Code, Cursor, or similar" as example AI tools. The mention of Cursor should be removed so the text only references Claude Code, keeping the blog aligned with the Stackless brand focus.
+## Task 7: Reframe blog as tutorial hub with guides-first framing
+**Status:** [ ] Incomplete
+
+**Context:** The current blog page (`blog.html`) uses traditional blog framing throughout: the nav label says "Blog", the H1 says "Blog", the meta titles/descriptions all say "blog", and the intro text references "thoughts on building." However, the actual content is overwhelmingly tutorial and guide material: a structured 3-part "Stackless Guide" series, a 3-part "Non-Expert Series", and standalone posts mostly titled as practical guides ("Security for Non-Coders", "Testing for Non-Coders", "The Non-Coder's Toolkit", etc.). Reframing this as a tutorial/guides hub better reflects the content, improves SEO for people searching for AI tutorials for non-coders, and positions Stackless as a learning resource rather than a personal blog. The "Non-Coder Start Guide" referenced in the TODO likely refers to the existing 3-part Stackless Guide series (posts 6-8) which should be elevated as the recommended starting point. No file rename is needed (blog.html stays as-is for URL stability), but all visible labels, headings, and meta descriptions should shift from "blog" to "guides"/"tutorials" framing.
 
 **Plan:**
-1. Edit `blog/post-6-security-for-non-coders.html` line 196
-2. Change `non-coders using AI tools like Claude Code, Cursor, or similar` to `non-coders using AI tools like Claude Code`
-3. Verify no other Cursor mentions exist in the file that need updating
+
+1. **Update `blog.html` page content:**
+   - Change `<title>` from "Blog — AI Tools, Non-Coder Dev..." to "Guides — AI Tools, Tutorials & Non-Coder Dev | Stackless"
+   - Change `<meta name="description">` from "The Stackless blog" to tutorial/guides framing
+   - Change OG and Twitter meta titles/descriptions similarly
+   - Change the `<h1>Blog</h1>` to `<h1>Guides</h1>`
+   - Rewrite the intro paragraph from "Thoughts on building with AI..." to something like "Practical tutorials and step-by-step guides for building with AI, no coding background required."
+   - Add a prominent "Start Here" callout above the Stackless Guide series, pointing new visitors to Part 1 as the recommended entry point
+   - Change the back-link text in the article list context from "All Posts" references to "All Guides" (in related navigation at bottom)
+
+2. **Update navigation label across all site pages** (the word "Blog" in nav links, keeping `href="blog.html"` unchanged):
+   - `index.html` (lines 63, 310)
+   - `about.html` (lines 45, 113)
+   - `projects.html` (lines 45, 247)
+   - `blog.html` (lines 45, 231)
+   - `fleet.html` (lines 422, 759)
+   - `resources.html` (lines 233, 448)
+   - `shop/index.html` (lines 404, 540)
+   - `claw-mapper/index.html` (lines 232, 442)
+
+3. **Update navigation label in all 13 blog post files** (both desktop nav and mobile menu):
+   - Change `>Blog</a>` to `>Guides</a>` in nav links (keeping `href="../blog.html"`)
+   - Change `← All Posts` back-links to `← All Guides` (posts 1-10 have `.back-link` class)
+   - Change "All Posts" text in posts 8, 12, 13 bottom navigation to "All Guides"
+   - Posts 12 and 13 also have inline-styled "Blog" links in their footer nav area — update those too
+
+4. **Do NOT rename the file** `blog.html` to avoid breaking any external links, bookmarks, or SEO. The URL stays the same; only the visible label and framing changes.
 
 **Acceptance Criteria:**
-- [ ] Line 196 reads "non-coders using AI tools like Claude Code" with no mention of Cursor
-- [ ] No broken HTML or missing closing tags
+- [ ] Nav label reads "Guides" (not "Blog") on all pages including mobile menus
+- [ ] `blog.html` H1 reads "Guides" with tutorial-focused intro paragraph
+- [ ] Meta title, description, OG, and Twitter card all use guides/tutorials framing (no "blog" word)
+- [ ] A "Start Here" callout is added above or integrated into the Stackless Guide series section, directing new visitors to Part 1
+- [ ] All "← All Posts" back-links in blog post files read "← All Guides"
+- [ ] All "All Posts" references in post bottom navigation read "All Guides"
+- [ ] File remains `blog.html` (no rename, no broken URLs)
 - [ ] Run tests and ensure they pass
 
-**Files to check:** blog/post-6-security-for-non-coders.html
+**Files to check:** `blog.html`, `index.html`, `about.html`, `projects.html`, `fleet.html`, `resources.html`, `shop/index.html`, `claw-mapper/index.html`, `blog/post-1-ehr-pathway.html`, `blog/post-2-non-coder-shipping.html`, `blog/post-3-tools-i-use.html`, `blog/post-4-process-not-code.html`, `blog/post-5-what-ai-gets-wrong.html`, `blog/post-6-security-for-non-coders.html`, `blog/post-7-testing-for-non-coders.html`, `blog/post-8-non-coders-toolkit.html`, `blog/post-9-gemini-canvas-frontends.html`, `blog/post-10-ai-orchestra.html`, `blog/post-11-privacy-for-non-coders.html`, `blog/post-12-building-agent-teams.html`, `blog/post-13-content-creator-agent.html`
 
 ---
 
-## Task 4: Remove duplicate "Browse Products" nav button across all pages
-**Status:** [x] Complete
+I now have all the information needed. Here's the plan:
 
-**Context:** The site navigation contains both a "Shop" link and a "Browse Products" CTA button, both pointing to `shop/index.html`. This is redundant — the CTA styled button (`class="nav-cta"`) duplicates the plain "Shop" link. The "Browse Products" button appears in 9 HTML files across desktop nav (`<li>` wrapped) and mobile menu (plain `<a>` tag) variants. After removal, the `.nav-cta` CSS rules in `styles.css` and `shop/styles.css` become dead code and should also be removed.
+## Task 8: Add missing projects and reorder projects page
+**Status:** [ ] Incomplete
+
+**Context:** The projects page (`projects.html`) currently lists 6 projects in this order: Personal Finance Dashboard, AI Portfolio Dashboard, Grocery Spending Dashboard, Curly Girl Wavy Girl UK, MSI Claw Controller Mapper, Daily AI Podcast. Three projects are missing entirely: The Agentcy (a playable browser game), Zoe Recipe Finder, and Acute HF EHR Pathway. CurlMagic (Curly Girl Wavy Girl UK) is the best "try it free" hook but is buried 4th behind three paid £5 products. The task also asks for 2-3 "spotlight" projects with more detail. The page uses a consistent card pattern with color bars, categories, tags, status dots, and action links. All styling is in `styles.css` (lines 477-628) with a 2-column grid on desktop, 1-column on mobile. Available color-bar classes: `bar-pink`, `bar-yellow`, `bar-indigo`, `bar-lime`, plus inline styles for `amber-400`, `violet-400`, `rose-400`. Blog post-1 covers the EHR Pathway and can inform its description.
 
 **Plan:**
-1. **index.html** — Remove line ~67 (`<li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav `<ul class="nav-links">`, and remove line ~315 (`<a href="shop/index.html" class="nav-cta">Browse Products</a>`) from mobile menu `<div class="mobile-menu">`.
-2. **about.html** — Remove line ~49 (`<li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav.
-3. **projects.html** — Remove line ~49 (`<li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav.
-4. **blog.html** — Remove line ~49 (`<li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav.
-5. **fleet.html** — Remove line ~426 (`<li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav, and remove line ~764 (`<a href="shop/index.html" class="nav-cta">Browse Products</a>`) from mobile menu.
-6. **resources.html** — Remove line ~237 (`<li><a href="shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav.
-7. **shop/index.html** — Remove line ~408 (`<li><a href="index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav.
-8. **blog/post-11-privacy-for-non-coders.html** — Remove line ~223 (`<li><a href="../shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav.
-9. **claw-mapper/index.html** — Remove line ~236 (`<li><a href="../shop/index.html" class="nav-cta">Browse Products</a></li>`) from desktop nav.
-10. **styles.css** — Remove `.nav-cta` rules at lines ~150-168 (base + hover), line ~777 (`.mobile-menu .nav-cta`), and line ~1207 (`[data-theme="dark"] .nav-cta`).
-11. **shop/styles.css** — Remove `.nav-cta` rules at lines ~86-97 (base + hover) and ~443 (responsive).
-12. Run a final grep for "Browse Products" and "nav-cta" across all HTML/CSS files to confirm no remnants.
+
+1. **Reorder existing cards in `projects.html`** (lines 70-234):
+   - Move the Curly Girl Wavy Girl UK card (currently 4th, lines 155-181) to **first position** in the grid
+   - Keep the three paid products (Finance, Portfolio, Grocery) grouped together after the free/spotlight items
+   - Keep MSI Claw and Daily AI Podcast in their current relative positions
+
+2. **Add new project card: The Agentcy** — Insert after CurlMagic (position 2):
+   - Color bar: `bar-pink` (game/fun theme)
+   - Category: "Game" with `background: var(--pink-500); color: white;`
+   - Price/date: "Free"
+   - Title: "The Agentcy"
+   - Description: Business simulation game where you run an AI agent company. Hire agents, complete contracts, unlock upgrades, and progress through eras. 15 tasks, 90 agent results, 14 upgrades. Built entirely with AI, playable in the browser.
+   - Tags: `#Game` `#Simulation` `#Browser`
+   - Status: Live (green dot)
+   - Link: Point to the game location (needs confirmation — likely hosted or to be hosted under stackless-site)
+
+3. **Add new project card: Zoe Recipe Finder** — Insert as position 3:
+   - Color bar: inline `background: var(--rose-400);`
+   - Category: "Health" with `background: var(--rose-400); color: white;`
+   - Price/date: "Free"
+   - Title: "Zoe Recipe Finder"
+   - Description: Recipe search tool built around ZOE personalised nutrition scores. Filter by your food list, find meals that work with your gut biology. Built for real dietary constraints, not generic healthy eating.
+   - Tags: `#Health` `#Nutrition` `#WebApp`
+   - Status: Complete (green dot)
+   - Link: No external link (not hosted on stackless-site) — footer with status only, like Daily AI Podcast
+
+4. **Add new project card: Acute HF EHR Pathway** — Insert as position 4:
+   - Color bar: `bar-indigo`
+   - Category: "Clinical" with `background: var(--indigo-500); color: white;`
+   - Price/date: "2025"
+   - Title: "Acute HF EHR Pathway"
+   - Description: Interactive clinical pathway template for acute heart failure, designed for EHR integration. Maps the full patient journey from admission to discharge with decision points, escalation criteria, and documentation prompts. Built from real clinical experience.
+   - Tags: `#Clinical` `#EHR` `#Healthcare`
+   - Status: Complete (green dot)
+   - Link: Blog post link `blog/post-1-ehr-pathway.html` with "Read More" text
+
+5. **Add CSS for spotlight cards** in `styles.css` (after line 628):
+   - Add `.project-card.spotlight` class that spans full width: `grid-column: 1 / -1;`
+   - Spotlight cards use a horizontal layout on desktop: `flex-direction: row;` with the color bar on the left (vertical) instead of top
+   - Alternatively, simpler approach: spotlight cards are just full-width standard cards with a slightly larger title and description area. Use `grid-column: 1 / -1;` only.
+   - Apply `.spotlight` class to CurlMagic and The Agentcy cards (the two strongest free "try it" projects)
+
+6. **Final card order** (9 total):
+   1. Curly Girl Wavy Girl UK — **spotlight** (full-width)
+   2. The Agentcy — **spotlight** (full-width)
+   3. Zoe Recipe Finder — standard card
+   4. Acute HF EHR Pathway — standard card
+   5. MSI Claw Controller Mapper — standard card
+   6. Daily AI Podcast — standard card
+   7. Personal Finance Dashboard — standard card
+   8. AI Portfolio Dashboard — standard card
+   9. Grocery Spending Dashboard — standard card
+
+7. **Update page intro text** (line 66-68) to reflect the expanded portfolio — change "A collection of practical tools" to mention the variety (games, clinical tools, consumer apps, dashboards).
 
 **Acceptance Criteria:**
-- [ ] No `<li>` or `<a>` containing "Browse Products" remains in any HTML file
-- [ ] No `nav-cta` class references remain in any HTML file
-- [ ] No `.nav-cta` CSS rules remain in styles.css or shop/styles.css
-- [ ] The "Shop" link still appears and works correctly in both desktop and mobile nav on every page
+- [ ] CurlMagic appears first on the projects page (no longer buried behind paid products)
+- [ ] The Agentcy, Zoe Recipe Finder, and Acute HF EHR Pathway all have project cards
+- [ ] 2 spotlight projects (CurlMagic + The Agentcy) display full-width on desktop
+- [ ] All new cards follow the existing HTML pattern (color bar, meta, title, desc, tags, footer)
+- [ ] All new cards render correctly in dark mode
+- [ ] Page is responsive — spotlight cards collapse to single-column on mobile
+- [ ] Existing cards and links remain functional (no broken hrefs)
 - [ ] Run tests and ensure they pass
 
-**Files to check:** index.html, about.html, projects.html, blog.html, fleet.html, resources.html, shop/index.html, blog/post-11-privacy-for-non-coders.html, claw-mapper/index.html, styles.css, shop/styles.css
+**Files to check:** `projects.html`, `styles.css`, `blog/post-1-ehr-pathway.html`, `ideas.md`, `TODO.md`
+
+---
+
+## Task 9: Audit blog posts — remove unverified tool references
+**Status:** [ ] Incomplete
+
+**Context:** Posts 8, 9, and 10 contain claims about third-party tools (Cursor, Windsurf, Copilot, v0, Bolt, Lovable, Replit) including pricing, capabilities, and comparisons that haven't been verified against current product pages. These claims risk being outdated or inaccurate. The task is to remove these unverified sections while keeping the posts coherent and focused on the tools actually used (Claude Code, Gemini Canvas, ChatGPT, NotebookLM, Claude Artifacts).
+
+**Plan:**
+
+**post-8-non-coders-toolkit.html:**
+1. Delete the `<h3>Cursor / Windsurf / Copilot</h3>` heading, its tool-card div (lines 305-313), and the follow-up paragraph (line 315)
+2. Delete the `<h3>v0 (Vercel)</h3>` heading and its tool-card div (lines 317-325)
+3. Delete the `<h3>Bolt / Lovable / Replit Agent</h3>` heading and its tool-card div (lines 327-335)
+4. In the "How I Pick the Right Tool" list (lines 341-348): remove the v0 reference from the "Quick visual prototype?" bullet (change to just "Gemini Canvas"), and remove the entire "Need a full app with user accounts/database?" bullet mentioning Bolt/Replit Agent
+5. Review surrounding text for flow. The section should jump from ChatGPT Canvas straight to "How I Pick the Right Tool"
+
+**post-9-gemini-canvas-frontends.html:**
+1. In the comparison table (lines 321-362): delete the `<tr>` row for v0 (Vercel) (lines 343-348) and the `<tr>` row for Bolt.new (lines 349-354)
+2. Keep Gemini Canvas, Claude Code, and Claude Artifacts rows intact
+3. No other references to remove in this file
+
+**post-10-ai-orchestra.html:**
+1. Delete the entire Cursor/Windsurf tool-card div (lines 275-282)
+2. In the "New Shiny Tool" section (lines 313-325): delete the intro paragraph mentioning v0/Bolt/Replit/Lovable (line 315), delete the v0 paragraph (line 317), delete the Bolt.new paragraph (line 319), delete the Replit Agent paragraph (line 321)
+3. Keep the Claude Artifacts paragraph (line 323) — reframe the section heading and intro to just mention Artifacts as an additional useful tool rather than comparing it to removed tools
+4. Rewrite the closing paragraph (line 325) to not reference "chasing every new tool" since the removed tools no longer appear; instead reinforce the core-tools-plus-Artifacts message
+
+**Acceptance Criteria:**
+- [ ] post-8: No mentions of Cursor, Windsurf, Copilot, v0, Bolt, Lovable, or Replit remain
+- [ ] post-9: Comparison table contains only Gemini Canvas, Claude Code, and Claude Artifacts rows
+- [ ] post-10: Cursor/Windsurf tool card removed; "New Shiny Tool" section reworked to only mention Claude Artifacts
+- [ ] All three posts read coherently after removals (no dangling references, broken transitions, or orphaned headings)
+- [ ] No broken HTML structure (unclosed tags, empty sections)
+- [ ] Run tests and ensure they pass
+
+**Files to check:** `blog/post-8-non-coders-toolkit.html`, `blog/post-9-gemini-canvas-frontends.html`, `blog/post-10-ai-orchestra.html`
+
+---
+
+Now I have all the information needed. Let me produce the implementation plan.
+
+## Task 10: Write post-14 "Security for Non-Coders: What Actually Happens When You Get Hacked"
+**Status:** [ ] Incomplete
+
+**Context:** Post-14 is the next entry in the Non-Expert Series (following posts 11-13). The content roadmap specifies the topic as "Security for Non-Coders: What Actually Happens When You Get Hacked" — covering phishing, credential stuffing, and what hackers do first, demystifying the threat rather than the defence. The post should follow the template established by posts 12-13 (simplified nav, article-nav footer, full custom footer, embedded scoped CSS with card components using 3px border + 6px box-shadow pattern, dark mode overrides, tags, reading time meta). Post-13's `article-nav` currently has no "Next Post" link — that needs updating. The blog index (blog.html) Non-Expert Series section and individual post listing also need updating.
+
+**Plan:**
+1. **Create `blog/post-14-security-for-non-coders.html`** using the post-12/13 template structure:
+   - Simplified nav (`.nav` / `.nav-inner` / `.nav-logo` pattern from posts 12-13)
+   - Dark mode script in `<head>`
+   - SEO meta tags (og:title, og:description, og:url, twitter:card) with canonical URL `https://stackless.tech/blog/post-14-security-for-non-coders.html`
+   - Tags: `Security`, `Privacy`, `Non-Expert` (inline tag spans)
+   - Reading time ~10 min, date February 2026
+   - Article content covering: (a) what actually happens in a hack — the kill chain in plain English, (b) phishing — how it works, real examples, what to look for, (c) credential stuffing — password reuse attacks explained, (d) what hackers do first once they're in (lateral movement, data exfiltration, persistence), (e) practical "what to do right now" checklist
+   - Custom card components scoped to `.article-body`: `.attack-card` (indigo shadow), `.warning-card` (pink shadow), `.checklist` (lime shadow), `.scenario-card` (orange shadow) — following the 3px border + 6px box-shadow convention
+   - Dark mode CSS overrides for all card types and article typography
+   - `article-nav` footer with Previous (post-13), All Posts, and no Next Post link (latest post)
+   - Full custom footer matching posts 12-13
+
+2. **Update `blog/post-13-content-creator-agent.html`** — change the `article-nav` "Next Post" link from empty/absent to point to `post-14-security-for-non-coders.html`
+
+3. **Update `blog.html`** (blog index page):
+   - Add post-14 link to the Non-Expert Series banner section (alongside posts 11-13)
+   - Add a new article item entry for post-14 with tags (`Security`, `Privacy`, NON-EXPERT badge), reading time, excerpt, and link
+
+4. **Update `sitemap.xml`** — add entry for `https://stackless.tech/blog/post-14-security-for-non-coders.html` with current date and monthly changefreq
+
+**Acceptance Criteria:**
+- [ ] `post-14-security-for-non-coders.html` exists with complete article content (~10 min read)
+- [ ] Post follows posts 12-13 template: simplified nav, embedded scoped CSS, card components with box-shadow pattern, dark mode support, article-nav footer, full footer
+- [ ] SEO metadata (title, description, canonical, og tags, twitter card) is complete
+- [ ] Dark mode renders correctly (all cards, text, blockquotes have `[data-theme="dark"]` overrides)
+- [ ] Content covers phishing, credential stuffing, attacker first moves, and actionable checklist — demystifying threats in plain English for non-coders
+- [ ] Post-13 article-nav updated with Next Post link to post-14
+- [ ] blog.html Non-Expert Series section includes post-14 link
+- [ ] blog.html has a new article listing entry for post-14
+- [ ] sitemap.xml includes post-14 URL
+- [ ] All internal links resolve correctly (prev/next navigation, blog index links)
+- [ ] Run tests and ensure they pass
+
+**Files to check:** `blog/post-13-content-creator-agent.html`, `blog/post-12-building-agent-teams.html`, `blog/post-11-privacy-for-non-coders.html`, `blog.html`, `sitemap.xml`, `styles.css`, `content-roadmap.md`
+
+---
+
+## Task 11: Replace placeholder Buy Now button URLs with Payhip product links
+**Status:** [ ] Incomplete
+
+**Context:** The shop page (`shop/index.html`) has 3 product cards (Finance Dashboard, AI Portfolio Template, Grocery Spending Dashboard) each priced at £5, plus a "Buy Me a Coffee" donation button. All 4 buttons currently have `href="#"`, making them non-functional. The site already references Payhip in product delivery descriptions ("Instant download via Payhip") and a complete integration research guide exists at `research/research-payhip-integration.md` with account setup steps, embed code format, and pricing calculations. The homepage and projects page correctly link to the shop anchors (`#buy-finance`, `#buy-portfolio`, `#buy-grocery`), so the only missing piece is the actual Payhip product URLs on the buy buttons. A Ko-fi or similar link is needed for the donation button.
+
+**Plan:**
+1. **Manual prerequisite — Create Payhip account and products** (see MANUAL_TASKS below). This produces 3 product IDs and optionally a Ko-fi donation URL.
+2. **Add Payhip embed script** to `shop/index.html` — insert `<script src="https://payhip.com/payhip.js"></script>` in the `<head>` section.
+3. **Update Finance Dashboard buy button** (line ~453 in `shop/index.html`) — replace `href="#"` with `href="https://payhip.com/b/FINANCE_ID"` and add `data-payhip-button-id="FINANCE_ID"` attribute plus `class="payhip-buy-button"` alongside existing classes.
+4. **Update AI Portfolio buy button** (line ~473) — same pattern with the portfolio product ID.
+5. **Update Grocery Spending buy button** (line ~493) — same pattern with the grocery product ID.
+6. **Update donation button** (line ~515) — replace `href="#"` with the Ko-fi (or Payhip tip) URL, add `target="_blank" rel="noopener"`.
+7. **Add `target="_blank" rel="noopener"` to all 3 product buy buttons** so purchases open in a new tab (Payhip checkout overlay will handle it if the JS is loaded, but the fallback should open a new tab).
+8. **Test locally** — open shop page, verify each button navigates to the correct Payhip checkout or Ko-fi page instead of scrolling to top.
+
+**Acceptance Criteria:**
+- [ ] Payhip JS embed script is present in `shop/index.html` head
+- [ ] All 3 product Buy Now buttons have valid Payhip product URLs (no more `href="#"`)
+- [ ] Donation button has a valid external URL (Ko-fi or Payhip tip jar)
+- [ ] Buttons open Payhip checkout overlay or new-tab fallback correctly
+- [ ] Homepage and projects page "View Template" links still navigate to the correct shop sections
+- [ ] Run tests and ensure they pass
+
+**Files to check:** `shop/index.html`, `index.html`, `projects.html`, `research/research-payhip-integration.md`
+
+---
+
+## Task 12: Add Mailchimp email signup form between Non-Expert Series banner and article list
+**Status:** [ ] Incomplete
+
+**Context:** The blog page (`blog.html`) is a static HTML page with no build tools or frameworks. It has two series banners (Stackless Guide and Non-Expert Series) followed by an `.article-list` div containing 13 articles. The site uses a neo-brutalist aesthetic with CSS custom properties (`var(--slate-900)`, `var(--pink-500)`, `var(--lime-400)`, etc.), 3px solid borders, offset box shadows, and Inter font. Dark mode is handled via `[data-theme]` attribute and CSS variables, so inline styles using variables work automatically in both themes. No existing newsletter or Mailchimp integration exists anywhere in the codebase. The insertion point is between the closing `</div>` of the Non-Expert Series banner (line ~94) and the `<div class="article-list">` (line ~96) in `blog.html`.
+
+**Plan:**
+1. **Create a Mailchimp account and audience list** (manual step) — sign up at mailchimp.com, create a free account, set up an audience/list, and get the embedded form action URL (looks like `https://<dc>.list-manage.com/subscribe/post?u=<id>&amp;id=<list_id>`)
+2. **Add the signup form HTML to `blog.html`** — Insert a new `<div>` between the Non-Expert Series banner and the `.article-list` div. The form will:
+   - Use a dark background matching the series banners (`var(--slate-900)`) but with an accent border colour (`var(--indigo-600)`) to visually distinguish it
+   - Include a short heading ("Get new posts by email") and one-line description
+   - Have a single email input field + submit button in a horizontal flex layout
+   - Point the form `action` to the Mailchimp subscribe endpoint (POST)
+   - Include the hidden Mailchimp fields (`u` and `id` values)
+   - Include a honeypot field (Mailchimp's bot protection) hidden via CSS
+   - Use `target="_blank"` to open Mailchimp's confirmation page in a new tab
+3. **Style the form inline** (matching site conventions — all other banners use inline styles):
+   - Container: `background: var(--slate-900); color: var(--white); padding: 1.5rem; margin-bottom: 2rem; border: 3px solid var(--indigo-600); box-shadow: 6px 6px 0 0 rgba(0,0,0,1);`
+   - Input: white background, 3px solid border, `padding: 0.75rem 1rem; font-family: inherit; font-weight: 600; border: 3px solid var(--slate-900); flex: 1;`
+   - Button: `background: var(--indigo-600); color: white; border: none; padding: 0.75rem 1.5rem; font-weight: 800; text-transform: uppercase; cursor: pointer; font-family: inherit;`
+   - Responsive: flex-wrap on the input+button row so it stacks on mobile
+4. **Add a placeholder Mailchimp URL** in the form action with a clear `<!-- TODO: Replace with your Mailchimp form action URL -->` comment, since the actual URL requires the manual Mailchimp setup step
+5. **Test locally** — open `blog.html` in browser, verify placement, check dark mode toggle, check mobile responsiveness
+
+**Acceptance Criteria:**
+- [ ] Email signup form appears between Non-Expert Series banner and article list
+- [ ] Form has email input field and subscribe button
+- [ ] Form posts to Mailchimp endpoint (or has clearly marked placeholder URL)
+- [ ] Includes Mailchimp honeypot bot protection field (hidden)
+- [ ] Styling matches site's neo-brutalist aesthetic (3px borders, bold type, CSS variables)
+- [ ] Works in both light and dark mode
+- [ ] Responsive — stacks properly on mobile
+- [ ] No JavaScript dependencies added (pure HTML form submission)
+- [ ] Run tests and ensure they pass
+
+**Files to check:** `blog.html`, `styles.css`
+
+---
+
+## Task 13: Create complete sitemap.xml covering all pages and sub-sites
+**Status:** [ ] Incomplete
+
+**Context:** A `sitemap.xml` already exists at the project root but is incomplete. It covers 15 of 28 pages: the 6 main pages, shop, and 9 blog posts (post-2 through post-10). Missing entirely: `post-1-ehr-pathway.html`, `post-11` through `post-13`, `resources.html`, all 7 curly-girl sub-site pages, and `claw-mapper/index.html`. The `robots.txt` already references the sitemap at `https://stackless.tech/sitemap.xml`. The base URL is `https://stackless.tech/`. The existing sitemap follows a consistent XML structure with `<loc>`, `<priority>`, and `<changefreq>` tags per URL.
+
+**Plan:**
+1. **Edit `sitemap.xml`** to add all missing URLs, keeping the existing structure and priority scheme:
+   - Add `resources.html` (priority 0.5, monthly)
+   - Add `blog/post-1-ehr-pathway.html` (priority 0.6, monthly)
+   - Add `blog/post-11-privacy-for-non-coders.html` (priority 0.6, monthly)
+   - Add `blog/post-12-building-agent-teams.html` (priority 0.6, monthly)
+   - Add `blog/post-13-content-creator-agent.html` (priority 0.6, monthly)
+   - Add `curly-girl/index.html` (priority 0.8, weekly) — sub-site landing page
+   - Add `curly-girl/about.html` (priority 0.6, monthly)
+   - Add `curly-girl/checker.html` (priority 0.7, monthly) — interactive tool
+   - Add `curly-girl/quiz.html` (priority 0.7, monthly) — interactive tool
+   - Add `curly-girl/products.html` (priority 0.7, weekly) — 257-product browser
+   - Add `curly-girl/faq.html` (priority 0.6, monthly)
+   - Add `curly-girl/listen.html` (priority 0.5, monthly)
+   - Add `claw-mapper/index.html` (priority 0.6, monthly)
+2. **Verify `robots.txt`** still correctly references `Sitemap: https://stackless.tech/sitemap.xml` (already confirmed correct).
+3. **Validate the XML** is well-formed after editing (check closing tags, encoding declaration).
+4. **Manual step:** Submit the updated sitemap to Google Search Console after deploying.
+
+**Acceptance Criteria:**
+- [ ] `sitemap.xml` contains all 28 indexable HTML pages (6 main + 1 shop + 13 blog + 7 curly-girl + 1 claw-mapper)
+- [ ] All URLs use the `https://stackless.tech/` base domain
+- [ ] Each URL entry includes `<loc>`, `<priority>`, and `<changefreq>` tags
+- [ ] XML is well-formed (valid opening/closing tags, proper XML declaration)
+- [ ] `robots.txt` references the sitemap URL (already done)
+- [ ] No duplicate URLs exist in the sitemap
+
+**Files to check:** `sitemap.xml`, `robots.txt`, `blog/*.html`, `curly-girl/*.html`, `claw-mapper/index.html`, `resources.html`
+
+---
+
+Good. Now I have everything I need. The next blog post would be post-14. Let me produce the plan.
+
+## Task 14: MSI Claw mapper blog post and GitHub push
+**Status:** [ ] Incomplete
+
+**Context:** The MSI Claw Controller Mapper (`claw-mapper/index.html`) is a fully built 1,447-line single-file HTML app that maps PC game keybindings to the MSI Claw 8 AI+ controller. It includes: keybinding parser, auto-mapper with priority-based slot assignment, interactive SVG layout diagram, click-to-reassign modal, quick reference card generator, and VDF export for Steam Input. The tool already has a card on `projects.html` (amber bar, "Gaming" category, "Live" status, links to `claw-mapper/index.html`). It is NOT referenced on `fleet.html` and doesn't need to be (fleet is for AI agents, not tools). A blog post needs to be written as post-14, added to `blog.html` index, and then the whole thing pushed to GitHub. There are currently 13 blog posts (post-1 through post-13, skipping post-6's number but it exists).
+
+**Plan:**
+
+1. **Create blog post file** `blog/post-14-claw-mapper.html`
+   - Follow the exact template pattern from existing posts (e.g., post-3, post-10): `<head>` with SEO/OG/Twitter meta, FOUC prevention script, inline `<style>` for article-body and dark mode, standard nav, article content, footer, mobile menu, theme toggle JS
+   - Tags: "Tools" (lime-400), "Gaming" (amber-400)
+   - Title: something like "I Built a Controller Mapper for the MSI Claw (Without Writing a Line of Code)"
+   - Content sections:
+     - **Intro**: The MSI Claw problem (great hardware, Steam Input config is painful, no good mapping tools)
+     - **What it does**: Paste keybindings, auto-maps to controller, visual layout, VDF export
+     - **How it works**: Parser, category detection, priority-based auto-mapper, layer system (Base/L1/R1/Back)
+     - **The AI build process**: Built entirely with Claude Code, single-file architecture, no dependencies
+     - **Try it**: Link to `../claw-mapper/index.html`
+   - Read time: ~6 min
+   - Date: February 2026
+
+2. **Update `blog.html`** — Add post-14 entry at the TOP of the `.article-list` div (before the post-13 entry, line ~97), following the exact `<a class="article-item">` pattern with tags, title, meta, and description
+
+3. **Update `projects.html`** — The MSI Claw card already exists (line 183-206) with accurate description and "Live" status. Verify description still matches, add a "Read more" blog link if the card pattern supports it. Minor update only if needed.
+
+4. **Git add and push** — Stage `blog/post-14-claw-mapper.html`, `blog.html`, and `claw-mapper/index.html` (plus `projects.html` if changed). Commit and push to GitHub.
+
+**Acceptance Criteria:**
+- [ ] `blog/post-14-claw-mapper.html` exists, follows site template exactly (nav, footer, mobile menu, dark mode, SEO meta)
+- [ ] Blog post content covers the tool's features, the problem it solves, the build process, and links to the live tool
+- [ ] `blog.html` lists post-14 at the top of the article list with correct tags, title, meta, and description
+- [ ] `projects.html` MSI Claw card description is accurate and consistent with blog post
+- [ ] All internal links work (`../claw-mapper/index.html` from blog post, `blog/post-14-claw-mapper.html` from blog index)
+- [ ] Dark mode works on the new blog post (inline `[data-theme="dark"]` overrides)
+- [ ] Changes committed and pushed to GitHub
+- [ ] Run tests and ensure they pass
+
+**Files to check:** `claw-mapper/index.html`, `blog.html`, `projects.html`, `blog/post-14-claw-mapper.html` (new), `blog/post-3-tools-i-use.html` (template reference), `blog/post-10-ai-orchestra.html` (template reference), `styles.css`, `fleet.html`
+
+---
+
+Good - nav links are consistent across pages. Now I have all the information needed. Here's the plan:
+
+## Task 15: UI/UX consistency audit across all 7 Stackless main pages
+**Status:** [ ] Incomplete
+
+**Context:** The 7 main Stackless pages (index, about, projects, blog, fleet, resources, shop) share `styles.css` but fleet, resources, and shop also have extensive inline `<style>` blocks with page-specific classes. The main dark mode section in `styles.css` (lines 1029-1211) covers shared components well, but **none of the page-specific inline styles have dark mode overrides** for fleet (`.fleet-hero`, `.fleet-stats`, agent cards), resources (`.resource-card`, `.notebooklm-badge`, `.audio-stub`), or shop (`.product-card`, `.product-body`, `.btn-buy`). Additionally, 6 CSS custom properties (`--slate-50`, `--slate-200`, `--slate-300`, `--slate-400`, `--slate-600`) are used across 79 occurrences in 18 files but **never defined**, causing those styles to silently fail (transparent backgrounds, invisible borders). Mobile nav and desktop nav are structurally consistent across all 7 pages. Tag styling on blog.html uses hardcoded inline color styles rather than the `.tag` class pattern used on index/projects. The blog post cards on blog.html also lack dark mode coverage for their inline-styled elements.
+
+**Plan:**
+
+1. **Define missing CSS variables** in `styles.css` root `:root` block (line ~5):
+   - Add `--slate-50: #f8fafc;`, `--slate-200: #e2e8f0;`, `--slate-300: #cbd5e1;`, `--slate-400: #94a3b8;`, `--slate-600: #475569;` alongside existing slate values
+   - Add dark mode overrides for these new variables in the `[data-theme="dark"]` block (~line 1029): `--slate-50`, `--slate-200`, `--slate-300`, `--slate-400`, `--slate-600` mapped to appropriate dark equivalents
+
+2. **Add dark mode rules for fleet.html inline elements** in `fleet.html` `<style>` block:
+   - `.fleet-hero h1`, `.fleet-hero .lead` text colors
+   - `.fleet-premise` (dark bg on dark = needs lighter treatment)
+   - `.fleet-section-header`, `.fleet-section-tag`, `.fleet-section-title` text
+   - Agent cards (`.agent-card`, `.agent-card-header`, etc.) backgrounds and borders
+   - `.fleet-cta` section
+
+3. **Add dark mode rules for resources.html inline elements** in `resources.html` `<style>` block:
+   - `.resource-card` background, border, box-shadow
+   - `.resource-card h3`, `.resource-card p` text colors
+   - `.resource-tag` background
+   - `.notebooklm-badge` background/border (hardcoded `#e0f2fe`/`#0ea5e9`)
+   - `.audio-stub`, `.infographic-stub` background and border
+   - `.coming-soon-note` treatment
+   - `.section-label::after` line color
+
+4. **Add dark mode rules for shop/index.html inline elements** in `shop/index.html` `<style>` block:
+   - `.product-card` background, border, box-shadow
+   - `.product-category-tag` border
+   - `.product-title`, `.product-price`, `.product-desc` text colors
+   - `.product-features li` text and border colors
+   - `.btn-buy` variants
+   - `.shop-hero h1`, `.shop-hero p` text
+   - `.shop-note`, `.shop-faq` sections
+
+5. **Normalise blog.html tag styling** — replace inline `style="background: var(--pink-500); color: white;"` on blog tags with CSS classes (e.g. `.tag-agents`, `.tag-security`, `.tag-tools`) defined in either `styles.css` or blog.html's inline block, with corresponding dark mode overrides
+
+6. **Add dark mode for blog.html list-specific elements** — the `.article-item` is covered in styles.css, but check inline-styled elements on blog.html (filter buttons active states, search input)
+
+7. **Verify mobile responsiveness** on fleet, resources, and shop:
+   - Fleet: check agent card grid at 768px breakpoint (currently inline — may need `@media` block)
+   - Resources: check `.resource-grid` at 768px (uses `auto-fill` so likely OK)
+   - Shop: check `.products-grid` at 768px (uses `repeat(3, 1fr)` — needs mobile override for single column)
+
+8. **Cross-page visual test** — open each page in browser, toggle dark mode, resize to mobile, verify no broken elements
+
+**Acceptance Criteria:**
+- [ ] All 6 missing `--slate-*` CSS variables defined in `:root` with dark mode equivalents
+- [ ] Fleet page renders correctly in dark mode (hero, stats, agent cards, CTA)
+- [ ] Resources page renders correctly in dark mode (resource cards, badges, stubs)
+- [ ] Shop page renders correctly in dark mode (product cards, buttons, FAQ)
+- [ ] Blog page tags use CSS classes instead of inline styles, with dark mode support
+- [ ] Shop products grid collapses to single column on mobile (768px)
+- [ ] No hardcoded light-only colors (e.g. `#e0f2fe`, `#075985`) without dark mode alternatives
+- [ ] Run tests and ensure they pass
+
+**Files to check:** `styles.css`, `index.html`, `about.html`, `projects.html`, `blog.html`, `fleet.html`, `resources.html`, `shop/index.html`
+
+---
+
+## Task 16: UI/UX audit and fixes for CurlMagic sub-site (7 pages, products priority)
+**Status:** [ ] Incomplete
+
+**Context:** The CurlMagic (Curly Girl Wavy Girl UK) sub-site has 7 HTML pages, 1 shared CSS file (2,437 lines), and 3 JS files. The site is well-built with consistent navigation, working dark mode, and responsive design using clamp() and a single 768px breakpoint. However, several UI/UX issues exist across pages. The Products page (priority) lacks a "Clear all filters" button, has no loading indicator on "Load More", and filter dropdowns could be improved. Cross-site issues include: inconsistent footers (3 different variants), listen.html has ~200 lines of inline CSS not in the shared stylesheet, theme toggle logic is duplicated in every page instead of being in app.js, quiz lacks a visible "Question X of Y" indicator, no skip-to-main-content link, no aria-live regions on dynamic content, and the about page is very long with no jump-to-section navigation.
+
+**Plan:**
+
+**Phase 1 — Products page (priority)**
+1. **Add "Clear all filters" button** in `products.html` — add a button after the filter chips area; in `app.js` add a `clearAllFilters()` function that resets all 6 dropdowns, clears search input, removes all filter chips, and re-runs `filterProducts()`
+2. **Add loading state to "Load More"** — in `app.js`, add a brief visual indicator (button text changes to "Loading..." or spinner class) when `showMore()` is triggered, especially useful for large result sets
+3. **Add aria-live region** to the products results container in `products.html` so screen readers announce filter result count changes
+4. **Add "no results" empty state** — in `app.js` `filterProducts()`, display a friendly message when zero products match filters
+
+**Phase 2 — Cross-site consistency**
+5. **Standardise footers** — choose the home page's rich footer variant and apply it consistently to all 7 pages (currently home has a full footer, 5 pages have a minimal 2-line footer, listen.html has an inline-styled footer)
+6. **Move listen.html inline styles** (~200 lines) into `styles.css` under properly namespaced classes (`.listen-*`, `.episode-*`)
+7. **Deduplicate theme toggle script** — move the inline theme toggle JS from each page's footer into `app.js`, keep only the FOUC-prevention snippet in `<head>`
+
+**Phase 3 — Accessibility improvements**
+8. **Add skip-to-main-content link** to all 7 pages — visually hidden, appears on keyboard focus
+9. **Add quiz progress indicator** — show "Question X of 7" text alongside the progress bar in `quiz.html`; add `aria-label` and `aria-valuenow` to the progress bar
+10. **Add aria-live regions** to FAQ search results counter and scanner results areas in `faq.html` and `checker.html`
+
+**Phase 4 — Content UX**
+11. **Add table of contents** to `about.html` — a sticky or top-anchored jump-to-section nav for the long educational page (What is CGM, What to Avoid, Modified CGM, Transition, Myths, Science, UK-Focused, About)
+
+**Acceptance Criteria:**
+- [ ] Products page has a visible "Clear all filters" button that resets all dropdowns, search, and chips
+- [ ] Products page shows loading state on "Load More" and a friendly empty state when no results match
+- [ ] Products results container has `aria-live="polite"` announcing result count changes
+- [ ] All 7 pages have the same footer structure (rich variant from home)
+- [ ] listen.html has zero inline `<style>` blocks — all styles moved to styles.css
+- [ ] Theme toggle JS exists only in app.js (plus FOUC snippet in `<head>`), not duplicated per page
+- [ ] All 7 pages have a skip-to-main-content link
+- [ ] Quiz shows "Question X of 7" and progress bar has proper ARIA attributes
+- [ ] FAQ counter and scanner results have `aria-live` attributes
+- [ ] About page has a clickable table of contents linking to sections
+- [ ] All pages render correctly in light and dark mode after changes
+- [ ] Run tests and ensure they pass
+
+**Files to check:** `curly-girl/products.html`, `curly-girl/app.js`, `curly-girl/styles.css`, `curly-girl/index.html`, `curly-girl/about.html`, `curly-girl/faq.html`, `curly-girl/checker.html`, `curly-girl/quiz.html`, `curly-girl/listen.html`
+
+---
+
+## Task 17: Set up LinkedIn page for Stackless and repurpose posts 11-13
+
+**Status:** [ ] Incomplete
+
+**Context:** Stackless currently has no LinkedIn presence despite the content roadmap (`content-roadmap.md`) identifying LinkedIn as the primary social platform. The site footer already has a LinkedIn icon placeholder pointing to `#`. Three recent blog posts (11: Privacy for Non-Coders, 12: Building Agent Teams, 13: The Content Creator Agent) are ready to repurpose into LinkedIn posts using the Social Adapter prompt defined in post-13 (`blog/post-13-content-creator-agent.html`, lines 344-358). The content roadmap specifies the flow: blog post → LinkedIn post (excerpt + insight + question, 200-250 words, professional tone). The brand voice is direct, practical, no fluff, no "excited to share" language.
+
+**Plan:**
+1. **Human action:** Create a LinkedIn Company Page for "Stackless" at linkedin.com/company/
+   - Use tagline: "Not a coder. Still ships products."
+   - Description from site: "A non-coder's experiment building real digital products with AI"
+   - Upload logo/banner matching site branding (dark theme, lime/pink/indigo accents)
+2. **Human action:** Run the Social Adapter prompt from post-13 against each of posts 11, 12, and 13 to generate LinkedIn posts (paste each article's text into Claude with the prompt)
+3. **Human action:** Post the three generated LinkedIn posts (one per day or per few days for cadence)
+4. **Code change:** Update `index.html` footer LinkedIn icon href from `#` to the new LinkedIn company page URL
+5. **Code change:** Update any other pages that share the same footer with the LinkedIn placeholder (`about.html`, `blog.html`, `projects.html`, `resources.html`, `fleet.html`, blog post pages)
+
+**Acceptance Criteria:**
+- [ ] LinkedIn Company Page exists with correct branding, tagline, and description
+- [ ] Three LinkedIn posts published (one each for posts 11, 12, 13) using Social Adapter output
+- [ ] All site footer LinkedIn icons link to the actual LinkedIn company page URL (not `#`)
+- [ ] Run tests and ensure they pass
+
+**Files to check:** `index.html`, `about.html`, `blog.html`, `projects.html`, `resources.html`, `fleet.html`, `blog/post-11-privacy-for-non-coders.html`, `blog/post-12-building-agent-teams.html`, `blog/post-13-content-creator-agent.html`, `content-roadmap.md`
 
 ---

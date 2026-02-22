@@ -1,0 +1,13 @@
+[LOG] Iteration 3 started at 2026-02-22 08:54:38
+[LOG] Task: ## Task 1: <title>
+----------------------------------------
+Task 4 complete. Changes committed as `2c857c4`:
+
+- Removed `nav-cta` class from Shop links in post-12 and post-13
+- Removed `.nav-cta` CSS rules from `styles.css` (3 blocks), `shop/styles.css` (3 blocks), and `claw-mapper/index.html` (2 inline rules)
+- Verified zero `nav-cta` or "Browse Products" references remain in any HTML/CSS file
+- Confirmed all 21 pages still have their "Shop" links intact
+
+----------------------------------------
+[LOG] Iteration 3 ended at 2026-02-22 08:56:55
+[LOG] Exit code: 0

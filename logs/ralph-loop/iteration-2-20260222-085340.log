@@ -1,0 +1,8 @@
+[LOG] Iteration 2 started at 2026-02-22 08:53:41
+[LOG] Task: ## Task 1: <title>
+----------------------------------------
+Done. **Task 3 complete** — removed "Cursor, or similar" from `blog/post-6-security-for-non-coders.html` line 196 so it now reads "non-coders using AI tools like Claude Code who want to build things...". Committed as `2a487f7`.
+
+----------------------------------------
+[LOG] Iteration 2 ended at 2026-02-22 08:54:34
+[LOG] Exit code: 0

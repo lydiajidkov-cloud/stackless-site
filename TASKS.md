@@ -172,7 +172,7 @@ Now I have all the information needed. Let me produce the implementation plan.
 ---
 
 ## Task 13: Create complete sitemap.xml covering all pages and sub-sites
-**Status:** [ ] Incomplete
+**Status:** [x] Complete
 
 **Context:** A `sitemap.xml` already exists at the project root but is incomplete. It covers 15 of 28 pages: the 6 main pages, shop, and 9 blog posts (post-2 through post-10). Missing entirely: `post-1-ehr-pathway.html`, `post-11` through `post-13`, `resources.html`, all 7 curly-girl sub-site pages, and `claw-mapper/index.html`. The `robots.txt` already references the sitemap at `https://stackless.tech/sitemap.xml`. The base URL is `https://stackless.tech/`. The existing sitemap follows a consistent XML structure with `<loc>`, `<priority>`, and `<changefreq>` tags per URL.
 
@@ -196,12 +196,12 @@ Now I have all the information needed. Let me produce the implementation plan.
 4. **Manual step:** Submit the updated sitemap to Google Search Console after deploying.
 
 **Acceptance Criteria:**
-- [ ] `sitemap.xml` contains all 28 indexable HTML pages (6 main + 1 shop + 13 blog + 7 curly-girl + 1 claw-mapper)
-- [ ] All URLs use the `https://stackless.tech/` base domain
-- [ ] Each URL entry includes `<loc>`, `<priority>`, and `<changefreq>` tags
-- [ ] XML is well-formed (valid opening/closing tags, proper XML declaration)
-- [ ] `robots.txt` references the sitemap URL (already done)
-- [ ] No duplicate URLs exist in the sitemap
+- [x] `sitemap.xml` contains all 30 indexable HTML pages (7 main + 1 shop + 15 blog + 7 curly-girl + 1 claw-mapper)
+- [x] All URLs use the `https://stackless.tech/` base domain
+- [x] Each URL entry includes `<loc>`, `<priority>`, and `<changefreq>` tags
+- [x] XML is well-formed (valid opening/closing tags, proper XML declaration)
+- [x] `robots.txt` references the sitemap URL (already done)
+- [x] No duplicate URLs exist in the sitemap
 
 **Files to check:** `sitemap.xml`, `robots.txt`, `blog/*.html`, `curly-girl/*.html`, `claw-mapper/index.html`, `resources.html`
 

@@ -380,3 +380,156 @@
 **Files to check:** `blog.html`, `index.html`, `about.html`, `projects.html`, `fleet.html`, `resources.html`, `shop/index.html`, `claw-mapper/index.html`, `blog/post-1-ehr-pathway.html`, `blog/post-2-non-coder-shipping.html`, `blog/post-3-tools-i-use.html`, `blog/post-4-process-not-code.html`, `blog/post-5-what-ai-gets-wrong.html`, `blog/post-6-security-for-non-coders.html`, `blog/post-7-testing-for-non-coders.html`, `blog/post-8-non-coders-toolkit.html`, `blog/post-9-gemini-canvas-frontends.html`, `blog/post-10-ai-orchestra.html`, `blog/post-11-privacy-for-non-coders.html`, `blog/post-12-building-agent-teams.html`, `blog/post-13-content-creator-agent.html`
 
 ---
+
+## Task 8: Add missing projects and reorder projects page
+**Status:** [x] Complete
+**Completed:** 2026-02-22 10:03:12
+**Duration:** 4m 1s
+**Commits:**
+- 55d3691 Add 3 missing projects, reorder cards, and add spotlight layout
+
+**Context:** The projects page (`projects.html`) currently lists 6 projects in this order: Personal Finance Dashboard, AI Portfolio Dashboard, Grocery Spending Dashboard, Curly Girl Wavy Girl UK, MSI Claw Controller Mapper, Daily AI Podcast. Three projects are missing entirely: The Agentcy (a playable browser game), Zoe Recipe Finder, and Acute HF EHR Pathway. CurlMagic (Curly Girl Wavy Girl UK) is the best "try it free" hook but is buried 4th behind three paid £5 products. The task also asks for 2-3 "spotlight" projects with more detail. The page uses a consistent card pattern with color bars, categories, tags, status dots, and action links. All styling is in `styles.css` (lines 477-628) with a 2-column grid on desktop, 1-column on mobile. Available color-bar classes: `bar-pink`, `bar-yellow`, `bar-indigo`, `bar-lime`, plus inline styles for `amber-400`, `violet-400`, `rose-400`. Blog post-1 covers the EHR Pathway and can inform its description.
+
+**Plan:**
+
+1. **Reorder existing cards in `projects.html`** (lines 70-234):
+   - Move the Curly Girl Wavy Girl UK card (currently 4th, lines 155-181) to **first position** in the grid
+   - Keep the three paid products (Finance, Portfolio, Grocery) grouped together after the free/spotlight items
+   - Keep MSI Claw and Daily AI Podcast in their current relative positions
+
+2. **Add new project card: The Agentcy** — Insert after CurlMagic (position 2):
+   - Color bar: `bar-pink` (game/fun theme)
+   - Category: "Game" with `background: var(--pink-500); color: white;`
+   - Price/date: "Free"
+   - Title: "The Agentcy"
+   - Description: Business simulation game where you run an AI agent company. Hire agents, complete contracts, unlock upgrades, and progress through eras. 15 tasks, 90 agent results, 14 upgrades. Built entirely with AI, playable in the browser.
+   - Tags: `#Game` `#Simulation` `#Browser`
+   - Status: Live (green dot)
+   - Link: Point to the game location (needs confirmation — likely hosted or to be hosted under stackless-site)
+
+3. **Add new project card: Zoe Recipe Finder** — Insert as position 3:
+   - Color bar: inline `background: var(--rose-400);`
+   - Category: "Health" with `background: var(--rose-400); color: white;`
+   - Price/date: "Free"
+   - Title: "Zoe Recipe Finder"
+   - Description: Recipe search tool built around ZOE personalised nutrition scores. Filter by your food list, find meals that work with your gut biology. Built for real dietary constraints, not generic healthy eating.
+   - Tags: `#Health` `#Nutrition` `#WebApp`
+   - Status: Complete (green dot)
+   - Link: No external link (not hosted on stackless-site) — footer with status only, like Daily AI Podcast
+
+4. **Add new project card: Acute HF EHR Pathway** — Insert as position 4:
+   - Color bar: `bar-indigo`
+   - Category: "Clinical" with `background: var(--indigo-500); color: white;`
+   - Price/date: "2025"
+   - Title: "Acute HF EHR Pathway"
+   - Description: Interactive clinical pathway template for acute heart failure, designed for EHR integration. Maps the full patient journey from admission to discharge with decision points, escalation criteria, and documentation prompts. Built from real clinical experience.
+   - Tags: `#Clinical` `#EHR` `#Healthcare`
+   - Status: Complete (green dot)
+   - Link: Blog post link `blog/post-1-ehr-pathway.html` with "Read More" text
+
+5. **Add CSS for spotlight cards** in `styles.css` (after line 628):
+   - Add `.project-card.spotlight` class that spans full width: `grid-column: 1 / -1;`
+   - Spotlight cards use a horizontal layout on desktop: `flex-direction: row;` with the color bar on the left (vertical) instead of top
+   - Alternatively, simpler approach: spotlight cards are just full-width standard cards with a slightly larger title and description area. Use `grid-column: 1 / -1;` only.
+   - Apply `.spotlight` class to CurlMagic and The Agentcy cards (the two strongest free "try it" projects)
+
+6. **Final card order** (9 total):
+   1. Curly Girl Wavy Girl UK — **spotlight** (full-width)
+   2. The Agentcy — **spotlight** (full-width)
+   3. Zoe Recipe Finder — standard card
+   4. Acute HF EHR Pathway — standard card
+   5. MSI Claw Controller Mapper — standard card
+   6. Daily AI Podcast — standard card
+   7. Personal Finance Dashboard — standard card
+   8. AI Portfolio Dashboard — standard card
+   9. Grocery Spending Dashboard — standard card
+
+7. **Update page intro text** (line 66-68) to reflect the expanded portfolio — change "A collection of practical tools" to mention the variety (games, clinical tools, consumer apps, dashboards).
+
+**Acceptance Criteria:**
+- [x] CurlMagic appears first on the projects page (no longer buried behind paid products)
+- [x] The Agentcy, Zoe Recipe Finder, and Acute HF EHR Pathway all have project cards
+- [x] 2 spotlight projects (CurlMagic + The Agentcy) display full-width on desktop
+- [x] All new cards follow the existing HTML pattern (color bar, meta, title, desc, tags, footer)
+- [x] All new cards render correctly in dark mode
+- [x] Page is responsive — spotlight cards collapse to single-column on mobile
+- [x] Existing cards and links remain functional (no broken hrefs)
+- [x] Run tests and ensure they pass
+
+**Files to check:** `projects.html`, `styles.css`, `blog/post-1-ehr-pathway.html`, `ideas.md`, `TODO.md`
+
+---
+## Task 8: Add missing projects and reorder projects page
+**Status:** [x] Complete
+
+**Context:** The projects page (`projects.html`) currently lists 6 projects in this order: Personal Finance Dashboard, AI Portfolio Dashboard, Grocery Spending Dashboard, Curly Girl Wavy Girl UK, MSI Claw Controller Mapper, Daily AI Podcast. Three projects are missing entirely: The Agentcy (a playable browser game), Zoe Recipe Finder, and Acute HF EHR Pathway. CurlMagic (Curly Girl Wavy Girl UK) is the best "try it free" hook but is buried 4th behind three paid £5 products. The task also asks for 2-3 "spotlight" projects with more detail. The page uses a consistent card pattern with color bars, categories, tags, status dots, and action links. All styling is in `styles.css` (lines 477-628) with a 2-column grid on desktop, 1-column on mobile. Available color-bar classes: `bar-pink`, `bar-yellow`, `bar-indigo`, `bar-lime`, plus inline styles for `amber-400`, `violet-400`, `rose-400`. Blog post-1 covers the EHR Pathway and can inform its description.
+
+**Plan:**
+
+1. **Reorder existing cards in `projects.html`** (lines 70-234):
+   - Move the Curly Girl Wavy Girl UK card (currently 4th, lines 155-181) to **first position** in the grid
+   - Keep the three paid products (Finance, Portfolio, Grocery) grouped together after the free/spotlight items
+   - Keep MSI Claw and Daily AI Podcast in their current relative positions
+
+2. **Add new project card: The Agentcy** — Insert after CurlMagic (position 2):
+   - Color bar: `bar-pink` (game/fun theme)
+   - Category: "Game" with `background: var(--pink-500); color: white;`
+   - Price/date: "Free"
+   - Title: "The Agentcy"
+   - Description: Business simulation game where you run an AI agent company. Hire agents, complete contracts, unlock upgrades, and progress through eras. 15 tasks, 90 agent results, 14 upgrades. Built entirely with AI, playable in the browser.
+   - Tags: `#Game` `#Simulation` `#Browser`
+   - Status: Live (green dot)
+   - Link: Point to the game location (needs confirmation — likely hosted or to be hosted under stackless-site)
+
+3. **Add new project card: Zoe Recipe Finder** — Insert as position 3:
+   - Color bar: inline `background: var(--rose-400);`
+   - Category: "Health" with `background: var(--rose-400); color: white;`
+   - Price/date: "Free"
+   - Title: "Zoe Recipe Finder"
+   - Description: Recipe search tool built around ZOE personalised nutrition scores. Filter by your food list, find meals that work with your gut biology. Built for real dietary constraints, not generic healthy eating.
+   - Tags: `#Health` `#Nutrition` `#WebApp`
+   - Status: Complete (green dot)
+   - Link: No external link (not hosted on stackless-site) — footer with status only, like Daily AI Podcast
+
+4. **Add new project card: Acute HF EHR Pathway** — Insert as position 4:
+   - Color bar: `bar-indigo`
+   - Category: "Clinical" with `background: var(--indigo-500); color: white;`
+   - Price/date: "2025"
+   - Title: "Acute HF EHR Pathway"
+   - Description: Interactive clinical pathway template for acute heart failure, designed for EHR integration. Maps the full patient journey from admission to discharge with decision points, escalation criteria, and documentation prompts. Built from real clinical experience.
+   - Tags: `#Clinical` `#EHR` `#Healthcare`
+   - Status: Complete (green dot)
+   - Link: Blog post link `blog/post-1-ehr-pathway.html` with "Read More" text
+
+5. **Add CSS for spotlight cards** in `styles.css` (after line 628):
+   - Add `.project-card.spotlight` class that spans full width: `grid-column: 1 / -1;`
+   - Spotlight cards use a horizontal layout on desktop: `flex-direction: row;` with the color bar on the left (vertical) instead of top
+   - Alternatively, simpler approach: spotlight cards are just full-width standard cards with a slightly larger title and description area. Use `grid-column: 1 / -1;` only.
+   - Apply `.spotlight` class to CurlMagic and The Agentcy cards (the two strongest free "try it" projects)
+
+6. **Final card order** (9 total):
+   1. Curly Girl Wavy Girl UK — **spotlight** (full-width)
+   2. The Agentcy — **spotlight** (full-width)
+   3. Zoe Recipe Finder — standard card
+   4. Acute HF EHR Pathway — standard card
+   5. MSI Claw Controller Mapper — standard card
+   6. Daily AI Podcast — standard card
+   7. Personal Finance Dashboard — standard card
+   8. AI Portfolio Dashboard — standard card
+   9. Grocery Spending Dashboard — standard card
+
+7. **Update page intro text** (line 66-68) to reflect the expanded portfolio — change "A collection of practical tools" to mention the variety (games, clinical tools, consumer apps, dashboards).
+
+**Acceptance Criteria:**
+- [x] CurlMagic appears first on the projects page (no longer buried behind paid products)
+- [x] The Agentcy, Zoe Recipe Finder, and Acute HF EHR Pathway all have project cards
+- [x] 2 spotlight projects (CurlMagic + The Agentcy) display full-width on desktop
+- [x] All new cards follow the existing HTML pattern (color bar, meta, title, desc, tags, footer)
+- [x] All new cards render correctly in dark mode
+- [x] Page is responsive — spotlight cards collapse to single-column on mobile
+- [x] Existing cards and links remain functional (no broken hrefs)
+- [x] Run tests and ensure they pass
+
+**Files to check:** `projects.html`, `styles.css`, `blog/post-1-ehr-pathway.html`, `ideas.md`, `TODO.md`
+
+---

@@ -7,6 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
     <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+    <!-- Payhip checkout overlay -->
+    <script src="https://payhip.com/payhip.js"></script>
 
     <!-- SEO -->
     <meta name="description" content="Browse Stackless digital tools. Finance dashboards, AI portfolio templates, grocery trackers — practical templates built with AI, all priced at £5.">
@@ -450,7 +452,8 @@
                             <li>Budget planner with life-change modelling</li>
                             <li>Self-service data editor</li>
                         </ul>
-                        <a href="#" class="btn-buy lime">Buy Now &mdash; &pound;5</a>
+                        <!-- TODO: Replace FINANCE_ID with your Payhip product key (from product URL) -->
+                        <a href="https://payhip.com/b/FINANCE_ID" class="payhip-buy-button btn-buy lime" data-theme="none" data-product="FINANCE_ID" target="_blank" rel="noopener">Buy Now &mdash; &pound;5</a>
                         <p style="font-size:0.75rem; color:var(--slate-500); font-weight:600; margin-top:0.75rem; text-align:center;">Instant download via Payhip. Deploy free on Streamlit Cloud — runs in your browser, no install.</p>
                     </div>
                 </div>
@@ -470,7 +473,8 @@
                             <li>Activity heatmap</li>
                             <li>Zero dependencies (just HTML + JS)</li>
                         </ul>
-                        <a href="#" class="btn-buy indigo">Buy Now &mdash; &pound;5</a>
+                        <!-- TODO: Replace PORTFOLIO_ID with your Payhip product key (from product URL) -->
+                        <a href="https://payhip.com/b/PORTFOLIO_ID" class="payhip-buy-button btn-buy indigo" data-theme="none" data-product="PORTFOLIO_ID" target="_blank" rel="noopener">Buy Now &mdash; &pound;5</a>
                         <p style="font-size:0.75rem; color:var(--slate-500); font-weight:600; margin-top:0.75rem; text-align:center;">Instant download via Payhip. Opens in any browser — no install, no dependencies.</p>
                     </div>
                 </div>
@@ -490,7 +494,8 @@
                             <li>"Hide top item" toggle</li>
                             <li>Works offline, zero dependencies</li>
                         </ul>
-                        <a href="#" class="btn-buy pink">Buy Now &mdash; &pound;5</a>
+                        <!-- TODO: Replace GROCERY_ID with your Payhip product key (from product URL) -->
+                        <a href="https://payhip.com/b/GROCERY_ID" class="payhip-buy-button btn-buy pink" data-theme="none" data-product="GROCERY_ID" target="_blank" rel="noopener">Buy Now &mdash; &pound;5</a>
                         <p style="font-size:0.75rem; color:var(--slate-500); font-weight:600; margin-top:0.75rem; text-align:center;">Instant download via Payhip. Runs instantly in any browser. No install needed.</p>
                     </div>
                 </div>
@@ -512,7 +517,8 @@
             <div class="guide-card">
                 <h2>Support the Project</h2>
                 <p>Everything here is &pound;5 because I'd rather 100 people use something than 5 people think about it. If you got value from a template, a blog post, or just the idea that non-coders can ship real products, you can support the project with a donation. No pressure, no guilt, no minimum.</p>
-                <a href="#" class="btn-buy indigo" style="display: inline-block; width: auto; padding: 1rem 2rem; margin-top: 1rem;">Buy Me a Coffee</a>
+                <!-- TODO: Replace with your Ko-fi page URL (e.g. https://ko-fi.com/stackless) -->
+                <a href="https://ko-fi.com/stackless" class="btn-buy indigo" style="display: inline-block; width: auto; padding: 1rem 2rem; margin-top: 1rem;" target="_blank" rel="noopener">Buy Me a Coffee</a>
             </div>
         </section>
 

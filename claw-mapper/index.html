@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MSI Claw Controller Mapper — Stackless</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FDFCF0;
+    --white: #ffffff;
+    --slate-900: #0f172a;
+    --slate-800: #1e293b;
+    --slate-700: #334155;
+    --slate-500: #64748b;
+    --slate-100: #f1f5f9;
+    --pink-500: #ec4899;
+    --indigo-600: #4f46e5;
+    --indigo-500: #6366f1;
+    --lime-400: #a3e635;
+    --yellow-300: #fde047;
+    --amber-400: #fbbf24;
+    --amber-500: #f59e0b;
+    --orange-500: #f97316;
+    --violet-400: #a78bfa;
+    --rose-400: #fb7185;
+    --red-500: #ef4444;
+    --green-500: #22c55e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  ::selection { background: var(--pink-500); color: var(--white); }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--slate-900); line-height: 1.6; min-height: 100vh; }
+  .dot-pattern { position: fixed; inset: 0; pointer-events: none; opacity: 0.2; background-image: radial-gradient(#000 0.5px, transparent 0.5px); background-size: 24px 24px; z-index: 0; }
+  .top-banner { background: var(--indigo-600); color: var(--white); padding: 0.5rem 1rem; text-align: center; font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.2em; }
+  nav { position: sticky; top: 0; z-index: 50; background: var(--white); border-bottom: 4px solid var(--slate-900); }
+  .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; height: 5rem; }
+  .logo-group { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; text-decoration: none; }
+  .logo-icon { background: var(--pink-500); border: 2px solid var(--slate-900); padding: 0.5rem; box-shadow: 3px 3px 0 0 rgba(0,0,0,1); transition: all 0.15s; display: flex; align-items: center; justify-content: center; }
+  .logo-group:hover .logo-icon { transform: translate(0.5px, 0.5px); box-shadow: none; }
+  .logo-icon svg { width: 24px; height: 24px; stroke: var(--white); fill: var(--white); }
+  .logo-text { font-size: 1.875rem; font-weight: 900; letter-spacing: -0.05em; text-transform: uppercase; font-style: italic; color: var(--slate-900); text-decoration: none; }
+  .logo-text span { color: var(--indigo-600); }
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--slate-900); text-decoration: none; font-weight: 900; text-transform: uppercase; font-size: 0.875rem; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--pink-500); }
+  .nav-cta { background: var(--lime-400); border: 2px solid var(--slate-900); padding: 0.5rem 1.5rem; box-shadow: 4px 4px 0 0 rgba(0,0,0,1); font-weight: 900; text-transform: uppercase; font-size: 0.875rem; cursor: pointer; transition: all 0.15s; text-decoration: none; color: var(--slate-900); display: inline-block; }
+  .nav-cta:hover { box-shadow: none; transform: translate(1px, 1px); }
+  .hamburger { display: none; padding: 0.5rem; background: var(--slate-100); border: 2px solid var(--slate-900); cursor: pointer; flex-direction: column; gap: 4px; }
+  .hamburger span { width: 24px; height: 4px; background: var(--slate-900); display: block; }
+
+  /* Hero */
+  .tool-hero { padding: 3rem 1rem 2rem; max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+  .tool-hero-inner { background: var(--white); border: 4px solid var(--slate-900); padding: 2.5rem; box-shadow: 8px 8px 0 0 var(--amber-400); }
+  .tool-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--amber-400); border: 2px solid var(--slate-900); padding: 0.35rem 0.75rem; margin-bottom: 1.25rem; font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; }
+  .tool-hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; text-transform: uppercase; letter-spacing: -0.05em; line-height: 0.95; margin-bottom: 1rem; }
+  .tool-hero h1 .accent { color: var(--indigo-600); font-style: italic; }
+  .tool-hero-desc { font-size: 1.125rem; font-weight: 700; color: var(--slate-700); max-width: 720px; margin-bottom: 1.5rem; }
+
+  /* Tabs */
+  .tabs-bar { max-width: 1280px; margin: 0 auto; padding: 0 1rem; position: relative; z-index: 1; }
+  .tabs-inner { display: flex; background: var(--white); border: 4px solid var(--slate-900); overflow-x: auto; }
+  .tab { padding: 0.875rem 1.5rem; cursor: pointer; font-size: 0.875rem; font-weight: 900; text-transform: uppercase; color: var(--slate-500); border-right: 2px solid var(--slate-900); transition: all 0.15s; white-space: nowrap; }
+  .tab:last-child { border-right: none; }
+  .tab:hover { color: var(--slate-900); background: var(--slate-100); }
+  .tab.active { color: var(--white); background: var(--indigo-600); }
+
+  /* Content */
+  .content { max-width: 1280px; margin: 0 auto; padding: 2rem 1rem 4rem; position: relative; z-index: 1; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ========== SETUP TAB ========== */
+  .setup-section { background: var(--white); border: 3px solid var(--slate-900); padding: 2rem; margin-bottom: 1.5rem; box-shadow: 6px 6px 0 0 rgba(0,0,0,1); }
+  .setup-section h2 { font-size: 1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .setup-section h2 .step-num { background: var(--indigo-600); color: var(--white); width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 0.8125rem; border: 2px solid var(--slate-900); flex-shrink: 0; }
+  label.field-label { display: block; font-size: 0.8125rem; font-weight: 800; text-transform: uppercase; margin-bottom: 0.5rem; color: var(--slate-700); }
+  input.text-input, textarea.text-input { width: 100%; border: 3px solid var(--slate-900); padding: 0.75rem 1rem; font-family: inherit; font-size: 0.9375rem; font-weight: 600; background: var(--bg); outline: none; }
+  input.text-input:focus, textarea.text-input:focus { background: var(--white); border-color: var(--indigo-600); }
+  textarea.text-input { min-height: 160px; resize: vertical; font-family: 'Courier New', Consolas, monospace; font-size: 0.8125rem; line-height: 1.5; }
+  .btn-action { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border: 3px solid var(--slate-900); font-weight: 900; font-size: 0.875rem; text-transform: uppercase; cursor: pointer; transition: all 0.15s; box-shadow: 4px 4px 0 0 rgba(0,0,0,1); font-family: inherit; }
+  .btn-action:hover { box-shadow: none; transform: translate(1px, 1px); }
+  .btn-action.green { background: var(--lime-400); color: var(--slate-900); }
+  .btn-action.amber { background: var(--amber-400); color: var(--slate-900); }
+  .btn-action.indigo { background: var(--indigo-600); color: var(--white); }
+  .btn-action.pink { background: var(--pink-500); color: var(--white); }
+  .btn-action.red { background: var(--red-500); color: var(--white); }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+  .or-divider { font-size: 0.75rem; font-weight: 900; color: var(--slate-500); text-transform: uppercase; margin: 1rem 0; text-align: center; }
+  .info-box { background: #edf9e0; border: 2px solid var(--lime-400); padding: 0.875rem; margin: 0.75rem 0; font-size: 0.8125rem; color: var(--slate-800); font-weight: 700; }
+  .warn-box { background: #fef3e0; border: 2px solid var(--amber-400); padding: 0.875rem; margin: 0.75rem 0; font-size: 0.8125rem; color: var(--slate-800); font-weight: 700; }
+  .error-box { background: #fde8e8; border: 2px solid var(--red-500); padding: 0.875rem; margin: 0.75rem 0; font-size: 0.8125rem; color: var(--slate-800); font-weight: 700; }
+
+  /* Bindings table */
+  .bindings-table { width: 100%; border-collapse: collapse; border: 3px solid var(--slate-900); }
+  .bindings-table th { background: var(--slate-900); color: var(--white); padding: 0.625rem 1rem; text-align: left; font-size: 0.75rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; }
+  .bindings-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--slate-100); font-size: 0.8125rem; font-weight: 600; }
+  .bindings-table tr:hover { background: var(--slate-100); }
+  .bindings-table input, .bindings-table select { border: 2px solid var(--slate-900); padding: 0.35rem 0.5rem; font-family: inherit; font-size: 0.8125rem; font-weight: 700; background: var(--bg); width: 100%; }
+  .bindings-table select { cursor: pointer; }
+  .bindings-table .del-btn { background: none; border: 2px solid var(--red-500); color: var(--red-500); width: 26px; height: 26px; cursor: pointer; font-weight: 900; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .bindings-table .del-btn:hover { background: var(--red-500); color: var(--white); }
+  .parse-stats { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 0.75rem 0; }
+  .parse-stat { font-size: 0.8125rem; font-weight: 800; }
+  .parse-stat .num { color: var(--indigo-600); }
+
+  /* ========== LAYOUT VIEW ========== */
+  .layout-view { position: relative; }
+  .action-set-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; justify-content: center; flex-wrap: wrap; }
+  .as-tab { padding: 0.5rem 1.25rem; border: 2px solid var(--slate-900); font-size: 0.8125rem; font-weight: 900; text-transform: uppercase; cursor: pointer; transition: all 0.15s; background: var(--white); color: var(--slate-900); box-shadow: 3px 3px 0 0 rgba(0,0,0,1); }
+  .as-tab.active { background: var(--indigo-600); color: var(--white); box-shadow: none; transform: translate(1px, 1px); }
+  .as-tab.orange { border-color: var(--orange-500); }
+  .as-tab.orange.active { background: var(--orange-500); }
+  .as-tab.violet { border-color: var(--violet-400); }
+  .as-tab.violet.active { background: var(--violet-400); color: var(--slate-900); }
+  .diagram-area { display: grid; grid-template-columns: 240px 1fr 240px; gap: 0; min-height: 340px; margin-bottom: 2rem; }
+  .side-labels { display: flex; flex-direction: column; justify-content: center; gap: 16px; }
+  .side-labels.left { align-items: flex-end; padding-right: 12px; }
+  .side-labels.right { align-items: flex-start; padding-left: 12px; }
+  .side-label { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 4px; border: 2px solid transparent; transition: all 0.15s; }
+  .side-label:hover { border-color: var(--indigo-600); background: var(--slate-100); }
+  .side-labels.left .side-label { flex-direction: row-reverse; }
+  .label-text { text-align: right; }
+  .side-labels.right .label-text { text-align: left; }
+  .label-action { font-size: 0.8125rem; color: var(--slate-900); font-weight: 800; }
+  .label-key { font-size: 0.6875rem; color: var(--indigo-600); font-weight: 700; }
+  .label-btn { background: var(--slate-100); color: var(--slate-900); padding: 3px 8px; border: 2px solid var(--slate-900); font-size: 0.6875rem; font-weight: 900; white-space: nowrap; min-width: 28px; text-align: center; }
+  .label-btn.red { background: var(--red-500); color: var(--white); }
+  .device-centre { display: flex; align-items: center; justify-content: center; position: relative; }
+  .claw-svg { width: 580px; height: 310px; max-width: 100%; }
+  .detail-columns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 0.5rem; }
+  .detail-col { background: var(--white); border: 3px solid var(--slate-900); padding: 1.25rem; box-shadow: 4px 4px 0 0 rgba(0,0,0,1); }
+  .detail-col h3 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--slate-900); font-weight: 900; }
+  .detail-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+  .detail-icon { width: 22px; height: 22px; border: 2px solid var(--slate-900); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 900; flex-shrink: 0; margin-top: 1px; background: var(--slate-100); color: var(--slate-900); }
+  .detail-icon.face { background: var(--red-500); color: var(--white); border-radius: 50%; }
+  .detail-info .action { font-size: 0.8125rem; color: var(--slate-900); font-weight: 700; }
+  .detail-info .key { font-size: 0.6875rem; color: var(--indigo-600); font-weight: 700; }
+  .mode-shift-section { margin-top: 1.5rem; background: var(--white); border: 3px solid var(--slate-900); padding: 1.5rem; box-shadow: 6px 6px 0 0 rgba(0,0,0,1); }
+  .mode-shift-section h2 { font-size: 0.875rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .dot { width: 12px; height: 12px; border: 2px solid var(--slate-900); border-radius: 50%; flex-shrink: 0; }
+  .dot-orange { background: var(--orange-500); }
+  .dot-violet { background: var(--violet-400); }
+  .dot-red { background: var(--red-500); }
+  .ms-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+  .ms-card { background: var(--bg); border: 2px solid var(--slate-900); padding: 0.5rem 0.75rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.8125rem; cursor: pointer; transition: all 0.15s; }
+  .ms-card:hover { background: var(--slate-100); border-color: var(--indigo-600); }
+  .ms-card .btn { color: var(--slate-500); font-weight: 800; }
+  .ms-card .act { color: var(--slate-900); font-weight: 700; }
+  .ms-card .k { font-size: 0.6875rem; color: var(--indigo-600); font-weight: 700; }
+  .ms-card .right-col { text-align: right; }
+  .ms-note { font-size: 0.75rem; color: var(--orange-500); font-weight: 700; margin-top: 0.75rem; }
+
+  /* ========== QUICK REF ========== */
+  .quick-ref pre { background: var(--white); border: 3px solid var(--slate-900); padding: 1.5rem; font-size: 0.8125rem; line-height: 1.6; overflow-x: auto; font-family: 'Courier New', Consolas, monospace; box-shadow: 6px 6px 0 0 rgba(0,0,0,1); color: var(--slate-900); }
+  .print-btn { background: var(--indigo-600); color: var(--white); border: 3px solid var(--slate-900); padding: 0.625rem 1.25rem; cursor: pointer; font-size: 0.875rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1rem; box-shadow: 4px 4px 0 0 rgba(0,0,0,1); transition: all 0.15s; font-family: inherit; }
+  .print-btn:hover { box-shadow: none; transform: translate(1px, 1px); }
+
+  /* ========== EXPORT TAB ========== */
+  .export-card { background: var(--white); border: 3px solid var(--slate-900); padding: 2rem; margin-bottom: 1.5rem; box-shadow: 6px 6px 0 0 rgba(0,0,0,1); }
+  .export-card h2 { font-size: 1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .export-card p { font-size: 0.9375rem; font-weight: 600; color: var(--slate-700); margin-bottom: 1rem; }
+
+  /* Reassign dropdown */
+  .reassign-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; }
+  .reassign-overlay.open { display: flex; }
+  .reassign-modal { background: var(--white); border: 4px solid var(--slate-900); padding: 2rem; max-width: 480px; width: 90%; box-shadow: 10px 10px 0 0 var(--indigo-600); max-height: 80vh; overflow-y: auto; }
+  .reassign-modal h3 { font-size: 1rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1rem; }
+  .reassign-modal .option { padding: 0.625rem 1rem; border: 2px solid var(--slate-900); margin-bottom: 0.5rem; cursor: pointer; font-size: 0.875rem; font-weight: 700; transition: all 0.15s; display: flex; justify-content: space-between; }
+  .reassign-modal .option:hover { background: var(--lime-400); }
+  .reassign-modal .option .okey { color: var(--indigo-600); font-size: 0.8125rem; }
+
+  /* Donate */
+  .donate-section { margin-top: 3rem; background: var(--white); border: 4px solid var(--slate-900); padding: 2.5rem; text-align: center; box-shadow: 10px 10px 0 0 var(--indigo-600); }
+  .donate-section h2 { font-size: 1.75rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .donate-section p { color: var(--slate-700); font-weight: 700; font-size: 1rem; margin-bottom: 1.5rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+  /* Footer */
+  footer { padding: 3rem 1rem; border-top: 4px solid var(--slate-900); text-align: center; background: var(--white); position: relative; z-index: 1; }
+  footer p { font-weight: 900; text-transform: uppercase; font-size: 0.875rem; letter-spacing: 0.3em; color: var(--slate-900); }
+
+  /* Mobile menu */
+  .mobile-menu { display: none; position: fixed; inset: 0; z-index: 60; background: var(--pink-500); flex-direction: column; align-items: center; justify-content: center; gap: 2rem; padding: 2rem; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu-close { position: absolute; top: 2rem; right: 2rem; font-size: 3.5rem; font-weight: 900; color: var(--white); background: none; border: none; cursor: pointer; line-height: 1; }
+  .mobile-menu a { font-size: 2.5rem; font-weight: 900; font-style: italic; text-transform: uppercase; color: var(--white); text-decoration: none; transition: color 0.2s; }
+  .mobile-menu a:hover { color: var(--slate-900); }
+  .empty-state { text-align: center; padding: 3rem; color: var(--slate-500); font-weight: 700; font-size: 1rem; }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .diagram-area { grid-template-columns: 1fr; gap: 1rem; }
+    .side-labels { flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 0; }
+    .side-labels.left, .side-labels.right { align-items: center; }
+    .side-labels.left .side-label { flex-direction: row; }
+    .label-text { text-align: left; }
+    .detail-columns { grid-template-columns: repeat(2, 1fr); }
+    .ms-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .nav-links { display: none; }
+    .tool-hero-inner { padding: 1.5rem; }
+    .tool-hero h1 { font-size: 1.75rem; }
+    .detail-columns { grid-template-columns: 1fr; }
+    .ms-grid { grid-template-columns: 1fr; }
+    .tabs-inner { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .tab { padding: 0.75rem 1rem; font-size: 0.75rem; }
+    .setup-section { padding: 1.25rem; }
+  }
+  @media print {
+    nav, .top-banner, .dot-pattern, .tool-hero, .tabs-bar, .donate-section, footer, .mobile-menu, .action-set-tabs { display: none; }
+    .tab-content { display: block !important; }
+    body { background: #fff; }
+  }
+</style>
+</head>
+<body>
+
+<div class="dot-pattern"></div>
+<div class="top-banner">Free Tool &mdash; MSI Claw Controller Mapper</div>
+
+<nav>
+  <div class="nav-container">
+    <a href="../index.html" class="logo-group">
+      <div class="logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <span class="logo-text">Stack<span>less</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../about.html">About</a></li>
+      <li><a href="../projects.html">Projects</a></li>
+      <li><a href="../blog.html">Blog</a></li>
+      <li><a href="../shop/index.html">Shop</a></li>
+      <li><a href="../shop/index.html" class="nav-cta">Browse Products</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<main>
+  <section class="tool-hero">
+    <div class="tool-hero-inner">
+      <div class="tool-badge">Free Tool</div>
+      <h1>MSI Claw <span class="accent">Controller Mapper</span></h1>
+      <p class="tool-hero-desc">Enter any PC game, paste its keybindings, and get an optimised MSI Claw controller layout with visual diagrams, quick reference cards, and one-click VDF export for Steam Input. Stop fumbling with menus, start playing.</p>
+    </div>
+  </section>
+
+  <section class="tabs-bar">
+    <div class="tabs-inner">
+      <div class="tab active" onclick="switchTab('setup')">Setup</div>
+      <div class="tab" onclick="switchTab('layout')">Layout View</div>
+      <div class="tab" onclick="switchTab('qref')">Quick Reference</div>
+      <div class="tab" onclick="switchTab('export')">Export</div>
+    </div>
+  </section>
+
+  <div class="content">
+
+<!-- ==================== TAB 1: SETUP ==================== -->
+<div id="t-setup" class="tab-content active">
+
+  <div class="setup-section">
+    <h2><span class="step-num">1</span> Game Name</h2>
+    <label class="field-label" for="gameName">What game are you mapping?</label>
+    <input class="text-input" type="text" id="gameName" placeholder="e.g. Elden Ring, Baldur's Gate 3, Dwarf Fortress..." value="">
+    <div class="btn-row">
+      <button class="btn-action amber" onclick="loadExample()">Try Example: Dwarf Fortress</button>
+    </div>
+  </div>
+
+  <div class="setup-section">
+    <h2><span class="step-num">2</span> Enter Keybindings</h2>
+    <p style="font-size:0.875rem;font-weight:600;color:var(--slate-700);margin-bottom:1rem;">Paste keybindings from a wiki, settings screen, or any format. The parser will try to extract action/key pairs automatically.</p>
+
+    <label class="field-label" for="urlInput">Option A: Fetch from URL</label>
+    <div style="display:flex;gap:0.5rem;">
+      <input class="text-input" type="url" id="urlInput" placeholder="https://pcgamingwiki.com/wiki/..." style="flex:1;">
+      <button class="btn-action indigo" onclick="fetchURL()" id="fetchBtn">Fetch</button>
+    </div>
+    <div id="fetchStatus" style="margin-top:0.5rem;"></div>
+
+    <div class="or-divider">or paste text directly</div>
+
+    <label class="field-label" for="rawInput">Option B: Paste keybindings</label>
+    <textarea class="text-input" id="rawInput" placeholder="Move Forward: W&#10;Move Back: S&#10;Jump: Space&#10;Attack: Mouse 1&#10;Block: Mouse 2&#10;Interact: E&#10;Inventory: Tab&#10;Map: M&#10;..."></textarea>
+
+    <div class="btn-row">
+      <button class="btn-action green" onclick="parseAndShow()">Parse Bindings</button>
+      <button class="btn-action pink" onclick="clearAll()">Clear All</button>
+    </div>
+  </div>
+
+  <div id="bindingsEditor" style="display:none;">
+    <div class="setup-section">
+      <h2><span class="step-num">3</span> Review &amp; Edit Bindings</h2>
+      <div id="parseStats" class="parse-stats"></div>
+      <div style="overflow-x:auto;">
+        <table class="bindings-table" id="bindingsTable">
+          <thead><tr><th>Action</th><th>Key</th><th>Category</th><th></th></tr></thead>
+          <tbody id="bindingsBody"></tbody>
+        </table>
+      </div>
+      <div class="btn-row">
+        <button class="btn-action green" onclick="addRow()">+ Add Binding</button>
+        <button class="btn-action indigo" onclick="autoMapAndShow()">Auto-Map to Controller</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ==================== TAB 2: LAYOUT VIEW ==================== -->
+<div id="t-layout" class="tab-content layout-view">
+  <div id="layoutEmpty" class="empty-state">
+    No layout generated yet. Go to Setup, enter a game, and click "Auto-Map to Controller".
+  </div>
+  <div id="layoutContent" style="display:none;">
+
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <h2 style="font-size:1.25rem;font-weight:900;text-transform:uppercase;" id="layoutTitle"></h2>
+      <p style="font-size:0.8125rem;font-weight:700;color:var(--slate-500);" id="layoutSubtitle"></p>
+    </div>
+
+    <div class="action-set-tabs" id="layerTabs"></div>
+
+    <div class="diagram-area">
+      <div class="side-labels left" id="leftLabels"></div>
+      <div class="device-centre">
+        <svg class="claw-svg" viewBox="0 0 580 310" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d4d0c8"/><stop offset="100%" stop-color="#b8b4a8"/></linearGradient>
+            <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f1f5f9"/><stop offset="100%" stop-color="#e2e8f0"/></linearGradient>
+          </defs>
+          <rect x="30" y="14" width="520" height="280" rx="18" ry="18" fill="url(#bodyGrad)" stroke="#0f172a" stroke-width="2.5"/>
+          <rect x="80" y="24" width="420" height="168" rx="6" fill="url(#screenGrad)" stroke="#0f172a" stroke-width="1.5"/>
+          <text x="290" y="100" text-anchor="middle" fill="#94a3b8" font-size="13" font-family="Inter, sans-serif" font-weight="800">MSI CLAW 8 AI+</text>
+          <text x="290" y="118" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="Inter, sans-serif" font-weight="600" id="svgGameName"></text>
+          <rect x="68" y="18" width="65" height="11" rx="4" fill="#e2e8f0" stroke="#0f172a" stroke-width="1.5"/>
+          <text x="100" y="27" text-anchor="middle" fill="#0f172a" font-size="8" font-family="Inter, sans-serif" font-weight="900">L1</text>
+          <rect x="447" y="18" width="65" height="11" rx="4" fill="#e2e8f0" stroke="#0f172a" stroke-width="1.5"/>
+          <text x="479" y="27" text-anchor="middle" fill="#0f172a" font-size="8" font-family="Inter, sans-serif" font-weight="900">R1</text>
+          <rect x="73" y="6" width="55" height="9" rx="3" fill="#cbd5e1" stroke="#0f172a" stroke-width="1.5"/>
+          <text x="100" y="13" text-anchor="middle" fill="#0f172a" font-size="7" font-family="Inter, sans-serif" font-weight="700">L2</text>
+          <rect x="452" y="6" width="55" height="9" rx="3" fill="#cbd5e1" stroke="#0f172a" stroke-width="1.5"/>
+          <text x="479" y="13" text-anchor="middle" fill="#0f172a" font-size="7" font-family="Inter, sans-serif" font-weight="700">R2</text>
+          <circle cx="120" cy="218" r="20" fill="#e2e8f0" stroke="#0f172a" stroke-width="2"/>
+          <circle cx="120" cy="218" r="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.5"/>
+          <text x="120" y="202" text-anchor="middle" fill="#64748b" font-size="8" font-family="Inter, sans-serif" font-weight="800">LS</text>
+          <rect x="106" y="256" width="28" height="10" rx="2" fill="#cbd5e1" stroke="#0f172a" stroke-width="1.5"/>
+          <rect x="115" y="247" width="10" height="28" rx="2" fill="#cbd5e1" stroke="#0f172a" stroke-width="1.5"/>
+          <rect x="222" y="210" width="13" height="8" rx="2" fill="#e2e8f0" stroke="#0f172a" stroke-width="1.5"/>
+          <text x="228" y="228" text-anchor="middle" fill="#64748b" font-size="5.5" font-family="Inter, sans-serif" font-weight="800">VIEW</text>
+          <circle cx="258" cy="214" r="6" fill="#e2e8f0" stroke="#ef4444" stroke-width="1.5"/>
+          <text x="258" y="216" text-anchor="middle" fill="#ef4444" font-size="6" font-weight="900" font-family="Inter, sans-serif">M</text>
+          <text x="258" y="228" text-anchor="middle" fill="#64748b" font-size="5.5" font-family="Inter, sans-serif" font-weight="800">MSI</text>
+          <circle cx="322" cy="214" r="6" fill="#e2e8f0" stroke="#0f172a" stroke-width="1.5"/>
+          <text x="322" y="216" text-anchor="middle" fill="#0f172a" font-size="6" font-weight="900" font-family="Inter, sans-serif">Q</text>
+          <text x="322" y="228" text-anchor="middle" fill="#64748b" font-size="5.5" font-family="Inter, sans-serif" font-weight="800">QCK</text>
+          <rect x="345" y="210" width="13" height="8" rx="2" fill="#e2e8f0" stroke="#0f172a" stroke-width="1.5"/>
+          <text x="351" y="228" text-anchor="middle" fill="#64748b" font-size="5.5" font-family="Inter, sans-serif" font-weight="800">MENU</text>
+          <circle cx="460" cy="207" r="9" fill="#e2e8f0" stroke="#ef4444" stroke-width="2"/>
+          <text x="460" y="210" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="900" font-family="Inter, sans-serif">Y</text>
+          <circle cx="446" cy="221" r="9" fill="#e2e8f0" stroke="#ef4444" stroke-width="2"/>
+          <text x="446" y="224" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="900" font-family="Inter, sans-serif">X</text>
+          <circle cx="474" cy="221" r="9" fill="#e2e8f0" stroke="#ef4444" stroke-width="2"/>
+          <text x="474" y="224" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="900" font-family="Inter, sans-serif">B</text>
+          <circle cx="460" cy="235" r="9" fill="#e2e8f0" stroke="#ef4444" stroke-width="2"/>
+          <text x="460" y="238" text-anchor="middle" fill="#ef4444" font-size="9" font-weight="900" font-family="Inter, sans-serif">A</text>
+          <circle cx="460" cy="266" r="20" fill="#e2e8f0" stroke="#0f172a" stroke-width="2"/>
+          <circle cx="460" cy="266" r="10" fill="#f1f5f9" stroke="#64748b" stroke-width="1.5"/>
+          <text x="460" y="292" text-anchor="middle" fill="#64748b" font-size="8" font-family="Inter, sans-serif" font-weight="800">RS</text>
+          <text x="120" y="290" text-anchor="middle" fill="#ef4444" font-size="8" font-family="Inter, sans-serif" font-weight="900">M1 (back)</text>
+          <text x="460" y="292" text-anchor="middle" fill="#ef4444" font-size="8" font-family="Inter, sans-serif" font-weight="900">M2 (back)</text>
+        </svg>
+      </div>
+      <div class="side-labels right" id="rightLabels"></div>
+    </div>
+
+    <div class="detail-columns" id="detailColumns"></div>
+    <div id="layerSections"></div>
+  </div>
+</div>
+
+<!-- ==================== TAB 3: QUICK REF ==================== -->
+<div id="t-qref" class="tab-content quick-ref">
+  <div id="qrefEmpty" class="empty-state">No layout generated yet. Go to Setup first.</div>
+  <div id="qrefContent" style="display:none;">
+    <button class="print-btn" onclick="window.print()">Print This Page</button>
+    <button class="print-btn" onclick="copyQuickRef()" style="background:var(--lime-400);color:var(--slate-900);">Copy to Clipboard</button>
+    <pre id="qrefPre"></pre>
+  </div>
+</div>
+
+<!-- ==================== TAB 4: EXPORT ==================== -->
+<div id="t-export" class="tab-content">
+  <div id="exportEmpty" class="empty-state">No layout generated yet. Go to Setup first.</div>
+  <div id="exportContent" style="display:none;">
+    <div class="export-card">
+      <h2>VDF Export (Steam Input Config)</h2>
+      <p>Download a ready-to-use Steam Input configuration file. Drop it into your Steam controller configs folder and it just works.</p>
+      <button class="btn-action green" onclick="exportVDF()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+        Download VDF File
+      </button>
+    </div>
+    <div class="export-card">
+      <h2>Quick Reference Card</h2>
+      <p>Plain-text cheat sheet you can print, screenshot, or paste into a note.</p>
+      <button class="btn-action indigo" onclick="copyQuickRef()">Copy to Clipboard</button>
+    </div>
+    <div class="export-card">
+      <h2>Tips</h2>
+      <div class="info-box">
+        <strong>VDF file location:</strong> Place the downloaded .vdf file in:<br>
+        <code style="font-size:0.75rem;">C:\Program Files (x86)\Steam\controller_base\templates\</code><br><br>
+        <strong>Back buttons (M1/M2):</strong> Steam Input cannot see the MSI Claw's back buttons. Map them via MSI Center M app instead.<br><br>
+        <strong>L1/R1 as Action Layers:</strong> The VDF uses L1 and R1 as Hold Action Layer triggers, giving you 8 extra bindings per bumper.
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="donate-section" id="donate">
+      <h2>Found this useful?</h2>
+      <p>This tool is free. If it saved you an hour of fiddling with Steam Input menus, you can say thanks with a tip.</p>
+      <a href="../shop/index.html#support" class="btn-action indigo" style="display:inline-flex;">Support the Project</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2026 Stackless Ltd. Built by AI, guided by a human.</p>
+</footer>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-menu-close" id="mobileClose">&times;</button>
+  <a href="../index.html">Home</a>
+  <a href="../about.html">About</a>
+  <a href="../projects.html">Projects</a>
+  <a href="../blog.html">Blog</a>
+  <a href="../shop/index.html">Shop</a>
+</div>
+
+<!-- Reassign modal -->
+<div class="reassign-overlay" id="reassignOverlay" onclick="if(event.target===this)closeReassign()">
+  <div class="reassign-modal">
+    <h3 id="reassignTitle">Reassign: <span id="reassignSlot"></span></h3>
+    <div id="reassignOptions"></div>
+    <div style="margin-top:1rem;">
+      <button class="btn-action red" onclick="closeReassign()" style="width:100%;justify-content:center;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STATE
+// ============================================================
+var state = {
+  gameName: '',
+  bindings: [],
+  mapping: {},
+  activeLayer: 'base'
+};
+
+// ============================================================
+// KEY NORMALISATION
+// ============================================================
+var KEY_NORM = {
+  'lmb':'Mouse 1','left click':'Mouse 1','left mouse':'Mouse 1','mouse1':'Mouse 1','left mouse button':'Mouse 1',
+  'rmb':'Mouse 2','right click':'Mouse 2','right mouse':'Mouse 2','mouse2':'Mouse 2','right mouse button':'Mouse 2',
+  'mmb':'Mouse 3','middle click':'Mouse 3','middle mouse':'Mouse 3','mouse3':'Mouse 3','middle mouse button':'Mouse 3',
+  'spacebar':'Space','space bar':'Space',
+  'l shift':'Left Shift','left shift':'Left Shift','lshift':'Left Shift',
+  'r shift':'Right Shift','right shift':'Right Shift','rshift':'Right Shift',
+  'l ctrl':'Left Ctrl','left ctrl':'Left Ctrl','lctrl':'Left Ctrl','left control':'Left Ctrl',
+  'r ctrl':'Right Ctrl','right ctrl':'Right Ctrl','rctrl':'Right Ctrl','right control':'Right Ctrl',
+  'l alt':'Left Alt','left alt':'Left Alt','lalt':'Left Alt',
+  'r alt':'Right Alt','right alt':'Right Alt','ralt':'Right Alt',
+  'esc':'Esc','escape':'Esc',
+  'enter':'Enter','return':'Enter',
+  'backspace':'Backspace','back space':'Backspace',
+  'del':'Delete','ins':'Insert',
+  'pg up':'Page Up','pgup':'Page Up','pg down':'Page Down','pgdn':'Page Down','pgdown':'Page Down',
+  'up arrow':'Up','down arrow':'Down','left arrow':'Left','right arrow':'Right',
+  'num lock':'Num Lock','caps lock':'Caps Lock','scroll lock':'Scroll Lock',
+  'mouse wheel up':'Scroll Up','scroll up':'Scroll Up','mwheelup':'Scroll Up',
+  'mouse wheel down':'Scroll Down','scroll down':'Scroll Down','mwheeldown':'Scroll Down'
+};
+
+function normalizeKey(str) {
+  if (!str) return '';
+  var s = str.trim();
+  var low = s.toLowerCase();
+  if (KEY_NORM[low]) return KEY_NORM[low];
+  // Single letter/number
+  if (/^[a-z]$/i.test(s)) return s.toUpperCase();
+  // F-keys
+  if (/^f\d{1,2}$/i.test(s)) return s.toUpperCase();
+  // Already good
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+// ============================================================
+// CATEGORY DETECTION
+// ============================================================
+var CAT_KEYWORDS = {
+  movement: /\b(move|walk|forward|backward|back|strafe|left|right|sprint|run|crouch|jump|climb|dodge|roll|swim|dash|prone|stand|sneak|stealth)\b/i,
+  camera: /\b(look|camera|rotate|pan|zoom|view|free.?look|orbit)\b/i,
+  combat: /\b(attack|fire|shoot|aim|block|parry|dodge|heavy|light|melee|ranged|cast|spell|ability|power|skill|ultimate|special|finisher|execute|counter|guard)\b/i,
+  interaction: /\b(interact|use|pick.?up|grab|open|talk|activate|loot|examine|read|collect|harvest|gather|mine|dig|build|craft|place|deploy)\b/i,
+  menu: /\b(inventory|map|menu|pause|journal|quest|log|character|skill.?tree|crafting|settings|save|load|codex|bestiary|photo|options|stats|status)\b/i,
+  quick: /\b(reload|heal|grenade|throw|swap|toggle|switch|potion|flask|item|consumable|tool|torch|lantern|mount|dismount|whistle|ping|mark|quick)\b/i
+};
+
+function categorizeAction(action) {
+  if (!action) return 'misc';
+  for (var cat in CAT_KEYWORDS) {
+    if (CAT_KEYWORDS[cat].test(action)) return cat;
+  }
+  return 'misc';
+}
+
+var CAT_LABELS = {movement:'Movement',camera:'Camera',combat:'Combat',interaction:'Interaction',menu:'Menu/UI',quick:'Quick Actions',misc:'Misc'};
+var CATEGORIES = ['movement','camera','combat','interaction','menu','quick','misc'];
+
+// ============================================================
+// PARSER
+// ============================================================
+function parseBindings(text) {
+  var results = [];
+  var seen = {};
+  var lines = text.split(/\n/);
+
+  function addBinding(action, key) {
+    action = action.trim().replace(/^[\-\*\u2022\u2013\u2014]+\s*/, '');
+    key = key.trim().replace(/^[\[\(\{<]+|[\]\)\}>]+$/g, '');
+    if (!action || !key) return;
+    if (action.length < 2 || action.length > 80) return;
+    if (key.length > 30) return;
+    var nk = normalizeKey(key);
+    var uid = action.toLowerCase() + '|' + nk.toLowerCase();
+    if (seen[uid]) return;
+    seen[uid] = true;
+    results.push({action: action, key: nk, category: categorizeAction(action)});
+  }
+
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i].trim();
+    if (!line || line.length < 3) continue;
+
+    // Table rows: | Action | Key |
+    var tableMatch = line.match(/^\|?\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|?$/);
+    if (tableMatch && !/^[\-=\+]+$/.test(tableMatch[1]) && !/action|command|function|binding/i.test(tableMatch[1])) {
+      addBinding(tableMatch[1], tableMatch[2]);
+      continue;
+    }
+
+    // Key: Action (reversed) — [W] Move Forward
+    var bracketFirst = line.match(/^\[([^\]]+)\]\s+(.+)$/);
+    if (bracketFirst) { addBinding(bracketFirst[2], bracketFirst[1]); continue; }
+
+    // Action [Key] or Action (Key)
+    var bracketEnd = line.match(/^(.+?)\s+[\[\(]([^\]\)]+)[\]\)]$/);
+    if (bracketEnd) { addBinding(bracketEnd[1], bracketEnd[2]); continue; }
+
+    // Action: Key or Action = Key or Action - Key
+    var kvMatch = line.match(/^(.+?)\s*[:=]\s*(.+)$/);
+    if (kvMatch && kvMatch[1].length < 50 && kvMatch[2].length < 30) {
+      addBinding(kvMatch[1], kvMatch[2]);
+      continue;
+    }
+
+    // Action — Key (em dash)
+    var dashMatch = line.match(/^(.+?)\s+[\u2013\u2014-]\s+(.+)$/);
+    if (dashMatch && dashMatch[1].length < 50 && dashMatch[2].length < 30) {
+      addBinding(dashMatch[1], dashMatch[2]);
+      continue;
+    }
+
+    // Key → Action
+    var arrowMatch = line.match(/^(\S+)\s*[\u2192\u2190>]+\s*(.+)$/);
+    if (arrowMatch && arrowMatch[1].length < 15) {
+      addBinding(arrowMatch[2], arrowMatch[1]);
+      continue;
+    }
+
+    // Tab-separated: Action\tKey
+    var tabMatch = line.match(/^(.+?)\t+(.+)$/);
+    if (tabMatch && tabMatch[1].length < 50 && tabMatch[2].length < 20) {
+      addBinding(tabMatch[1], tabMatch[2]);
+      continue;
+    }
+  }
+
+  // WASD detection
+  if (text.match(/\bWASD\b/i) && !results.some(function(b){return b.key==='W' && /move|forward/i.test(b.action);})) {
+    addBinding('Move Forward', 'W');
+    addBinding('Move Back', 'S');
+    addBinding('Move Left', 'A');
+    addBinding('Move Right', 'D');
+  }
+
+  return results;
+}
+
+// ============================================================
+// CONTROLLER SLOT DEFINITIONS
+// ============================================================
+var SLOT_ORDER = [
+  // Fixed slots
+  {id:'ls',label:'Left Stick',type:'stick',catPref:'movement'},
+  {id:'rs',label:'Right Stick',type:'stick',catPref:'camera'},
+  {id:'r2',label:'R2',type:'trigger'},
+  {id:'l2',label:'L2',type:'trigger'},
+  // Face buttons
+  {id:'a',label:'A',type:'face'},
+  {id:'b',label:'B',type:'face'},
+  {id:'x',label:'X',type:'face'},
+  {id:'y',label:'Y',type:'face'},
+  // D-pad
+  {id:'dup',label:'D-pad Up',type:'dpad'},
+  {id:'ddown',label:'D-pad Down',type:'dpad'},
+  {id:'dleft',label:'D-pad Left',type:'dpad'},
+  {id:'dright',label:'D-pad Right',type:'dpad'},
+  // L1 layer
+  {id:'l1_a',label:'L1+A',type:'layer_l1'},
+  {id:'l1_b',label:'L1+B',type:'layer_l1'},
+  {id:'l1_x',label:'L1+X',type:'layer_l1'},
+  {id:'l1_y',label:'L1+Y',type:'layer_l1'},
+  {id:'l1_dup',label:'L1+D-Up',type:'layer_l1'},
+  {id:'l1_ddown',label:'L1+D-Down',type:'layer_l1'},
+  {id:'l1_dleft',label:'L1+D-Left',type:'layer_l1'},
+  {id:'l1_dright',label:'L1+D-Right',type:'layer_l1'},
+  // R1 layer
+  {id:'r1_a',label:'R1+A',type:'layer_r1'},
+  {id:'r1_b',label:'R1+B',type:'layer_r1'},
+  {id:'r1_x',label:'R1+X',type:'layer_r1'},
+  {id:'r1_y',label:'R1+Y',type:'layer_r1'},
+  {id:'r1_dup',label:'R1+D-Up',type:'layer_r1'},
+  {id:'r1_ddown',label:'R1+D-Down',type:'layer_r1'},
+  {id:'r1_dleft',label:'R1+D-Left',type:'layer_r1'},
+  {id:'r1_dright',label:'R1+D-Right',type:'layer_r1'},
+  // Special
+  {id:'m1',label:'M1 (Back)',type:'back'},
+  {id:'m2',label:'M2 (Back)',type:'back'},
+  {id:'view',label:'View',type:'switch'},
+  {id:'menu_btn',label:'Menu',type:'switch'}
+];
+
+// ============================================================
+// AUTO-MAPPER
+// ============================================================
+function autoMap(bindings) {
+  var mapping = {};
+  var used = {};
+  var remaining = bindings.slice();
+
+  function assign(slotId, binding) {
+    mapping[slotId] = {action: binding.action, key: binding.key};
+    used[binding.action + '|' + binding.key] = true;
+    remaining = remaining.filter(function(b){return !(b.action===binding.action && b.key===binding.key);});
+  }
+
+  function findByKey(key) {
+    return remaining.find(function(b){return b.key.toLowerCase()===key.toLowerCase();});
+  }
+  function findByCat(cat) {
+    return remaining.filter(function(b){return b.category===cat;});
+  }
+  function findByKeyword(regex) {
+    return remaining.find(function(b){return regex.test(b.action);});
+  }
+
+  // LS → Movement WASD
+  var wasd = {W:'ls_up',S:'ls_down',A:'ls_left',D:'ls_right'};
+  for (var wk in wasd) {
+    var wb = findByKey(wk);
+    if (wb) assign(wasd[wk], wb);
+  }
+  // If no WASD, try arrow keys
+  if (!mapping.ls_up) {
+    var arrows = {Up:'ls_up',Down:'ls_down',Left:'ls_left',Right:'ls_right'};
+    for (var ak in arrows) {
+      var ab = findByKey(ak);
+      if (ab) assign(arrows[ak], ab);
+    }
+  }
+
+  // RS → Mouse (always)
+  mapping.rs = {action:'Mouse Cursor', key:'Mouse'};
+
+  // R2 → Mouse 1 / primary attack
+  var m1 = findByKey('Mouse 1');
+  if (m1) assign('r2', m1);
+  else { var atk = findByKeyword(/\b(attack|fire|shoot|select|confirm|primary)\b/i); if(atk) assign('r2', atk); }
+
+  // L2 → Mouse 2 / secondary
+  var m2b = findByKey('Mouse 2');
+  if (m2b) assign('l2', m2b);
+  else { var blk = findByKeyword(/\b(block|aim|secondary|alt.?fire|scope)\b/i); if(blk) assign('l2', blk); }
+
+  // Face buttons: prioritise common actions
+  var facePrefs = [
+    /\b(jump|dodge|roll)\b/i,
+    /\b(cancel|back|escape)\b/i,
+    /\b(interact|use|action|pick|activate|examine)\b/i,
+    /\b(build|mine|craft|dig|ability|heavy)\b/i
+  ];
+  var faceSlots = ['a','b','x','y'];
+  var faceIdx = 0;
+  for (var fp = 0; fp < facePrefs.length && faceIdx < faceSlots.length; fp++) {
+    var fb = findByKeyword(facePrefs[fp]);
+    if (fb) { assign(faceSlots[faceIdx], fb); faceIdx++; }
+  }
+  // Fill remaining face slots
+  var quickActions = findByCat('quick').concat(findByCat('combat')).concat(findByCat('interaction'));
+  while (faceIdx < faceSlots.length && quickActions.length) {
+    var qa = quickActions.shift();
+    if (!used[qa.action+'|'+qa.key]) { assign(faceSlots[faceIdx], qa); faceIdx++; }
+  }
+
+  // D-pad: menus and navigation
+  var dpadPrefs = [
+    /\b(map|minimap)\b/i,
+    /\b(inventory|items|bag)\b/i,
+    /\b(quest|journal|mission)\b/i,
+    /\b(character|stats|skill|level)\b/i
+  ];
+  var dpadSlots = ['dup','ddown','dleft','dright'];
+  var dpadIdx = 0;
+  for (var dp = 0; dp < dpadPrefs.length && dpadIdx < dpadSlots.length; dp++) {
+    var db = findByKeyword(dpadPrefs[dp]);
+    if (db) { assign(dpadSlots[dpadIdx], db); dpadIdx++; }
+  }
+  var menuActions = findByCat('menu').concat(findByCat('quick'));
+  while (dpadIdx < dpadSlots.length && menuActions.length) {
+    var ma = menuActions.shift();
+    if (!used[ma.action+'|'+ma.key]) { assign(dpadSlots[dpadIdx], ma); dpadIdx++; }
+  }
+
+  // L1 layer (8 slots)
+  var l1Slots = ['l1_a','l1_b','l1_x','l1_y','l1_dup','l1_ddown','l1_dleft','l1_dright'];
+  for (var li = 0; li < l1Slots.length && remaining.length; li++) {
+    assign(l1Slots[li], remaining[0]);
+  }
+
+  // R1 layer (8 slots)
+  var r1Slots = ['r1_a','r1_b','r1_x','r1_y','r1_dup','r1_ddown','r1_dleft','r1_dright'];
+  for (var ri = 0; ri < r1Slots.length && remaining.length; ri++) {
+    assign(r1Slots[ri], remaining[0]);
+  }
+
+  // M1 → Shift/sprint/modifier
+  var shiftB = findByKeyword(/\b(sprint|shift|modifier|run)\b/i);
+  if (shiftB) assign('m1', shiftB);
+  else if (findByKey('Left Shift')) assign('m1', findByKey('Left Shift'));
+  else if (remaining.length) assign('m1', remaining[0]);
+
+  // M2 → next available
+  if (remaining.length) assign('m2', remaining[0]);
+
+  // View → next or pause
+  var viewB = findByKeyword(/\b(pause|unpause|photo|screenshot)\b/i);
+  if (viewB) assign('view', viewB);
+  else if (remaining.length) assign('view', remaining[0]);
+
+  // Menu → Esc/menu
+  var menuB = findByKeyword(/\b(menu|pause|esc|settings|options)\b/i);
+  if (menuB) assign('menu_btn', menuB);
+  else mapping.menu_btn = {action:'Game Menu', key:'Esc'};
+
+  return mapping;
+}
+
+// ============================================================
+// UI: Tab switching
+// ============================================================
+function switchTab(t) {
+  document.querySelectorAll('.tab').forEach(function(e){e.classList.remove('active');});
+  document.querySelectorAll('.tab-content').forEach(function(e){e.classList.remove('active');});
+  var map = {setup:0,layout:1,qref:2,export:3};
+  document.querySelectorAll('.tab')[map[t]].classList.add('active');
+  document.getElementById('t-'+t).classList.add('active');
+}
+
+// ============================================================
+// UI: Mobile menu
+// ============================================================
+document.getElementById('hamburger').addEventListener('click', function(){document.getElementById('mobileMenu').classList.add('open');});
+document.getElementById('mobileClose').addEventListener('click', function(){document.getElementById('mobileMenu').classList.remove('open');});
+document.getElementById('mobileMenu').querySelectorAll('a').forEach(function(l){l.addEventListener('click',function(){document.getElementById('mobileMenu').classList.remove('open');});});
+
+// ============================================================
+// UI: Parse and show bindings table
+// ============================================================
+function parseAndShow() {
+  var raw = document.getElementById('rawInput').value;
+  if (!raw.trim()) return;
+  state.bindings = parseBindings(raw);
+  if (!state.gameName) state.gameName = document.getElementById('gameName').value || 'My Game';
+  renderBindingsTable();
+}
+
+function renderBindingsTable() {
+  var b = state.bindings;
+  if (!b.length) { document.getElementById('bindingsEditor').style.display='none'; return; }
+  document.getElementById('bindingsEditor').style.display='block';
+
+  var catCounts = {};
+  b.forEach(function(x){ catCounts[x.category] = (catCounts[x.category]||0)+1; });
+
+  var statsHtml = '<span class="parse-stat"><span class="num">'+b.length+'</span> bindings found</span>';
+  for (var c in catCounts) {
+    statsHtml += '<span class="parse-stat">'+CAT_LABELS[c]+': <span class="num">'+catCounts[c]+'</span></span>';
+  }
+  document.getElementById('parseStats').innerHTML = statsHtml;
+
+  var html = '';
+  for (var i = 0; i < b.length; i++) {
+    html += '<tr>';
+    html += '<td><input value="'+escHtml(b[i].action)+'" onchange="updateBinding('+i+',\'action\',this.value)"></td>';
+    html += '<td><input value="'+escHtml(b[i].key)+'" onchange="updateBinding('+i+',\'key\',this.value)"></td>';
+    html += '<td><select onchange="updateBinding('+i+',\'category\',this.value)">';
+    CATEGORIES.forEach(function(cat){
+      html += '<option value="'+cat+'"'+(b[i].category===cat?' selected':'')+'>'+CAT_LABELS[cat]+'</option>';
+    });
+    html += '</select></td>';
+    html += '<td><button class="del-btn" onclick="removeBinding('+i+')">&times;</button></td>';
+    html += '</tr>';
+  }
+  document.getElementById('bindingsBody').innerHTML = html;
+}
+
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function updateBinding(i, field, val) {
+  state.bindings[i][field] = field==='key' ? normalizeKey(val) : val;
+  if (field==='action') state.bindings[i].category = categorizeAction(val);
+}
+function removeBinding(i) {
+  state.bindings.splice(i,1);
+  renderBindingsTable();
+}
+function addRow() {
+  state.bindings.push({action:'',key:'',category:'misc'});
+  renderBindingsTable();
+}
+function clearAll() {
+  state.bindings = [];
+  state.mapping = {};
+  document.getElementById('bindingsEditor').style.display='none';
+  document.getElementById('rawInput').value = '';
+  document.getElementById('gameName').value = '';
+  hideLayout();
+}
+
+// ============================================================
+// UI: Auto-map and render layout
+// ============================================================
+function autoMapAndShow() {
+  state.gameName = document.getElementById('gameName').value || 'My Game';
+  if (!state.bindings.length) { alert('No bindings to map. Parse some keybindings first.'); return; }
+  state.mapping = autoMap(state.bindings);
+  state.activeLayer = 'base';
+  renderLayout();
+  renderQuickRef();
+  switchTab('layout');
+}
+
+function hideLayout() {
+  document.getElementById('layoutContent').style.display='none';
+  document.getElementById('layoutEmpty').style.display='block';
+  document.getElementById('qrefContent').style.display='none';
+  document.getElementById('qrefEmpty').style.display='block';
+  document.getElementById('exportContent').style.display='none';
+  document.getElementById('exportEmpty').style.display='block';
+}
+
+function showLayout() {
+  document.getElementById('layoutContent').style.display='block';
+  document.getElementById('layoutEmpty').style.display='none';
+  document.getElementById('qrefContent').style.display='block';
+  document.getElementById('qrefEmpty').style.display='none';
+  document.getElementById('exportContent').style.display='block';
+  document.getElementById('exportEmpty').style.display='none';
+}
+
+// ============================================================
+// RENDERER
+// ============================================================
+function renderLayout() {
+  showLayout();
+  var m = state.mapping;
+  var gn = state.gameName;
+
+  document.getElementById('layoutTitle').textContent = gn + ' — MSI Claw 8 AI+';
+  document.getElementById('layoutSubtitle').textContent = Object.keys(m).length + ' bindings mapped across base + 2 action layers';
+  document.getElementById('svgGameName').textContent = gn;
+
+  // Layer tabs
+  var hasL1 = Object.keys(m).some(function(k){return k.startsWith('l1_')&&m[k];});
+  var hasR1 = Object.keys(m).some(function(k){return k.startsWith('r1_')&&m[k];});
+  var layerHtml = '<div class="as-tab'+(state.activeLayer==='base'?' active':'')+'" onclick="setLayer(\'base\')">Base</div>';
+  if (hasL1) layerHtml += '<div class="as-tab orange'+(state.activeLayer==='l1'?' active':'')+'" onclick="setLayer(\'l1\')">Hold L1</div>';
+  if (hasR1) layerHtml += '<div class="as-tab violet'+(state.activeLayer==='r1'?' active':'')+'" onclick="setLayer(\'r1\')">Hold R1</div>';
+  document.getElementById('layerTabs').innerHTML = layerHtml;
+
+  // Side labels
+  function lb(slot, btnLabel, isRed) {
+    var b = m[slot];
+    if (!b) return '';
+    return '<div class="side-label" onclick="openReassign(\''+slot+'\')">' +
+      '<div class="label-btn'+(isRed?' red':'')+'">'+btnLabel+'</div>' +
+      '<div class="label-text"><div class="label-action">'+escHtml(b.action)+'</div><div class="label-key">'+escHtml(b.key)+'</div></div></div>';
+  }
+
+  var leftHtml = '';
+  leftHtml += '<div class="side-label"><div class="label-text"><div class="label-action">Action Layer: Hold L1</div><div class="label-key">8 extra bindings</div></div><div class="label-btn">L1</div></div>';
+  leftHtml += lb('l2','L2',false);
+  leftHtml += lb('m1','M1',true);
+  leftHtml += lb('view','View',false);
+  // Reverse order for left side
+  document.getElementById('leftLabels').innerHTML = leftHtml;
+
+  var rightHtml = '';
+  rightHtml += '<div class="side-label"><div class="label-btn">R1</div><div class="label-text"><div class="label-action">Action Layer: Hold R1</div><div class="label-key">8 extra bindings</div></div></div>';
+  rightHtml += lb('r2','R2',false);
+  rightHtml += lb('m2','M2',true);
+  rightHtml += lb('menu_btn','Menu',false);
+  document.getElementById('rightLabels').innerHTML = rightHtml;
+
+  // Detail columns
+  var dcHtml = '';
+
+  // Left Joystick
+  dcHtml += '<div class="detail-col"><h3>Left Joystick</h3>';
+  dcHtml += '<div style="font-size:0.8125rem;font-weight:800;margin-bottom:8px;">Directional Pad (WASD)</div>';
+  var lsDirs = {ls_up:'\u2191',ls_down:'\u2193',ls_left:'\u2190',ls_right:'\u2192'};
+  for (var ld in lsDirs) {
+    if (m[ld]) dcHtml += '<div class="detail-item" onclick="openReassign(\''+ld+'\')"><div class="detail-icon">'+lsDirs[ld]+'</div><div class="detail-info"><div class="action">'+escHtml(m[ld].action)+'</div><div class="key">'+escHtml(m[ld].key)+'</div></div></div>';
+  }
+  dcHtml += '</div>';
+
+  // D-pad
+  dcHtml += '<div class="detail-col"><h3>Directional Pad</h3>';
+  var dpDirs = {dup:'\u2191',ddown:'\u2193',dleft:'\u2190',dright:'\u2192'};
+  for (var dd in dpDirs) {
+    if (m[dd]) dcHtml += '<div class="detail-item" onclick="openReassign(\''+dd+'\')"><div class="detail-icon">'+dpDirs[dd]+'</div><div class="detail-info"><div class="action">'+escHtml(m[dd].action)+'</div><div class="key">'+escHtml(m[dd].key)+'</div></div></div>';
+  }
+  dcHtml += '</div>';
+
+  // Right Joystick
+  dcHtml += '<div class="detail-col"><h3>Right Joystick</h3>';
+  dcHtml += '<div style="font-size:0.8125rem;font-weight:800;margin-bottom:8px;">Mouse Cursor</div>';
+  dcHtml += '</div>';
+
+  // Face buttons
+  dcHtml += '<div class="detail-col"><h3>Face Buttons</h3>';
+  var faces = {a:'A',b:'B',x:'X',y:'Y'};
+  for (var f in faces) {
+    if (m[f]) dcHtml += '<div class="detail-item" onclick="openReassign(\''+f+'\')"><div class="detail-icon face">'+faces[f]+'</div><div class="detail-info"><div class="action">'+escHtml(m[f].action)+'</div><div class="key">'+escHtml(m[f].key)+'</div></div></div>';
+  }
+  dcHtml += '</div>';
+
+  document.getElementById('detailColumns').innerHTML = dcHtml;
+
+  // Layer sections
+  var layerHtml2 = '';
+  if (hasL1) {
+    layerHtml2 += '<div class="mode-shift-section"><h2><span class="dot dot-orange"></span> Hold L1 Layer</h2><div class="ms-grid">';
+    var l1s = ['l1_a','l1_b','l1_x','l1_y','l1_dup','l1_ddown','l1_dleft','l1_dright'];
+    var l1Labels = ['L1+A','L1+B','L1+X','L1+Y','L1+D\u2191','L1+D\u2193','L1+D\u2190','L1+D\u2192'];
+    for (var li2 = 0; li2 < l1s.length; li2++) {
+      if (m[l1s[li2]]) {
+        layerHtml2 += '<div class="ms-card" onclick="openReassign(\''+l1s[li2]+'\')"><div class="btn">'+l1Labels[li2]+'</div><div class="right-col"><div class="act">'+escHtml(m[l1s[li2]].action)+'</div><div class="k">'+escHtml(m[l1s[li2]].key)+'</div></div></div>';
+      }
+    }
+    layerHtml2 += '</div></div>';
+  }
+  if (hasR1) {
+    layerHtml2 += '<div class="mode-shift-section" style="margin-top:1rem;"><h2><span class="dot dot-violet"></span> Hold R1 Layer</h2><div class="ms-grid">';
+    var r1s = ['r1_a','r1_b','r1_x','r1_y','r1_dup','r1_ddown','r1_dleft','r1_dright'];
+    var r1Labels = ['R1+A','R1+B','R1+X','R1+Y','R1+D\u2191','R1+D\u2193','R1+D\u2190','R1+D\u2192'];
+    for (var ri2 = 0; ri2 < r1s.length; ri2++) {
+      if (m[r1s[ri2]]) {
+        layerHtml2 += '<div class="ms-card" onclick="openReassign(\''+r1s[ri2]+'\')"><div class="btn">'+r1Labels[ri2]+'</div><div class="right-col"><div class="act">'+escHtml(m[r1s[ri2]].action)+'</div><div class="k">'+escHtml(m[r1s[ri2]].key)+'</div></div></div>';
+      }
+    }
+    layerHtml2 += '</div></div>';
+  }
+
+  // Back buttons
+  if (m.m1 || m.m2) {
+    layerHtml2 += '<div class="mode-shift-section" style="margin-top:1rem;"><h2><span class="dot dot-red"></span> Back Buttons (MSI Center M)</h2><div class="ms-grid" style="grid-template-columns:repeat(2,1fr);">';
+    if (m.m1) layerHtml2 += '<div class="ms-card" onclick="openReassign(\'m1\')"><div class="btn">M1</div><div class="right-col"><div class="act">'+escHtml(m.m1.action)+'</div><div class="k">'+escHtml(m.m1.key)+'</div></div></div>';
+    if (m.m2) layerHtml2 += '<div class="ms-card" onclick="openReassign(\'m2\')"><div class="btn">M2</div><div class="right-col"><div class="act">'+escHtml(m.m2.action)+'</div><div class="k">'+escHtml(m.m2.key)+'</div></div></div>';
+    layerHtml2 += '</div><div class="ms-note">Mapped via MSI Center M app (not Steam Input: Steam cannot see the Claw\'s back buttons)</div></div>';
+  }
+
+  document.getElementById('layerSections').innerHTML = layerHtml2;
+}
+
+function setLayer(l) {
+  state.activeLayer = l;
+  renderLayout();
+}
+
+// ============================================================
+// REASSIGN MODAL
+// ============================================================
+var reassignSlotId = null;
+
+function openReassign(slotId) {
+  reassignSlotId = slotId;
+  var slotLabel = SLOT_ORDER.find(function(s){return s.id===slotId;});
+  document.getElementById('reassignSlot').textContent = slotLabel ? slotLabel.label : slotId;
+
+  var html = '';
+  state.bindings.forEach(function(b) {
+    html += '<div class="option" onclick="doReassign(\''+escHtml(b.action).replace(/'/g,"\\'")+'\',\''+escHtml(b.key).replace(/'/g,"\\'")+'\')"><span>'+escHtml(b.action)+'</span><span class="okey">'+escHtml(b.key)+'</span></div>';
+  });
+  html += '<div class="option" onclick="doReassign(\'\',\'\')"><span style="color:var(--red-500);">Clear this slot</span><span></span></div>';
+  document.getElementById('reassignOptions').innerHTML = html;
+  document.getElementById('reassignOverlay').classList.add('open');
+}
+
+function doReassign(action, key) {
+  if (!action && !key) {
+    delete state.mapping[reassignSlotId];
+  } else {
+    state.mapping[reassignSlotId] = {action:action, key:key};
+  }
+  closeReassign();
+  renderLayout();
+  renderQuickRef();
+}
+
+function closeReassign() {
+  document.getElementById('reassignOverlay').classList.remove('open');
+  reassignSlotId = null;
+}
+
+// ============================================================
+// QUICK REFERENCE GENERATOR
+// ============================================================
+function renderQuickRef() {
+  var m = state.mapping;
+  var gn = state.gameName.toUpperCase();
+  var pad = function(s, n) { while(s.length < n) s += ' '; return s; };
+  var t = '';
+  t += gn + ' - MSI CLAW 8 AI+ QUICK REFERENCE\n';
+  t += '='.repeat(Math.max(50, gn.length + 40)) + '\n\n';
+
+  t += pad('BASE LAYER', 38) + 'HOLD L1\n';
+  t += pad('-'.repeat(32), 38) + '-'.repeat(25) + '\n';
+
+  var baseLines = [];
+  if(m.ls_up) baseLines.push(['LS','Movement ('+m.ls_up.key+m.ls_down.key+m.ls_left.key+m.ls_right.key+')']);
+  baseLines.push(['RS','Mouse Cursor']);
+  if(m.r2) baseLines.push(['R2',m.r2.action+' ('+m.r2.key+')']);
+  if(m.l2) baseLines.push(['L2',m.l2.action+' ('+m.l2.key+')']);
+  if(m.a) baseLines.push(['A',m.a.action+' ('+m.a.key+')']);
+  if(m.b) baseLines.push(['B',m.b.action+' ('+m.b.key+')']);
+  if(m.x) baseLines.push(['X',m.x.action+' ('+m.x.key+')']);
+  if(m.y) baseLines.push(['Y',m.y.action+' ('+m.y.key+')']);
+  if(m.dup) baseLines.push(['D-Up',m.dup.action+' ('+m.dup.key+')']);
+  if(m.ddown) baseLines.push(['D-Down',m.ddown.action+' ('+m.ddown.key+')']);
+  if(m.dleft) baseLines.push(['D-Left',m.dleft.action+' ('+m.dleft.key+')']);
+  if(m.dright) baseLines.push(['D-Right',m.dright.action+' ('+m.dright.key+')']);
+  if(m.view) baseLines.push(['View',m.view.action+' ('+m.view.key+')']);
+  if(m.menu_btn) baseLines.push(['Menu',m.menu_btn.action+' ('+m.menu_btn.key+')']);
+
+  var l1Lines = [];
+  var l1s = ['l1_a','l1_b','l1_x','l1_y','l1_dup','l1_ddown','l1_dleft','l1_dright'];
+  var l1L = ['L1+A','L1+B','L1+X','L1+Y','L1+D-Up','L1+D-Dn','L1+D-Lt','L1+D-Rt'];
+  for (var li3 = 0; li3 < l1s.length; li3++) {
+    if (m[l1s[li3]]) l1Lines.push([l1L[li3], m[l1s[li3]].action+' ('+m[l1s[li3]].key+')']);
+  }
+
+  var maxRows = Math.max(baseLines.length, l1Lines.length + 3);
+  for (var row = 0; row < maxRows; row++) {
+    var left = '';
+    if (row < baseLines.length) {
+      left = ' ' + pad(baseLines[row][0], 8) + '= ' + baseLines[row][1];
+    }
+    left = pad(left, 38);
+
+    var right = '';
+    if (row < l1Lines.length) {
+      right = l1Lines[row][0] + ' = ' + l1Lines[row][1];
+    } else if (row === l1Lines.length + 1) {
+      right = 'HOLD R1';
+    } else if (row === l1Lines.length + 2) {
+      right = '-'.repeat(25);
+    } else {
+      var r1Offset = row - l1Lines.length - 3;
+      var r1s = ['r1_a','r1_b','r1_x','r1_y','r1_dup','r1_ddown','r1_dleft','r1_dright'];
+      var r1L = ['R1+A','R1+B','R1+X','R1+Y','R1+D-Up','R1+D-Dn','R1+D-Lt','R1+D-Rt'];
+      if (r1Offset >= 0 && r1Offset < r1s.length && m[r1s[r1Offset]]) {
+        right = r1L[r1Offset] + ' = ' + m[r1s[r1Offset]].action + ' (' + m[r1s[r1Offset]].key + ')';
+      }
+    }
+
+    t += left + right + '\n';
+  }
+
+  t += '\n';
+  if (m.m1 || m.m2) {
+    t += 'BACK BUTTONS (MSI Center M)\n';
+    t += '-'.repeat(32) + '\n';
+    if (m.m1) t += ' M1        = ' + m.m1.action + ' (' + m.m1.key + ')\n';
+    if (m.m2) t += ' M2        = ' + m.m2.action + ' (' + m.m2.key + ')\n';
+  }
+
+  document.getElementById('qrefPre').textContent = t;
+}
+
+function copyQuickRef() {
+  var text = document.getElementById('qrefPre').textContent;
+  navigator.clipboard.writeText(text).then(function(){
+    alert('Quick reference copied to clipboard!');
+  });
+}
+
+// ============================================================
+// VDF EXPORT
+// ============================================================
+function vdfGroup(id, mode, inputs, settings) {
+  var s = '"group"\n{\n\t"id"\t\t"'+id+'"\n\t"mode"\t\t"'+mode+'"\n\t"inputs"\n\t{\n';
+  for (var k in inputs) {
+    if (!inputs.hasOwnProperty(k)) continue;
+    var v = inputs[k];
+    s += '\t\t"'+k+'"\n\t\t{\n\t\t\t"activators"\n\t\t\t{\n';
+    if (v && v.hold) {
+      s += '\t\t\t\t"Full_Press"\n\t\t\t\t{\n\t\t\t\t\t"bindings"\n\t\t\t\t\t{\n\t\t\t\t\t\t"binding"\t\t"'+v.press+'"\n\t\t\t\t\t}\n\t\t\t\t}\n';
+      s += '\t\t\t\t"Release_Press"\n\t\t\t\t{\n\t\t\t\t\t"bindings"\n\t\t\t\t\t{\n\t\t\t\t\t\t"binding"\t\t"'+v.release+'"\n\t\t\t\t\t}\n\t\t\t\t}\n';
+    } else {
+      s += '\t\t\t\t"Full_Press"\n\t\t\t\t{\n\t\t\t\t\t"bindings"\n\t\t\t\t\t{\n\t\t\t\t\t\t"binding"\t\t"'+v+'"\n\t\t\t\t\t}\n\t\t\t\t}\n';
+    }
+    s += '\t\t\t}\n\t\t}\n';
+  }
+  s += '\t}\n';
+  if (settings) {
+    s += '\t"settings"\n\t{\n';
+    for (var sk in settings) { if (settings.hasOwnProperty(sk)) s += '\t\t"'+sk+'"\t\t"'+settings[sk]+'"\n'; }
+    s += '\t}\n';
+  }
+  s += '}\n';
+  return s;
+}
+
+function keyToVdf(key) {
+  var map = {
+    'Mouse 1':'mouse_button LEFT','Mouse 2':'mouse_button RIGHT','Mouse 3':'mouse_button MIDDLE',
+    'Space':'key_press SPACE','Esc':'key_press ESCAPE','Enter':'key_press RETURN',
+    'Tab':'key_press TAB','Left Shift':'key_press LEFT_SHIFT','Right Shift':'key_press RIGHT_SHIFT',
+    'Left Ctrl':'key_press LEFT_CONTROL','Right Ctrl':'key_press RIGHT_CONTROL',
+    'Left Alt':'key_press LEFT_ALT','Right Alt':'key_press RIGHT_ALT',
+    'Backspace':'key_press BACKSPACE','Delete':'key_press DELETE','Insert':'key_press INSERT',
+    'Home':'key_press HOME','End':'key_press END','Page Up':'key_press PAGE_UP','Page Down':'key_press PAGE_DOWN',
+    'Up':'key_press UP','Down':'key_press DOWN','Left':'key_press LEFT','Right':'key_press RIGHT',
+    'Caps Lock':'key_press CAPSLOCK','Num Lock':'key_press NUMLOCK',
+    '[':'key_press LEFT_BRACKET',']':'key_press RIGHT_BRACKET',
+    '-':'key_press DASH','=':'key_press EQUALS',
+    ',':'key_press COMMA','.':'key_press PERIOD','/':'key_press SLASH',
+    ';':'key_press SEMICOLON','\'':'key_press SINGLE_QUOTE','\\':'key_press BACKSLASH',
+    '`':'key_press BACKQUOTE'
+  };
+  if (map[key]) return map[key];
+  if (/^F\d{1,2}$/.test(key)) return 'key_press ' + key.toUpperCase();
+  if (/^[A-Z0-9]$/.test(key)) return 'key_press ' + key;
+  return 'key_press ' + key.toUpperCase();
+}
+
+function exportVDF() {
+  var m = state.mapping;
+  var gn = state.gameName || 'My Game';
+  var slug = gn.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'');
+
+  var vdf = '"controller_mappings"\n{\n';
+  vdf += '\t"version"\t\t"3"\n';
+  vdf += '\t"title"\t\t"#Title"\n';
+  vdf += '\t"description"\t\t"#Description"\n';
+  vdf += '\t"creator"\t\t"0"\n';
+  vdf += '\t"controller_type"\t\t"controller_generic"\n';
+  vdf += '\t"Timestamp"\t\t"'+Math.floor(Date.now()/1000)+'"\n\n';
+
+  vdf += '\t"actions"\n\t{\n\t\t"Default"\n\t\t{\n\t\t\t"title"\t\t"#Set_Default"\n\t\t\t"legacy_set"\t\t"1"\n\t\t}\n\t}\n\n';
+
+  vdf += '\t"action_layers"\n\t{\n';
+  vdf += '\t\t"L1_Layer"\n\t\t{\n\t\t\t"title"\t\t"L1 Layer"\n\t\t\t"legacy_set"\t\t"1"\n\t\t\t"set_layer"\t\t"1"\n\t\t\t"parent_set_name"\t\t"Default"\n\t\t}\n';
+  vdf += '\t\t"R1_Layer"\n\t\t{\n\t\t\t"title"\t\t"R1 Layer"\n\t\t\t"legacy_set"\t\t"1"\n\t\t\t"set_layer"\t\t"1"\n\t\t\t"parent_set_name"\t\t"Default"\n\t\t}\n';
+  vdf += '\t}\n\n';
+
+  var bindCount = Object.keys(m).length;
+  vdf += '\t"localization"\n\t{\n\t\t"english"\n\t\t{\n\t\t\t"title"\t\t"'+gn+' - MSI Claw 8 AI+"\n\t\t\t"description"\t\t"'+bindCount+' bindings: base + L1 Layer + R1 Layer + back buttons"\n\t\t}\n\t}\n\n';
+
+  // Group 0: Face buttons base
+  var faceInputs = {};
+  if (m.a) faceInputs.button_a = keyToVdf(m.a.key)+', '+m.a.action;
+  if (m.b) faceInputs.button_b = keyToVdf(m.b.key)+', '+m.b.action;
+  if (m.x) faceInputs.button_x = keyToVdf(m.x.key)+', '+m.x.action;
+  if (m.y) faceInputs.button_y = keyToVdf(m.y.key)+', '+m.y.action;
+  vdf += vdfGroup('0','four_buttons',faceInputs);
+
+  // Group 1: D-pad base
+  var dpadInputs = {};
+  if (m.dup) dpadInputs.dpad_north = keyToVdf(m.dup.key)+', '+m.dup.action;
+  if (m.ddown) dpadInputs.dpad_south = keyToVdf(m.ddown.key)+', '+m.ddown.action;
+  if (m.dleft) dpadInputs.dpad_west = keyToVdf(m.dleft.key)+', '+m.dleft.action;
+  if (m.dright) dpadInputs.dpad_east = keyToVdf(m.dright.key)+', '+m.dright.action;
+  vdf += vdfGroup('1','dpad',dpadInputs);
+
+  // Group 2: Left stick
+  var lsInputs = {};
+  if (m.ls_up) lsInputs.dpad_north = keyToVdf(m.ls_up.key)+', '+m.ls_up.action;
+  if (m.ls_down) lsInputs.dpad_south = keyToVdf(m.ls_down.key)+', '+m.ls_down.action;
+  if (m.ls_left) lsInputs.dpad_west = keyToVdf(m.ls_left.key)+', '+m.ls_left.action;
+  if (m.ls_right) lsInputs.dpad_east = keyToVdf(m.ls_right.key)+', '+m.ls_right.action;
+  vdf += vdfGroup('2','dpad',lsInputs,{requires_click:'0',edge_binding_radius:'24995'});
+
+  // Group 3: Right stick as mouse
+  vdf += vdfGroup('3','joystick_mouse',{click:'key_press RETURN, Confirm'},{sensitivity:'110'});
+
+  // Group 4: Left trigger
+  if (m.l2) vdf += vdfGroup('4','trigger',{edge:keyToVdf(m.l2.key)+', '+m.l2.action},{output_trigger:'1'});
+  else vdf += vdfGroup('4','trigger',{edge:'mouse_button RIGHT, Right Click'},{output_trigger:'1'});
+
+  // Group 5: Right trigger
+  if (m.r2) vdf += vdfGroup('5','trigger',{edge:keyToVdf(m.r2.key)+', '+m.r2.action},{output_trigger:'2'});
+  else vdf += vdfGroup('5','trigger',{edge:'mouse_button LEFT, Left Click'},{output_trigger:'2'});
+
+  // Group 6: Switches base
+  var switchInputs = {};
+  if (m.view) switchInputs.button_escape = keyToVdf(m.view.key)+', '+m.view.action;
+  if (m.menu_btn) switchInputs.button_menu = keyToVdf(m.menu_btn.key)+', '+m.menu_btn.action;
+  switchInputs.left_bumper = {hold:true, press:'controller_action apply_action_set_layer L1_Layer, Apply L1', release:'controller_action remove_action_set_layer L1_Layer, Remove L1'};
+  switchInputs.right_bumper = {hold:true, press:'controller_action apply_action_set_layer R1_Layer, Apply R1', release:'controller_action remove_action_set_layer R1_Layer, Remove R1'};
+  vdf += vdfGroup('6','switches',switchInputs);
+
+  // Group 7: L1 face buttons
+  var l1Face = {};
+  if (m.l1_a) l1Face.button_a = keyToVdf(m.l1_a.key)+', '+m.l1_a.action;
+  if (m.l1_b) l1Face.button_b = keyToVdf(m.l1_b.key)+', '+m.l1_b.action;
+  if (m.l1_x) l1Face.button_x = keyToVdf(m.l1_x.key)+', '+m.l1_x.action;
+  if (m.l1_y) l1Face.button_y = keyToVdf(m.l1_y.key)+', '+m.l1_y.action;
+  vdf += vdfGroup('7','four_buttons',l1Face);
+
+  // Group 8: L1 d-pad
+  var l1Dpad = {};
+  if (m.l1_dup) l1Dpad.dpad_north = keyToVdf(m.l1_dup.key)+', '+m.l1_dup.action;
+  if (m.l1_ddown) l1Dpad.dpad_south = keyToVdf(m.l1_ddown.key)+', '+m.l1_ddown.action;
+  if (m.l1_dleft) l1Dpad.dpad_west = keyToVdf(m.l1_dleft.key)+', '+m.l1_dleft.action;
+  if (m.l1_dright) l1Dpad.dpad_east = keyToVdf(m.l1_dright.key)+', '+m.l1_dright.action;
+  vdf += vdfGroup('8','dpad',l1Dpad);
+
+  // Group 9: L1 switches
+  var l1Switch = {};
+  if (m.view) l1Switch.button_escape = keyToVdf(m.view.key)+', '+m.view.action;
+  if (m.menu_btn) l1Switch.button_menu = keyToVdf(m.menu_btn.key)+', '+m.menu_btn.action;
+  l1Switch.left_bumper = {hold:true, press:'controller_action apply_action_set_layer L1_Layer, Hold L1', release:'controller_action remove_action_set_layer L1_Layer, Release L1'};
+  l1Switch.right_bumper = {hold:true, press:'controller_action apply_action_set_layer R1_Layer, Hold R1', release:'controller_action remove_action_set_layer R1_Layer, Release R1'};
+  vdf += vdfGroup('9','switches',l1Switch);
+
+  // Group 10: R1 face buttons
+  var r1Face = {};
+  if (m.r1_a) r1Face.button_a = keyToVdf(m.r1_a.key)+', '+m.r1_a.action;
+  if (m.r1_b) r1Face.button_b = keyToVdf(m.r1_b.key)+', '+m.r1_b.action;
+  if (m.r1_x) r1Face.button_x = keyToVdf(m.r1_x.key)+', '+m.r1_x.action;
+  if (m.r1_y) r1Face.button_y = keyToVdf(m.r1_y.key)+', '+m.r1_y.action;
+  vdf += vdfGroup('10','four_buttons',r1Face);
+
+  // Group 11: R1 d-pad
+  var r1Dpad = {};
+  if (m.r1_dup) r1Dpad.dpad_north = keyToVdf(m.r1_dup.key)+', '+m.r1_dup.action;
+  if (m.r1_ddown) r1Dpad.dpad_south = keyToVdf(m.r1_ddown.key)+', '+m.r1_ddown.action;
+  if (m.r1_dleft) r1Dpad.dpad_west = keyToVdf(m.r1_dleft.key)+', '+m.r1_dleft.action;
+  if (m.r1_dright) r1Dpad.dpad_east = keyToVdf(m.r1_dright.key)+', '+m.r1_dright.action;
+  vdf += vdfGroup('11','dpad',r1Dpad);
+
+  // Group 12: R1 switches
+  var r1Switch = {};
+  if (m.view) r1Switch.button_escape = keyToVdf(m.view.key)+', '+m.view.action;
+  if (m.menu_btn) r1Switch.button_menu = keyToVdf(m.menu_btn.key)+', '+m.menu_btn.action;
+  r1Switch.left_bumper = {hold:true, press:'controller_action apply_action_set_layer L1_Layer, Hold L1', release:'controller_action remove_action_set_layer L1_Layer, Release L1'};
+  r1Switch.right_bumper = {hold:true, press:'controller_action apply_action_set_layer R1_Layer, Hold R1', release:'controller_action remove_action_set_layer R1_Layer, Release R1'};
+  vdf += vdfGroup('12','switches',r1Switch);
+
+  // Presets
+  vdf += '"preset"\n{\n\t"id"\t\t"0"\n\t"name"\t\t"Default"\n\t"group_source_bindings"\n\t{\n';
+  vdf += '\t\t"6"\t\t"switch active"\n\t\t"0"\t\t"button_diamond active"\n\t\t"1"\t\t"dpad active"\n';
+  vdf += '\t\t"2"\t\t"joystick active"\n\t\t"3"\t\t"right_joystick active"\n\t\t"4"\t\t"left_trigger active"\n\t\t"5"\t\t"right_trigger active"\n';
+  vdf += '\t}\n}\n';
+
+  vdf += '"preset"\n{\n\t"id"\t\t"1"\n\t"name"\t\t"L1_Layer"\n\t"group_source_bindings"\n\t{\n';
+  vdf += '\t\t"9"\t\t"switch active"\n\t\t"7"\t\t"button_diamond active"\n\t\t"8"\t\t"dpad active"\n';
+  vdf += '\t\t"2"\t\t"joystick active"\n\t\t"3"\t\t"right_joystick active"\n\t\t"4"\t\t"left_trigger active"\n\t\t"5"\t\t"right_trigger active"\n';
+  vdf += '\t}\n}\n';
+
+  vdf += '"preset"\n{\n\t"id"\t\t"2"\n\t"name"\t\t"R1_Layer"\n\t"group_source_bindings"\n\t{\n';
+  vdf += '\t\t"12"\t\t"switch active"\n\t\t"10"\t\t"button_diamond active"\n\t\t"11"\t\t"dpad active"\n';
+  vdf += '\t\t"2"\t\t"joystick active"\n\t\t"3"\t\t"right_joystick active"\n\t\t"4"\t\t"left_trigger active"\n\t\t"5"\t\t"right_trigger active"\n';
+  vdf += '\t}\n}\n';
+
+  vdf += '}\n';
+
+  var blob = new Blob([vdf], {type:'text/plain'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = slug + '_msi_claw.vdf';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ============================================================
+// URL FETCH
+// ============================================================
+function fetchURL() {
+  var url = document.getElementById('urlInput').value.trim();
+  if (!url) return;
+  var status = document.getElementById('fetchStatus');
+  status.innerHTML = '<div class="info-box">Fetching page...</div>';
+  document.getElementById('fetchBtn').disabled = true;
+
+  var proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
+  fetch(proxyUrl)
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.text();
+    })
+    .then(function(html) {
+      // Strip HTML to text
+      var tmp = document.createElement('div');
+      tmp.innerHTML = html;
+      // Remove scripts, styles
+      tmp.querySelectorAll('script,style,nav,footer,header').forEach(function(e){e.remove();});
+      var text = tmp.textContent || tmp.innerText || '';
+      // Clean up whitespace
+      text = text.replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n');
+      document.getElementById('rawInput').value = text.trim();
+      status.innerHTML = '<div class="info-box">Page fetched! Click "Parse Bindings" to extract keybindings.</div>';
+      document.getElementById('fetchBtn').disabled = false;
+    })
+    .catch(function(err) {
+      status.innerHTML = '<div class="error-box">Failed to fetch: ' + escHtml(err.message) + '. Try pasting the keybindings manually instead.</div>';
+      document.getElementById('fetchBtn').disabled = false;
+    });
+}
+
+// ============================================================
+// DWARF FORTRESS EXAMPLE
+// ============================================================
+function loadExample() {
+  document.getElementById('gameName').value = 'Dwarf Fortress';
+  state.gameName = 'Dwarf Fortress';
+  state.bindings = [
+    {action:'Camera Up',key:'W',category:'camera'},
+    {action:'Camera Down',key:'S',category:'camera'},
+    {action:'Camera Left',key:'A',category:'camera'},
+    {action:'Camera Right',key:'D',category:'camera'},
+    {action:'Left Click (Select/Place)',key:'Mouse 1',category:'interaction'},
+    {action:'Right Click (Cancel/Back)',key:'Mouse 2',category:'interaction'},
+    {action:'Pause / Unpause',key:'Space',category:'menu'},
+    {action:'Cancel / Back',key:'Esc',category:'menu'},
+    {action:'Mine / Dig',key:'M',category:'interaction'},
+    {action:'Build',key:'B',category:'interaction'},
+    {action:'Z-Level Up',key:'E',category:'camera'},
+    {action:'Z-Level Down',key:'C',category:'camera'},
+    {action:'Zoom Out',key:']',category:'camera'},
+    {action:'Zoom In',key:'[',category:'camera'},
+    {action:'Fine Camera Pan',key:'Mouse 3',category:'camera'},
+    {action:'Confirm / Enter',key:'Enter',category:'interaction'},
+    {action:'Remove Designations',key:'X',category:'interaction'},
+    {action:'Shift Modifier',key:'Left Shift',category:'quick'},
+    {action:'Home Base',key:'F1',category:'quick'},
+    {action:'Chop Trees',key:'L',category:'interaction'},
+    {action:'Gather Plants',key:'G',category:'interaction'},
+    {action:'Smooth Stone',key:'V',category:'interaction'},
+    {action:'Zones',key:'Z',category:'menu'},
+    {action:'Stockpiles',key:'P',category:'menu'},
+    {action:'Designate Items',key:'I',category:'menu'},
+    {action:'Burrows',key:'U',category:'menu'},
+    {action:'Hauling',key:'H',category:'interaction'},
+    {action:'Citizens',key:'U',category:'menu'},
+    {action:'Squads',key:'Q',category:'menu'},
+    {action:'Work Orders',key:'O',category:'menu'},
+    {action:'Labor',key:'Y',category:'menu'},
+    {action:'Nobles',key:'N',category:'menu'},
+    {action:'Stocks',key:'K',category:'menu'},
+    {action:'Speed Down',key:'Alt+-',category:'quick'},
+    {action:'Speed Up',key:'Alt+=',category:'quick'}
+  ];
+
+  // Pre-build the exact DF mapping
+  state.mapping = {
+    ls_up:{action:'Camera Up',key:'W'},
+    ls_down:{action:'Camera Down',key:'S'},
+    ls_left:{action:'Camera Left',key:'A'},
+    ls_right:{action:'Camera Right',key:'D'},
+    rs:{action:'Mouse Cursor',key:'Mouse'},
+    r2:{action:'Left Click (Select/Place)',key:'Mouse 1'},
+    l2:{action:'Right Click (Cancel/Back)',key:'Mouse 2'},
+    a:{action:'Pause / Unpause',key:'Space'},
+    b:{action:'Cancel / Back',key:'Esc'},
+    x:{action:'Mine / Dig',key:'M'},
+    y:{action:'Build',key:'B'},
+    dup:{action:'Z-Level Up',key:'E'},
+    ddown:{action:'Z-Level Down',key:'C'},
+    dleft:{action:'Zoom Out',key:']'},
+    dright:{action:'Zoom In',key:'['},
+    l1_a:{action:'Chop Trees',key:'L'},
+    l1_b:{action:'Gather Plants',key:'G'},
+    l1_x:{action:'Smooth Stone',key:'V'},
+    l1_y:{action:'Zones',key:'Z'},
+    l1_dup:{action:'Stockpiles',key:'P'},
+    l1_ddown:{action:'Designate Items',key:'I'},
+    l1_dleft:{action:'Burrows',key:'U'},
+    l1_dright:{action:'Hauling',key:'H'},
+    r1_a:{action:'Citizens',key:'U'},
+    r1_b:{action:'Squads',key:'Q'},
+    r1_x:{action:'Work Orders',key:'O'},
+    r1_y:{action:'Labor',key:'Y'},
+    r1_dup:{action:'Nobles',key:'N'},
+    r1_ddown:{action:'Stocks',key:'K'},
+    r1_dleft:{action:'Speed Down',key:'Alt+-'},
+    r1_dright:{action:'Speed Up',key:'Alt+='},
+    m1:{action:'Shift Modifier',key:'Left Shift'},
+    m2:{action:'Home Base',key:'F1'},
+    view:{action:'Remove Designations',key:'X'},
+    menu_btn:{action:'Game Menu',key:'Esc'}
+  };
+
+  renderBindingsTable();
+  renderLayout();
+  renderQuickRef();
+  switchTab('layout');
+}
+</script>
+</body>
+</html>

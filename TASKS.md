@@ -57,7 +57,7 @@ Now I have a comprehensive understanding of the codebase. Let me output the plan
 Good, post-11 doesn't have a back-link. I now have all the information needed to produce the plan.
 
 ## Task 7: Reframe blog as tutorial hub with guides-first framing
-**Status:** [ ] Incomplete
+**Status:** [x] Complete
 
 **Context:** The current blog page (`blog.html`) uses traditional blog framing throughout: the nav label says "Blog", the H1 says "Blog", the meta titles/descriptions all say "blog", and the intro text references "thoughts on building." However, the actual content is overwhelmingly tutorial and guide material: a structured 3-part "Stackless Guide" series, a 3-part "Non-Expert Series", and standalone posts mostly titled as practical guides ("Security for Non-Coders", "Testing for Non-Coders", "The Non-Coder's Toolkit", etc.). Reframing this as a tutorial/guides hub better reflects the content, improves SEO for people searching for AI tutorials for non-coders, and positions Stackless as a learning resource rather than a personal blog. The "Non-Coder Start Guide" referenced in the TODO likely refers to the existing 3-part Stackless Guide series (posts 6-8) which should be elevated as the recommended starting point. No file rename is needed (blog.html stays as-is for URL stability), but all visible labels, headings, and meta descriptions should shift from "blog" to "guides"/"tutorials" framing.
 
@@ -91,14 +91,14 @@ Good, post-11 doesn't have a back-link. I now have all the information needed to
 4. **Do NOT rename the file** `blog.html` to avoid breaking any external links, bookmarks, or SEO. The URL stays the same; only the visible label and framing changes.
 
 **Acceptance Criteria:**
-- [ ] Nav label reads "Guides" (not "Blog") on all pages including mobile menus
-- [ ] `blog.html` H1 reads "Guides" with tutorial-focused intro paragraph
-- [ ] Meta title, description, OG, and Twitter card all use guides/tutorials framing (no "blog" word)
-- [ ] A "Start Here" callout is added above or integrated into the Stackless Guide series section, directing new visitors to Part 1
-- [ ] All "← All Posts" back-links in blog post files read "← All Guides"
-- [ ] All "All Posts" references in post bottom navigation read "All Guides"
-- [ ] File remains `blog.html` (no rename, no broken URLs)
-- [ ] Run tests and ensure they pass
+- [x] Nav label reads "Guides" (not "Blog") on all pages including mobile menus
+- [x] `blog.html` H1 reads "Guides" with tutorial-focused intro paragraph
+- [x] Meta title, description, OG, and Twitter card all use guides/tutorials framing (no "blog" word)
+- [x] A "Start Here" callout is added above or integrated into the Stackless Guide series section, directing new visitors to Part 1
+- [x] All "← All Posts" back-links in blog post files read "← All Guides"
+- [x] All "All Posts" references in post bottom navigation read "All Guides"
+- [x] File remains `blog.html` (no rename, no broken URLs)
+- [x] Run tests and ensure they pass
 
 **Files to check:** `blog.html`, `index.html`, `about.html`, `projects.html`, `fleet.html`, `resources.html`, `shop/index.html`, `claw-mapper/index.html`, `blog/post-1-ehr-pathway.html`, `blog/post-2-non-coder-shipping.html`, `blog/post-3-tools-i-use.html`, `blog/post-4-process-not-code.html`, `blog/post-5-what-ai-gets-wrong.html`, `blog/post-6-security-for-non-coders.html`, `blog/post-7-testing-for-non-coders.html`, `blog/post-8-non-coders-toolkit.html`, `blog/post-9-gemini-canvas-frontends.html`, `blog/post-10-ai-orchestra.html`, `blog/post-11-privacy-for-non-coders.html`, `blog/post-12-building-agent-teams.html`, `blog/post-13-content-creator-agent.html`
 

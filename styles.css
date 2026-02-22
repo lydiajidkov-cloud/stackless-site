@@ -627,6 +627,10 @@ nav {
   height: 18px;
 }
 
+.project-card.spotlight {
+  grid-column: 1 / -1;
+}
+
 /* Mission / Vibe Section */
 .mission {
   padding: 6rem 1rem;

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Built a Controller Mapper for the MSI Claw (Without Writing a Line of Code) — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+
+    <!-- SEO -->
+    <meta name="description" content="A free browser-based tool that maps any PC game's keybindings to the MSI Claw controller. Paste your bindings, get an interactive layout, export a VDF for Steam Input.">
+    <link rel="canonical" href="https://stackless.tech/blog/post-16-claw-mapper.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="I Built a Controller Mapper for the MSI Claw (Without Writing a Line of Code) — Stackless">
+    <meta property="og:description" content="A free browser-based tool that maps any PC game's keybindings to the MSI Claw controller. Paste your bindings, get an interactive layout, export a VDF for Steam Input.">
+    <meta property="og:url" content="https://stackless.tech/blog/post-16-claw-mapper.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://stackless.tech/og-image.png">
+    <meta property="og:site_name" content="Stackless">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="I Built a Controller Mapper for the MSI Claw (Without Writing a Line of Code)">
+    <meta name="twitter:description" content="A free browser-based tool that maps any PC game's keybindings to the MSI Claw controller. Paste your bindings, get an interactive layout, export a VDF for Steam Input.">
+    <meta name="twitter:image" content="https://stackless.tech/og-image.png">
+
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--lime-400);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .article-body a {
+            color: var(--indigo-600);
+            font-weight: 700;
+            text-decoration: underline;
+        }
+        .back-link {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--slate-900);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--slate-900);
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+        .back-link:hover { background: var(--slate-100); }
+        .feature-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--amber-400);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .feature-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            font-size: 0.95rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        .problem-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--pink-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .problem-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--pink-500);
+        }
+        .problem-card p {
+            font-size: 0.95rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        .try-it-box {
+            background: var(--lime-400);
+            border: 3px solid var(--slate-900);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 6px 6px 0 0 rgba(0,0,0,1);
+            text-align: center;
+        }
+        .try-it-box h3 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        .try-it-box p {
+            margin-bottom: 1rem !important;
+            color: var(--slate-900) !important;
+            font-weight: 600 !important;
+        }
+        .try-it-box a.try-btn {
+            display: inline-block;
+            background: var(--slate-900);
+            color: var(--white);
+            padding: 0.75rem 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 3px solid var(--slate-900);
+            font-size: 0.875rem;
+        }
+        .try-it-box a.try-btn:hover {
+            background: var(--indigo-600);
+            border-color: var(--indigo-600);
+        }
+        .build-note {
+            background: var(--slate-100);
+            border-left: 4px solid var(--indigo-600);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .build-note strong {
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--slate-900);
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+        }
+        .build-note p {
+            font-size: 0.95rem !important;
+            margin-top: 0.5rem !important;
+        }
+
+        /* Dark mode overrides */
+        [data-theme="dark"] .article-body h1,
+        [data-theme="dark"] .article-body h2,
+        [data-theme="dark"] .article-body h3 {
+            color: var(--slate-900);
+        }
+        [data-theme="dark"] .article-body p,
+        [data-theme="dark"] .article-body li {
+            color: var(--slate-700);
+        }
+        [data-theme="dark"] .article-meta {
+            color: var(--slate-500);
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+        [data-theme="dark"] .feature-card,
+        [data-theme="dark"] .problem-card {
+            background: #1e1e28;
+            border-color: rgba(255,255,255,0.12);
+        }
+        [data-theme="dark"] .feature-card {
+            box-shadow: 6px 6px 0 0 var(--amber-400);
+        }
+        [data-theme="dark"] .problem-card {
+            box-shadow: 6px 6px 0 0 var(--pink-500);
+        }
+        [data-theme="dark"] .article-body blockquote {
+            background: #1e1e28;
+            border-left-color: var(--pink-500);
+        }
+        [data-theme="dark"] .article-body code {
+            background: #2a2a38;
+            color: var(--lime-400);
+        }
+        [data-theme="dark"] .build-note {
+            background: #1e1e28;
+            border-left-color: var(--indigo-600);
+        }
+        [data-theme="dark"] .try-it-box {
+            background: var(--lime-400);
+        }
+        [data-theme="dark"] .back-link {
+            border-color: rgba(255,255,255,0.12);
+        }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../blog.html">Guides</a></li>
+                <li><a href="../fleet.html">The Fleet</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span class="icon-sun">&#9728;&#65039;</span>
+                <span class="icon-moon">&#127769;</span>
+            </button>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="article-body">
+            <a href="../blog.html" class="back-link">&larr; All Guides</a>
+
+            <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+                <span class="tag" style="background: var(--lime-400); border-color: var(--lime-400);">Tools</span>
+                <span class="tag" style="background: var(--amber-400); border-color: var(--amber-400);">Gaming</span>
+            </div>
+
+            <h1>I Built a Controller Mapper for the MSI Claw (Without Writing a Line of Code)</h1>
+            <div class="article-meta">6 min read &middot; February 2026</div>
+
+            <p>The MSI Claw 8 AI+ is a great piece of hardware. Gorgeous screen, proper Windows handheld, runs Steam games natively. But configuring the controller? Absolute pain.</p>
+
+            <p>Steam Input is powerful but opaque. You open the configurator, stare at a grid of buttons, and try to remember which action you bound to which key. For complex games like Dwarf Fortress, you're mapping 80+ keybindings across four controller layers. There's no visual feedback, no way to see your layout at a glance, and if you mess up the VDF file, you start over.</p>
+
+            <p>I wanted a tool that would let me paste a game's keybindings and see them mapped to the controller visually. Nothing like that existed. So I built one.</p>
+
+            <h2>The Problem</h2>
+
+            <div class="problem-card">
+                <h4>Steam Input Is Painful</h4>
+                <p>Steam Input's controller configurator works, but it was designed for people who already understand controller mapping. For complex PC games with dozens of keyboard shortcuts, the process is: open Steam, enter the configurator, click each button one at a time, assign an action, repeat 80 times, then test and discover you've put movement on the wrong stick.</p>
+            </div>
+
+            <p>The MSI Claw makes this worse because it has fewer physical buttons than a typical keyboard game expects. You need to use layers (action sets in Steam's terminology) to fit everything: a Base layer for the most common actions, shoulder modifier layers (L1 and R1) for secondary commands, and Back Grip layers for the rest.</p>
+
+            <p>The real problem isn't the buttons. It's the mental model. You can't see the full picture. You're editing one binding at a time in a modal, and there's no way to check "wait, did I already assign something to the left bumper on the R1 layer?"</p>
+
+            <h2>What the Tool Does</h2>
+
+            <div class="feature-card">
+                <h4>Paste and Parse</h4>
+                <p>Paste your game's keybindings in any format. The parser handles plain text lists, CSV, wiki tables, config file syntax. It identifies the action name and the key, categorises each binding (movement, combat, UI, camera, etc.), and flags any it can't parse.</p>
+            </div>
+
+            <div class="feature-card">
+                <h4>Auto-Map to Controller</h4>
+                <p>The mapper takes your parsed bindings and assigns them to controller buttons using a priority system. High-frequency actions (movement, primary attack) get the best slots on the Base layer. Less common actions get pushed to modifier layers. The algorithm knows which buttons are ergonomically accessible and prioritises accordingly.</p>
+            </div>
+
+            <div class="feature-card">
+                <h4>Interactive SVG Layout</h4>
+                <p>See your entire controller layout at a glance. An SVG diagram of the MSI Claw shows every button with its assigned action. Click any button to reassign it. Switch between layers (Base, L1, R1, Back) with tabs. Unassigned bindings appear in a list on the side so nothing gets lost.</p>
+            </div>
+
+            <div class="feature-card">
+                <h4>Quick Reference Card</h4>
+                <p>Generate a printable reference card showing all your bindings organised by layer. Useful for learning a new layout without constantly checking the configurator.</p>
+            </div>
+
+            <div class="feature-card">
+                <h4>VDF Export</h4>
+                <p>Export your layout as a Steam Input VDF file. Drop it into your Steam controller config folder and your layout is live. No manual entry in the Steam configurator needed.</p>
+            </div>
+
+            <h2>How It Works Under the Hood</h2>
+
+            <p>The tool is a single HTML file. No dependencies, no build tools, no server. Open it in a browser and it works. Here's what happens when you paste your keybindings:</p>
+
+            <ol>
+                <li><strong>Parsing:</strong> A multi-format parser splits your input into action-key pairs. It handles tab-separated, comma-separated, colon-separated, and freeform text. It strips out headers, blank lines, and formatting noise.</li>
+                <li><strong>Category detection:</strong> Each action is categorised automatically. "Move forward" becomes Movement. "Attack" becomes Combat. "Open inventory" becomes UI. The categoriser uses keyword matching with fallbacks for ambiguous actions.</li>
+                <li><strong>Priority assignment:</strong> Categories get priority weights. Movement is highest (you need WASD on the sticks). Combat is next. UI and menu actions are lowest. Within each category, the parser's original order serves as a tiebreaker.</li>
+                <li><strong>Slot mapping:</strong> The auto-mapper walks the priority list and assigns each action to the best available slot. Base layer gets the top-priority actions, L1 layer gets the next tier, and so on. Ergonomic slot quality is pre-scored: thumbstick click is worse than face button, which is worse than trigger.</li>
+                <li><strong>Rendering:</strong> The SVG diagram updates live. Labels appear beside each button. Click any label to open a modal where you can reassign, swap, or clear the binding.</li>
+            </ol>
+
+            <h2>The AI Build Process</h2>
+
+            <p>This entire tool was built with Claude Code. I described what I wanted in plain English, iterated on the result, and refined the UX by testing in the browser and feeding back what didn't work.</p>
+
+            <div class="build-note">
+                <strong>Single-file architecture</strong>
+                <p>The whole thing is one HTML file: 1,400+ lines of HTML, CSS, and JavaScript. No framework, no bundler, no package.json. This is deliberate. A single file means zero deployment friction. Host it anywhere. Open it locally. Send it to someone. It just works.</p>
+            </div>
+
+            <div class="build-note">
+                <strong>No backend required</strong>
+                <p>Everything runs in the browser. Your keybindings never leave your machine. The parser, mapper, renderer, and VDF exporter are all client-side JavaScript. There's nothing to install, no account to create, no data sent anywhere.</p>
+            </div>
+
+            <p>The build process was roughly: describe the feature, test it, describe the fix, test again. The SVG controller diagram took the most iteration because spatial layout is hard to describe in words. But Claude Code handled the coordinate maths, the path drawing, and the click target geometry without me needing to understand any of it.</p>
+
+            <blockquote>
+                "I told it what I wanted the controller to look like. It figured out the SVG. I told it the labels were overlapping. It fixed the spacing. I never opened a graphics editor."
+            </blockquote>
+
+            <h2>What I Learned</h2>
+
+            <p>Building a tool like this taught me a few things about non-coder development:</p>
+
+            <ul>
+                <li><strong>Single-file apps are underrated.</strong> No build step means no build errors. No dependencies means no version conflicts. For tools that serve a specific purpose, a single HTML file is the perfect delivery format.</li>
+                <li><strong>Domain knowledge matters more than code.</strong> I know what makes a good controller layout because I use a handheld daily. That knowledge shaped every design decision. The AI handled the implementation, but the "what" and "why" came from me.</li>
+                <li><strong>Visual tools need visual iteration.</strong> I couldn't describe the SVG layout perfectly on the first try. I had to see it, adjust it, see it again. The feedback loop between browser and AI is where the quality happens.</li>
+                <li><strong>Niche tools fill real gaps.</strong> This tool serves maybe a few thousand people worldwide who own an MSI Claw and play complex PC games. But for those people, it saves hours of tedious configuration. Small audience, real value.</li>
+            </ul>
+
+            <div class="try-it-box">
+                <h3>Try the Controller Mapper</h3>
+                <p>Free, no signup, runs entirely in your browser.</p>
+                <a href="../claw-mapper/index.html" class="try-btn">Open the Mapper &rarr;</a>
+            </div>
+
+            <h2>Related Posts</h2>
+            <ul>
+                <li><a href="post-10-ai-orchestra.html">What I Actually Ship With AI: A Solo Builder's Real Stack</a></li>
+                <li><a href="post-3-tools-i-use.html">The Non-Coder's Stack: Tools I Actually Use</a></li>
+                <li><a href="post-4-process-not-code.html">It's About Process, Not Code</a></li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>Stackless &copy; 2026 &mdash; Built with Claude Code. No devs were hired.</p>
+    </footer>
+
+    <script>
+        document.getElementById('hamburger')?.addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('show');
+        });
+    </script>
+    <script>
+        (function() {
+            var btn = document.getElementById('themeToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('stackless-theme', next);
+            });
+        })();
+    </script>
+</body>
+</html>

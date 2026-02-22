@@ -82,7 +82,8 @@
       retailers.forEach(function(r) { var opt = document.createElement('option'); opt.value = r; opt.textContent = r; retSelect.appendChild(opt); });
       var tags = [...new Set(products.flatMap(function(p) { return p.tags; }))].filter(Boolean).sort();
       var tagSelect = document.getElementById('filterTag');
-      tags.forEach(function(t) { var opt = document.createElement('option'); opt.value = t; opt.textContent = formatLabel(t); tagSelect.appendChild(opt); });
+      var tagDefs = window.CG_PRODUCT_TAGS || {};
+      tags.forEach(function(t) { var opt = document.createElement('option'); opt.value = t; opt.textContent = tagDefs[t] ? tagDefs[t].label : formatLabel(t); tagSelect.appendChild(opt); });
     }
 
     function formatLabel(s) { return s.replace(/[-_]/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); }); }
@@ -128,8 +129,13 @@
 
     function createProductCard(p) {
       var card = document.createElement('div'); card.className = 'product-card';
-      var tagsHTML = p.tags.map(function(t) { return '<span class="product-tag tag-' + t + '">' + formatLabel(t) + '</span>'; }).join('');
-      card.innerHTML = '<div class="product-header"><span class="product-name">' + escapeHtml(p.name) + '</span><span class="product-price">' + escapeHtml(p.price) + '</span></div><div class="product-meta"><span class="product-meta-item meta-brand">' + escapeHtml(p.brand) + '</span><span class="product-meta-item meta-retailer">' + escapeHtml(p.retailer) + '</span><span class="product-meta-item meta-category">' + formatLabel(p.category) + '</span><span class="product-meta-item meta-weight-' + p.weight + '">' + formatLabel(p.weight) + '</span><span class="product-cgm cgm-' + p.cgm + '">' + formatLabel(p.cgm.replace('_', ' ')) + '</span></div>' + (tagsHTML ? '<div class="product-tags">' + tagsHTML + '</div>' : '') + (p.notes ? '<div class="product-notes">' + escapeHtml(p.notes) + '</div>' : '');
+      var tagDefs = window.CG_PRODUCT_TAGS || {};
+      var tagsHTML = p.tags.map(function(t) { var label = tagDefs[t] ? tagDefs[t].label : formatLabel(t); return '<span class="product-tag tag-' + t + '">' + label + '</span>'; }).join('');
+      card.innerHTML = '<div class="product-header"><span class="product-name">' + escapeHtml(p.name) + '</span><span class="product-price">' + escapeHtml(p.price) + '</span></div>' +
+        '<div class="product-meta-text">' + escapeHtml(p.brand) + ' · ' + escapeHtml(p.retailer) + ' · ' + formatLabel(p.category) + '</div>' +
+        '<div class="product-badges"><span class="product-meta-item meta-weight-' + p.weight + '">' + formatLabel(p.weight) + '</span><span class="product-cgm cgm-' + p.cgm + '">' + formatLabel(p.cgm.replace('_', ' ')) + '</span></div>' +
+        (tagsHTML ? '<div class="product-tags">' + tagsHTML + '</div>' : '') +
+        (p.notes ? '<div class="product-notes">' + escapeHtml(p.notes) + '</div>' : '');
       return card;
     }
 

@@ -1615,11 +1615,18 @@ h3 {
   white-space: nowrap;
 }
 
-.product-meta {
+.product-meta-text {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin: 0.4rem 0 0.3rem;
+  line-height: 1.4;
+}
+
+.product-badges {
   display: flex;
   flex-wrap: wrap;
   gap: 0.3rem;
-  margin: 0.5rem 0;
+  margin: 0.3rem 0;
 }
 
 .product-meta-item {
@@ -1630,10 +1637,6 @@ h3 {
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
-
-.meta-brand { background: var(--rose-50); color: var(--text-muted); }
-.meta-retailer { background: var(--rose-50); color: var(--rose-500); }
-.meta-category { background: var(--rose-50); color: var(--text-muted); }
 .meta-weight-lightweight { background: var(--emerald-50); color: var(--emerald-800); }
 .meta-weight-medium { background: var(--warning-bg); color: var(--warning); }
 .meta-weight-heavy { background: var(--danger-bg); color: var(--danger); }
@@ -1664,19 +1667,21 @@ h3 {
   padding: 0.15rem 0.5rem;
   border-radius: var(--radius-pill);
   font-weight: 700;
+  border: 1.5px solid currentColor;
+  background: transparent;
 }
 
-.tag-holy-grail { background: rgba(251, 146, 60, 0.1); color: var(--orange-500); }
-.tag-holy-grail-wavies { background: rgba(251, 146, 60, 0.08); color: var(--orange-400); }
-.tag-budget-starter { background: var(--emerald-50); color: var(--emerald-800); }
-.tag-good-sotc { background: var(--rose-50); color: var(--rose-500); }
-.tag-protein-free { background: var(--rose-50); color: var(--text-muted); }
-.tag-protein-boost { background: rgba(251, 146, 60, 0.1); color: var(--orange-500); }
-.tag-co-wash { background: var(--emerald-50); color: var(--emerald-800); }
-.tag-fragrance-free { background: var(--rose-50); color: var(--text-muted); }
-.tag-glycerin-free { background: var(--rose-50); color: var(--text-muted); }
-.tag-lightweight { background: var(--emerald-50); color: var(--emerald-800); }
-.tag-warning { background: var(--danger-bg); color: var(--danger); }
+.tag-holy-grail { color: var(--orange-500); }
+.tag-holy-grail-wavies { color: var(--orange-400); }
+.tag-budget-starter { color: var(--emerald-800); }
+.tag-good-sotc { color: var(--rose-500); }
+.tag-protein-free { color: var(--text-muted); }
+.tag-protein-boost { color: var(--orange-500); }
+.tag-co-wash { color: var(--emerald-800); }
+.tag-fragrance-free { color: var(--text-muted); }
+.tag-glycerin-free { color: var(--text-muted); }
+.tag-lightweight { color: var(--emerald-800); }
+.tag-warning { color: var(--danger); }
 
 .product-notes {
   font-size: 0.8rem;

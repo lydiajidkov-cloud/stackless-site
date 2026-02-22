@@ -51,7 +51,7 @@ This task is already complete. The commit `2a487f7` removed the Cursor mention f
 Now I have all the information needed. Here's the plan:
 
 ## Task 3: Restructure product card tag hierarchy and fix SOTC typo
-**Status:** [ ] Incomplete
+**Status:** [x] Complete
 
 **Context:** Product cards in `curly-girl/products.html` currently render brand, retailer, category, weight, and CGM status all as styled pills inside a single `.product-meta` row. Community tags (Holy Grail, Budget Starter, etc.) render in a separate `.product-tags` row but look visually similar to meta pills. The task requires three visual hierarchy changes: (1) convert brand/retailer/category from styled pills to plain dot-separated text, (2) move LIGHTWEIGHT/weight and CGM badges to their own distinct row, and (3) give community tags a visually distinct style. Additionally, `formatLabel("good-sotc")` produces "Good Sotc" instead of "Good SOTC" — needs a special-case fix or data change.
 
@@ -76,13 +76,13 @@ Now I have all the information needed. Here's the plan:
 4. **Dark mode check:** Verify dark mode overrides in styles.css still work for the restructured elements — the existing `.dark .product-meta-item` rules may need updating to target `.product-badges` children instead.
 
 **Acceptance Criteria:**
-- [ ] Brand, retailer, and category display as plain dot-separated text (no pill/badge styling)
-- [ ] Weight (LIGHTWEIGHT/MEDIUM/HEAVY) and CGM badges appear on their own row with existing pill styling preserved
-- [ ] Community tags (Holy Grail, Budget Starter, Good SOTC, etc.) have a visually distinct style from badges
-- [ ] "Good SOTC" displays with correct capitalisation (not "Good Sotc")
-- [ ] Tag filtering still works correctly via the filterTag dropdown
-- [ ] Dark mode renders all restructured elements correctly
-- [ ] Run tests and ensure they pass
+- [x] Brand, retailer, and category display as plain dot-separated text (no pill/badge styling)
+- [x] Weight (LIGHTWEIGHT/MEDIUM/HEAVY) and CGM badges appear on their own row with existing pill styling preserved
+- [x] Community tags (Holy Grail, Budget Starter, Good SOTC, etc.) have a visually distinct style from badges
+- [x] "Good SOTC" displays with correct capitalisation (not "Good Sotc")
+- [x] Tag filtering still works correctly via the filterTag dropdown
+- [x] Dark mode renders all restructured elements correctly
+- [x] Run tests and ensure they pass
 
 **Files to check:** `curly-girl/products.html`, `curly-girl/styles.css`, `curly-girl/products-data.js`
 

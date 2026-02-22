@@ -85,3 +85,82 @@
 
 ---
 
+
+## Task 3: Restructure product card tag hierarchy and fix SOTC typo
+**Status:** [x] Complete
+**Completed:** 2026-02-22 09:47:04
+**Duration:** 3m 13s
+**Commits:**
+- bc659af Restructure product card tag hierarchy and fix SOTC typo
+
+**Context:** Product cards in `curly-girl/products.html` currently render brand, retailer, category, weight, and CGM status all as styled pills inside a single `.product-meta` row. Community tags (Holy Grail, Budget Starter, etc.) render in a separate `.product-tags` row but look visually similar to meta pills. The task requires three visual hierarchy changes: (1) convert brand/retailer/category from styled pills to plain dot-separated text, (2) move LIGHTWEIGHT/weight and CGM badges to their own distinct row, and (3) give community tags a visually distinct style. Additionally, `formatLabel("good-sotc")` produces "Good Sotc" instead of "Good SOTC" — needs a special-case fix or data change.
+
+**Plan:**
+
+1. **Fix the typo in `products-data.js`** (lines ~427-439, `CG_PRODUCT_TAGS` definition):
+   - The tag key `"good-sotc"` stays as-is (it's a slug used for CSS classes and filtering)
+   - Change the label in `CG_PRODUCT_TAGS["good-sotc"]` from `"Good SOTC"` (already correct in definition) — but `formatLabel()` is what renders it on cards, not the tag definition label
+   - The real fix: in `createProductCard()`, use `CG_PRODUCT_TAGS[t].label` instead of `formatLabel(t)` for tag rendering, so "Good SOTC" displays correctly from the definition
+
+2. **Restructure `createProductCard()` in `products.html`** (line 129-134):
+   - **Row 1 (meta text):** Replace brand/retailer/category pills with plain dot-separated text: `<div class="product-meta-text">Brand · Retailer · Category</div>`
+   - **Row 2 (badges):** Create a new `<div class="product-badges">` containing the weight pill (`meta-weight-*`) and CGM badge (`product-cgm cgm-*`)
+   - **Row 3 (community tags):** Keep `.product-tags` div but use `CG_PRODUCT_TAGS[t].label` for display text (fixes SOTC typo), and add a fallback to `formatLabel(t)` for unknown tags
+
+3. **Update CSS in `styles.css`**:
+   - **Add `.product-meta-text`:** Plain text style — `font-size: 0.65rem; color: var(--text-muted);` no background, no pill shape, dot separator
+   - **Add `.product-badges`:** Flex row with gap, holds weight + CGM badges (keep existing pill styling for these)
+   - **Restyle `.product-tag` community tags:** Give them a distinct look — e.g. outlined/bordered style instead of filled pills, or a softer background with a left border accent, to visually separate them from the weight/CGM badges
+   - **Remove** now-unused `.meta-brand`, `.meta-retailer`, `.meta-category` pill styles (or leave as dead CSS if cautious)
+
+4. **Dark mode check:** Verify dark mode overrides in styles.css still work for the restructured elements — the existing `.dark .product-meta-item` rules may need updating to target `.product-badges` children instead.
+
+**Acceptance Criteria:**
+- [x] Brand, retailer, and category display as plain dot-separated text (no pill/badge styling)
+- [x] Weight (LIGHTWEIGHT/MEDIUM/HEAVY) and CGM badges appear on their own row with existing pill styling preserved
+- [x] Community tags (Holy Grail, Budget Starter, Good SOTC, etc.) have a visually distinct style from badges
+- [x] "Good SOTC" displays with correct capitalisation (not "Good Sotc")
+- [x] Tag filtering still works correctly via the filterTag dropdown
+- [x] Dark mode renders all restructured elements correctly
+- [x] Run tests and ensure they pass
+
+**Files to check:** `curly-girl/products.html`, `curly-girl/styles.css`, `curly-girl/products-data.js`
+
+---
+## Task 3: Restructure product card tag hierarchy and fix SOTC typo
+**Status:** [x] Complete
+
+**Context:** Product cards in `curly-girl/products.html` currently render brand, retailer, category, weight, and CGM status all as styled pills inside a single `.product-meta` row. Community tags (Holy Grail, Budget Starter, etc.) render in a separate `.product-tags` row but look visually similar to meta pills. The task requires three visual hierarchy changes: (1) convert brand/retailer/category from styled pills to plain dot-separated text, (2) move LIGHTWEIGHT/weight and CGM badges to their own distinct row, and (3) give community tags a visually distinct style. Additionally, `formatLabel("good-sotc")` produces "Good Sotc" instead of "Good SOTC" — needs a special-case fix or data change.
+
+**Plan:**
+
+1. **Fix the typo in `products-data.js`** (lines ~427-439, `CG_PRODUCT_TAGS` definition):
+   - The tag key `"good-sotc"` stays as-is (it's a slug used for CSS classes and filtering)
+   - Change the label in `CG_PRODUCT_TAGS["good-sotc"]` from `"Good SOTC"` (already correct in definition) — but `formatLabel()` is what renders it on cards, not the tag definition label
+   - The real fix: in `createProductCard()`, use `CG_PRODUCT_TAGS[t].label` instead of `formatLabel(t)` for tag rendering, so "Good SOTC" displays correctly from the definition
+
+2. **Restructure `createProductCard()` in `products.html`** (line 129-134):
+   - **Row 1 (meta text):** Replace brand/retailer/category pills with plain dot-separated text: `<div class="product-meta-text">Brand · Retailer · Category</div>`
+   - **Row 2 (badges):** Create a new `<div class="product-badges">` containing the weight pill (`meta-weight-*`) and CGM badge (`product-cgm cgm-*`)
+   - **Row 3 (community tags):** Keep `.product-tags` div but use `CG_PRODUCT_TAGS[t].label` for display text (fixes SOTC typo), and add a fallback to `formatLabel(t)` for unknown tags
+
+3. **Update CSS in `styles.css`**:
+   - **Add `.product-meta-text`:** Plain text style — `font-size: 0.65rem; color: var(--text-muted);` no background, no pill shape, dot separator
+   - **Add `.product-badges`:** Flex row with gap, holds weight + CGM badges (keep existing pill styling for these)
+   - **Restyle `.product-tag` community tags:** Give them a distinct look — e.g. outlined/bordered style instead of filled pills, or a softer background with a left border accent, to visually separate them from the weight/CGM badges
+   - **Remove** now-unused `.meta-brand`, `.meta-retailer`, `.meta-category` pill styles (or leave as dead CSS if cautious)
+
+4. **Dark mode check:** Verify dark mode overrides in styles.css still work for the restructured elements — the existing `.dark .product-meta-item` rules may need updating to target `.product-badges` children instead.
+
+**Acceptance Criteria:**
+- [x] Brand, retailer, and category display as plain dot-separated text (no pill/badge styling)
+- [x] Weight (LIGHTWEIGHT/MEDIUM/HEAVY) and CGM badges appear on their own row with existing pill styling preserved
+- [x] Community tags (Holy Grail, Budget Starter, Good SOTC, etc.) have a visually distinct style from badges
+- [x] "Good SOTC" displays with correct capitalisation (not "Good Sotc")
+- [x] Tag filtering still works correctly via the filterTag dropdown
+- [x] Dark mode renders all restructured elements correctly
+- [x] Run tests and ensure they pass
+
+**Files to check:** `curly-girl/products.html`, `curly-girl/styles.css`, `curly-girl/products-data.js`
+
+---

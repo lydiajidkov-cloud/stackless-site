@@ -49,7 +49,7 @@ Interesting — post-12 and post-13 already have the pattern where `nav-cta` is 
 ---
 
 ## Task 3: Remove Cursor mention from post-6 security blog post
-**Status:** [ ] Incomplete
+**Status:** [x] Complete
 
 **Context:** In `blog/post-6-security-for-non-coders.html` line 196, the intro paragraph references "Claude Code, Cursor, or similar" as example AI tools. The mention of Cursor should be removed so the text only references Claude Code, keeping the blog aligned with the Stackless brand focus.
 

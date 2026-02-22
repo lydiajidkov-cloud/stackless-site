@@ -108,7 +108,7 @@ Now I have all the information needed. Let me produce the implementation plan.
 
 
 ## Task 12: Add Mailchimp email signup form between Non-Expert Series banner and article list
-**Status:** [ ] Incomplete
+**Status:** [x] Complete
 
 **Context:** The blog page (`blog.html`) is a static HTML page with no build tools or frameworks. It has two series banners (Stackless Guide and Non-Expert Series) followed by an `.article-list` div containing 13 articles. The site uses a neo-brutalist aesthetic with CSS custom properties (`var(--slate-900)`, `var(--pink-500)`, `var(--lime-400)`, etc.), 3px solid borders, offset box shadows, and Inter font. Dark mode is handled via `[data-theme]` attribute and CSS variables, so inline styles using variables work automatically in both themes. No existing newsletter or Mailchimp integration exists anywhere in the codebase. The insertion point is between the closing `</div>` of the Non-Expert Series banner (line ~94) and the `<div class="article-list">` (line ~96) in `blog.html`.
 
@@ -131,15 +131,15 @@ Now I have all the information needed. Let me produce the implementation plan.
 5. **Test locally** — open `blog.html` in browser, verify placement, check dark mode toggle, check mobile responsiveness
 
 **Acceptance Criteria:**
-- [ ] Email signup form appears between Non-Expert Series banner and article list
-- [ ] Form has email input field and subscribe button
-- [ ] Form posts to Mailchimp endpoint (or has clearly marked placeholder URL)
-- [ ] Includes Mailchimp honeypot bot protection field (hidden)
-- [ ] Styling matches site's neo-brutalist aesthetic (3px borders, bold type, CSS variables)
-- [ ] Works in both light and dark mode
-- [ ] Responsive — stacks properly on mobile
-- [ ] No JavaScript dependencies added (pure HTML form submission)
-- [ ] Run tests and ensure they pass
+- [x] Email signup form appears between Non-Expert Series banner and article list
+- [x] Form has email input field and subscribe button
+- [x] Form posts to Mailchimp endpoint (or has clearly marked placeholder URL)
+- [x] Includes Mailchimp honeypot bot protection field (hidden)
+- [x] Styling matches site's neo-brutalist aesthetic (3px borders, bold type, CSS variables)
+- [x] Works in both light and dark mode
+- [x] Responsive — stacks properly on mobile
+- [x] No JavaScript dependencies added (pure HTML form submission)
+- [x] Run tests and ensure they pass (no test framework — static HTML site)
 
 **Files to check:** `blog.html`, `styles.css`
 

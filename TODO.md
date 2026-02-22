@@ -17,12 +17,11 @@
 - [x] Blog posts audit — unverified tool references removed from post-8, post-9, post-10
 - [x] UI/UX consistency audit — all 7 Stackless main pages
 - [x] UI/UX audit — CurlMagic sub-site (all 7 pages)
+- [x] Homepage overhaul — CurlMagic moved to 1st, hero messaging broadened to "AI tools", dark mode lime fixed to soft green, footer nav links added
 
 ---
 
 ## Still To Do
-
-- [ ] **Homepage overhaul** — CurlMagic still 4th in homepage project cards. Messaging still narrow ("code" not "AI tools"). Dark mode green contrast bug. Disorganised footer.
 
 - [ ] **Rethink the shop** — Still sells £5 dashboards. Shift to selling tutorials for different use cases (gamer, busy parent etc.). MSI Claw is the natural first tutorial product.
 

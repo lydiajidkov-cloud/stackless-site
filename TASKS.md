@@ -54,7 +54,7 @@ Now I have all the information needed. Here's the plan:
 Now I have a comprehensive understanding of the codebase. Let me output the plan:
 
 ## Task 5: Create "The Non-Coder Start Guide" page
-**Status:** [ ] Incomplete
+**Status:** [x] Complete
 
 **Context:** The stackless-site is a neo-brutalist static site targeting non-coders building with AI. It already has two blog series ("The Stackless Guide" 3-part, "The Non-Expert Series" 3-part) covering security, testing, toolkit, privacy, and agents. However, there is no foundational "start here" guide that covers the absolute beginning: getting a Claude subscription, installing Claude Code, understanding what a terminal is, and running your first project. This is the missing "step zero" content — the on-ramp before the existing guides. It should be written from Lydia's real experience as a non-coder, making it the key differentiator for the site. The page will be a new blog post (post-14) following established patterns: inline `<style>` for article-body, series badge, back-link, tags, meta, and the site's neo-brutalist card system (warning-card, example-card, step-card, tip-box). It also needs to be added to `blog.html` as a featured series/entry and linked from the homepage as a prominent CTA.
 

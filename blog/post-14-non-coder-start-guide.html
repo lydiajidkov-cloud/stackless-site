@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Non-Coder Start Guide: From Zero to Your First AI Project — Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+
+    <!-- SEO -->
+    <meta name="description" content="The complete beginner's guide to building with AI. From getting a Claude subscription to shipping your first project. Written by a non-coder who's done it.">
+    <link rel="canonical" href="https://stackless.tech/blog/post-14-non-coder-start-guide.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="The Non-Coder Start Guide: From Zero to Your First AI Project">
+    <meta property="og:description" content="The complete beginner's guide to building with AI. From getting a Claude subscription to shipping your first project. Written by a non-coder who's done it.">
+    <meta property="og:url" content="https://stackless.tech/blog/post-14-non-coder-start-guide.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://stackless.tech/og-image.png">
+    <meta property="og:site_name" content="Stackless">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Non-Coder Start Guide: From Zero to Your First AI Project">
+    <meta name="twitter:description" content="The complete beginner's guide to building with AI. From getting a Claude subscription to shipping your first project.">
+    <meta name="twitter:image" content="https://stackless.tech/og-image.png">
+
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 4rem;
+        }
+        .article-body h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .article-meta {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--slate-500);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 3px solid var(--slate-900);
+        }
+        .article-body p {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.0625rem;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-body h3 {
+            font-size: 1.125rem;
+            font-weight: 800;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-body ul, .article-body ol {
+            color: var(--slate-700);
+            font-weight: 500;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li { margin-bottom: 0.5rem; }
+        .article-body blockquote {
+            border-left: 4px solid var(--indigo-600);
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            background: var(--slate-100);
+            font-style: italic;
+            font-weight: 600;
+        }
+        .article-body code {
+            background: var(--slate-100);
+            border: 1px solid var(--slate-900);
+            padding: 0.15rem 0.4rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .step-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--indigo-600);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .step-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--indigo-600);
+            margin-bottom: 0.5rem;
+        }
+        .step-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .warning-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--pink-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .warning-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--pink-500);
+            margin-bottom: 0.5rem;
+        }
+        .warning-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .example-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--lime-400);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .example-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--slate-700);
+            margin-bottom: 0.5rem;
+        }
+        .example-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .tip-card {
+            background: var(--white);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 var(--orange-500);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .tip-card h4 {
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--orange-500);
+            margin-bottom: 0.5rem;
+        }
+        .tip-card p { font-size: 0.95rem !important; margin-bottom: 0.5rem !important; }
+        .tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            background: var(--slate-100);
+            border: 2px solid var(--slate-900);
+            padding: 0.2rem 0.6rem;
+            margin-right: 0.4rem;
+        }
+        .article-nav {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 3px solid var(--slate-900);
+            flex-wrap: wrap;
+        }
+        .article-nav a {
+            font-weight: 800;
+            font-size: 0.875rem;
+            text-decoration: none;
+            color: var(--slate-900);
+            border: 2px solid var(--slate-900);
+            padding: 0.6rem 1rem;
+            transition: all 0.15s;
+        }
+        .article-nav a:hover {
+            background: var(--slate-900);
+            color: var(--white);
+        }
+
+        /* Dark mode */
+        [data-theme="dark"] .article-body p,
+        [data-theme="dark"] .article-body ul,
+        [data-theme="dark"] .article-body ol { color: var(--slate-700); }
+        [data-theme="dark"] .article-body blockquote { background: #1e1e28; border-left-color: var(--indigo-600); }
+        [data-theme="dark"] .article-body code { background: #2a2a38; color: var(--lime-400); border-color: rgba(255,255,255,0.12); }
+        [data-theme="dark"] .step-card,
+        [data-theme="dark"] .warning-card,
+        [data-theme="dark"] .example-card,
+        [data-theme="dark"] .tip-card { background: #1e1e28; border-color: rgba(255,255,255,0.12); }
+        [data-theme="dark"] .article-meta { border-bottom-color: rgba(255,255,255,0.12); }
+        [data-theme="dark"] .article-nav a { color: var(--slate-900); border-color: var(--slate-700); }
+        [data-theme="dark"] .article-nav a:hover { background: var(--slate-700); color: var(--white); }
+    </style>
+</head>
+<body>
+    <!-- Nav -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../index.html" class="nav-logo">Stackless</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../blog.html" class="active">Blog</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+                <li><a href="../fleet.html">The Fleet</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"><span class="icon-sun">☀️</span><span class="icon-moon">🌙</span></button>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu" onclick="document.getElementById('navLinks').classList.toggle('open')">&#9776;</button>
+        </div>
+    </nav>
+
+    <!-- Article -->
+    <main class="article-body">
+
+        <div class="article-meta">
+            <span class="tag">Getting Started</span>
+            <span class="tag">Claude Code</span>
+            <span class="tag">Beginner</span>
+            <span style="margin-left: 0.5rem;">February 2026 &bull; 20 min read</span>
+        </div>
+
+        <h1>The Non-Coder Start Guide: From Zero to Your First AI Project</h1>
+
+        <p>This is the guide I wish existed when I started. I'm a doctor. Not a developer. I'd never used a terminal, didn't know what Node.js was, and thought GitHub was only for programmers. Four months later, I'd shipped 13 projects, built a product shop, and was running AI coding sessions overnight while I slept.</p>
+
+        <p>This guide walks you through everything from scratch. Not "here's the concept" but "here's exactly what to click, type, and install." Because when I started, every guide assumed I already knew things I didn't.</p>
+
+        <blockquote>"The gap between wanting to build something and actually building it used to be years of learning to code. Now it's about an hour of setup."</blockquote>
+
+        <h2>Why this guide exists</h2>
+
+        <p>Most "getting started with AI coding" guides are written by developers. They skip the basics because the basics are obvious to them. "Open your terminal" is not obvious if you've never used one. "Install Node.js" raises questions: what is Node.js? Why do I need it? What does "install" mean in this context?</p>
+
+        <p>I'm writing this because I remember being confused by every single one of those steps. And I remember how quick the actual setup was once someone explained it properly.</p>
+
+        <p>Here's what we'll cover:</p>
+        <ol>
+            <li>Getting a Claude subscription (and why Claude specifically)</li>
+            <li>What a terminal actually is</li>
+            <li>Installing the prerequisites</li>
+            <li>Installing Claude Code</li>
+            <li>Your first run</li>
+            <li>Your first project</li>
+            <li>What to do next</li>
+        </ol>
+
+        <p>Total time: about 30-45 minutes for the full setup. Most of that is waiting for downloads.</p>
+
+        <h2>Step 1: Get Claude Pro</h2>
+
+        <p>Claude is the AI that powers Claude Code. It's made by Anthropic. You need a paid subscription because Claude Code uses a lot more AI capacity than a regular chat conversation.</p>
+
+        <div class="step-card">
+            <h4>What to do</h4>
+            <p>1. Go to <strong>claude.ai</strong> in your browser.</p>
+            <p>2. Create an account (email and password).</p>
+            <p>3. Subscribe to <strong>Claude Pro</strong>. It costs around <strong>&pound;18/month</strong> (about $20 USD).</p>
+            <p>4. That's it. You now have access to Claude Code.</p>
+        </div>
+
+        <div class="tip-card">
+            <h4>Why Claude and not ChatGPT or Gemini?</h4>
+            <p>ChatGPT and Gemini are great for chat. But Claude Code is different: it runs on your computer, reads your files, writes code directly into your project folders, and can run commands. It works with your actual file system, not in a browser tab. That's the key difference. Other tools can generate code you copy-paste. Claude Code builds your project in place, like having a developer sitting at your keyboard.</p>
+        </div>
+
+        <p>There's also a Claude Max plan at around &pound;80/month with 5x usage. You don't need it to start. Pro is plenty for learning and building your first few projects. You can upgrade later if you find yourself hitting usage limits regularly.</p>
+
+        <h2>Step 2: What is a terminal?</h2>
+
+        <p>A terminal is a text box where you type commands. That's it. It's not scary, it's not complicated, and you don't need to memorise commands. You'll type one or two things into it and then Claude Code takes over.</p>
+
+        <p>Think of it like this: your computer has two ways to interact with it. The graphical way (clicking icons, dragging files) and the text way (typing commands). The terminal is the text way. It can do everything the graphical way can do, plus things that don't have buttons or menus.</p>
+
+        <div class="step-card">
+            <h4>How to open your terminal</h4>
+            <p><strong>On Windows:</strong> Press the Windows key, type "Terminal" or "Windows Terminal", and click it. If that doesn't work, search for "Command Prompt" or "PowerShell" instead.</p>
+            <p><strong>On Mac:</strong> Press Cmd + Space, type "Terminal", press Enter.</p>
+            <p>You'll see a black or dark window with a blinking cursor. That's your terminal. You type commands here and press Enter to run them.</p>
+        </div>
+
+        <div class="example-card">
+            <h4>What it looks like</h4>
+            <p>On Windows, you'll see something like:</p>
+            <p><code>C:\Users\YourName&gt;</code></p>
+            <p>On Mac:</p>
+            <p><code>yourname@MacBook ~ %</code></p>
+            <p>That's called the "prompt". It's telling you where you are on your computer and waiting for you to type something. The bit before the &gt; or % is your current folder location.</p>
+        </div>
+
+        <div class="warning-card">
+            <h4>Don't panic</h4>
+            <p>The terminal can't break your computer by accident. If you type something wrong, it will just say "command not found" or show an error message. You can always close the window and open a new one. Nothing permanent happens unless you specifically tell it to delete files (and even then, it asks first in most cases).</p>
+        </div>
+
+        <h2>Step 3: Install the prerequisites</h2>
+
+        <p>Claude Code needs two things installed on your computer before it can run: <strong>Node.js</strong> and <strong>Git</strong>. You'll also want a <strong>GitHub account</strong>. Here's what each one is and how to install it.</p>
+
+        <h3>Node.js</h3>
+
+        <p>Node.js is a program that lets your computer run JavaScript code. Claude Code is built with JavaScript, so it needs Node.js to work. You'll never interact with Node.js directly. It just needs to be there.</p>
+
+        <div class="step-card">
+            <h4>Installing Node.js</h4>
+            <p>1. Go to <strong>nodejs.org</strong> in your browser.</p>
+            <p>2. Click the big green download button (it says "LTS" which means "Long Term Support", the stable version).</p>
+            <p>3. Run the downloaded file. Click Next, Next, Next, Install. Accept all the defaults.</p>
+            <p>4. When it's done, open a <strong>new</strong> terminal window (close the old one if it's open).</p>
+            <p>5. Type: <code>node --version</code> and press Enter.</p>
+            <p>6. If you see a version number (like v22.x.x), it's installed. If you see an error, close the terminal, reopen it, and try again.</p>
+        </div>
+
+        <h3>Git</h3>
+
+        <p>Git is a version control system. Think of it as an "undo history" for your entire project. Every time you save a checkpoint (called a "commit"), Git remembers the exact state of every file. If something goes wrong, you can go back to any previous checkpoint. It's your safety net.</p>
+
+        <div class="step-card">
+            <h4>Installing Git</h4>
+            <p><strong>On Windows:</strong> Go to <strong>git-scm.com</strong>, download the installer, run it. Accept all the default options. There are a lot of screens with options. Just click Next on all of them.</p>
+            <p><strong>On Mac:</strong> Open your terminal and type <code>git --version</code>. If it's not installed, your Mac will prompt you to install the Xcode Command Line Tools. Click Install and wait.</p>
+            <p>Once installed, verify by typing <code>git --version</code> in a new terminal window. You should see something like "git version 2.x.x".</p>
+        </div>
+
+        <h3>GitHub account</h3>
+
+        <p>GitHub is a website that stores your Git projects online. It's like Google Drive for code. You don't strictly need it to get started, but you'll want it within your first week because it gives you a backup of your work that lives outside your computer.</p>
+
+        <div class="step-card">
+            <h4>Setting up GitHub</h4>
+            <p>1. Go to <strong>github.com</strong> and create a free account.</p>
+            <p>2. That's it for now. You'll connect it to your computer later when you're ready to push your first project online. Claude Code can help you do that when the time comes.</p>
+        </div>
+
+        <div class="tip-card">
+            <h4>Why all three?</h4>
+            <p><strong>Node.js</strong> makes Claude Code run. <strong>Git</strong> keeps your work safe with undo history. <strong>GitHub</strong> backs up your work online. Together, they're the foundation that every project sits on. You install them once and then mostly forget about them.</p>
+        </div>
+
+        <h2>Step 4: Install Claude Code</h2>
+
+        <p>This is the moment it all comes together. One command in your terminal and Claude Code is installed.</p>
+
+        <div class="step-card">
+            <h4>The install command</h4>
+            <p>Open your terminal and type this exactly:</p>
+            <p><code>npm install -g @anthropic-ai/claude-code</code></p>
+            <p>Then press Enter.</p>
+        </div>
+
+        <p>Let me break down what that command means word by word, because understanding it makes the terminal less mysterious:</p>
+
+        <ul>
+            <li><strong>npm</strong> stands for "Node Package Manager". It's a tool that came with Node.js. It downloads and installs programs written in JavaScript.</li>
+            <li><strong>install</strong> tells npm you want to install something.</li>
+            <li><strong>-g</strong> means "globally". Install it for your whole computer, not just one folder.</li>
+            <li><strong>@anthropic-ai/claude-code</strong> is the name of the program you're installing. It's Claude Code, made by Anthropic.</li>
+        </ul>
+
+        <p>You'll see text scrolling by for 30-60 seconds. That's npm downloading and setting everything up. When it's done, you'll see your prompt again.</p>
+
+        <div class="warning-card">
+            <h4>If you see errors</h4>
+            <p>The most common error is a "permission denied" message. On Mac, try the command again with <code>sudo</code> at the start: <code>sudo npm install -g @anthropic-ai/claude-code</code> (it'll ask for your password). On Windows, try closing the terminal and reopening it as Administrator (right-click the Terminal icon, choose "Run as administrator").</p>
+        </div>
+
+        <h2>Step 5: Your first run</h2>
+
+        <p>Claude Code is installed. Time to start it up.</p>
+
+        <div class="step-card">
+            <h4>Starting Claude Code</h4>
+            <p>1. In your terminal, navigate to where you want to build things. For example: <code>cd Documents</code></p>
+            <p>2. Create a folder for your first project: <code>mkdir my-first-project</code></p>
+            <p>3. Go into that folder: <code>cd my-first-project</code></p>
+            <p>4. Type: <code>claude</code></p>
+            <p>5. Press Enter.</p>
+        </div>
+
+        <p>The first time you run <code>claude</code>, it will ask you to sign in. It opens a browser window where you log in with your Anthropic account (the one you made in Step 1). Once you authorise it, the terminal will show the Claude Code interface.</p>
+
+        <p>You'll see a prompt that looks different from the normal terminal. It's waiting for you to type what you want to build. Not code. Just plain English.</p>
+
+        <div class="example-card">
+            <h4>What the Claude Code prompt looks like</h4>
+            <p>You'll see something like:</p>
+            <p><code>claude&gt;</code></p>
+            <p>This is where you talk to Claude. Type what you want, just like you'd type in a chat. "Create an HTML file called index.html with a blue background and the text Hello World." Press Enter. Watch it work.</p>
+        </div>
+
+        <h3>Permission prompts</h3>
+
+        <p>Claude Code will ask your permission before doing things. It'll say something like "I want to create a file called index.html. Allow?" You can type <code>y</code> for yes. This is a safety feature: Claude Code won't change your files without asking first.</p>
+
+        <div class="tip-card">
+            <h4>You can always say no</h4>
+            <p>If Claude Code suggests doing something you're not sure about, just say no. It'll ask what you'd prefer instead. You're always in control. The AI proposes, you approve.</p>
+        </div>
+
+        <h2>Step 6: Your first project</h2>
+
+        <p>Let's build something real. Not a "Hello World" but something you'd actually look at twice.</p>
+
+        <div class="step-card">
+            <h4>Try this prompt</h4>
+            <p>Type this into Claude Code:</p>
+            <p><code>"Build me a personal homepage. Use a clean, modern design. Include my name [YOUR NAME], a short bio section, and three links to things I'm interested in. Use a dark background with light text. Make it look professional."</code></p>
+            <p>Replace [YOUR NAME] with your actual name. Modify the description to suit you.</p>
+        </div>
+
+        <p>Here's what will happen:</p>
+
+        <ol>
+            <li>Claude Code will tell you its plan ("I'll create an index.html file with...")</li>
+            <li>It'll ask permission to create the file</li>
+            <li>You say yes</li>
+            <li>It writes the file</li>
+            <li>It might ask if you want it to make adjustments</li>
+        </ol>
+
+        <p>To see your creation, find the file it made (it'll be in the folder you created earlier) and double-click it. It opens in your browser. You've just built a web page.</p>
+
+        <div class="example-card">
+            <h4>What to expect</h4>
+            <p>Your first project will take about 2-5 minutes from prompt to finished page. The result will be a working, styled HTML page. It won't be perfect. You'll want to change things. That's the point. Tell Claude Code what to change: "Make the heading bigger." "Change the background to dark blue." "Add a fourth link." Each change takes seconds.</p>
+        </div>
+
+        <p>This is the core loop of building with AI: describe what you want, review what you get, ask for changes. You'll do this hundreds of times and get faster every time.</p>
+
+        <div class="warning-card">
+            <h4>Save your work with Git</h4>
+            <p>Before you close Claude Code, type: "Initialise a git repository and commit everything." Claude Code will set up Git tracking for your project and save a checkpoint. This means even if you mess things up later, you can always get back to this version. Make this a habit. Commit after every meaningful change.</p>
+        </div>
+
+        <h2>Step 7: What next</h2>
+
+        <p>You've got Claude Code running. You've built your first thing. Here's where to go from here.</p>
+
+        <h3>Build something you actually need</h3>
+
+        <p>The best second project is something practical. A birthday tracker. A recipe list. A budget calculator. A landing page for a side project. Something you'll use, because you'll be more motivated to improve it.</p>
+
+        <h3>Read the Stackless Guide series</h3>
+
+        <p>I wrote a 3-part guide covering the things that tripped me up after the initial setup:</p>
+
+        <ul>
+            <li><strong><a href="post-6-security-for-non-coders.html">Part 1: Security</a></strong> covers keeping your data safe, what to never commit to Git, and the basics of working with AI tools without exposing sensitive information.</li>
+            <li><strong><a href="post-7-testing-for-non-coders.html">Part 2: Testing</a></strong> covers how to know if what the AI built actually works. The "trust but verify" approach, sample data, and the mistakes AI makes most often.</li>
+            <li><strong><a href="post-8-non-coders-toolkit.html">Part 3: The Toolkit</a></strong> covers the full set of tools I use, custom instructions, automation, and how to build increasingly powerful workflows over time.</li>
+        </ul>
+
+        <h3>Read the Non-Expert Series</h3>
+
+        <p>Once you're building regularly, these go deeper on specific topics:</p>
+
+        <ul>
+            <li><a href="post-11-privacy-for-non-coders.html">Privacy for Non-Coders</a> covers what data actually leaves your machine when you use AI tools.</li>
+            <li><a href="post-12-building-agent-teams.html">Building Agent Teams</a> covers using multiple AIs together for bigger tasks.</li>
+            <li><a href="post-13-content-creator-agent.html">Content Creator Agent</a> covers building an AI writing team with focused prompts.</li>
+        </ul>
+
+        <h3>Learn about Stackless</h3>
+
+        <p>This whole site was built by a non-coder (me) using the exact process described in this guide. Check out the <a href="../about.html">About page</a> for the full story, or browse <a href="../projects.html">Projects</a> to see what's possible when you stick with it for a few months.</p>
+
+        <div class="tip-card">
+            <h4>The one thing that matters most</h4>
+            <p>Custom instructions. Once you've built 2-3 things, create a file that tells Claude Code about you: what you like, how you work, what tech you prefer, what mistakes to avoid. This single step transforms Claude Code from a generic assistant into one that knows your preferences. I covered this in detail in <a href="post-8-non-coders-toolkit.html">Part 3 of the Stackless Guide</a>.</p>
+        </div>
+
+        <h2>The honest truth</h2>
+
+        <p>You will get stuck. Things will break. The AI will misunderstand you and build something you didn't ask for. Error messages will appear that make no sense. A file will vanish and you'll have no idea where it went.</p>
+
+        <p>All of this happened to me. All of it is normal. And all of it is fixable, usually by telling Claude Code "something went wrong, here's the error, please fix it."</p>
+
+        <p>The difference between people who build things with AI and people who don't isn't technical skill. It's willingness to sit with confusion for five minutes, try something, and see what happens. The AI handles the technical parts. You handle the intent, the decisions, and the persistence.</p>
+
+        <p>I went from "what's a terminal?" to shipping real products in four months. Not because I'm special, but because the tools are genuinely that good now. You just have to start.</p>
+
+        <blockquote>"The only real mistake is not trying. Everything else is just debugging."</blockquote>
+
+        <div class="article-nav">
+            <a href="../blog.html">All Posts</a>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div>
+                <a href="../index.html" style="font-weight: 900; font-size: 1.25rem; text-decoration: none; color: var(--slate-900);">Stackless</a>
+                <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--slate-500);">Digital products and tools for curious non-coders.</p>
+            </div>
+            <div>
+                <a href="../blog.html" style="font-weight: 700; font-size: 0.875rem; margin-right: 1.5rem; text-decoration: none; color: var(--slate-700);">Blog</a>
+                <a href="../shop/index.html" style="font-weight: 700; font-size: 0.875rem; text-decoration: none; color: var(--slate-700);">Shop</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Stackless. Built without code (mostly).</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            var btn = document.getElementById('themeToggle');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('stackless-theme', next);
+            });
+        })();
+    </script>
+</body>
+</html>

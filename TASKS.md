@@ -53,62 +53,6 @@ Now I have all the information needed. Here's the plan:
 
 Now I have a comprehensive understanding of the codebase. Let me output the plan:
 
-## Task 5: Create "The Non-Coder Start Guide" page
-**Status:** [x] Complete
-
-**Context:** The stackless-site is a neo-brutalist static site targeting non-coders building with AI. It already has two blog series ("The Stackless Guide" 3-part, "The Non-Expert Series" 3-part) covering security, testing, toolkit, privacy, and agents. However, there is no foundational "start here" guide that covers the absolute beginning: getting a Claude subscription, installing Claude Code, understanding what a terminal is, and running your first project. This is the missing "step zero" content — the on-ramp before the existing guides. It should be written from Lydia's real experience as a non-coder, making it the key differentiator for the site. The page will be a new blog post (post-14) following established patterns: inline `<style>` for article-body, series badge, back-link, tags, meta, and the site's neo-brutalist card system (warning-card, example-card, step-card, tip-box). It also needs to be added to `blog.html` as a featured series/entry and linked from the homepage as a prominent CTA.
-
-**Plan:**
-1. **Create `blog/post-14-non-coder-start-guide.html`** — New blog post following the exact template pattern from existing posts (post-8 is the closest reference as a toolkit/guide post):
-   - Standard `<head>`: charset, viewport, title, Google Fonts (Inter), `../styles.css`, theme toggle script, SEO meta, OG tags, Twitter cards, canonical URL
-   - Standard nav (all 7 links, none active since it's a blog subpage), theme toggle, hamburger
-   - `<main>` with `<div class="article-body">` (max-width: 720px, centered)
-   - Back link: `<a class="back-link" href="../blog.html">&larr; All Posts</a>`
-   - Series badge linking to the Stackless Guide series (or a new "Start Here" standalone badge)
-   - Tags: "Getting Started", "Claude Code", "Beginner"
-   - Title: "The Non-Coder Start Guide: From Zero to Your First AI Project"
-   - Meta: estimated ~20 min read, February 2026
-   - Inline `<style>` block matching existing blog post styles (article-body, h1-h3, p, blockquote, card classes)
-   - Dark mode support in the inline styles using `[data-theme="dark"]` selectors
-
-2. **Write the guide content** in these sections (using step-card, example-card, warning-card, tip-box patterns):
-   - **Why This Guide Exists** — Lydia's perspective: doctor, not a developer, built real products
-   - **Step 1: Get Claude Pro** — What it costs (£18/mo), what you get, why Claude specifically (vs ChatGPT/Gemini for code)
-   - **Step 2: What Is a Terminal?** — Demystify the terminal/command line for absolute beginners. Windows Terminal vs PowerShell vs Git Bash. "It's just a text box where you type commands"
-   - **Step 3: Install the Prerequisites** — Node.js (what it is, how to install), Git (what it is, how to install), GitHub account (what it is, why you need it)
-   - **Step 4: Install Claude Code** — `npm install -g @anthropic-ai/claude-code`, what that command means word by word
-   - **Step 5: Your First Run** — `claude` command, what happens, the permission prompts, how to talk to it
-   - **Step 6: Your First Project** — A simple practical example (e.g., "build me a personal website"), what to expect, how long it takes
-   - **Step 7: What Next** — Links to the existing Stackless Guide series (security, testing, toolkit), the Non-Expert Series, and the about page
-   - Use warning-cards for common mistakes (e.g., "Don't paste API keys"), example-cards for real terminal output, step-cards for each installation step
-
-3. **Update `blog.html`** — Add the new post:
-   - Add a new featured series block at the top (before "The Stackless Guide") styled as a prominent "START HERE" banner with a distinct color (amber/yellow to stand out). Or integrate it as a standalone featured item
-   - Add the article-item entry at the top of the article-list with tags "Getting Started", "Claude Code", "Beginner" and a "START HERE" series badge
-
-4. **Update `index.html`** — Add a visible CTA or mention in the hero section or Lab Feed area linking to the start guide as a key piece of content. Could be a new project card or a callout within the existing hero
-
-5. **Update `sitemap.xml`** — Add the new URL `https://stackless.tech/blog/post-14-non-coder-start-guide.html`
-
-6. **Standard footer, mobile menu, and theme toggle JS** — Copy from existing blog posts (post-8 or post-13 as reference)
-
-**Acceptance Criteria:**
-- [ ] `blog/post-14-non-coder-start-guide.html` exists and renders correctly with the site's neo-brutalist design
-- [ ] Page has full SEO (meta description, OG tags, Twitter cards, canonical URL, structured data)
-- [ ] Page has working dark mode toggle that persists
-- [ ] Page has responsive layout (mobile hamburger menu, readable on small screens)
-- [ ] Content covers the complete journey: subscription, terminal basics, prerequisites, Claude Code install, first run, first project
-- [ ] Uses the site's card system (step-card, warning-card, example-card) for key information
-- [ ] Written in Lydia's voice: direct, non-technical, from real experience
-- [ ] `blog.html` lists the new post prominently (featured "Start Here" section + article entry)
-- [ ] `sitemap.xml` updated with the new page URL
-- [ ] All internal links work (back to blog, series links to existing guides)
-- [ ] Nav links match all other pages (Home, About, Projects, Blog, The Fleet, Resources, Shop)
-- [ ] Run tests and ensure they pass
-
-**Files to check:** `blog.html`, `blog/post-8-non-coders-toolkit.html` (template reference), `blog/post-13-content-creator-agent.html` (latest post reference), `index.html`, `sitemap.xml`, `styles.css`
-
----
 
 Good, post-11 doesn't have a back-link. I now have all the information needed to produce the plan.
 

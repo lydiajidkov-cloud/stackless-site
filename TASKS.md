@@ -149,66 +149,6 @@ Good. Now I have everything I need. The next blog post would be post-14. Let me 
 
 Good - nav links are consistent across pages. Now I have all the information needed. Here's the plan:
 
-## Task 15: UI/UX consistency audit across all 7 Stackless main pages
-**Status:** [x] Complete
-
-**Context:** The 7 main Stackless pages (index, about, projects, blog, fleet, resources, shop) share `styles.css` but fleet, resources, and shop also have extensive inline `<style>` blocks with page-specific classes. The main dark mode section in `styles.css` (lines 1029-1211) covers shared components well, but **none of the page-specific inline styles have dark mode overrides** for fleet (`.fleet-hero`, `.fleet-stats`, agent cards), resources (`.resource-card`, `.notebooklm-badge`, `.audio-stub`), or shop (`.product-card`, `.product-body`, `.btn-buy`). Additionally, 6 CSS custom properties (`--slate-50`, `--slate-200`, `--slate-300`, `--slate-400`, `--slate-600`) are used across 79 occurrences in 18 files but **never defined**, causing those styles to silently fail (transparent backgrounds, invisible borders). Mobile nav and desktop nav are structurally consistent across all 7 pages. Tag styling on blog.html uses hardcoded inline color styles rather than the `.tag` class pattern used on index/projects. The blog post cards on blog.html also lack dark mode coverage for their inline-styled elements.
-
-**Plan:**
-
-1. **Define missing CSS variables** in `styles.css` root `:root` block (line ~5):
-   - Add `--slate-50: #f8fafc;`, `--slate-200: #e2e8f0;`, `--slate-300: #cbd5e1;`, `--slate-400: #94a3b8;`, `--slate-600: #475569;` alongside existing slate values
-   - Add dark mode overrides for these new variables in the `[data-theme="dark"]` block (~line 1029): `--slate-50`, `--slate-200`, `--slate-300`, `--slate-400`, `--slate-600` mapped to appropriate dark equivalents
-
-2. **Add dark mode rules for fleet.html inline elements** in `fleet.html` `<style>` block:
-   - `.fleet-hero h1`, `.fleet-hero .lead` text colors
-   - `.fleet-premise` (dark bg on dark = needs lighter treatment)
-   - `.fleet-section-header`, `.fleet-section-tag`, `.fleet-section-title` text
-   - Agent cards (`.agent-card`, `.agent-card-header`, etc.) backgrounds and borders
-   - `.fleet-cta` section
-
-3. **Add dark mode rules for resources.html inline elements** in `resources.html` `<style>` block:
-   - `.resource-card` background, border, box-shadow
-   - `.resource-card h3`, `.resource-card p` text colors
-   - `.resource-tag` background
-   - `.notebooklm-badge` background/border (hardcoded `#e0f2fe`/`#0ea5e9`)
-   - `.audio-stub`, `.infographic-stub` background and border
-   - `.coming-soon-note` treatment
-   - `.section-label::after` line color
-
-4. **Add dark mode rules for shop/index.html inline elements** in `shop/index.html` `<style>` block:
-   - `.product-card` background, border, box-shadow
-   - `.product-category-tag` border
-   - `.product-title`, `.product-price`, `.product-desc` text colors
-   - `.product-features li` text and border colors
-   - `.btn-buy` variants
-   - `.shop-hero h1`, `.shop-hero p` text
-   - `.shop-note`, `.shop-faq` sections
-
-5. **Normalise blog.html tag styling** — replace inline `style="background: var(--pink-500); color: white;"` on blog tags with CSS classes (e.g. `.tag-agents`, `.tag-security`, `.tag-tools`) defined in either `styles.css` or blog.html's inline block, with corresponding dark mode overrides
-
-6. **Add dark mode for blog.html list-specific elements** — the `.article-item` is covered in styles.css, but check inline-styled elements on blog.html (filter buttons active states, search input)
-
-7. **Verify mobile responsiveness** on fleet, resources, and shop:
-   - Fleet: check agent card grid at 768px breakpoint (currently inline — may need `@media` block)
-   - Resources: check `.resource-grid` at 768px (uses `auto-fill` so likely OK)
-   - Shop: check `.products-grid` at 768px (uses `repeat(3, 1fr)` — needs mobile override for single column)
-
-8. **Cross-page visual test** — open each page in browser, toggle dark mode, resize to mobile, verify no broken elements
-
-**Acceptance Criteria:**
-- [x] All 6 missing `--slate-*` CSS variables defined in `:root` with dark mode equivalents
-- [x] Fleet page renders correctly in dark mode (hero, stats, agent cards, CTA)
-- [x] Resources page renders correctly in dark mode (resource cards, badges, stubs)
-- [x] Shop page renders correctly in dark mode (product cards, buttons, FAQ)
-- [x] Blog page tags use CSS classes instead of inline styles, with dark mode support
-- [x] Shop products grid collapses to single column on mobile (768px)
-- [x] No hardcoded light-only colors (e.g. `#e0f2fe`, `#075985`) without dark mode alternatives
-- [x] Run tests and ensure they pass
-
-**Files to check:** `styles.css`, `index.html`, `about.html`, `projects.html`, `blog.html`, `fleet.html`, `resources.html`, `shop/index.html`
-
----
 
 ## Task 16: UI/UX audit and fixes for CurlMagic sub-site (7 pages, products priority)
 **Status:** [ ] Incomplete

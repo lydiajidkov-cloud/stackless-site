@@ -533,3 +533,81 @@
 **Files to check:** `projects.html`, `styles.css`, `blog/post-1-ehr-pathway.html`, `ideas.md`, `TODO.md`
 
 ---
+
+## Task 9: Audit blog posts — remove unverified tool references
+**Status:** [x] Complete
+**Completed:** 2026-02-22 10:07:26
+**Duration:** 4m 2s
+**Commits:**
+- aa188df Mark Task 9 as complete in TASKS.md
+- 25abefb Remove unverified third-party tool references from posts 8, 9, 10
+
+**Context:** Posts 8, 9, and 10 contain claims about third-party tools (Cursor, Windsurf, Copilot, v0, Bolt, Lovable, Replit) including pricing, capabilities, and comparisons that haven't been verified against current product pages. These claims risk being outdated or inaccurate. The task is to remove these unverified sections while keeping the posts coherent and focused on the tools actually used (Claude Code, Gemini Canvas, ChatGPT, NotebookLM, Claude Artifacts).
+
+**Plan:**
+
+**post-8-non-coders-toolkit.html:**
+1. Delete the `<h3>Cursor / Windsurf / Copilot</h3>` heading, its tool-card div (lines 305-313), and the follow-up paragraph (line 315)
+2. Delete the `<h3>v0 (Vercel)</h3>` heading and its tool-card div (lines 317-325)
+3. Delete the `<h3>Bolt / Lovable / Replit Agent</h3>` heading and its tool-card div (lines 327-335)
+4. In the "How I Pick the Right Tool" list (lines 341-348): remove the v0 reference from the "Quick visual prototype?" bullet (change to just "Gemini Canvas"), and remove the entire "Need a full app with user accounts/database?" bullet mentioning Bolt/Replit Agent
+5. Review surrounding text for flow. The section should jump from ChatGPT Canvas straight to "How I Pick the Right Tool"
+
+**post-9-gemini-canvas-frontends.html:**
+1. In the comparison table (lines 321-362): delete the `<tr>` row for v0 (Vercel) (lines 343-348) and the `<tr>` row for Bolt.new (lines 349-354)
+2. Keep Gemini Canvas, Claude Code, and Claude Artifacts rows intact
+3. No other references to remove in this file
+
+**post-10-ai-orchestra.html:**
+1. Delete the entire Cursor/Windsurf tool-card div (lines 275-282)
+2. In the "New Shiny Tool" section (lines 313-325): delete the intro paragraph mentioning v0/Bolt/Replit/Lovable (line 315), delete the v0 paragraph (line 317), delete the Bolt.new paragraph (line 319), delete the Replit Agent paragraph (line 321)
+3. Keep the Claude Artifacts paragraph (line 323) — reframe the section heading and intro to just mention Artifacts as an additional useful tool rather than comparing it to removed tools
+4. Rewrite the closing paragraph (line 325) to not reference "chasing every new tool" since the removed tools no longer appear; instead reinforce the core-tools-plus-Artifacts message
+
+**Acceptance Criteria:**
+- [x] post-8: No mentions of Cursor, Windsurf, Copilot, v0, Bolt, Lovable, or Replit remain
+- [x] post-9: Comparison table contains only Gemini Canvas, Claude Code, and Claude Artifacts rows
+- [x] post-10: Cursor/Windsurf tool card removed; "New Shiny Tool" section reworked to only mention Claude Artifacts
+- [x] All three posts read coherently after removals (no dangling references, broken transitions, or orphaned headings)
+- [x] No broken HTML structure (unclosed tags, empty sections)
+- [x] Run tests and ensure they pass
+
+**Files to check:** `blog/post-8-non-coders-toolkit.html`, `blog/post-9-gemini-canvas-frontends.html`, `blog/post-10-ai-orchestra.html`
+
+---
+## Task 9: Audit blog posts — remove unverified tool references
+**Status:** [x] Complete
+
+**Context:** Posts 8, 9, and 10 contain claims about third-party tools (Cursor, Windsurf, Copilot, v0, Bolt, Lovable, Replit) including pricing, capabilities, and comparisons that haven't been verified against current product pages. These claims risk being outdated or inaccurate. The task is to remove these unverified sections while keeping the posts coherent and focused on the tools actually used (Claude Code, Gemini Canvas, ChatGPT, NotebookLM, Claude Artifacts).
+
+**Plan:**
+
+**post-8-non-coders-toolkit.html:**
+1. Delete the `<h3>Cursor / Windsurf / Copilot</h3>` heading, its tool-card div (lines 305-313), and the follow-up paragraph (line 315)
+2. Delete the `<h3>v0 (Vercel)</h3>` heading and its tool-card div (lines 317-325)
+3. Delete the `<h3>Bolt / Lovable / Replit Agent</h3>` heading and its tool-card div (lines 327-335)
+4. In the "How I Pick the Right Tool" list (lines 341-348): remove the v0 reference from the "Quick visual prototype?" bullet (change to just "Gemini Canvas"), and remove the entire "Need a full app with user accounts/database?" bullet mentioning Bolt/Replit Agent
+5. Review surrounding text for flow. The section should jump from ChatGPT Canvas straight to "How I Pick the Right Tool"
+
+**post-9-gemini-canvas-frontends.html:**
+1. In the comparison table (lines 321-362): delete the `<tr>` row for v0 (Vercel) (lines 343-348) and the `<tr>` row for Bolt.new (lines 349-354)
+2. Keep Gemini Canvas, Claude Code, and Claude Artifacts rows intact
+3. No other references to remove in this file
+
+**post-10-ai-orchestra.html:**
+1. Delete the entire Cursor/Windsurf tool-card div (lines 275-282)
+2. In the "New Shiny Tool" section (lines 313-325): delete the intro paragraph mentioning v0/Bolt/Replit/Lovable (line 315), delete the v0 paragraph (line 317), delete the Bolt.new paragraph (line 319), delete the Replit Agent paragraph (line 321)
+3. Keep the Claude Artifacts paragraph (line 323) — reframe the section heading and intro to just mention Artifacts as an additional useful tool rather than comparing it to removed tools
+4. Rewrite the closing paragraph (line 325) to not reference "chasing every new tool" since the removed tools no longer appear; instead reinforce the core-tools-plus-Artifacts message
+
+**Acceptance Criteria:**
+- [x] post-8: No mentions of Cursor, Windsurf, Copilot, v0, Bolt, Lovable, or Replit remain
+- [x] post-9: Comparison table contains only Gemini Canvas, Claude Code, and Claude Artifacts rows
+- [x] post-10: Cursor/Windsurf tool card removed; "New Shiny Tool" section reworked to only mention Claude Artifacts
+- [x] All three posts read coherently after removals (no dangling references, broken transitions, or orphaned headings)
+- [x] No broken HTML structure (unclosed tags, empty sections)
+- [x] Run tests and ensure they pass
+
+**Files to check:** `blog/post-8-non-coders-toolkit.html`, `blog/post-9-gemini-canvas-frontends.html`, `blog/post-10-ai-orchestra.html`
+
+---

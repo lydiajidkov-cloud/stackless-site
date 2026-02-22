@@ -106,33 +106,6 @@ Now I have all the information needed. Let me produce the implementation plan.
 
 ---
 
-## Task 11: Replace placeholder Buy Now button URLs with Payhip product links
-**Status:** [x] Complete (code infrastructure done — replace FINANCE_ID, PORTFOLIO_ID, GROCERY_ID with real Payhip product keys after account setup)
-
-**Context:** The shop page (`shop/index.html`) has 3 product cards (Finance Dashboard, AI Portfolio Template, Grocery Spending Dashboard) each priced at £5, plus a "Buy Me a Coffee" donation button. All 4 buttons currently have `href="#"`, making them non-functional. The site already references Payhip in product delivery descriptions ("Instant download via Payhip") and a complete integration research guide exists at `research/research-payhip-integration.md` with account setup steps, embed code format, and pricing calculations. The homepage and projects page correctly link to the shop anchors (`#buy-finance`, `#buy-portfolio`, `#buy-grocery`), so the only missing piece is the actual Payhip product URLs on the buy buttons. A Ko-fi or similar link is needed for the donation button.
-
-**Plan:**
-1. **Manual prerequisite — Create Payhip account and products** (see MANUAL_TASKS below). This produces 3 product IDs and optionally a Ko-fi donation URL.
-2. **Add Payhip embed script** to `shop/index.html` — insert `<script src="https://payhip.com/payhip.js"></script>` in the `<head>` section.
-3. **Update Finance Dashboard buy button** (line ~453 in `shop/index.html`) — replace `href="#"` with `href="https://payhip.com/b/FINANCE_ID"` and add `data-payhip-button-id="FINANCE_ID"` attribute plus `class="payhip-buy-button"` alongside existing classes.
-4. **Update AI Portfolio buy button** (line ~473) — same pattern with the portfolio product ID.
-5. **Update Grocery Spending buy button** (line ~493) — same pattern with the grocery product ID.
-6. **Update donation button** (line ~515) — replace `href="#"` with the Ko-fi (or Payhip tip) URL, add `target="_blank" rel="noopener"`.
-7. **Add `target="_blank" rel="noopener"` to all 3 product buy buttons** so purchases open in a new tab (Payhip checkout overlay will handle it if the JS is loaded, but the fallback should open a new tab).
-8. **Test locally** — open shop page, verify each button navigates to the correct Payhip checkout or Ko-fi page instead of scrolling to top.
-
-**Acceptance Criteria:**
-- [x] Payhip JS embed script is present in `shop/index.html` head
-- [x] All 3 product Buy Now buttons have Payhip URLs with placeholder IDs (no more `href="#"`)
-- [x] Donation button has Ko-fi URL (placeholder — update after creating Ko-fi account)
-- [x] All buy buttons have `target="_blank" rel="noopener"` for new-tab fallback
-- [x] Homepage and projects page "View Template" links still navigate to the correct shop sections
-- [ ] **Manual:** Replace FINANCE_ID, PORTFOLIO_ID, GROCERY_ID with real Payhip product keys
-- [ ] **Manual:** Verify Ko-fi URL is correct after account creation
-
-**Files to check:** `shop/index.html`, `index.html`, `projects.html`, `research/research-payhip-integration.md`
-
----
 
 ## Task 12: Add Mailchimp email signup form between Non-Expert Series banner and article list
 **Status:** [ ] Incomplete

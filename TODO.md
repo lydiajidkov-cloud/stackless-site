@@ -25,6 +25,6 @@
 
 - [x] **Rethink the shop** — Tutorials section added (MSI Claw live, Busy Parent + Finance coming soon). Dashboards moved to secondary "Tools & Templates" section.
 
-- [ ] **QA testing** — Guide post explaining what QA is for non-coders + set up automated tests for the site (Playwright or link checker). Could become a Behind the Build post.
+- [x] **QA testing** — Guide post explaining what QA is for non-coders + set up automated tests for the site (Playwright or link checker). Could become a Behind the Build post.
 
 - [ ] **Set up LinkedIn page for Stackless** — *(human action)* Posts 11-13 ready to repurpose using Social Adapter prompt from post-13.

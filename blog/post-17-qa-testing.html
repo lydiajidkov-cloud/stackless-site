@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is QA Testing? (And How I Added It to Stackless) | Stackless</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+
+    <!-- SEO -->
+    <meta name="description" content="QA testing explained for non-coders — what it is, why it matters, and how I set up an automated link checker for the Stackless site with zero coding knowledge.">
+    <link rel="canonical" href="https://stackless.tech/blog/post-17-qa-testing.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="What Is QA Testing? (And How I Added It to Stackless)">
+    <meta property="og:description" content="QA testing explained for non-coders — what it is, why it matters, and how I set up an automated link checker for the Stackless site.">
+    <meta property="og:url" content="https://stackless.tech/blog/post-17-qa-testing.html">
+    <meta property="og:type" content="article">
+    <meta property="og:image" content="https://stackless.tech/og-image.png">
+    <meta property="og:site_name" content="Stackless">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="What Is QA Testing? (And How I Added It to Stackless)">
+    <meta name="twitter:description" content="QA testing explained for non-coders — what it is, why it matters, and how I set up an automated link checker for the Stackless site.">
+    <meta name="twitter:image" content="https://stackless.tech/og-image.png">
+
+    <style>
+        .article-body {
+            max-width: 720px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+            line-height: 1.75;
+            color: var(--slate-800);
+        }
+        [data-theme="dark"] .article-body {
+            color: var(--slate-200);
+        }
+        .article-body h2 {
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin-top: 2.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--slate-900);
+        }
+        [data-theme="dark"] .article-body h2 {
+            color: var(--white);
+        }
+        .article-body p {
+            margin-bottom: 1.25rem;
+        }
+        .article-body ul, .article-body ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        .article-body li {
+            margin-bottom: 0.5rem;
+        }
+        .article-meta {
+            color: var(--slate-500);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        .back-link {
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--slate-600);
+            text-decoration: none;
+            margin-bottom: 2rem;
+        }
+        [data-theme="dark"] .back-link {
+            color: var(--slate-400);
+        }
+        .back-link:hover {
+            color: var(--slate-900);
+        }
+        [data-theme="dark"] .back-link:hover {
+            color: var(--white);
+        }
+        .concept-box {
+            background: var(--lime-400);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 rgba(0,0,0,1);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        [data-theme="dark"] .concept-box {
+            background: #86efac;
+            border-color: var(--slate-900);
+        }
+        .concept-box h3 {
+            font-size: 0.85rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            color: var(--slate-900);
+        }
+        .concept-box p {
+            margin-bottom: 0;
+            color: var(--slate-900);
+            font-weight: 600;
+        }
+        .behind-build-box {
+            background: var(--slate-900);
+            border: 3px solid var(--slate-900);
+            box-shadow: 6px 6px 0 0 rgba(0,0,0,1);
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        .behind-build-box h3 {
+            font-size: 0.85rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+            color: var(--lime-400);
+        }
+        [data-theme="dark"] .behind-build-box h3 {
+            color: #86efac;
+        }
+        .behind-build-box p {
+            margin-bottom: 0;
+            color: var(--slate-300);
+            font-weight: 500;
+        }
+        .step-card {
+            border: 3px solid var(--slate-900);
+            box-shadow: 4px 4px 0 0 rgba(0,0,0,1);
+            padding: 1.25rem 1.5rem;
+            margin: 1rem 0;
+            background: var(--white);
+        }
+        [data-theme="dark"] .step-card {
+            background: var(--slate-800);
+            border-color: var(--slate-600);
+            box-shadow: 4px 4px 0 0 rgba(0,0,0,0.5);
+        }
+        .step-card h4 {
+            font-weight: 900;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--slate-900);
+        }
+        [data-theme="dark"] .step-card h4 {
+            color: var(--white);
+        }
+        .step-card p {
+            margin-bottom: 0;
+            color: var(--slate-700);
+            font-size: 0.95rem;
+        }
+        [data-theme="dark"] .step-card p {
+            color: var(--slate-300);
+        }
+        .step-number {
+            display: inline-block;
+            background: var(--slate-900);
+            color: var(--lime-400);
+            font-weight: 900;
+            font-size: 0.8rem;
+            padding: 0.15rem 0.5rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        [data-theme="dark"] .step-number {
+            background: #86efac;
+            color: var(--slate-900);
+        }
+        .code-block {
+            background: var(--slate-900);
+            color: #86efac;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border: 3px solid var(--slate-900);
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+        [data-theme="dark"] .code-block {
+            border-color: var(--slate-600);
+        }
+        .warning-box {
+            background: var(--amber-400);
+            border: 3px solid var(--slate-900);
+            padding: 1.25rem 1.5rem;
+            margin: 2rem 0;
+        }
+        .warning-box p {
+            margin-bottom: 0;
+            color: var(--slate-900);
+            font-weight: 600;
+        }
+        .warning-box strong {
+            font-weight: 900;
+        }
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .result-table th {
+            background: var(--slate-900);
+            color: var(--white);
+            font-weight: 800;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        .result-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 2px solid var(--slate-200);
+            color: var(--slate-700);
+            font-weight: 500;
+        }
+        [data-theme="dark"] .result-table td {
+            border-color: var(--slate-700);
+            color: var(--slate-300);
+        }
+        .result-table tr:last-child td {
+            border-bottom: none;
+        }
+        .pass { color: #16a34a; font-weight: 700; }
+        .fail { color: #dc2626; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <div class="dot-pattern"></div>
+    <div class="top-banner">The stack? What's that?!</div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo-group">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="logo-text">Stack<span>less</span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../projects.html">Projects</a></li>
+                <li><a href="../blog.html" class="active">Guides</a></li>
+                <li><a href="../fleet.html">The Fleet</a></li>
+                <li><a href="../resources.html">Resources</a></li>
+                <li><a href="../shop/index.html">Shop</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <span class="icon-sun">☀️</span>
+                <span class="icon-moon">🌙</span>
+            </button>
+            <button class="hamburger" id="hamburger" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="page-content" style="padding-top: 3rem;">
+            <div class="article-body">
+
+                <a href="../blog.html" class="back-link">&larr; All Guides</a>
+
+                <div style="display: flex; gap: 0.75rem; margin-bottom: 1.25rem; flex-wrap: wrap;">
+                    <span class="tag tag-lime">Behind the Build</span>
+                    <span class="tag tag-indigo">QA & Testing</span>
+                </div>
+
+                <h1 style="font-size: 2rem; font-weight: 900; line-height: 1.2; margin-bottom: 1rem; color: var(--slate-900);">
+                    What Is QA Testing?<br>(And How I Added It to Stackless)
+                </h1>
+
+                <p class="article-meta">8 min read &middot; February 2026</p>
+
+                <p>When developers finish building something, they don't just ship it and hope for the best. They run tests first. These tests catch broken links, missing pages, features that stopped working, and a dozen other things you'd only notice if you checked every page manually.</p>
+
+                <p>This process is called QA — Quality Assurance. It sounds corporate and technical, but the idea is simple: before real users see your work, make a machine check it for you.</p>
+
+                <p>I built Stackless without writing code. But that doesn't mean I get to skip QA. Every time Claude edits a file and I push to GitHub, something could break. A link pointing to the wrong place. A page that loads a missing stylesheet. A nav link someone might click and hit a 404.</p>
+
+                <p>So I added automated QA to Stackless. Here's what I learned.</p>
+
+                <div class="concept-box">
+                    <h3>What is QA, in plain English?</h3>
+                    <p>QA (Quality Assurance) is the process of checking that something works as expected before releasing it to users. In web development, QA usually means running automated scripts that visit every page and flag anything broken — dead links, missing images, pages that don't exist. Think of it as a robot that clicks around your site so you don't have to.</p>
+                </div>
+
+                <h2>Why QA Matters More When You're Not a Developer</h2>
+
+                <p>If you write code yourself, you often catch bugs as you go. You're reading the code, you understand what changed, you notice when something looks off.</p>
+
+                <p>When AI writes your code, you're working at a higher level. You describe what you want, review the output, and ship it. That's the whole point — it's faster. But it also means you might not notice if an old link breaks, or if a nav item now points to a page that was renamed two commits ago.</p>
+
+                <p>I ran into exactly this. A blog post referenced a tutorial that had been moved. The link in the post still pointed to the old path. Nobody clicked it, so nobody noticed. It just sat there, broken, for a week.</p>
+
+                <p>QA is the safety net that catches the things you'd only find if a user reported a bug.</p>
+
+                <h2>The Two Main Approaches</h2>
+
+                <p>There are two tools people usually reach for when automating web QA:</p>
+
+                <div class="step-card">
+                    <h4>Link Checkers</h4>
+                    <p>These crawl your site and check that every URL actually exists and returns a valid response. Fast, simple, lightweight. They won't tell you if your site looks wrong, but they'll tell you if something is missing or points nowhere. Good for static sites like Stackless.</p>
+                </div>
+
+                <div class="step-card">
+                    <h4>Browser Automation (Playwright, Cypress)</h4>
+                    <p>These tools open a real browser and simulate user behaviour — clicking buttons, filling forms, navigating between pages. Much more powerful, but also more complex to set up and maintain. Better suited to apps with user logins, shopping carts, or interactive features.</p>
+                </div>
+
+                <p>For Stackless — a static HTML site with no backend — a link checker is the right tool. It'll catch 90% of what could go wrong, with almost no setup.</p>
+
+                <h2>Behind the Build: Adding a Link Checker to Stackless</h2>
+
+                <div class="behind-build-box">
+                    <h3>Behind the Build</h3>
+                    <p>This section walks through the actual decisions I made and prompts I used. You can follow along and do the same for your own site.</p>
+                </div>
+
+                <p>The tool I used is called <strong>lychee</strong> — a fast, open-source link checker that runs on the command line. Claude walked me through the whole setup. Here's how it went.</p>
+
+                <h2>Step 1: Choose Your Checker</h2>
+
+                <p>I asked Claude: "What's the simplest way to run automated link checking on a static HTML site? I don't want to install anything complicated." The recommendation was lychee — free, fast, works on Windows, and gives clear output.</p>
+
+                <p>Other options exist (Broken Link Checker as a Node package, or even just running your site through an online checker) but lychee integrates cleanly with GitHub Actions, which meant I could automate it to run every time I push a change.</p>
+
+                <h2>Step 2: Install and Run Locally</h2>
+
+                <p>On Windows, the easiest way to install lychee is via winget (Windows Package Manager). Claude gave me this command to paste into a terminal:</p>
+
+                <div class="code-block">winget install lycheeverse.lychee</div>
+
+                <p>Once installed, I ran it against the Stackless folder:</p>
+
+                <div class="code-block">lychee --no-progress "./stackless-site/**/*.html"</div>
+
+                <p>This tells lychee to check every HTML file in the site folder. It crawls through them, finds every link, and checks whether each one resolves. The output looks something like this:</p>
+
+                <div class="code-block">
+🔍 Checking 847 links across 23 files<br>
+✅ 831 links OK<br>
+⚠️  3 redirects<br>
+❌ 13 errors
+                </div>
+
+                <p>Thirteen errors. That's thirteen links that would have given a user a broken experience. I had no idea.</p>
+
+                <h2>Step 3: Read the Report</h2>
+
+                <p>The output includes a table of broken links with their source file and the error type. Here's a simplified version of what I saw:</p>
+
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>File</th>
+                            <th>Broken Link</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>blog/post-7.html</td>
+                            <td>../shop/index.html#dashboards</td>
+                            <td><span class="fail">404</span></td>
+                        </tr>
+                        <tr>
+                            <td>about.html</td>
+                            <td>projects.html#curlmagic</td>
+                            <td><span class="fail">404</span></td>
+                        </tr>
+                        <tr>
+                            <td>index.html</td>
+                            <td>blog/post-5.html</td>
+                            <td><span class="pass">OK</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>Most of the errors were anchor links — links that point to a specific section within a page using a <code>#</code> symbol. When those sections get renamed or removed, the link still looks valid but lands nowhere. Lychee catches these too.</p>
+
+                <h2>Step 4: Automate It with GitHub Actions</h2>
+
+                <p>Running a check manually is useful, but the real value is having it run automatically every time you push a change. GitHub Actions lets you do this for free.</p>
+
+                <p>I asked Claude to write a GitHub Actions workflow file. The result was a file I saved at <code>.github/workflows/link-check.yml</code>:</p>
+
+                <div class="code-block">
+name: Link Check<br>
+<br>
+on:<br>
+&nbsp;&nbsp;push:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;branches: [master]<br>
+&nbsp;&nbsp;schedule:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;- cron: '0 9 * * 1'  # Every Monday at 9am<br>
+<br>
+jobs:<br>
+&nbsp;&nbsp;link-check:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;runs-on: ubuntu-latest<br>
+&nbsp;&nbsp;&nbsp;&nbsp;steps:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- uses: actions/checkout@v4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- name: Check links<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uses: lycheeverse/lychee-action@v2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;args: --no-progress './stackless-site/**/*.html'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fail: true
+                </div>
+
+                <p>Now, every time I push to GitHub — which happens after every session — the link checker runs automatically. If it finds errors, it flags the commit as failed, and I get a notification. The site still deploys (Render doesn't know about the check), but I know something needs fixing.</p>
+
+                <p>The schedule line also sets it to run every Monday morning, so even if nothing changed in my code, it'll catch any external links that have gone stale.</p>
+
+                <div class="warning-box">
+                    <p><strong>One gotcha:</strong> External links (links to other websites) sometimes fail the checker for reasons that aren't actually broken — some sites block automated crawlers and return a 403 error. You can tell lychee to skip specific domains or only check internal links. I configured mine to ignore a few known noisy domains.</p>
+                </div>
+
+                <h2>Step 5: Fix What It Finds</h2>
+
+                <p>The workflow I've now settled into:</p>
+
+                <ol>
+                    <li>Claude makes changes, we commit and push.</li>
+                    <li>GitHub Actions runs the link check automatically.</li>
+                    <li>If the check passes, the commit gets a green tick.</li>
+                    <li>If it fails, I get a notification with the report. I ask Claude to fix the broken links and push again.</li>
+                </ol>
+
+                <p>The whole thing takes about 90 seconds to run. I don't have to think about it. It just runs.</p>
+
+                <h2>What QA Doesn't Catch</h2>
+
+                <p>A link checker is powerful but narrow. It only checks links. It won't tell you:</p>
+
+                <ul>
+                    <li>Whether a page looks broken in dark mode</li>
+                    <li>Whether a button doesn't do anything when clicked</li>
+                    <li>Whether text is readable at different screen sizes</li>
+                    <li>Whether your email form actually sends emails</li>
+                </ul>
+
+                <p>For those things, you'd need browser automation tools like Playwright, or you'd need to check manually. For a site like Stackless, I've decided the link checker covers the most important risks, and I do a quick visual check whenever I make significant layout changes.</p>
+
+                <p>That split — automated for the things that are quick to check automatically, manual for everything else — is how most small teams handle QA too.</p>
+
+                <h2>The Bigger Lesson</h2>
+
+                <p>QA isn't about catching every possible bug before anyone sees your site. That's impossible. It's about reducing the most common, embarrassing, user-facing failures — broken links, missing pages, stuff that makes your site look unmaintained — so they don't reach real visitors.</p>
+
+                <p>Adding a link checker took me about 30 minutes. It will save me from looking unprofessional every single week for as long as the site exists.</p>
+
+                <p>If you're shipping anything to the public — a blog, a portfolio, a tool — it's worth setting up. Even a simple online link checker (no install needed) is better than nothing.</p>
+
+                <div class="concept-box">
+                    <h3>Want to try it?</h3>
+                    <p>You can run a free online link check at <strong>deadlinkchecker.com</strong> or <strong>validator.w3.org/checklink</strong> — no setup required. Paste your URL and see what comes back. If you want automated checks on every push, ask your AI assistant to help you set up a GitHub Actions workflow like the one in this post.</p>
+                </div>
+
+                <div style="border-top: 3px solid var(--slate-200); margin-top: 3rem; padding-top: 2rem;">
+                    <p style="font-weight: 700; color: var(--slate-900);">More from Stackless</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                        <a href="post-7-testing-for-non-coders.html" style="font-weight: 700; color: var(--slate-700); text-decoration: none; font-size: 0.9rem;">Testing & Validation for Non-Coders &rarr;</a>
+                        <a href="post-6-security-for-non-coders.html" style="font-weight: 700; color: var(--slate-700); text-decoration: none; font-size: 0.9rem;">Security & Privacy for Non-Coders &rarr;</a>
+                        <a href="../blog.html" style="font-weight: 700; color: var(--slate-700); text-decoration: none; font-size: 0.9rem;">All Guides &rarr;</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="../index.html">Home</a>
+            <a href="../projects.html">Projects</a>
+            <a href="../blog.html">Guides</a>
+            <a href="../shop/index.html">Shop</a>
+            <a href="../about.html">About</a>
+        </div>
+        <p>&copy; 2026 Stackless. Built by AI, guided by a human.</p>
+    </footer>
+
+    <script src="../theme.js"></script>
+</body>
+</html>

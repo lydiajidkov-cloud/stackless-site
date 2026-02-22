@@ -9,6 +9,7 @@
     <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
 </head>
 <body>
+  <a href="#main" class="skip-to-main">Skip to main content</a>
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
@@ -28,7 +29,7 @@
     </div>
   </nav>
 
-  <main class="container" style="padding-top:2rem; padding-bottom:3rem;">
+  <main id="main" class="container" style="padding-top:2rem; padding-bottom:3rem;">
     <section class="hero" style="padding-bottom:1rem;">
       <h1 style="font-size:clamp(2rem, 5vw, 3rem);">Discover Your <span class="highlight">Hair Profile</span></h1>
       <p>Answer 7 quick questions to get a personalised CGM routine with UK product suggestions.</p>
@@ -36,7 +37,8 @@
 
     <section style="padding-top:0;">
       <div class="quiz-container" id="quizContainer">
-        <div class="quiz-progress" id="quizProgress"></div>
+        <div class="quiz-progress-label" id="quizProgressLabel" aria-live="polite" style="text-align:center; font-size:0.85rem; font-weight:600; color:var(--text-muted); margin-bottom:0.5rem;">Question 1 of 7</div>
+        <div class="quiz-progress" id="quizProgress" role="progressbar" aria-label="Quiz progress" aria-valuenow="1" aria-valuemin="1" aria-valuemax="7"></div>
 
         <!-- Q1: Texture -->
         <div class="quiz-question active" data-q="0">
@@ -165,17 +167,5 @@
 
   <script src="ingredients-data.js"></script>
   <script src="app.js"></script>
-    <script>
-        (function() {
-            var btn = document.getElementById('themeToggle');
-            if (!btn) return;
-            btn.addEventListener('click', function() {
-                var current = document.documentElement.getAttribute('data-theme') || 'light';
-                var next = current === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', next);
-                localStorage.setItem('stackless-theme', next);
-            });
-        })();
-    </script>
 </body>
 </html>

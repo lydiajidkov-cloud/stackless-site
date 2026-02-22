@@ -9,6 +9,7 @@
     <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
 </head>
 <body>
+  <a href="#main" class="skip-to-main">Skip to main content</a>
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
@@ -28,16 +29,29 @@
     </div>
   </nav>
 
-  <main class="container" style="padding-top:2rem; padding-bottom:3rem;">
+  <main id="main" class="container" style="padding-top:2rem; padding-bottom:3rem;">
     <section class="hero" style="padding-bottom:1rem;">
       <h1 style="font-size:clamp(2rem, 5vw, 3rem);">The <span class="highlight">Method</span></h1>
       <p>Everything you need to know about the Curly Girl Method, common myths, and why we built this.</p>
     </section>
 
     <section style="padding-top:0;">
+      <nav class="toc" aria-label="Table of contents">
+        <h3 class="toc-title">On this page</h3>
+        <ol class="toc-list">
+          <li><a href="#what-is-cgm">What is the Curly Girl Method?</a></li>
+          <li><a href="#what-to-avoid">What to Avoid</a></li>
+          <li><a href="#modified-cgm">Modified CGM</a></li>
+          <li><a href="#transition">The Transition Period</a></li>
+          <li><a href="#myths">Common Myths</a></li>
+          <li><a href="#science">The Science Behind CGM</a></li>
+          <li><a href="#uk-focused">Why UK-Focused?</a></li>
+          <li><a href="#about-tool">About This Tool</a></li>
+        </ol>
+      </nav>
       <div class="about-content">
 
-        <h2>What is the Curly Girl Method?</h2>
+        <h2 id="what-is-cgm">What is the Curly Girl Method?</h2>
         <p>The Curly Girl Method (CGM) is a hair care approach created by hairstylist Lorraine Massey and published in her 2001 book "Curly Girl: The Handbook". Massey grew up in England and was ridiculed for her curly hair. A friend later suggested washing with conditioner instead of shampoo, which transformed her approach to curl care.</p>
         <p>The core philosophy is simple: stop using ingredients that damage curls, and start working with your natural texture rather than against it. CGM is based on three steps:</p>
         <ol>
@@ -46,7 +60,7 @@
           <li><strong>Style on wet hair:</strong> Apply styling products to soaking wet hair to lock in moisture and encourage curl clumping.</li>
         </ol>
 
-        <h2>What to Avoid</h2>
+        <h2 id="what-to-avoid">What to Avoid</h2>
         <p>CGM identifies several ingredient categories that are harmful to curly, wavy, and coily hair:</p>
         <ul>
           <li><strong>Sulphates:</strong> Harsh cleansers (SLS, SLES, ALS) that strip natural oils.</li>
@@ -56,7 +70,7 @@
         </ul>
         <p>Not all "bad-sounding" ingredients are actually harmful. Fatty alcohols (cetyl, cetearyl, stearyl alcohol) are moisturising. Water-soluble silicones wash out easily. Behentrimonium methosulfate is a conditioning agent, not a sulphate.</p>
 
-        <h2>Modified CGM</h2>
+        <h2 id="modified-cgm">Modified CGM</h2>
         <p>Strict CGM is not for everyone. The community increasingly embraces a modified approach:</p>
         <ul>
           <li>Occasional gentle sulphates for fine or wavy hair prone to buildup</li>
@@ -65,7 +79,7 @@
         </ul>
         <p>The philosophy is: "If it works for your hair, go ahead." The goal is healthy, happy curls, not perfect rule-following.</p>
 
-        <h2>The Transition Period</h2>
+        <h2 id="transition">The Transition Period</h2>
         <p>When you start CGM, your hair may actually look worse before it looks better. This is normal.</p>
         <ul>
           <li><strong>Weeks 1-2:</strong> Hair may feel oily, limp, or awkward</li>
@@ -76,7 +90,7 @@
         </ul>
         <p>Commit to at least 6 weeks before judging your results.</p>
 
-        <h2>Common Myths</h2>
+        <h2 id="myths">Common Myths</h2>
 
         <div class="myth-card">
           <div class="myth-label">Myth</div>
@@ -115,7 +129,7 @@
           <p>Hair porosity, density, strand width, scalp type, and water hardness all affect what works. Wavies need much lighter products than curlies.</p>
         </div>
 
-        <h2>The Science Behind CGM</h2>
+        <h2 id="science">The Science Behind CGM</h2>
 
         <h3>Why Curly Hair Is Drier</h3>
         <p>Sebum is produced at the root and needs to travel down the hair shaft. On straight hair, it slides smoothly. On curly hair, every bend acts as a roadblock. This is why curly hair needs external moisture from conditioners and leave-ins.</p>
@@ -132,10 +146,10 @@
         <h3>Wavy Hair Is Not "Failed Curly Hair"</h3>
         <p>Wavy hair (Type 2) has its own needs. Less dryness, but heavy products weigh waves down. Less is usually more for wavies.</p>
 
-        <h2>Why UK-Focused?</h2>
+        <h2 id="uk-focused">Why UK-Focused?</h2>
         <p>Almost all CGM content recommends American products. This tool is built specifically for UK shops, with products from Boots, Superdrug, Poundland, Savers, Pak's, Lidl, Aldi, Amazon UK, and specialist retailers. All prices in GBP.</p>
 
-        <h2>About This Tool</h2>
+        <h2 id="about-tool">About This Tool</h2>
         <p>Curly Girl Wavy Girl UK is a free hair quiz and ingredient checker built by <a href="../index.html">Stackless</a>. It covers wavy (Type 2), curly (Type 3), and coily (Type 4) hair equally, using a database of 200+ ingredients cross-referenced against multiple CGM community sources.</p>
         <p>All data is processed locally in your browser. Nothing is sent to any server. Your quiz results are saved in your browser's localStorage.</p>
 
@@ -149,17 +163,5 @@
   </footer>
 
   <script src="app.js"></script>
-    <script>
-        (function() {
-            var btn = document.getElementById('themeToggle');
-            if (!btn) return;
-            btn.addEventListener('click', function() {
-                var current = document.documentElement.getAttribute('data-theme') || 'light';
-                var next = current === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', next);
-                localStorage.setItem('stackless-theme', next);
-            });
-        })();
-    </script>
 </body>
 </html>

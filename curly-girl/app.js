@@ -654,6 +654,10 @@ function updateProgress() {
     if (i < currentQuestion) steps[i].classList.add('done');
     if (i === currentQuestion) steps[i].classList.add('current');
   }
+  var label = document.getElementById('quizProgressLabel');
+  if (label) label.textContent = 'Question ' + (currentQuestion + 1) + ' of ' + totalQuestions;
+  var bar = document.getElementById('quizProgress');
+  if (bar) bar.setAttribute('aria-valuenow', currentQuestion + 1);
 }
 
 function selectOption(el) {
@@ -1162,6 +1166,19 @@ function escHtml(str) {
   div.appendChild(document.createTextNode(str));
   return div.innerHTML;
 }
+
+// ============ THEME TOGGLE ============
+
+(function() {
+  var btn = document.getElementById('themeToggle');
+  if (!btn) return;
+  btn.addEventListener('click', function() {
+    var current = document.documentElement.getAttribute('data-theme') || 'light';
+    var next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('stackless-theme', next);
+  });
+})();
 
 // ============ INIT ============
 

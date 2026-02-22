@@ -9,6 +9,7 @@
     <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
 </head>
 <body>
+  <a href="#main" class="skip-to-main">Skip to main content</a>
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
@@ -28,7 +29,7 @@
     </div>
   </nav>
 
-  <main class="container" style="padding-top:2rem; padding-bottom:3rem;">
+  <main id="main" class="container" style="padding-top:2rem; padding-bottom:3rem;">
     <section class="hero" style="padding-bottom:1rem;">
       <h1 style="font-size:clamp(2rem, 5vw, 3rem);">What are you <span class="highlight">struggling</span> with?</h1>
       <p>50 answers to the most common curly and wavy hair questions, with UK products and budget options first.</p>
@@ -36,7 +37,7 @@
 
     <section style="max-width:700px; margin:0 auto; padding:0 0.5rem 3rem;">
       <input type="text" class="faq-search" id="faqSearch" placeholder="Search... e.g. 'frizzy', 'hard water', 'wavy', 'protein'" autocomplete="off">
-      <div class="faq-count" id="faqCount">50 questions</div>
+      <div class="faq-count" id="faqCount" aria-live="polite">50 questions</div>
       <div class="faq-no-results" id="noResults">No matching questions found. Try different keywords.</div>
 
       <!-- 1. Troubleshooting -->
@@ -150,9 +151,8 @@
     <p class="disclaimer">This tool is for informational purposes only. Always patch test new products.</p>
   </footer>
 
+  <script src="app.js"></script>
   <script>
-    function toggleNav() { document.getElementById('navLinks').classList.toggle('open'); }
-
     document.querySelectorAll('.faq-question').forEach(function(q) {
       q.addEventListener('click', function() { this.parentElement.classList.toggle('open'); });
     });
@@ -189,17 +189,5 @@
       if (!query) allItems.forEach(function(item) { item.classList.remove('open'); });
     });
   </script>
-    <script>
-        (function() {
-            var btn = document.getElementById('themeToggle');
-            if (!btn) return;
-            btn.addEventListener('click', function() {
-                var current = document.documentElement.getAttribute('data-theme') || 'light';
-                var next = current === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', next);
-                localStorage.setItem('stackless-theme', next);
-            });
-        })();
-    </script>
 </body>
 </html>

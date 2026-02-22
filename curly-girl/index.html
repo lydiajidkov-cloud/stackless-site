@@ -9,6 +9,7 @@
     <script>(function(){var t=localStorage.getItem('stackless-theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
 </head>
 <body>
+  <a href="#main" class="skip-to-main">Skip to main content</a>
   <!-- Navigation -->
   <nav class="nav">
     <div class="nav-inner">
@@ -29,7 +30,7 @@
     </div>
   </nav>
 
-  <main class="container" style="padding-top:2rem; padding-bottom:3rem;">
+  <main id="main" class="container" style="padding-top:2rem; padding-bottom:3rem;">
     <!-- Hero -->
     <section class="hero" style="padding-top:3rem; padding-bottom:4rem; margin-bottom:3rem;">
       <div class="hero-glow"></div>
@@ -208,17 +209,5 @@
   </footer>
 
   <script src="app.js"></script>
-    <script>
-        (function() {
-            var btn = document.getElementById('themeToggle');
-            if (!btn) return;
-            btn.addEventListener('click', function() {
-                var current = document.documentElement.getAttribute('data-theme') || 'light';
-                var next = current === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', next);
-                localStorage.setItem('stackless-theme', next);
-            });
-        })();
-    </script>
 </body>
 </html>

@@ -1052,6 +1052,13 @@ footer p {
 .theme-toggle .icon-sun,
 .theme-toggle .icon-moon {
   display: none;
+  color: var(--slate-900);
+  line-height: 0;
+}
+
+.theme-toggle .icon-sun svg,
+.theme-toggle .icon-moon svg {
+  display: block;
 }
 
 [data-theme="light"] .theme-toggle .icon-sun,
@@ -1061,6 +1068,7 @@ footer p {
 
 [data-theme="dark"] .theme-toggle .icon-moon {
   display: block;
+  color: var(--slate-900);
 }
 
 /* ============================================

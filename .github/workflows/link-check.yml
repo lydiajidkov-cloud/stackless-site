@@ -1,0 +1,26 @@
+name: Link Check
+
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9am UTC
+
+jobs:
+  link-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --exclude 'mailto:'
+            --exclude 'MAILCHIMP_FORM_ACTION_URL'
+            --exclude 'localhost'
+            --exclude 'example\.com'
+            --timeout 30
+            './stackless-site/**/*.html'
+          fail: true
